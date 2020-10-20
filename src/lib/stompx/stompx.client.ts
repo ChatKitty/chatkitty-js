@@ -1,17 +1,15 @@
 import { RxStomp } from '@stomp/rx-stomp';
 import { RxStompConfig } from '@stomp/rx-stomp';
 import { Versions } from '@stomp/stompjs';
-import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
 
 import { StompXConfiguration } from './stompx.configuration';
+import { StompXError } from './stompx.error';
 
 export class StompXClient {
   private readonly rxStompConfig: RxStompConfig;
 
   private rxStomp: RxStomp = new RxStomp();
-
-  private connectedSubscription?: Subscription;
 
   constructor(configuration: StompXConfiguration) {
     let scheme: string;
@@ -40,7 +38,7 @@ export class StompXClient {
     };
   }
 
-  public connect(headers: Record<string, string>, onConnected: () => void) {
+  public connect(headers: Record<string, string>, onSuccess: () => void, onError: (error: StompXError) => void) {
     const params = new URLSearchParams(headers);
 
     const brokerURL = this.rxStompConfig.brokerURL + '?' + params.toString();
@@ -52,9 +50,19 @@ export class StompXClient {
 
     this.rxStomp.activate();
 
-    this.connectedSubscription = this.rxStomp.connected$.subscribe(() =>
-      onConnected()
-    );
+    const successSubscription = this.rxStomp.connected$.subscribe(() => {
+      onSuccess();
+
+      successSubscription.unsubscribe();
+    });
+
+    const errorSubscription = this.rxStomp.stompErrors$.subscribe(frame => {
+      onError(JSON.parse(frame.body));
+
+      errorSubscription.unsubscribe();
+
+      this.rxStomp.deactivate();
+    });
   }
 
   public relayResource<R>(destination: string, onResourceRelayed: (resource: R) => void) {
@@ -69,10 +77,6 @@ export class StompXClient {
 
   public disconnect(onDisconnected: () => void) {
     this.rxStomp.deactivate();
-
-    if (this.connectedSubscription) {
-      this.connectedSubscription.unsubscribe();
-    }
 
     onDisconnected();
   }

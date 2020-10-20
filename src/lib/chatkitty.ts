@@ -3,8 +3,12 @@ import { environment } from '../environments/environment';
 import { ChatKittyConfiguration } from './chatkitty.configuration';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
+import { SessionAccessDeniedError } from './model/session/start/session.errors';
 import { SessionStartRequest } from './model/session/start/session.start.request';
-import { SessionStartedResult } from './model/session/start/session.start.results';
+import {
+  SessionAccessDeniedErrorResult,
+  SessionStartedResult
+} from './model/session/start/session.start.results';
 import { StompXClient } from './stompx/stompx.client';
 
 export default class ChatKitty {
@@ -33,13 +37,17 @@ export default class ChatKitty {
       };
     }
 
-    this.client.connect(headers, () => {
-      this.client.relayResource<CurrentUser>(ChatKitty.currentUserRelay, user => {
-        request.callback(new SessionStartedResult({
-          user: user
-        }));
+    this.client.connect(headers,
+      () => {
+        this.client.relayResource<CurrentUser>(ChatKitty.currentUserRelay, user => {
+          request.callback(new SessionStartedResult({ user: user }));
+        });
+      },
+      (error) => {
+        if (error.error === 'AccessDeniedError') {
+          request.callback(new SessionAccessDeniedErrorResult(new SessionAccessDeniedError()));
+        }
       });
-    });
   }
 
   public getCurrentUser(callback: (result: GetCurrentUserResult) => void) {

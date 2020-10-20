@@ -1,7 +1,7 @@
 import { ChatKittyError } from '../../chatkitty.error';
 
-export class SessionNotStartedError extends ChatKittyError {
+export class SessionAccessDeniedError extends ChatKittyError {
   constructor() {
-    super('SessionNotStarted', 'ChatKitty session has not started.');
+    super('SessionAccessDeniedError', 'ChatKitty session did not start. Access denied.');
   }
 }

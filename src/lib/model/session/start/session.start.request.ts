@@ -1,10 +1,10 @@
 import {
-  SessionNotStartedResult,
+  SessionAccessDeniedErrorResult,
   SessionStartedResult,
 } from './session.start.results';
 
 export interface SessionStartRequest {
   username: string;
   authParams?: unknown;
-  callback: (result: SessionStartedResult | SessionNotStartedResult) => void;
+  callback: (result: SessionStartedResult | SessionAccessDeniedErrorResult) => void;
 }
