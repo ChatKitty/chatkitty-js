@@ -1,5 +1,5 @@
 {
-  "name": "chatkitty-js",
+  "name": "chatkitty",
   "version": "0.0.1",
   "description": "JS SDK for the ChatKitty Chat API",
   "main": "build/main/index.js",
