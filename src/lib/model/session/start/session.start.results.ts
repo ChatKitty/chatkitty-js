@@ -1,13 +1,13 @@
 import {
   ChatKittyErrorResult,
-  ChatKittySuccessfulResult,
+  ChatKittySuccessfulResult
 } from '../../chatkitty.result';
-import { CurrentUser } from '../../current-user/current-user.model';
+import { Session } from '../session.model';
 
-import { SessionNotStartedError } from './session.start.errors';
+import { SessionNotStartedError } from './session.errors';
 
 export class SessionStartedResult extends ChatKittySuccessfulResult {
-  constructor(public currentUser: CurrentUser) {
+  constructor(public session: Session) {
     super();
   }
 }
@@ -19,5 +19,5 @@ export class SessionNotStartedResult extends ChatKittyErrorResult {
 }
 
 export function sessionWasStarted(result: SessionStartedResult | SessionNotStartedResult): result is SessionStartedResult {
-  return (result as SessionStartedResult).currentUser !== undefined;
+  return (result as SessionStartedResult).session !== undefined;
 }

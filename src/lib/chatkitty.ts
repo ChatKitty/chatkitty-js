@@ -2,11 +2,14 @@ import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
 import { CurrentUser } from './model/current-user/current-user.model';
+import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
 import { SessionStartRequest } from './model/session/start/session.start.request';
 import { SessionStartedResult } from './model/session/start/session.start.results';
 import { StompXClient } from './stompx/stompx.client';
 
 export default class ChatKitty {
+  private static readonly currentUserRelay = '/application/v1/users/me.relay';
+
   private readonly client: StompXClient;
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
@@ -31,9 +34,17 @@ export default class ChatKitty {
     }
 
     this.client.connect(headers, () => {
-      this.client.relayResource<CurrentUser>('/application/v1/users/me.relay', user => {
-        request.callback(new SessionStartedResult(user));
+      this.client.relayResource<CurrentUser>(ChatKitty.currentUserRelay, user => {
+        request.callback(new SessionStartedResult({
+          user: user
+        }));
       });
+    });
+  }
+
+  public getCurrentUser(callback: (result: GetCurrentUserResult) => void) {
+    this.client.relayResource<CurrentUser>(ChatKitty.currentUserRelay, user => {
+      callback(new GetCurrentUserResult(user));
     });
   }
 }

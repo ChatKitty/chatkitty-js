@@ -34,7 +34,7 @@ test('start session with session started', (t) => {
       if (sessionWasStarted(result)) {
         t.pass('Session was started');
 
-        t.log(result.currentUser);
+        t.log(result.session);
       } else {
         t.fail('Session was not started');
       }
