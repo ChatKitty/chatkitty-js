@@ -1,6 +1,7 @@
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
+import { CurrentUser } from './model/current-user/current-user.model';
 import { SessionStartRequest } from './model/session/start/session.start.request';
 import { SessionStartedResult } from './model/session/start/session.start.results';
 import { StompXClient } from './stompx/stompx.client';
@@ -30,13 +31,9 @@ export default class ChatKitty {
     }
 
     this.client.connect(headers, () => {
-      request.callback(
-        new SessionStartedResult({
-          id: 1,
-          name: 'TODO',
-          displayPictureUrl: 'TODO'
-        })
-      );
+      this.client.relayResource<CurrentUser>('/application/v1/users/me.relay', user => {
+        request.callback(new SessionStartedResult(user));
+      });
     });
   }
 }

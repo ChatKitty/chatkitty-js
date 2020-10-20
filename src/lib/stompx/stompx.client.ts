@@ -2,6 +2,7 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { RxStompConfig } from '@stomp/rx-stomp';
 import { Versions } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
+import { v4 } from 'uuid';
 
 import { StompXConfiguration } from './stompx.configuration';
 
@@ -56,6 +57,16 @@ export class StompXClient {
     );
   }
 
+  public relayResource<R>(destination: string, onResourceRelayed: (resource: R) => void) {
+    this.rxStomp.watch(destination, {
+      id: destination,
+      receipt: StompXClient.generateReceipt()
+    })
+    .subscribe(message => {
+      onResourceRelayed(JSON.parse(message.body));
+    });
+  }
+
   public disconnect(onDisconnected: () => void) {
     this.rxStomp.deactivate();
 
@@ -64,5 +75,9 @@ export class StompXClient {
     }
 
     onDisconnected();
+  }
+
+  private static generateReceipt(): string {
+    return 'receipt-' + v4();
   }
 }
