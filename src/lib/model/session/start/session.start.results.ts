@@ -17,3 +17,7 @@ export class SessionNotStartedResult extends ChatKittyErrorResult {
     super();
   }
 }
+
+export function sessionWasStarted(result: SessionStartedResult | SessionNotStartedResult): result is SessionStartedResult {
+  return (result as SessionStartedResult).currentUser !== undefined;
+}

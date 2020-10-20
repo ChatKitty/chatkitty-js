@@ -2,8 +2,6 @@
 .nyc_output
 build
 node_modules
-src/tests
-src/**.js
 coverage
 *.log
 yarn.lock

@@ -2,7 +2,6 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { RxStompConfig } from '@stomp/rx-stomp';
 import { Versions } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
-import SockJS from 'sockjs-client';
 
 import { StompXConfiguration } from './stompx.configuration';
 
@@ -11,37 +10,17 @@ export class StompXClient {
 
   private rxStomp: RxStomp = new RxStomp();
 
-  private connectedSubscription: Subscription | null = null;
+  private connectedSubscription?: Subscription;
 
   constructor(configuration: StompXConfiguration) {
-    let brokerUrl: string;
-
-    if (typeof WebSocket !== 'function') {
-      let scheme: string;
-      if (configuration.isSecure) {
-        scheme = 'https';
-      } else {
-        scheme = 'http';
-      }
-
-      brokerUrl = scheme + '://' + configuration.host + '/stompx';
-
-      this.rxStomp.stompClient.webSocketFactory = function() {
-        console.log('Using SockJS');
-
-        return new SockJS(brokerUrl);
-      };
-
+    let scheme: string;
+    if (configuration.isSecure) {
+      scheme = 'wss';
     } else {
-      let scheme: string;
-      if (configuration.isSecure) {
-        scheme = 'wss';
-      } else {
-        scheme = 'ws';
-      }
-
-      brokerUrl = scheme + '://' + configuration.host + '/stompx/websocket';
+      scheme = 'ws';
     }
+
+    const brokerUrl = scheme + '://' + configuration.host + '/stompx/websocket';
 
     this.rxStompConfig = {
       brokerURL: brokerUrl,
@@ -64,9 +43,6 @@ export class StompXClient {
     const params = new URLSearchParams(headers);
 
     const brokerURL = this.rxStompConfig.brokerURL + '?' + params.toString();
-
-    console.log('URL is: ' + brokerURL);
-
 
     this.rxStomp.configure({
       ...this.rxStompConfig,
