@@ -49,14 +49,11 @@
   },
   "dependencies": {
     "@stomp/rx-stomp": "^0.3.5",
-    "rxjs": "^6.6.3",
-    "sockjs-client": "^1.5.0",
-    "ws": "^7.3.1"
+    "rxjs": "^6.6.3"
   },
   "devDependencies": {
     "@ava/typescript": "^1.1.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/sockjs-client": "^1.1.1",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
