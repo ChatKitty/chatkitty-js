@@ -3,7 +3,7 @@ import test from 'ava';
 import { environment } from '../environments/environment';
 import ChatKitty from '../lib/chatkitty';
 import {
-  sessionWasStarted
+  sessionStarted
 } from '../lib/model/session/start/session.start.results';
 
 interface ChatKittyHolder {
@@ -31,7 +31,7 @@ test('start session with session started', (t) => {
       password: '12345678'
     },
     callback: (result) => {
-      if (sessionWasStarted(result)) {
+      if (sessionStarted(result)) {
         t.pass('Session was started');
 
         t.log(result.session);

@@ -1,26 +1,26 @@
 import {
-  ChatKittyErrorResult,
-  ChatKittySuccessfulResult
+  ChatKittyFailedResult,
+  ChatKittySucceededResult
 } from '../../chatkitty.result';
 import { Session } from '../session.model';
 
 import { SessionAccessDeniedError } from './session.errors';
 
-export class SessionStartedResult extends ChatKittySuccessfulResult {
+export class SessionStartedResult extends ChatKittySucceededResult {
   constructor(public session: Session) {
     super();
   }
 }
 
-export class SessionAccessDeniedErrorResult extends ChatKittyErrorResult {
+export class SessionAccessDeniedResult extends ChatKittyFailedResult {
   constructor(public error: SessionAccessDeniedError) {
     super();
   }
 }
 
-export function sessionWasStarted(result:
-                                    SessionStartedResult |
-                                    SessionAccessDeniedErrorResult
+export function sessionStarted(result:
+                                 SessionStartedResult |
+                                 SessionAccessDeniedResult
 ): result is SessionStartedResult {
   return (result as SessionStartedResult).session !== undefined;
 }

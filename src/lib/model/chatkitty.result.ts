@@ -1,26 +1,26 @@
 import { ChatKittyError } from './chatkitty.error';
 
 export interface ChatKittyResult {
-  wasSuccessful: boolean;
-  wasCancelled: boolean;
-  isError: boolean;
+  succeeded: boolean;
+  cancelled: boolean;
+  failed: boolean;
 }
 
-export abstract class ChatKittySuccessfulResult implements ChatKittyResult {
-  wasSuccessful = true;
-  wasCancelled = false;
-  isError = false;
+export abstract class ChatKittySucceededResult implements ChatKittyResult {
+  succeeded = true;
+  cancelled = false;
+  failed = false;
 }
 
 export abstract class ChatKittyCancelledResult implements ChatKittyResult {
-  wasSuccessful = false;
-  wasCancelled = true;
-  isError = false;
+  succeeded = false;
+  cancelled = true;
+  failed = false;
 }
 
-export abstract class ChatKittyErrorResult implements ChatKittyResult {
-  wasSuccessful = false;
-  wasCancelled = false;
-  isError = true;
+export abstract class ChatKittyFailedResult implements ChatKittyResult {
+  succeeded = false;
+  cancelled = false;
+  failed = true;
   abstract error: ChatKittyError;
 }

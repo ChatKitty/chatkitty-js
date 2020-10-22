@@ -6,7 +6,7 @@ import { GetCurrentUserResult } from './model/current-user/get/current-user.get.
 import { SessionAccessDeniedError } from './model/session/start/session.errors';
 import { SessionStartRequest } from './model/session/start/session.start.request';
 import {
-  SessionAccessDeniedErrorResult,
+  SessionAccessDeniedResult,
   SessionStartedResult
 } from './model/session/start/session.start.results';
 import { StompXClient } from './stompx/stompx.client';
@@ -45,7 +45,7 @@ export default class ChatKitty {
       },
       (error) => {
         if (error.error === 'AccessDeniedError') {
-          request.callback(new SessionAccessDeniedErrorResult(new SessionAccessDeniedError()));
+          request.callback(new SessionAccessDeniedResult(new SessionAccessDeniedError()));
         }
       });
   }
