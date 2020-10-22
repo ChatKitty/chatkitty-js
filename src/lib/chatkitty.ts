@@ -26,7 +26,7 @@ export default class ChatKitty {
   }
 
   public startSession(request: SessionStartRequest): Promise<SessionStartedResult | SessionAccessDeniedResult> {
-    return new Promise<SessionStartedResult | SessionAccessDeniedResult>(
+    return new Promise(
       resolve => {
         this.client.connect({
           apiKey: this.configuration.apiKey,
@@ -54,7 +54,7 @@ export default class ChatKitty {
   }
 
   public getCurrentUser(): Promise<GetCurrentUserResult> {
-    return new Promise<GetCurrentUserResult>(
+    return new Promise(
       resolve => {
         this.client.relayResource<CurrentUser>({
           destination: ChatKitty.currentUserRelay,
