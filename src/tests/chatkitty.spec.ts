@@ -22,22 +22,21 @@ test.before((t) => {
   };
 });
 
-test('start session with session started', (t) => {
+test('start session with session started', async (t) => {
   const kitty: ChatKitty = (t.context as ChatKittyHolder).getKitty();
 
-  kitty.startSession({
+  const result = await kitty.startSession({
     username: 'tester@chatkitty.com',
     authParams: {
       password: '12345678'
-    },
-    callback: (result) => {
-      if (sessionStarted(result)) {
-        t.pass('Session was started');
-
-        t.log(result.session);
-      } else {
-        t.fail('Session was not started');
-      }
     }
   });
+
+  if (sessionStarted(result)) {
+    t.pass('Session was started');
+
+    t.log(result.session);
+  } else {
+    t.fail('Session was not started');
+  }
 });
