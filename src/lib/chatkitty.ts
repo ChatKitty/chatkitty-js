@@ -25,34 +25,33 @@ export default class ChatKitty {
   }
 
   public startSession(request: SessionStartRequest) {
-    let headers: Record<string, string> = {
-      api_key: this.configuration.apiKey,
-      stompx_user: request.username
-    };
-
-    if (request.authParams) {
-      headers = {
-        ...headers,
-        stompx_auth_params: JSON.stringify(request.authParams)
-      };
-    }
-
-    this.client.connect(headers,
-      () => {
-        this.client.relayResource<CurrentUser>(ChatKitty.currentUserRelay, user => {
-          request.callback(new SessionStartedResult({ user: user }));
-        });
+    this.client.connect({
+      apiKey: this.configuration.apiKey,
+      username: request.username,
+      authParams: request.authParams,
+      onSuccess: () => {
+        this.client.relayResource<CurrentUser>({
+            destination: ChatKitty.currentUserRelay,
+            onSuccess: user => {
+              request.callback(new SessionStartedResult({ user: user }));
+            }
+          }
+        );
       },
-      (error) => {
+      onError: (error) => {
         if (error.error === 'AccessDeniedError') {
           request.callback(new SessionAccessDeniedResult(new SessionAccessDeniedError()));
         }
-      });
+      }
+    });
   }
 
   public getCurrentUser(callback: (result: GetCurrentUserResult) => void) {
-    this.client.relayResource<CurrentUser>(ChatKitty.currentUserRelay, user => {
-      callback(new GetCurrentUserResult(user));
+    this.client.relayResource<CurrentUser>({
+      destination: ChatKitty.currentUserRelay,
+      onSuccess: user => {
+        callback(new GetCurrentUserResult(user));
+      }
     });
   }
 }

@@ -3,8 +3,10 @@ import { RxStompConfig } from '@stomp/rx-stomp';
 import { Versions } from '@stomp/stompjs';
 import { v4 } from 'uuid';
 
+import { StompXConnectRequest } from './request/stompx.connect.request';
+import { StompXDisconnectRequest } from './request/stompx.disconnect.request';
+import { StompXRelayResourceRequest } from './request/stompx.relay-resource.request';
 import { StompXConfiguration } from './stompx.configuration';
-import { StompXError } from './stompx.error';
 
 export class StompXClient {
   private readonly rxStompConfig: RxStompConfig;
@@ -38,7 +40,19 @@ export class StompXClient {
     };
   }
 
-  public connect(headers: Record<string, string>, onSuccess: () => void, onError: (error: StompXError) => void) {
+  public connect(request: StompXConnectRequest) {
+    let headers: Record<string, string> = {
+      api_key: request.apiKey,
+      stompx_user: request.username
+    };
+
+    if (request.authParams) {
+      headers = {
+        ...headers,
+        stompx_auth_params: JSON.stringify(request.authParams)
+      };
+    }
+
     const params = new URLSearchParams(headers);
 
     const brokerURL = this.rxStompConfig.brokerURL + '?' + params.toString();
@@ -51,13 +65,13 @@ export class StompXClient {
     this.rxStomp.activate();
 
     const successSubscription = this.rxStomp.connected$.subscribe(() => {
-      onSuccess();
+      request.onSuccess();
 
       successSubscription.unsubscribe();
     });
 
     const errorSubscription = this.rxStomp.stompErrors$.subscribe(frame => {
-      onError(JSON.parse(frame.body));
+      request.onError(JSON.parse(frame.body));
 
       errorSubscription.unsubscribe();
 
@@ -65,20 +79,20 @@ export class StompXClient {
     });
   }
 
-  public relayResource<R>(destination: string, onResourceRelayed: (resource: R) => void) {
-    this.rxStomp.watch(destination, {
-      id: destination,
+  public relayResource<R>(request: StompXRelayResourceRequest<R>) {
+    this.rxStomp.watch(request.destination, {
+      id: request.destination,
       receipt: StompXClient.generateReceipt()
     })
     .subscribe(message => {
-      onResourceRelayed(JSON.parse(message.body));
+      request.onSuccess(JSON.parse(message.body));
     });
   }
 
-  public disconnect(onDisconnected: () => void) {
+  public disconnect(request: StompXDisconnectRequest) {
     this.rxStomp.deactivate();
 
-    onDisconnected();
+    request.onSuccess();
   }
 
   private static generateReceipt(): string {
