@@ -13,7 +13,23 @@ import {
 import { StompXClient } from './stompx/stompx.client';
 
 export default class ChatKitty {
+  private static readonly _instances = new Map<string, ChatKitty>();
+
   private static readonly currentUserRelay = '/application/v1/users/me.relay';
+
+  public static getInstance(apiKey: string): ChatKitty {
+    let instance = ChatKitty._instances.get(apiKey);
+
+    if (instance !== undefined) {
+      return instance;
+    }
+
+    instance = new ChatKitty({ apiKey: apiKey });
+
+    ChatKitty._instances.set(apiKey, instance);
+
+    return instance;
+  }
 
   private readonly client: StompXClient;
 
