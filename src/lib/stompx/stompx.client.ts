@@ -59,7 +59,7 @@ export class StompXClient {
 
     this.rxStomp.configure({
       ...this.rxStompConfig,
-      brokerURL: brokerURL
+      brokerURL: encodeURI(brokerURL)
     });
 
     this.rxStomp.activate();
