@@ -81,4 +81,14 @@ export default class ChatKitty {
       }
     );
   }
+
+  public endSession(): Promise<void> {
+    return new Promise(
+      resolve => {
+        this.client.disconnect({
+          onSuccess: () => resolve()
+        });
+      }
+    );
+  }
 }
