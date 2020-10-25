@@ -85,7 +85,7 @@ export class StompXClient {
       receipt: StompXClient.generateReceipt()
     })
     .subscribe(message => {
-      request.onSuccess(JSON.parse(message.body));
+      request.onSuccess(JSON.parse(message.body).resource);
     });
   }
 
