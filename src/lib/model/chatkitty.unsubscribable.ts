@@ -1,3 +1,1 @@
-export interface ChatkittyUnsubscribable {
-  unsubscribe(): void
-}
+export type ChatkittyUnsubscribable = () => void;

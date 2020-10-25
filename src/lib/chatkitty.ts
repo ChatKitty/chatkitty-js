@@ -91,9 +91,9 @@ export default class ChatKitty {
   }
 
   public onCurrentUserChanged(observer: ChatkittyObserver<CurrentUser | null>): ChatkittyUnsubscribable {
-    return this.currentUserNextSubject.subscribe(
-      user => observer.onNext(user)
-    );
+    const subscription = this.currentUserNextSubject.subscribe(user => observer.onNext(user));
+
+    return () => subscription.unsubscribe();
   }
 
   public endSession(): Promise<void> {
