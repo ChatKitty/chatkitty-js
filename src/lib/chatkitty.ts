@@ -1,7 +1,11 @@
+import { Subject } from 'rxjs';
+
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
 import { UnknownChatKittyError } from './model/chatkitty.error';
+import { ChatkittyObserver } from './model/chatkitty.observer';
+import { ChatkittyUnsubscribable } from './model/chatkitty.unsubscribable';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
 import { SessionAccessDeniedError } from './model/session/start/session.errors';
@@ -32,6 +36,8 @@ export default class ChatKitty {
   }
 
   private readonly client: StompXClient;
+
+  private readonly currentUserNextSubject = new Subject<CurrentUser | null>();
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.client = new StompXClient({
@@ -75,6 +81,8 @@ export default class ChatKitty {
         this.client.relayResource<CurrentUser>({
           destination: ChatKitty.currentUserRelay,
           onSuccess: user => {
+            this.currentUserNextSubject.next(user);
+
             resolve(new GetCurrentUserResult(user));
           }
         });
@@ -82,11 +90,21 @@ export default class ChatKitty {
     );
   }
 
+  public onCurrentUserChanged(observer: ChatkittyObserver<CurrentUser | null>): ChatkittyUnsubscribable {
+    return this.currentUserNextSubject.subscribe(
+      user => observer.onNext(user)
+    );
+  }
+
   public endSession(): Promise<void> {
     return new Promise(
       resolve => {
         this.client.disconnect({
-          onSuccess: () => resolve()
+          onSuccess: () => {
+            this.currentUserNextSubject.next(null);
+
+            resolve();
+          }
         });
       }
     );
