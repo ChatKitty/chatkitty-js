@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
@@ -37,7 +37,7 @@ export default class ChatKitty {
 
   private readonly client: StompXClient;
 
-  private readonly currentUserNextSubject = new Subject<CurrentUser | null>();
+  private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(null);
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.client = new StompXClient({
@@ -58,6 +58,8 @@ export default class ChatKitty {
             this.client.relayResource<CurrentUser>({
                 destination: ChatKitty.currentUserRelay,
                 onSuccess: user => {
+                  this.currentUserNextSubject.next(user);
+
                   resolve(new SessionStartedResult({ user: user }));
                 }
               }
@@ -81,8 +83,6 @@ export default class ChatKitty {
         this.client.relayResource<CurrentUser>({
           destination: ChatKitty.currentUserRelay,
           onSuccess: user => {
-            this.currentUserNextSubject.next(user);
-
             resolve(new GetCurrentUserResult(user));
           }
         });
@@ -90,8 +90,16 @@ export default class ChatKitty {
     );
   }
 
-  public onCurrentUserChanged(observer: ChatkittyObserver<CurrentUser | null>): ChatkittyUnsubscribable {
-    const subscription = this.currentUserNextSubject.subscribe(user => observer.onNext(user));
+  public onCurrentUserChanged(onNextOrObserver:
+                                | ChatkittyObserver<CurrentUser | null>
+                                | ((user: CurrentUser | null) => void)): ChatkittyUnsubscribable {
+    const subscription = this.currentUserNextSubject.subscribe(user => {
+      if (typeof onNextOrObserver === 'function') {
+        onNextOrObserver(user);
+      } else {
+        onNextOrObserver.onNext(user);
+      }
+    });
 
     return () => subscription.unsubscribe();
   }
