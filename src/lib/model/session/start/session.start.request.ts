@@ -1,4 +1,4 @@
-export interface SessionStartRequest {
+export declare class StartSessionRequest {
   username: string;
   authParams?: unknown;
 }

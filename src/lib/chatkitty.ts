@@ -3,16 +3,25 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
-import { UnknownChatKittyError } from './model/chatkitty.error';
+import { Channel } from './model/channel/channel.model';
+import { CreateChannelRequest } from './model/channel/create/channel.create.request';
+import {
+  CreateChannelResult,
+  CreatedChannelResult
+} from './model/channel/create/channel.create.results';
+import {
+  NoActiveSessionChatKittyError,
+  UnknownChatKittyError
+} from './model/chatkitty.error';
 import { ChatkittyObserver } from './model/chatkitty.observer';
 import { ChatkittyUnsubscribable } from './model/chatkitty.unsubscribable';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
-import { SessionAccessDeniedError } from './model/session/start/session.errors';
-import { SessionStartRequest } from './model/session/start/session.start.request';
+import { AccessDeniedSessionError } from './model/session/start/session.errors';
+import { StartSessionRequest } from './model/session/start/session.start.request';
 import {
-  SessionAccessDeniedResult,
-  SessionStartedResult
+  AccessDeniedSessionResult,
+  StartedSessionResult, StartSessionResult
 } from './model/session/start/session.start.results';
 import { StompXClient } from './stompx/stompx.client';
 
@@ -39,6 +48,8 @@ export default class ChatKitty {
 
   private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(null);
 
+  private currentUser: CurrentUser | undefined;
+
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.client = new StompXClient({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
@@ -47,7 +58,7 @@ export default class ChatKitty {
     });
   }
 
-  public startSession(request: SessionStartRequest): Promise<SessionStartedResult | SessionAccessDeniedResult> {
+  public startSession(request: StartSessionRequest): Promise<StartSessionResult> {
     return new Promise(
       resolve => {
         this.client.connect({
@@ -55,21 +66,26 @@ export default class ChatKitty {
           username: request.username,
           authParams: request.authParams,
           onSuccess: () => {
-            this.client.relayResource<CurrentUser>({
+            this.client.relayResource<CurrentUser>(
+              {
                 destination: ChatKitty.currentUserRelay,
                 onSuccess: user => {
+                  this.currentUser = user;
+
+                  this.client.listenToTopic(user._topics.channels);
+
                   this.currentUserNextSubject.next(user);
 
-                  resolve(new SessionStartedResult({ user: user }));
+                  resolve(new StartedSessionResult({ user: user }));
                 }
               }
             );
           },
           onError: (error) => {
             if (error.error === 'AccessDeniedError') {
-              resolve(new SessionAccessDeniedResult(new SessionAccessDeniedError()));
+              resolve(new AccessDeniedSessionResult(new AccessDeniedSessionError()));
             } else {
-              resolve(new SessionAccessDeniedResult(new UnknownChatKittyError()));
+              resolve(new AccessDeniedSessionResult(new UnknownChatKittyError()));
             }
           }
         });
@@ -102,6 +118,24 @@ export default class ChatKitty {
     });
 
     return () => subscription.unsubscribe();
+  }
+
+  public createChannel(request: CreateChannelRequest): Promise<CreateChannelResult> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.currentUser === undefined) {
+          reject(new NoActiveSessionChatKittyError());
+        } else {
+          this.client.performAction<CreateChannelRequest, Channel>({
+            destination: this.currentUser._actions.createChannel,
+            body: request,
+            onSuccess: channel => {
+              resolve(new CreatedChannelResult(channel));
+            }
+          });
+        }
+      }
+    );
   }
 
   public endSession(): Promise<void> {

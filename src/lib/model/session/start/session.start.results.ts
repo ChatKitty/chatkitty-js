@@ -4,23 +4,24 @@ import {
 } from '../../chatkitty.result';
 import { Session } from '../session.model';
 
-import { SessionAccessDeniedError } from './session.errors';
+import { AccessDeniedSessionError } from './session.errors';
 
-export class SessionStartedResult extends ChatKittySucceededResult {
+export type StartSessionResult =
+  StartedSessionResult |
+  AccessDeniedSessionResult
+
+export class StartedSessionResult extends ChatKittySucceededResult {
   constructor(public session: Session) {
     super();
   }
 }
 
-export class SessionAccessDeniedResult extends ChatKittyFailedResult {
-  constructor(public error: SessionAccessDeniedError) {
+export class AccessDeniedSessionResult extends ChatKittyFailedResult {
+  constructor(public error: AccessDeniedSessionError) {
     super();
   }
 }
 
-export function sessionStarted(result:
-                                 SessionStartedResult |
-                                 SessionAccessDeniedResult
-): result is SessionStartedResult {
-  return (result as SessionStartedResult).session !== undefined;
+export function startedSession(result: StartSessionResult): result is StartedSessionResult {
+  return (result as StartedSessionResult).session !== undefined;
 }

@@ -8,3 +8,9 @@ export class UnknownChatKittyError extends ChatKittyError {
     super('UnknownChatKittyError', 'An unknown error has occurred.');
   }
 }
+
+export class NoActiveSessionChatKittyError extends ChatKittyError {
+  constructor() {
+    super('NoActiveSessionChatKittyError', 'You\'re not connected to ChatKitty.');
+  }
+}
