@@ -1,5 +1,5 @@
 export declare class StompXPage {
-  _embedded: Record<string, unknown>;
+  _embedded?: Record<string, unknown>;
   page: StompXPageMetadata;
   _relays: StompXPageRelays;
 }

@@ -16,7 +16,11 @@ export class ChatKittyPaginator<I> {
       }
     );
 
-    const items = page._embedded[contentName] as I[];
+    let items: I[] = [];
+
+    if (page._embedded) {
+      items = page._embedded[contentName] as I[];
+    }
 
     return new ChatKittyPaginator<I>(items, client, contentName, page._relays.prev, page._relays.next);
   }
@@ -60,7 +64,11 @@ export class ChatKittyPaginator<I> {
       }
     );
 
-    const items = page._embedded[this.contentName] as I[];
+    let items: I[] = [];
+
+    if (page._embedded) {
+      items = page._embedded[this.contentName] as I[];
+    }
 
     return new ChatKittyPaginator<I>(items, this.client, this.contentName, page._relays.prev, page._relays.next);
   }
