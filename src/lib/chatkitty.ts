@@ -9,6 +9,7 @@ import {
   CreateChannelResult,
   CreatedChannelResult
 } from './model/channel/create/channel.create.results';
+import { GetChannelsResult } from './model/channel/get/channel.get.results';
 import {
   NoActiveSessionChatKittyError,
   UnknownChatKittyError
@@ -139,14 +140,27 @@ export default class ChatKitty {
     );
   }
 
-  public getJoinableChannels(): Promise<ChatKittyPaginator<Channel>> {
+  public getChannels(): Promise<GetChannelsResult> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.currentUser === undefined) {
+          reject(new NoActiveSessionChatKittyError());
+        } else {
+          ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.channels, 'channels')
+          .then(paginator => resolve(new GetChannelsResult(paginator)));
+        }
+      }
+    );
+  }
+
+  public getJoinableChannels(): Promise<GetChannelsResult> {
     return new Promise(
       (resolve, reject) => {
         if (this.currentUser === undefined) {
           reject(new NoActiveSessionChatKittyError());
         } else {
           ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.joinableChannels, 'channels')
-          .then(paginator => resolve(paginator));
+          .then(paginator => resolve(new GetChannelsResult(paginator)));
         }
       }
     );
