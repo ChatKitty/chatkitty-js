@@ -14,6 +14,7 @@ import {
   UnknownChatKittyError
 } from './model/chatkitty.error';
 import { ChatkittyObserver } from './model/chatkitty.observer';
+import { ChatKittyPaginator } from './model/chatkitty.paginator';
 import { ChatkittyUnsubscribable } from './model/chatkitty.unsubscribable';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
@@ -133,6 +134,19 @@ export default class ChatKitty {
               resolve(new CreatedChannelResult(channel));
             }
           });
+        }
+      }
+    );
+  }
+
+  public getJoinableChannels(): Promise<ChatKittyPaginator<Channel>> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.currentUser === undefined) {
+          reject(new NoActiveSessionChatKittyError());
+        } else {
+          ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.joinableChannels, 'channels')
+          .then(paginator => resolve(paginator));
         }
       }
     );

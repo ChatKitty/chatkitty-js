@@ -9,6 +9,7 @@ export declare class CurrentUser {
 
 export declare class CurrentUserRelays {
   self: string;
+  joinableChannels: string;
 }
 
 export declare class CurrentUserTopics {

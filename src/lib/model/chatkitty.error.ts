@@ -14,3 +14,9 @@ export class NoActiveSessionChatKittyError extends ChatKittyError {
     super('NoActiveSessionChatKittyError', 'You\'re not connected to ChatKitty.');
   }
 }
+
+export class PageOutOfBoundsChatKittyError extends ChatKittyError {
+  constructor() {
+    super('PageOutOfBoundsChatKittyError', 'You\'ve requested a page that doesn\'t exists.');
+  }
+}
