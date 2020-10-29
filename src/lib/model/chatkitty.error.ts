@@ -1,3 +1,5 @@
+import { Channel } from './channel/channel.model';
+
 export abstract class ChatKittyError {
   protected constructor(public type: string, public message: string) {
   }
@@ -12,6 +14,12 @@ export class UnknownChatKittyError extends ChatKittyError {
 export class NoActiveSessionChatKittyError extends ChatKittyError {
   constructor() {
     super('NoActiveSessionChatKittyError', 'You\'re not connected to ChatKitty.');
+  }
+}
+
+export class NoActiveChannelSessionChatKittyError extends ChatKittyError {
+  constructor(public channel: Channel) {
+    super('NoActiveChannelSessionChatKittyError', `You haven't started a session for the channel ${channel.name}.`);
   }
 }
 

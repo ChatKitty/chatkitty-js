@@ -1,5 +1,5 @@
-export declare class StompXPerformActionRequest<B, R> {
+export declare class StompXPerformActionRequest<R> {
   destination: string;
-  body: B;
+  body: unknown;
   onSuccess?: (resource: R) => void;
 }

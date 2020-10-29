@@ -3,4 +3,21 @@ export declare class Channel {
   type: string;
   name: string;
   properties: Map<string, unknown>;
+  _relays: ChannelRelays;
+  _topics: ChannelTopics;
+  _actions: ChannelActions;
+}
+
+export declare class ChannelRelays {
+  self: string;
+  messages: string;
+}
+
+export declare class ChannelTopics {
+  self: string;
+  messages: string;
+}
+
+export declare class ChannelActions {
+  message: string;
 }

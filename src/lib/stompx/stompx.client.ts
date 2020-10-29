@@ -6,9 +6,12 @@ import { v4 } from 'uuid';
 
 import { StompXConnectRequest } from './request/stompx.connect.request';
 import { StompXDisconnectRequest } from './request/stompx.disconnect.request';
+import { StompXListenForEventRequest } from './request/stompx.listen-for-event.request';
 import { StompXPerformActionRequest } from './request/stompx.perform-action.request';
 import { StompXRelayResourceRequest } from './request/stompx.relay-resource.request';
 import { StompXConfiguration } from './stompx.configuration';
+import { StompXEvent } from './stompx.event';
+import { StompXEventHandler } from './stompx.event-handler';
 
 export class StompXClient {
   private readonly rxStompConfig: RxStompConfig;
@@ -18,6 +21,8 @@ export class StompXClient {
   private readonly topics: Map<string, Subscription> = new Map();
 
   private readonly pendingActions: Map<string, (resource: unknown) => void> = new Map();
+
+  private readonly eventHandlers: Map<string, Set<StompXEventHandler<unknown>>> = new Map();
 
   constructor(configuration: StompXConfiguration) {
     let scheme: string;
@@ -85,30 +90,71 @@ export class StompXClient {
     });
   }
 
-  public listenToTopic(topic: string) {
+  public listenToTopic<R>(topic: string): () => void {
     const subscription = this.rxStomp.watch(topic, {
       id: StompXClient.generateSubscriptionId(),
       receipt: StompXClient.generateReceipt()
     })
     .subscribe(message => {
+        const event: StompXEvent<R> = JSON.parse(message.body);
+
         const receipt = message.headers['receipt-id'];
 
         if (receipt !== undefined) {
           const action = this.pendingActions.get(receipt);
 
           if (action !== undefined) {
-            action(JSON.parse(message.body).resource);
+
+            action(event.resource);
 
             this.pendingActions.delete(receipt);
           }
+        }
+
+        const handlers = this.eventHandlers.get(topic);
+
+        if (handlers) {
+          handlers.forEach(handler => {
+              if (handler.event === event.type) {
+                handler.onSuccess(event.resource);
+              }
+            }
+          );
         }
       }
     );
 
     this.topics.set(topic, subscription);
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }
 
-  public performAction<B, R>(request: StompXPerformActionRequest<B, R>) {
+  public listenForEvent<R>(request: StompXListenForEventRequest<R>): () => void {
+    let handlers = this.eventHandlers.get(request.topic);
+
+    if (handlers === undefined) {
+      handlers = new Set<StompXEventHandler<unknown>>();
+    }
+
+    const handler = {
+      event: request.event,
+      onSuccess: request.onSuccess as (resource: unknown) => void
+    };
+
+    handlers.add(handler);
+
+    this.eventHandlers.set(request.topic, handlers);
+
+    return () => {
+      if (handlers) {
+        handlers.delete(handler);
+      }
+    };
+  }
+
+  public performAction<R>(request: StompXPerformActionRequest<R>) {
     const receipt = StompXClient.generateReceipt();
 
     if (request.onSuccess) {

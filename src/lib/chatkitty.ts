@@ -1,8 +1,11 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
+import { ChannelSession } from './model/channel-session/channel-session.model';
+import { StartChannelSessionRequest } from './model/channel-session/start/channel-session.start.request';
+import { StartedChannelSessionResult } from './model/channel-session/start/channel-session.start.results';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
@@ -11,14 +14,26 @@ import {
 } from './model/channel/create/channel.create.results';
 import { GetChannelsResult } from './model/channel/get/channel.get.results';
 import {
+  NoActiveChannelSessionChatKittyError,
   NoActiveSessionChatKittyError,
   UnknownChatKittyError
 } from './model/chatkitty.error';
 import { ChatkittyObserver } from './model/chatkitty.observer';
 import { ChatKittyPaginator } from './model/chatkitty.paginator';
-import { ChatkittyUnsubscribable } from './model/chatkitty.unsubscribable';
+import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
+import {
+  CreateChannelMessageRequest,
+  createTextMessage
+} from './model/message/create/message.create.request';
+import {
+  CreatedTextMessageResult,
+  CreateMessageResult
+} from './model/message/create/message.create.results';
+import { GetChannelMessagesRequest } from './model/message/get/message.get.request';
+import { GetMessagesResult } from './model/message/get/message.get.results';
+import { Message, TextUserMessage } from './model/message/message.model';
 import { AccessDeniedSessionError } from './model/session/start/session.errors';
 import { StartSessionRequest } from './model/session/start/session.start.request';
 import {
@@ -51,6 +66,7 @@ export default class ChatKitty {
   private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(null);
 
   private currentUser: CurrentUser | undefined;
+  private channelSessions: Map<number, ChannelSession> = new Map();
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.client = new StompXClient({
@@ -110,7 +126,7 @@ export default class ChatKitty {
 
   public onCurrentUserChanged(onNextOrObserver:
                                 | ChatkittyObserver<CurrentUser | null>
-                                | ((user: CurrentUser | null) => void)): ChatkittyUnsubscribable {
+                                | ((user: CurrentUser | null) => void)): ChatKittyUnsubscribe {
     const subscription = this.currentUserNextSubject.subscribe(user => {
       if (typeof onNextOrObserver === 'function') {
         onNextOrObserver(user);
@@ -128,7 +144,7 @@ export default class ChatKitty {
         if (this.currentUser === undefined) {
           reject(new NoActiveSessionChatKittyError());
         } else {
-          this.client.performAction<CreateChannelRequest, Channel>({
+          this.client.performAction<Channel>({
             destination: this.currentUser._actions.createChannel,
             body: request,
             onSuccess: channel => {
@@ -166,17 +182,82 @@ export default class ChatKitty {
     );
   }
 
-  public endSession(): Promise<void> {
-    return new Promise(
-      resolve => {
-        this.client.disconnect({
-          onSuccess: () => {
-            this.currentUserNextSubject.next(null);
+  public startChannelSession(request: StartChannelSessionRequest): StartedChannelSessionResult {
+    const channelUnsubscribe = this.client.listenToTopic(request.channel._topics.self);
+    const messagesUnsubscribe = this.client.listenToTopic(request.channel._topics.messages);
 
-            resolve();
+    let receivedMessageUnsubscribe: () => void;
+
+    const onReceivedMessage = request.onReceivedMessage;
+
+    if (onReceivedMessage) {
+      receivedMessageUnsubscribe = this.client.listenForEvent<Message>({
+        topic: request.channel._topics.messages,
+        event: 'thread.message.created',
+        onSuccess: message => {
+          onReceivedMessage(message);
+        }
+      });
+    }
+
+    return new StartedChannelSessionResult({
+      channel: request.channel,
+      unsubscribe: () => {
+        channelUnsubscribe();
+        messagesUnsubscribe();
+
+        if (receivedMessageUnsubscribe) {
+          receivedMessageUnsubscribe();
+        }
+      }
+    });
+  }
+
+  public createChannelMessage(request: CreateChannelMessageRequest): Promise<CreateMessageResult> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.channelSessions.has(request.channel.id)) {
+          reject(new NoActiveChannelSessionChatKittyError(request.channel));
+        } else {
+          if (createTextMessage(request)) {
+            this.client.performAction<TextUserMessage>({
+              destination: request.channel._actions.message,
+              body: {
+                type: 'TEXT',
+                body: request.body
+              },
+              onSuccess: message => {
+                resolve(new CreatedTextMessageResult(message));
+              }
+            });
           }
-        });
+        }
       }
     );
+  }
+
+  public getChannelMessages(request: GetChannelMessagesRequest): Promise<GetMessagesResult> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.channelSessions.has(request.channel.id)) {
+          reject(new NoActiveChannelSessionChatKittyError(request.channel));
+        } else {
+          ChatKittyPaginator.createInstance<Message>(this.client, request.channel._relays.messages, 'messages')
+          .then(paginator => resolve(new GetMessagesResult(paginator)));
+        }
+      }
+    );
+  }
+
+  public endChannelSession(session: ChannelSession) {
+    session.unsubscribe();
+  }
+
+  public endSession() {
+    this.client.disconnect({
+      onSuccess: () => {
+        this.currentUserNextSubject.next(null);
+      }
+    });
   }
 }
