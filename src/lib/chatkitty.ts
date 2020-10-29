@@ -5,7 +5,10 @@ import { environment } from '../environments/environment';
 import { ChatKittyConfiguration } from './chatkitty.configuration';
 import { ChannelSession } from './model/channel-session/channel-session.model';
 import { StartChannelSessionRequest } from './model/channel-session/start/channel-session.start.request';
-import { StartedChannelSessionResult } from './model/channel-session/start/channel-session.start.results';
+import {
+  StartChannelSessionResult,
+  StartedChannelSessionResult
+} from './model/channel-session/start/channel-session.start.results';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
@@ -24,14 +27,14 @@ import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
 import {
-  CreateChannelMessageRequest,
-  createTextMessage
+  createChannelTextMessage,
+  CreateMessageRequest
 } from './model/message/create/message.create.request';
 import {
   CreatedTextMessageResult,
   CreateMessageResult
 } from './model/message/create/message.create.results';
-import { GetChannelMessagesRequest } from './model/message/get/message.get.request';
+import { GetMessagesRequest } from './model/message/get/message.get.request';
 import { GetMessagesResult } from './model/message/get/message.get.results';
 import { Message, TextUserMessage } from './model/message/message.model';
 import { AccessDeniedSessionError } from './model/session/start/session.errors';
@@ -182,7 +185,7 @@ export default class ChatKitty {
     );
   }
 
-  public startChannelSession(request: StartChannelSessionRequest): StartedChannelSessionResult {
+  public startChannelSession(request: StartChannelSessionRequest): StartChannelSessionResult {
     const channelUnsubscribe = this.client.listenToTopic(request.channel._topics.self);
     const messagesUnsubscribe = this.client.listenToTopic(request.channel._topics.messages);
 
@@ -213,13 +216,13 @@ export default class ChatKitty {
     });
   }
 
-  public createChannelMessage(request: CreateChannelMessageRequest): Promise<CreateMessageResult> {
+  public createMessage(request: CreateMessageRequest): Promise<CreateMessageResult> {
     return new Promise(
       (resolve, reject) => {
-        if (this.channelSessions.has(request.channel.id)) {
-          reject(new NoActiveChannelSessionChatKittyError(request.channel));
-        } else {
-          if (createTextMessage(request)) {
+        if (createChannelTextMessage(request)) {
+          if (this.channelSessions.has(request.channel.id)) {
+            reject(new NoActiveChannelSessionChatKittyError(request.channel));
+          } else {
             this.client.performAction<TextUserMessage>({
               destination: request.channel._actions.message,
               body: {
@@ -236,7 +239,7 @@ export default class ChatKitty {
     );
   }
 
-  public getChannelMessages(request: GetChannelMessagesRequest): Promise<GetMessagesResult> {
+  public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
     return new Promise(
       (resolve, reject) => {
         if (this.channelSessions.has(request.channel.id)) {

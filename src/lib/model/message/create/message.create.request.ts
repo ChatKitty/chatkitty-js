@@ -1,6 +1,6 @@
 import { Channel } from '../../channel/channel.model';
 
-export type CreateChannelMessageRequest =
+export type CreateMessageRequest =
   CreateChannelTextMessageRequest
 
 export declare class CreateChannelTextMessageRequest {
@@ -8,7 +8,7 @@ export declare class CreateChannelTextMessageRequest {
   body: string;
 }
 
-export function createTextMessage(request: CreateChannelMessageRequest): request is CreateChannelTextMessageRequest {
+export function createChannelTextMessage(request: CreateMessageRequest): request is CreateChannelTextMessageRequest {
   return (request as CreateChannelTextMessageRequest).body !== undefined;
 }
 

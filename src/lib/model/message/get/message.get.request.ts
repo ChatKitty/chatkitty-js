@@ -1,5 +1,5 @@
 import { Channel } from '../../channel/channel.model';
 
-export declare class GetChannelMessagesRequest {
+export declare class GetMessagesRequest {
   channel: Channel;
 }
