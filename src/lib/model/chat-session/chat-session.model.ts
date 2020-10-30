@@ -1,7 +1,7 @@
 import { Channel } from '../channel/channel.model';
 import { ChatKittyUnsubscribe } from '../chatkitty.unsubscribe';
 
-export declare class ChannelSession {
+export declare class ChatSession {
   channel: Channel;
   unsubscribe: ChatKittyUnsubscribe;
 }

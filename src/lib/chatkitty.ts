@@ -3,13 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
-import { ChannelSession } from './model/channel-session/channel-session.model';
-import { NoActiveChannelSessionChatKittyError } from './model/channel-session/start/channel-session.start.error';
-import { StartChannelSessionRequest } from './model/channel-session/start/channel-session.start.request';
-import {
-  StartChannelSessionResult,
-  StartedChannelSessionResult
-} from './model/channel-session/start/channel-session.start.result';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
@@ -23,6 +16,13 @@ import {
   JoinChannelResult,
   JoinedChannelResult
 } from './model/channel/join/channel.join.result';
+import { ChatSession } from './model/chat-session/chat-session.model';
+import { NoActiveChatSessionChatKittyError } from './model/chat-session/start/chat-session.start.error';
+import { StartChatSessionRequest } from './model/chat-session/start/chat-session.start.request';
+import {
+  StartChatSessionResult,
+  StartedChatSessionResult
+} from './model/chat-session/start/chat-session.start.result';
 import {
   UnknownChatKittyError
 } from './model/chatkitty.error';
@@ -77,7 +77,7 @@ export default class ChatKitty {
   private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(null);
 
   private currentUser: CurrentUser | undefined;
-  private channelSessions: Map<number, ChannelSession> = new Map();
+  private chatSessions: Map<number, ChatSession> = new Map();
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.client = new StompXClient({
@@ -218,7 +218,7 @@ export default class ChatKitty {
     );
   }
 
-  public startChannelSession(request: StartChannelSessionRequest): StartChannelSessionResult {
+  public startChatSession(request: StartChatSessionRequest): StartChatSessionResult {
     const channelUnsubscribe = this.client.listenToTopic(request.channel._topics.self);
     const messagesUnsubscribe = this.client.listenToTopic(request.channel._topics.messages);
 
@@ -236,7 +236,7 @@ export default class ChatKitty {
       });
     }
 
-    return new StartedChannelSessionResult({
+    return new StartedChatSessionResult({
       channel: request.channel,
       unsubscribe: () => {
         channelUnsubscribe();
@@ -253,8 +253,8 @@ export default class ChatKitty {
     return new Promise(
       (resolve, reject) => {
         if (createChannelTextMessage(request)) {
-          if (this.channelSessions.has(request.channel.id)) {
-            reject(new NoActiveChannelSessionChatKittyError(request.channel));
+          if (this.chatSessions.has(request.channel.id)) {
+            reject(new NoActiveChatSessionChatKittyError(request.channel));
           } else {
             this.client.performAction<TextUserMessage>({
               destination: request.channel._actions.message,
@@ -275,8 +275,8 @@ export default class ChatKitty {
   public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
     return new Promise(
       (resolve, reject) => {
-        if (this.channelSessions.has(request.channel.id)) {
-          reject(new NoActiveChannelSessionChatKittyError(request.channel));
+        if (this.chatSessions.has(request.channel.id)) {
+          reject(new NoActiveChatSessionChatKittyError(request.channel));
         } else {
           ChatKittyPaginator.createInstance<Message>(this.client, request.channel._relays.messages, 'messages')
           .then(paginator => resolve(new GetMessagesResult(paginator)));
@@ -285,7 +285,7 @@ export default class ChatKitty {
     );
   }
 
-  public endChannelSession(session: ChannelSession) {
+  public endChatSession(session: ChatSession) {
     session.unsubscribe();
   }
 
