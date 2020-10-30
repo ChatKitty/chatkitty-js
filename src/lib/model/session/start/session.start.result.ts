@@ -4,7 +4,7 @@ import {
 } from '../../chatkitty.result';
 import { Session } from '../session.model';
 
-import { AccessDeniedSessionError } from './session.errors';
+import { AccessDeniedSessionError } from './session.error';
 
 export type StartSessionResult =
   StartedSessionResult |

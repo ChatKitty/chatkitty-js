@@ -20,4 +20,5 @@ export declare class ChannelTopics {
 
 export declare class ChannelActions {
   message: string;
+  join?: string;
 }

@@ -1,31 +1,36 @@
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
 import { ChannelSession } from './model/channel-session/channel-session.model';
+import { NoActiveChannelSessionChatKittyError } from './model/channel-session/start/channel-session.start.error';
 import { StartChannelSessionRequest } from './model/channel-session/start/channel-session.start.request';
 import {
   StartChannelSessionResult,
   StartedChannelSessionResult
-} from './model/channel-session/start/channel-session.start.results';
+} from './model/channel-session/start/channel-session.start.result';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
   CreateChannelResult,
   CreatedChannelResult
-} from './model/channel/create/channel.create.results';
-import { GetChannelsResult } from './model/channel/get/channel.get.results';
+} from './model/channel/create/channel.create.result';
+import { GetChannelsResult } from './model/channel/get/channel.get.result';
+import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
+import { JoinChannelRequest } from './model/channel/join/channel.join.request';
 import {
-  NoActiveChannelSessionChatKittyError,
-  NoActiveSessionChatKittyError,
+  JoinChannelResult,
+  JoinedChannelResult
+} from './model/channel/join/channel.join.result';
+import {
   UnknownChatKittyError
 } from './model/chatkitty.error';
 import { ChatkittyObserver } from './model/chatkitty.observer';
 import { ChatKittyPaginator } from './model/chatkitty.paginator';
 import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
 import { CurrentUser } from './model/current-user/current-user.model';
-import { GetCurrentUserResult } from './model/current-user/get/current-user.get.results';
+import { GetCurrentUserResult } from './model/current-user/get/current-user.get.result';
 import {
   createChannelTextMessage,
   CreateMessageRequest
@@ -33,16 +38,19 @@ import {
 import {
   CreatedTextMessageResult,
   CreateMessageResult
-} from './model/message/create/message.create.results';
+} from './model/message/create/message.create.result';
 import { GetMessagesRequest } from './model/message/get/message.get.request';
-import { GetMessagesResult } from './model/message/get/message.get.results';
+import { GetMessagesResult } from './model/message/get/message.get.result';
 import { Message, TextUserMessage } from './model/message/message.model';
-import { AccessDeniedSessionError } from './model/session/start/session.errors';
+import {
+  AccessDeniedSessionError,
+  NoActiveSessionChatKittyError
+} from './model/session/start/session.error';
 import { StartSessionRequest } from './model/session/start/session.start.request';
 import {
   AccessDeniedSessionResult,
   StartedSessionResult, StartSessionResult
-} from './model/session/start/session.start.results';
+} from './model/session/start/session.start.result';
 import { StompXClient } from './stompx/stompx.client';
 
 export default class ChatKitty {
@@ -149,7 +157,10 @@ export default class ChatKitty {
         } else {
           this.client.performAction<Channel>({
             destination: this.currentUser._actions.createChannel,
-            body: request,
+            body: {
+              type: request.type,
+              name: request.name
+            },
             onSuccess: channel => {
               resolve(new CreatedChannelResult(channel));
             }
@@ -180,6 +191,28 @@ export default class ChatKitty {
         } else {
           ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.joinableChannels, 'channels')
           .then(paginator => resolve(new GetChannelsResult(paginator)));
+        }
+      }
+    );
+  }
+
+  public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.currentUser === undefined) {
+          reject(new NoActiveSessionChatKittyError());
+        } else {
+          if (request.channel._actions.join) {
+            this.client.performAction<Channel>({
+              destination: request.channel._actions.join,
+              body: request,
+              onSuccess: channel => {
+                resolve(new JoinedChannelResult(channel));
+              }
+            });
+          } else {
+            reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
+          }
         }
       }
     );
