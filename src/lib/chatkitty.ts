@@ -31,17 +31,17 @@ import { ChatKittyPaginator } from './model/chatkitty.paginator';
 import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.result';
-import {
-  createChannelTextMessage,
-  CreateMessageRequest
-} from './model/message/create/message.create.request';
-import {
-  CreatedTextMessageResult,
-  CreateMessageResult
-} from './model/message/create/message.create.result';
 import { GetMessagesRequest } from './model/message/get/message.get.request';
 import { GetMessagesResult } from './model/message/get/message.get.result';
 import { Message, TextUserMessage } from './model/message/message.model';
+import {
+  sendChannelTextMessage,
+  SendMessageRequest
+} from './model/message/send/message.send.request';
+import {
+  SendMessageResult,
+  SentTextMessageResult
+} from './model/message/send/message.send.result';
 import {
   AccessDeniedSessionError,
   NoActiveSessionChatKittyError
@@ -249,10 +249,10 @@ export default class ChatKitty {
     });
   }
 
-  public createMessage(request: CreateMessageRequest): Promise<CreateMessageResult> {
+  public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
     return new Promise(
       (resolve, reject) => {
-        if (createChannelTextMessage(request)) {
+        if (sendChannelTextMessage(request)) {
           if (this.chatSessions.has(request.channel.id)) {
             reject(new NoActiveChatSessionChatKittyError(request.channel));
           } else {
@@ -263,7 +263,7 @@ export default class ChatKitty {
                 body: request.body
               },
               onSuccess: message => {
-                resolve(new CreatedTextMessageResult(message));
+                resolve(new SentTextMessageResult(message));
               }
             });
           }
