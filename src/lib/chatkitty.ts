@@ -236,7 +236,7 @@ export default class ChatKitty {
       });
     }
 
-    return new StartedChatSessionResult({
+    const session = {
       channel: request.channel,
       end: () => {
         channelUnsubscribe();
@@ -245,15 +245,21 @@ export default class ChatKitty {
         if (receivedMessageUnsubscribe) {
           receivedMessageUnsubscribe();
         }
+
+        this.chatSessions.delete(request.channel.id);
       }
-    });
+    };
+
+    this.chatSessions.set(request.channel.id, session);
+
+    return new StartedChatSessionResult(session);
   }
 
   public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
     return new Promise(
       (resolve, reject) => {
         if (sendChannelTextMessage(request)) {
-          if (this.chatSessions.has(request.channel.id)) {
+          if (!this.chatSessions.has(request.channel.id)) {
             reject(new NoActiveChatSessionChatKittyError(request.channel));
           } else {
             this.client.performAction<TextUserMessage>({
@@ -275,7 +281,7 @@ export default class ChatKitty {
   public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
     return new Promise(
       (resolve, reject) => {
-        if (this.chatSessions.has(request.channel.id)) {
+        if (!this.chatSessions.has(request.channel.id)) {
           reject(new NoActiveChatSessionChatKittyError(request.channel));
         } else {
           ChatKittyPaginator.createInstance<Message>(this.client, request.channel._relays.messages, 'messages')
