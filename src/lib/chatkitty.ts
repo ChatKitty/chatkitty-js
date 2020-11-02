@@ -238,7 +238,7 @@ export default class ChatKitty {
 
     return new StartedChatSessionResult({
       channel: request.channel,
-      unsubscribe: () => {
+      end: () => {
         channelUnsubscribe();
         messagesUnsubscribe();
 
@@ -286,7 +286,7 @@ export default class ChatKitty {
   }
 
   public endChatSession(session: ChatSession) {
-    session.unsubscribe();
+    session.end();
   }
 
   public endSession() {
