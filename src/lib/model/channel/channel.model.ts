@@ -2,7 +2,7 @@ export declare class Channel {
   id: number;
   type: string;
   name: string;
-  properties: Map<string, unknown>;
+  properties: unknown;
   _relays: ChannelRelays;
   _topics: ChannelTopics;
   _actions: ChannelActions;

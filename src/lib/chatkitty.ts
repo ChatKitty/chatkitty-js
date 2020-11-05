@@ -32,6 +32,10 @@ import { ChatKittyPaginator } from './model/chatkitty.paginator';
 import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.result';
+import {
+  UpdateCurrentUserResult,
+  UpdatedCurrentUserResult
+} from './model/current-user/update/current-user.update.result';
 import { GetMessagesRequest } from './model/message/get/message.get.request';
 import { GetMessagesResult } from './model/message/get/message.get.result';
 import { Message, TextUserMessage } from './model/message/message.model';
@@ -143,6 +147,26 @@ export default class ChatKitty {
     );
   }
 
+  public updateCurrentUser(update: (user: CurrentUser) => CurrentUser): Promise<UpdateCurrentUserResult> {
+    return new Promise(
+      (resolve, reject) => {
+        if (this.currentUser === undefined) {
+          reject(new NoActiveSessionChatKittyError());
+        } else {
+          this.client.performAction<CurrentUser>({
+            destination: this.currentUser._actions.update,
+            body: update(this.currentUser),
+            onSuccess: user => {
+              this.currentUserNextSubject.next(user);
+
+              resolve(new UpdatedCurrentUserResult(user));
+            }
+          });
+        }
+      }
+    );
+  }
+
   public onCurrentUserChanged(onNextOrObserver:
                                 | ChatkittyObserver<CurrentUser | null>
                                 | ((user: CurrentUser | null) => void)): ChatKittyUnsubscribe {
@@ -229,8 +253,6 @@ export default class ChatKitty {
   public getChannel(id: number): Promise<GetChannelResult> {
     return new Promise(
       resolve => {
-        console.log('Relaying ' + ChatKitty.channelRelay(id));
-        
         this.client.relayResource<Channel>({
           destination: ChatKitty.channelRelay(id),
           onSuccess: channel => {

@@ -3,5 +3,5 @@ export declare class UserProperties {
   displayName: string;
   displayPictureUrl: string;
   isGuest: string;
-  properties: Map<string, unknown>;
+  properties: unknown;
 }

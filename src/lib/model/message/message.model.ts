@@ -8,7 +8,7 @@ interface MessageProperties {
   id: number;
   type: string;
   createdTime: string;
-  properties: Map<string, unknown>;
+  properties: unknown;
 }
 
 export type SystemMessage =
@@ -21,7 +21,7 @@ export declare class TextSystemMessage implements MessageProperties {
   id: number;
   type: string;
   createdTime: string;
-  properties: Map<string, unknown>;
+  properties: unknown;
   body: string;
 }
 
@@ -29,7 +29,7 @@ export declare class TextUserMessage implements MessageProperties {
   id: number;
   type: string;
   createdTime: string;
-  properties: Map<string, unknown>;
+  properties: unknown;
   user: UserProperties;
   body: string;
 }

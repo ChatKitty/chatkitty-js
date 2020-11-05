@@ -2,6 +2,7 @@ export declare class CurrentUser {
   id: number;
   name: string;
   displayPictureUrl: string;
+  properties: unknown;
   _relays: CurrentUserRelays;
   _topics: CurrentUserTopics;
   _actions: CurrentUserActions;
@@ -19,5 +20,6 @@ export declare class CurrentUserTopics {
 }
 
 export declare class CurrentUserActions {
+  update: string;
   createChannel: string;
 }
