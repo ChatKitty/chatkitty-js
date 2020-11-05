@@ -23,9 +23,7 @@ import {
   StartChatSessionResult,
   StartedChatSessionResult
 } from './model/chat-session/start/chat-session.start.result';
-import {
-  UnknownChatKittyError
-} from './model/chatkitty.error';
+import { UnknownChatKittyError } from './model/chatkitty.error';
 import { ChatkittyObserver } from './model/chatkitty.observer';
 import { ChatKittyPaginator } from './model/chatkitty.paginator';
 import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
@@ -42,6 +40,7 @@ import {
   SendMessageResult,
   SentTextMessageResult
 } from './model/message/send/message.send.result';
+import { Notification } from './model/notification/notification.model';
 import {
   AccessDeniedSessionError,
   NoActiveSessionChatKittyError
@@ -49,7 +48,8 @@ import {
 import { StartSessionRequest } from './model/session/start/session.start.request';
 import {
   AccessDeniedSessionResult,
-  StartedSessionResult, StartSessionResult
+  StartedSessionResult,
+  StartSessionResult
 } from './model/session/start/session.start.result';
 import { StompXClient } from './stompx/stompx.client';
 
@@ -102,6 +102,7 @@ export default class ChatKitty {
                   this.currentUser = user;
 
                   this.client.listenToTopic(user._topics.channels);
+                  this.client.listenToTopic(user._topics.notifications);
 
                   this.currentUserNextSubject.next(user);
 
@@ -147,6 +148,28 @@ export default class ChatKitty {
     });
 
     return () => subscription.unsubscribe();
+  }
+
+  public onNotificationReceived(onNextOrObserver:
+                                  | ChatkittyObserver<Notification>
+                                  | ((notification: Notification) => void)): ChatKittyUnsubscribe {
+    if (this.currentUser === undefined) {
+      throw new NoActiveSessionChatKittyError();
+    }
+
+    const unsubscribe = this.client.listenForEvent<Notification>({
+      topic: this.currentUser._topics.notifications,
+      event: 'me.notification.created',
+      onSuccess: notification => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(notification);
+        } else {
+          onNextOrObserver.onNext(notification);
+        }
+      }
+    });
+
+    return () => unsubscribe;
   }
 
   public createChannel(request: CreateChannelRequest): Promise<CreateChannelResult> {
