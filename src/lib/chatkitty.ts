@@ -9,7 +9,10 @@ import {
   CreateChannelResult,
   CreatedChannelResult
 } from './model/channel/create/channel.create.result';
-import { GetChannelsResult } from './model/channel/get/channel.get.result';
+import {
+  GetChannelResult,
+  GetChannelsResult
+} from './model/channel/get/channel.get.result';
 import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
 import { JoinChannelRequest } from './model/channel/join/channel.join.request';
 import {
@@ -70,6 +73,10 @@ export default class ChatKitty {
     ChatKitty._instances.set(apiKey, instance);
 
     return instance;
+  }
+
+  private static channelRelay(id: number): string {
+    return '/application/v1/channels/' + id + '.relay';
   }
 
   private readonly client: StompXClient;
@@ -215,6 +222,21 @@ export default class ChatKitty {
           ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.joinableChannels, 'channels')
           .then(paginator => resolve(new GetChannelsResult(paginator)));
         }
+      }
+    );
+  }
+
+  public getChannel(id: number): Promise<GetChannelResult> {
+    return new Promise(
+      resolve => {
+        console.log('Relaying ' + ChatKitty.channelRelay(id));
+        
+        this.client.relayResource<Channel>({
+          destination: ChatKitty.channelRelay(id),
+          onSuccess: channel => {
+            resolve(new GetChannelResult(channel));
+          }
+        });
       }
     );
   }

@@ -18,11 +18,11 @@ export type UserMessage =
   TextUserMessage
 
 export declare class TextSystemMessage implements MessageProperties {
-  body: string;
-  createdTime: string;
   id: number;
-  properties: Map<string, unknown>;
   type: string;
+  createdTime: string;
+  properties: Map<string, unknown>;
+  body: string;
 }
 
 export declare class TextUserMessage implements MessageProperties {
