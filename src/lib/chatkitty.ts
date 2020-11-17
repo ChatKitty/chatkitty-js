@@ -147,6 +147,20 @@ export default class ChatKitty {
     );
   }
 
+  public onCurrentUserChanged(onNextOrObserver:
+                                | ChatkittyObserver<CurrentUser | null>
+                                | ((user: CurrentUser | null) => void)): ChatKittyUnsubscribe {
+    const subscription = this.currentUserNextSubject.subscribe(user => {
+      if (typeof onNextOrObserver === 'function') {
+        onNextOrObserver(user);
+      } else {
+        onNextOrObserver.onNext(user);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }
+
   public updateCurrentUser(update: (user: CurrentUser) => CurrentUser): Promise<UpdateCurrentUserResult> {
     return new Promise(
       (resolve, reject) => {
@@ -165,42 +179,6 @@ export default class ChatKitty {
         }
       }
     );
-  }
-
-  public onCurrentUserChanged(onNextOrObserver:
-                                | ChatkittyObserver<CurrentUser | null>
-                                | ((user: CurrentUser | null) => void)): ChatKittyUnsubscribe {
-    const subscription = this.currentUserNextSubject.subscribe(user => {
-      if (typeof onNextOrObserver === 'function') {
-        onNextOrObserver(user);
-      } else {
-        onNextOrObserver.onNext(user);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }
-
-  public onNotificationReceived(onNextOrObserver:
-                                  | ChatkittyObserver<Notification>
-                                  | ((notification: Notification) => void)): ChatKittyUnsubscribe {
-    if (this.currentUser === undefined) {
-      throw new NoActiveSessionChatKittyError();
-    }
-
-    const unsubscribe = this.client.listenForEvent<Notification>({
-      topic: this.currentUser._topics.notifications,
-      event: 'me.notification.created',
-      onSuccess: notification => {
-        if (typeof onNextOrObserver === 'function') {
-          onNextOrObserver(notification);
-        } else {
-          onNextOrObserver.onNext(notification);
-        }
-      }
-    });
-
-    return () => unsubscribe;
   }
 
   public createChannel(request: CreateChannelRequest): Promise<CreateChannelResult> {
@@ -360,6 +338,28 @@ export default class ChatKitty {
 
   public endChatSession(session: ChatSession) {
     session.end();
+  }
+
+  public onNotificationReceived(onNextOrObserver:
+                                  | ChatkittyObserver<Notification>
+                                  | ((notification: Notification) => void)): ChatKittyUnsubscribe {
+    if (this.currentUser === undefined) {
+      throw new NoActiveSessionChatKittyError();
+    }
+
+    const unsubscribe = this.client.listenForEvent<Notification>({
+      topic: this.currentUser._topics.notifications,
+      event: 'me.notification.created',
+      onSuccess: notification => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(notification);
+        } else {
+          onNextOrObserver.onNext(notification);
+        }
+      }
+    });
+
+    return () => unsubscribe;
   }
 
   public endSession() {

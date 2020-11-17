@@ -4,7 +4,7 @@ import {
 import { CurrentUser } from '../current-user.model';
 
 export class GetCurrentUserResult extends ChatKittySucceededResult {
-  constructor(public currentUser: CurrentUser) {
+  constructor(public user: CurrentUser) {
     super();
   }
 }
