@@ -85,7 +85,9 @@ export default class ChatKitty {
 
   private readonly client: StompXClient;
 
-  private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(null);
+  private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(
+    null
+  );
 
   private currentUser: CurrentUser | undefined;
   private chatSessions: Map<number, ChatSession> = new Map();
@@ -98,59 +100,67 @@ export default class ChatKitty {
     });
   }
 
-  public startSession(request: StartSessionRequest): Promise<StartSessionResult> {
-    return new Promise(
-      resolve => {
-        this.client.connect({
-          apiKey: this.configuration.apiKey,
-          username: request.username,
-          authParams: request.authParams,
-          onSuccess: () => {
-            this.client.relayResource<CurrentUser>(
-              {
-                destination: ChatKitty.currentUserRelay,
-                onSuccess: user => {
-                  this.currentUser = user;
+  public startSession(
+    request: StartSessionRequest
+  ): Promise<StartSessionResult> {
+    return new Promise((resolve) => {
+      this.client.connect({
+        apiKey: this.configuration.apiKey,
+        username: request.username,
+        authParams: request.authParams,
+        onSuccess: () => {
+          this.client.relayResource<CurrentUser>({
+            destination: ChatKitty.currentUserRelay,
+            onSuccess: (user) => {
+              this.currentUser = user;
 
-                  this.client.listenToTopic(user._topics.channels);
-                  this.client.listenToTopic(user._topics.notifications);
+              this.client.listenToTopic({ topic: user._topics.channels });
+              this.client.listenToTopic({ topic: user._topics.notifications });
 
-                  this.currentUserNextSubject.next(user);
+              this.currentUserNextSubject.next(user);
 
-                  resolve(new StartedSessionResult({ user: user }));
-                }
-              }
-            );
-          },
-          onError: (error) => {
-            if (error.error === 'AccessDeniedError') {
-              resolve(new AccessDeniedSessionResult(new AccessDeniedSessionError()));
-            } else {
-              resolve(new AccessDeniedSessionResult(new UnknownChatKittyError()));
+              resolve(new StartedSessionResult({ user: user }));
             }
+          });
+        },
+        onError: (error) => {
+          if (error.error === 'AccessDeniedError') {
+            resolve(
+              new AccessDeniedSessionResult(new AccessDeniedSessionError())
+            );
+          } else {
+            resolve(new AccessDeniedSessionResult(new UnknownChatKittyError()));
           }
-        });
+        }
+      });
+    });
+  }
+
+  public endSession() {
+    this.client.disconnect({
+      onSuccess: () => {
+        this.currentUserNextSubject.next(null);
       }
-    );
+    });
   }
 
   public getCurrentUser(): Promise<GetCurrentUserResult> {
-    return new Promise(
-      resolve => {
-        this.client.relayResource<CurrentUser>({
-          destination: ChatKitty.currentUserRelay,
-          onSuccess: user => {
-            resolve(new GetCurrentUserResult(user));
-          }
-        });
-      }
-    );
+    return new Promise((resolve) => {
+      this.client.relayResource<CurrentUser>({
+        destination: ChatKitty.currentUserRelay,
+        onSuccess: (user) => {
+          resolve(new GetCurrentUserResult(user));
+        }
+      });
+    });
   }
 
-  public onCurrentUserChanged(onNextOrObserver:
-                                | ChatkittyObserver<CurrentUser | null>
-                                | ((user: CurrentUser | null) => void)): ChatKittyUnsubscribe {
-    const subscription = this.currentUserNextSubject.subscribe(user => {
+  public onCurrentUserChanged(
+    onNextOrObserver:
+      | ChatkittyObserver<CurrentUser | null>
+      | ((user: CurrentUser | null) => void)
+  ): ChatKittyUnsubscribe {
+    const subscription = this.currentUserNextSubject.subscribe((user) => {
       if (typeof onNextOrObserver === 'function') {
         onNextOrObserver(user);
       } else {
@@ -161,111 +171,110 @@ export default class ChatKitty {
     return () => subscription.unsubscribe();
   }
 
-  public updateCurrentUser(update: (user: CurrentUser) => CurrentUser): Promise<UpdateCurrentUserResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (this.currentUser === undefined) {
-          reject(new NoActiveSessionChatKittyError());
-        } else {
-          this.client.performAction<CurrentUser>({
-            destination: this.currentUser._actions.update,
-            body: update(this.currentUser),
-            onSuccess: user => {
-              this.currentUserNextSubject.next(user);
+  public updateCurrentUser(
+    update: (user: CurrentUser) => CurrentUser
+  ): Promise<UpdateCurrentUserResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        this.client.performAction<CurrentUser>({
+          destination: this.currentUser._actions.update,
+          body: update(this.currentUser),
+          onSuccess: (user) => {
+            this.currentUserNextSubject.next(user);
 
-              resolve(new UpdatedCurrentUserResult(user));
-            }
-          });
-        }
-      }
-    );
-  }
-
-  public createChannel(request: CreateChannelRequest): Promise<CreateChannelResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (this.currentUser === undefined) {
-          reject(new NoActiveSessionChatKittyError());
-        } else {
-          this.client.performAction<Channel>({
-            destination: this.currentUser._actions.createChannel,
-            body: {
-              type: request.type,
-              name: request.name
-            },
-            onSuccess: channel => {
-              resolve(new CreatedChannelResult(channel));
-            }
-          });
-        }
-      }
-    );
-  }
-
-  public getChannels(): Promise<GetChannelsResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (this.currentUser === undefined) {
-          reject(new NoActiveSessionChatKittyError());
-        } else {
-          ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.channels, 'channels')
-          .then(paginator => resolve(new GetChannelsResult(paginator)));
-        }
-      }
-    );
-  }
-
-  public getJoinableChannels(): Promise<GetChannelsResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (this.currentUser === undefined) {
-          reject(new NoActiveSessionChatKittyError());
-        } else {
-          ChatKittyPaginator.createInstance<Channel>(this.client, this.currentUser._relays.joinableChannels, 'channels')
-          .then(paginator => resolve(new GetChannelsResult(paginator)));
-        }
-      }
-    );
-  }
-
-  public getChannel(id: number): Promise<GetChannelResult> {
-    return new Promise(
-      resolve => {
-        this.client.relayResource<Channel>({
-          destination: ChatKitty.channelRelay(id),
-          onSuccess: channel => {
-            resolve(new GetChannelResult(channel));
+            resolve(new UpdatedCurrentUserResult(user));
           }
         });
       }
-    );
+    });
+  }
+
+  public createChannel(
+    request: CreateChannelRequest
+  ): Promise<CreateChannelResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        this.client.performAction<Channel>({
+          destination: this.currentUser._actions.createChannel,
+          body: {
+            type: request.type,
+            name: request.name
+          },
+          onSuccess: (channel) => {
+            resolve(new CreatedChannelResult(channel));
+          }
+        });
+      }
+    });
+  }
+
+  public getChannels(): Promise<GetChannelsResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        ChatKittyPaginator.createInstance<Channel>(
+          this.client,
+          this.currentUser._relays.channels,
+          'channels'
+        ).then((paginator) => resolve(new GetChannelsResult(paginator)));
+      }
+    });
+  }
+
+  public getJoinableChannels(): Promise<GetChannelsResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        ChatKittyPaginator.createInstance<Channel>(
+          this.client,
+          this.currentUser._relays.joinableChannels,
+          'channels'
+        ).then((paginator) => resolve(new GetChannelsResult(paginator)));
+      }
+    });
+  }
+
+  public getChannel(id: number): Promise<GetChannelResult> {
+    return new Promise((resolve) => {
+      this.client.relayResource<Channel>({
+        destination: ChatKitty.channelRelay(id),
+        onSuccess: (channel) => {
+          resolve(new GetChannelResult(channel));
+        }
+      });
+    });
   }
 
   public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (this.currentUser === undefined) {
-          reject(new NoActiveSessionChatKittyError());
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        if (request.channel._actions.join) {
+          this.client.performAction<Channel>({
+            destination: request.channel._actions.join,
+            body: request,
+            onSuccess: (channel) => {
+              resolve(new JoinedChannelResult(channel));
+            }
+          });
         } else {
-          if (request.channel._actions.join) {
-            this.client.performAction<Channel>({
-              destination: request.channel._actions.join,
-              body: request,
-              onSuccess: channel => {
-                resolve(new JoinedChannelResult(channel));
-              }
-            });
-          } else {
-            reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
-          }
+          reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
         }
       }
-    );
+    });
   }
 
-  public startChatSession(request: StartChatSessionRequest): StartChatSessionResult {
-    const channelUnsubscribe = this.client.listenToTopic(request.channel._topics.self);
-    const messagesUnsubscribe = this.client.listenToTopic(request.channel._topics.messages);
+  public startChatSession(
+    request: StartChatSessionRequest
+  ): StartChatSessionResult {
+    let unsubscribe: () => void;
 
     let receivedMessageUnsubscribe: () => void;
 
@@ -275,23 +284,41 @@ export default class ChatKitty {
       receivedMessageUnsubscribe = this.client.listenForEvent<Message>({
         topic: request.channel._topics.messages,
         event: 'thread.message.created',
-        onSuccess: message => {
+        onSuccess: (message) => {
           onReceivedMessage(message);
         }
       });
     }
 
+    const channelUnsubscribe = this.client.listenToTopic({
+      topic: request.channel._topics.self,
+      callback: () => {
+        const messagesUnsubscribe = this.client.listenToTopic({
+          topic: request.channel._topics.messages
+        });
+
+        unsubscribe = () => {
+          if (receivedMessageUnsubscribe) {
+            receivedMessageUnsubscribe();
+          }
+
+          if (messagesUnsubscribe) {
+            messagesUnsubscribe();
+          }
+
+          channelUnsubscribe();
+
+          this.chatSessions.delete(request.channel.id);
+        };
+      }
+    });
+
     const session = {
       channel: request.channel,
       end: () => {
-        channelUnsubscribe();
-        messagesUnsubscribe();
-
-        if (receivedMessageUnsubscribe) {
-          receivedMessageUnsubscribe();
+        if (unsubscribe) {
+          unsubscribe();
         }
-
-        this.chatSessions.delete(request.channel.id);
       }
     };
 
@@ -300,49 +327,50 @@ export default class ChatKitty {
     return new StartedChatSessionResult(session);
   }
 
-  public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (sendChannelTextMessage(request)) {
-          if (!this.chatSessions.has(request.channel.id)) {
-            reject(new NoActiveChatSessionChatKittyError(request.channel));
-          } else {
-            this.client.performAction<TextUserMessage>({
-              destination: request.channel._actions.message,
-              body: {
-                type: 'TEXT',
-                body: request.body
-              },
-              onSuccess: message => {
-                resolve(new SentTextMessageResult(message));
-              }
-            });
-          }
-        }
-      }
-    );
-  }
-
-  public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
-    return new Promise(
-      (resolve, reject) => {
-        if (!this.chatSessions.has(request.channel.id)) {
-          reject(new NoActiveChatSessionChatKittyError(request.channel));
-        } else {
-          ChatKittyPaginator.createInstance<Message>(this.client, request.channel._relays.messages, 'messages')
-          .then(paginator => resolve(new GetMessagesResult(paginator)));
-        }
-      }
-    );
-  }
-
   public endChatSession(session: ChatSession) {
     session.end();
   }
 
-  public onNotificationReceived(onNextOrObserver:
-                                  | ChatkittyObserver<Notification>
-                                  | ((notification: Notification) => void)): ChatKittyUnsubscribe {
+  public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
+    return new Promise((resolve, reject) => {
+      if (sendChannelTextMessage(request)) {
+        if (!this.chatSessions.has(request.channel.id)) {
+          reject(new NoActiveChatSessionChatKittyError(request.channel));
+        } else {
+          this.client.performAction<TextUserMessage>({
+            destination: request.channel._actions.message,
+            body: {
+              type: 'TEXT',
+              body: request.body
+            },
+            onSuccess: (message) => {
+              resolve(new SentTextMessageResult(message));
+            }
+          });
+        }
+      }
+    });
+  }
+
+  public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
+    return new Promise((resolve, reject) => {
+      if (!this.chatSessions.has(request.channel.id)) {
+        reject(new NoActiveChatSessionChatKittyError(request.channel));
+      } else {
+        ChatKittyPaginator.createInstance<Message>(
+          this.client,
+          request.channel._relays.messages,
+          'messages'
+        ).then((paginator) => resolve(new GetMessagesResult(paginator)));
+      }
+    });
+  }
+
+  public onNotificationReceived(
+    onNextOrObserver:
+      | ChatkittyObserver<Notification>
+      | ((notification: Notification) => void)
+  ): ChatKittyUnsubscribe {
     if (this.currentUser === undefined) {
       throw new NoActiveSessionChatKittyError();
     }
@@ -350,7 +378,7 @@ export default class ChatKitty {
     const unsubscribe = this.client.listenForEvent<Notification>({
       topic: this.currentUser._topics.notifications,
       event: 'me.notification.created',
-      onSuccess: notification => {
+      onSuccess: (notification) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(notification);
         } else {
@@ -360,13 +388,5 @@ export default class ChatKitty {
     });
 
     return () => unsubscribe;
-  }
-
-  public endSession() {
-    this.client.disconnect({
-      onSuccess: () => {
-        this.currentUserNextSubject.next(null);
-      }
-    });
   }
 }

@@ -1,5 +1,4 @@
-import { RxStomp } from '@stomp/rx-stomp';
-import { RxStompConfig } from '@stomp/rx-stomp';
+import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
 import { Versions } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
@@ -7,6 +6,7 @@ import { v4 } from 'uuid';
 import { StompXConnectRequest } from './request/stompx.connect.request';
 import { StompXDisconnectRequest } from './request/stompx.disconnect.request';
 import { StompXListenForEventRequest } from './request/stompx.listen-for-event.request';
+import { StompxListenToTopicRequest } from './request/stompx.listen-to-topic.request';
 import { StompXPerformActionRequest } from './request/stompx.perform-action.request';
 import { StompXRelayResourceRequest } from './request/stompx.relay-resource.request';
 import { StompXConfiguration } from './stompx.configuration';
@@ -90,13 +90,23 @@ export class StompXClient {
     });
   }
 
-  public listenToTopic<R>(topic: string): () => void {
-    const subscription = this.rxStomp.watch(topic, {
+  public listenToTopic(request: StompxListenToTopicRequest): () => void {
+    const subscriptionReceipt = StompXClient.generateReceipt();
+
+    const callback = request.callback;
+
+    if (callback) {
+      this.rxStomp.watchForReceipt(subscriptionReceipt, () => {
+        callback();
+      });
+    }
+
+    const subscription = this.rxStomp.watch(request.topic, {
       id: StompXClient.generateSubscriptionId(),
-      receipt: StompXClient.generateReceipt()
+      receipt: subscriptionReceipt
     })
     .subscribe(message => {
-        const event: StompXEvent<R> = JSON.parse(message.body);
+        const event: StompXEvent<unknown> = JSON.parse(message.body);
 
         const receipt = message.headers['receipt-id'];
 
@@ -111,7 +121,7 @@ export class StompXClient {
           }
         }
 
-        const handlers = this.eventHandlers.get(topic);
+        const handlers = this.eventHandlers.get(request.topic);
 
         if (handlers) {
           handlers.forEach(handler => {
@@ -124,7 +134,7 @@ export class StompXClient {
       }
     );
 
-    this.topics.set(topic, subscription);
+    this.topics.set(request.topic, subscription);
 
     return () => {
       subscription.unsubscribe();
