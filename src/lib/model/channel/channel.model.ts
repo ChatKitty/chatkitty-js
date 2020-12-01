@@ -6,6 +6,7 @@ export declare class Channel {
   _relays: ChannelRelays;
   _topics: ChannelTopics;
   _actions: ChannelActions;
+  _streams: ChannelStreams;
 }
 
 export declare class ChannelRelays {
@@ -21,4 +22,8 @@ export declare class ChannelTopics {
 export declare class ChannelActions {
   message: string;
   join?: string;
+}
+
+export declare class ChannelStreams {
+  messages: string;
 }

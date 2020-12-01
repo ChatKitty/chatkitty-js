@@ -10,6 +10,7 @@ export declare class CurrentUser {
 
 export declare class CurrentUserRelays {
   self: string;
+  fileAccessGrant: string;
   channels: string;
   joinableChannels: string;
 }

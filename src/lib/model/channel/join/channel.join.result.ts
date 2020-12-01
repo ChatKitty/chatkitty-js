@@ -1,10 +1,7 @@
-import {
-  ChatKittySucceededResult
-} from '../../chatkitty.result';
+import { ChatKittySucceededResult } from '../../chatkitty.result';
 import { Channel } from '../channel.model';
 
-export type JoinChannelResult =
-  JoinedChannelResult
+export type JoinChannelResult = JoinedChannelResult;
 
 export class JoinedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
@@ -12,6 +9,8 @@ export class JoinedChannelResult extends ChatKittySucceededResult {
   }
 }
 
-export function joinedChannel(result: JoinChannelResult): result is JoinedChannelResult {
+export function joinedChannel(
+  result: JoinChannelResult
+): result is JoinedChannelResult {
   return (result as JoinedChannelResult).channel !== undefined;
 }

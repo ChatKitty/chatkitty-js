@@ -1,10 +1,7 @@
-import {
-  ChatKittySucceededResult
-} from '../../chatkitty.result';
+import { ChatKittySucceededResult } from '../../chatkitty.result';
 import { ChatSession } from '../chat-session.model';
 
-export type StartChatSessionResult =
-  StartedChatSessionResult
+export type StartChatSessionResult = StartedChatSessionResult;
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {
   constructor(public session: ChatSession) {
@@ -12,6 +9,8 @@ export class StartedChatSessionResult extends ChatKittySucceededResult {
   }
 }
 
-export function startedChatSession(result: StartChatSessionResult): result is StartedChatSessionResult {
+export function startedChatSession(
+  result: StartChatSessionResult
+): result is StartedChatSessionResult {
   return (result as StartedChatSessionResult).session !== undefined;
 }

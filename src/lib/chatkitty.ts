@@ -38,13 +38,19 @@ import {
 } from './model/current-user/update/current-user.update.result';
 import { GetMessagesRequest } from './model/message/get/message.get.request';
 import { GetMessagesResult } from './model/message/get/message.get.result';
-import { Message, TextUserMessage } from './model/message/message.model';
 import {
+  FileUserMessage,
+  Message,
+  TextUserMessage
+} from './model/message/message.model';
+import {
+  sendChannelFileMessage,
   sendChannelTextMessage,
   SendMessageRequest
 } from './model/message/send/message.send.request';
 import {
   SendMessageResult,
+  SentFileMessageResult,
   SentTextMessageResult
 } from './model/message/send/message.send.result';
 import { Notification } from './model/notification/notification.model';
@@ -90,6 +96,7 @@ export default class ChatKitty {
   );
 
   private currentUser: CurrentUser | undefined;
+  private grant: string | undefined;
   private chatSessions: Map<number, ChatSession> = new Map();
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
@@ -118,6 +125,13 @@ export default class ChatKitty {
               this.client.listenToTopic({ topic: user._topics.notifications });
 
               this.currentUserNextSubject.next(user);
+
+              this.client.relayResource<{ grant: string }>({
+                destination: user._relays.fileAccessGrant,
+                onSuccess: (grant) => {
+                  this.grant = grant.grant;
+                }
+              });
 
               resolve(new StartedSessionResult({ user: user }));
             }
@@ -333,10 +347,10 @@ export default class ChatKitty {
 
   public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
     return new Promise((resolve, reject) => {
-      if (sendChannelTextMessage(request)) {
-        if (!this.chatSessions.has(request.channel.id)) {
-          reject(new NoActiveChatSessionChatKittyError(request.channel));
-        } else {
+      if (!this.chatSessions.has(request.channel.id)) {
+        reject(new NoActiveChatSessionChatKittyError(request.channel));
+      } else {
+        if (sendChannelTextMessage(request)) {
           this.client.performAction<TextUserMessage>({
             destination: request.channel._actions.message,
             body: {
@@ -345,6 +359,17 @@ export default class ChatKitty {
             },
             onSuccess: (message) => {
               resolve(new SentTextMessageResult(message));
+            }
+          });
+        }
+
+        if (sendChannelFileMessage(request)) {
+          this.client.sendToStream<FileUserMessage>({
+            stream: request.channel._streams.messages,
+            grant: <string>this.grant,
+            blob: request.file,
+            onSuccess: (message) => {
+              resolve(new SentFileMessageResult(message));
             }
           });
         }

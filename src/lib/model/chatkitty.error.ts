@@ -1,6 +1,5 @@
 export abstract class ChatKittyError {
-  protected constructor(public type: string, public message: string) {
-  }
+  protected constructor(public type: string, public message: string) {}
 }
 
 export class UnknownChatKittyError extends ChatKittyError {
@@ -11,6 +10,9 @@ export class UnknownChatKittyError extends ChatKittyError {
 
 export class PageOutOfBoundsChatKittyError extends ChatKittyError {
   constructor() {
-    super('PageOutOfBoundsChatKittyError', 'You\'ve requested a page that doesn\'t exists.');
+    super(
+      'PageOutOfBoundsChatKittyError',
+      "You've requested a page that doesn't exists."
+    );
   }
 }
