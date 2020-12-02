@@ -16,6 +16,8 @@ import { StompXEvent } from './stompx.event';
 import { StompXEventHandler } from './stompx.event-handler';
 
 export class StompXClient {
+  private readonly httpBaseUrl: string;
+
   private readonly rxStompConfig: RxStompConfig;
 
   private readonly rxStomp: RxStomp = new RxStomp();
@@ -35,14 +37,24 @@ export class StompXClient {
   > = new Map();
 
   constructor(configuration: StompXConfiguration) {
-    let scheme: string;
+    let httpScheme: string;
     if (configuration.isSecure) {
-      scheme = 'wss';
+      httpScheme = 'https';
     } else {
-      scheme = 'ws';
+      httpScheme = 'http';
     }
 
-    const brokerUrl = scheme + '://' + configuration.host + '/stompx/websocket';
+    this.httpBaseUrl = httpScheme + '://' + configuration.host;
+
+    let wsScheme: string;
+    if (configuration.isSecure) {
+      wsScheme = 'wss';
+    } else {
+      wsScheme = 'ws';
+    }
+
+    const brokerUrl =
+      wsScheme + '://' + configuration.host + '/stompx/websocket';
 
     this.rxStompConfig = {
       brokerURL: brokerUrl,
@@ -217,6 +229,7 @@ export class StompXClient {
 
     this.axios({
       method: 'post',
+      baseURL: this.httpBaseUrl,
       url: request.stream,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data', Grant: request.grant },

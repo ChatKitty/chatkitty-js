@@ -7,24 +7,24 @@ import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
   CreateChannelResult,
-  CreatedChannelResult
+  CreatedChannelResult,
 } from './model/channel/create/channel.create.result';
 import {
   GetChannelResult,
-  GetChannelsResult
+  GetChannelsResult,
 } from './model/channel/get/channel.get.result';
 import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
 import { JoinChannelRequest } from './model/channel/join/channel.join.request';
 import {
   JoinChannelResult,
-  JoinedChannelResult
+  JoinedChannelResult,
 } from './model/channel/join/channel.join.result';
 import { ChatSession } from './model/chat-session/chat-session.model';
 import { NoActiveChatSessionChatKittyError } from './model/chat-session/start/chat-session.start.error';
 import { StartChatSessionRequest } from './model/chat-session/start/chat-session.start.request';
 import {
   StartChatSessionResult,
-  StartedChatSessionResult
+  StartedChatSessionResult,
 } from './model/chat-session/start/chat-session.start.result';
 import { UnknownChatKittyError } from './model/chatkitty.error';
 import { ChatkittyObserver } from './model/chatkitty.observer';
@@ -34,35 +34,35 @@ import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.result';
 import {
   UpdateCurrentUserResult,
-  UpdatedCurrentUserResult
+  UpdatedCurrentUserResult,
 } from './model/current-user/update/current-user.update.result';
 import { GetMessagesRequest } from './model/message/get/message.get.request';
 import { GetMessagesResult } from './model/message/get/message.get.result';
 import {
   FileUserMessage,
   Message,
-  TextUserMessage
+  TextUserMessage,
 } from './model/message/message.model';
 import {
   sendChannelFileMessage,
   sendChannelTextMessage,
-  SendMessageRequest
+  SendMessageRequest,
 } from './model/message/send/message.send.request';
 import {
   SendMessageResult,
   SentFileMessageResult,
-  SentTextMessageResult
+  SentTextMessageResult,
 } from './model/message/send/message.send.result';
 import { Notification } from './model/notification/notification.model';
 import {
   AccessDeniedSessionError,
-  NoActiveSessionChatKittyError
+  NoActiveSessionChatKittyError,
 } from './model/session/start/session.error';
 import { StartSessionRequest } from './model/session/start/session.start.request';
 import {
   AccessDeniedSessionResult,
   StartedSessionResult,
-  StartSessionResult
+  StartSessionResult,
 } from './model/session/start/session.start.result';
 import { StompXClient } from './stompx/stompx.client';
 
@@ -103,7 +103,7 @@ export default class ChatKitty {
     this.client = new StompXClient({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
       host: configuration.host || 'api.chatkitty.com',
-      isDebug: !environment.production
+      isDebug: !environment.production,
     });
   }
 
@@ -130,11 +130,11 @@ export default class ChatKitty {
                 destination: user._relays.fileAccessGrant,
                 onSuccess: (grant) => {
                   this.grant = grant.grant;
-                }
+                },
               });
 
               resolve(new StartedSessionResult({ user: user }));
-            }
+            },
           });
         },
         onError: (error) => {
@@ -145,7 +145,7 @@ export default class ChatKitty {
           } else {
             resolve(new AccessDeniedSessionResult(new UnknownChatKittyError()));
           }
-        }
+        },
       });
     });
   }
@@ -154,7 +154,7 @@ export default class ChatKitty {
     this.client.disconnect({
       onSuccess: () => {
         this.currentUserNextSubject.next(null);
-      }
+      },
     });
   }
 
@@ -164,7 +164,7 @@ export default class ChatKitty {
         destination: ChatKitty.currentUserRelay,
         onSuccess: (user) => {
           resolve(new GetCurrentUserResult(user));
-        }
+        },
       });
     });
   }
@@ -199,7 +199,7 @@ export default class ChatKitty {
             this.currentUserNextSubject.next(user);
 
             resolve(new UpdatedCurrentUserResult(user));
-          }
+          },
         });
       }
     });
@@ -216,11 +216,11 @@ export default class ChatKitty {
           destination: this.currentUser._actions.createChannel,
           body: {
             type: request.type,
-            name: request.name
+            name: request.name,
           },
           onSuccess: (channel) => {
             resolve(new CreatedChannelResult(channel));
-          }
+          },
         });
       }
     });
@@ -260,7 +260,7 @@ export default class ChatKitty {
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelResult(channel));
-        }
+        },
       });
     });
   }
@@ -276,7 +276,7 @@ export default class ChatKitty {
             body: request,
             onSuccess: (channel) => {
               resolve(new JoinedChannelResult(channel));
-            }
+            },
           });
         } else {
           reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
@@ -300,7 +300,7 @@ export default class ChatKitty {
         event: 'thread.message.created',
         onSuccess: (message) => {
           onReceivedMessage(message);
-        }
+        },
       });
     }
 
@@ -308,7 +308,7 @@ export default class ChatKitty {
       topic: request.channel._topics.self,
       callback: () => {
         const messagesUnsubscribe = this.client.listenToTopic({
-          topic: request.channel._topics.messages
+          topic: request.channel._topics.messages,
         });
 
         unsubscribe = () => {
@@ -324,7 +324,7 @@ export default class ChatKitty {
 
           this.chatSessions.delete(request.channel.id);
         };
-      }
+      },
     });
 
     const session = {
@@ -333,7 +333,7 @@ export default class ChatKitty {
         if (unsubscribe) {
           unsubscribe();
         }
-      }
+      },
     };
 
     this.chatSessions.set(request.channel.id, session);
@@ -355,11 +355,11 @@ export default class ChatKitty {
             destination: request.channel._actions.message,
             body: {
               type: 'TEXT',
-              body: request.body
+              body: request.body,
             },
             onSuccess: (message) => {
               resolve(new SentTextMessageResult(message));
-            }
+            },
           });
         }
 
@@ -370,7 +370,7 @@ export default class ChatKitty {
             blob: request.file,
             onSuccess: (message) => {
               resolve(new SentFileMessageResult(message));
-            }
+            },
           });
         }
       }
@@ -409,7 +409,7 @@ export default class ChatKitty {
         } else {
           onNextOrObserver.onNext(notification);
         }
-      }
+      },
     });
 
     return () => unsubscribe;
