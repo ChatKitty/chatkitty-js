@@ -38,6 +38,7 @@ import {
 } from './model/current-user/update/current-user.update.result';
 import { GetMessagesRequest } from './model/message/get/message.get.request';
 import { GetMessagesResult } from './model/message/get/message.get.result';
+import MessageMapper from './model/message/message.mapper';
 import {
   FileUserMessage,
   Message,
@@ -96,8 +97,10 @@ export default class ChatKitty {
   );
 
   private currentUser: CurrentUser | undefined;
-  private grant: string | undefined;
+  private writeFileGrant: string | undefined;
   private chatSessions: Map<number, ChatSession> = new Map();
+
+  private messageMapper: MessageMapper = new MessageMapper('');
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.client = new StompXClient({
@@ -127,9 +130,16 @@ export default class ChatKitty {
               this.currentUserNextSubject.next(user);
 
               this.client.relayResource<{ grant: string }>({
-                destination: user._relays.fileAccessGrant,
+                destination: user._relays.writeFileAccessGrant,
                 onSuccess: (grant) => {
-                  this.grant = grant.grant;
+                  this.writeFileGrant = grant.grant;
+                },
+              });
+
+              this.client.relayResource<{ grant: string }>({
+                destination: user._relays.readFileAccessGrant,
+                onSuccess: (grant) => {
+                  this.messageMapper = new MessageMapper(grant.grant);
                 },
               });
 
@@ -299,7 +309,7 @@ export default class ChatKitty {
         topic: request.channel._topics.messages,
         event: 'thread.message.created',
         onSuccess: (message) => {
-          onReceivedMessage(message);
+          onReceivedMessage(this.messageMapper.map(message));
         },
       });
     }
@@ -358,7 +368,9 @@ export default class ChatKitty {
               body: request.body,
             },
             onSuccess: (message) => {
-              resolve(new SentTextMessageResult(message));
+              resolve(
+                new SentTextMessageResult(this.messageMapper.map(message))
+              );
             },
           });
         }
@@ -366,10 +378,12 @@ export default class ChatKitty {
         if (sendChannelFileMessage(request)) {
           this.client.sendToStream<FileUserMessage>({
             stream: request.channel._streams.messages,
-            grant: <string>this.grant,
+            grant: <string>this.writeFileGrant,
             blob: request.file,
             onSuccess: (message) => {
-              resolve(new SentFileMessageResult(message));
+              resolve(
+                new SentFileMessageResult(this.messageMapper.map(message))
+              );
             },
           });
         }
@@ -385,7 +399,8 @@ export default class ChatKitty {
         ChatKittyPaginator.createInstance<Message>(
           this.client,
           request.channel._relays.messages,
-          'messages'
+          'messages',
+          (message) => this.messageMapper.map(message)
         ).then((paginator) => resolve(new GetMessagesResult(paginator)));
       }
     });

@@ -7,7 +7,8 @@ export class ChatKittyPaginator<I> {
   static async createInstance<I>(
     client: StompXClient,
     relay: string,
-    contentName: string
+    contentName: string,
+    mapper?: (item: I) => I
   ): Promise<ChatKittyPaginator<I>> {
     const page = await new Promise<StompXPage>((resolve) => {
       client.relayResource<StompXPage>({
@@ -20,6 +21,10 @@ export class ChatKittyPaginator<I> {
 
     if (page._embedded) {
       items = page._embedded[contentName] as I[];
+    }
+
+    if (mapper) {
+      items = items.map((item) => mapper(item));
     }
 
     return new ChatKittyPaginator<I>(

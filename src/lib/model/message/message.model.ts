@@ -47,3 +47,9 @@ export declare class FileUserMessage implements MessageProperties {
   user: UserProperties;
   file: ChatKittyFile;
 }
+
+export function isFileMessage(
+  message: Message
+): message is FileSystemMessage | FileUserMessage {
+  return (message as { file: ChatKittyFile }).file !== undefined;
+}
