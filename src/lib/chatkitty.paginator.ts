@@ -1,7 +1,7 @@
-import { StompXPage } from '../stompx/request/stompx.page';
-import { StompXClient } from '../stompx/stompx.client';
-
 import { PageOutOfBoundsChatKittyError } from './chatkitty.error';
+import { StompXPage } from './stompx/request/stompx.page';
+import { StompXClient } from './stompx/stompx.client';
+
 
 export class ChatKittyPaginator<I> {
   static async createInstance<I>(

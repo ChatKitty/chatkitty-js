@@ -3,6 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../environments/environment';
 
 import { ChatKittyConfiguration } from './chatkitty.configuration';
+import { UnknownChatKittyError } from './chatkitty.error';
+import { ChatkittyObserver } from './chatkitty.observer';
+import { ChatKittyPaginator } from './chatkitty.paginator';
+import { ChatKittyUnsubscribe } from './chatkitty.unsubscribe';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
@@ -26,10 +30,6 @@ import {
   StartChatSessionResult,
   StartedChatSessionResult,
 } from './model/chat-session/start/chat-session.start.result';
-import { UnknownChatKittyError } from './model/chatkitty.error';
-import { ChatkittyObserver } from './model/chatkitty.observer';
-import { ChatKittyPaginator } from './model/chatkitty.paginator';
-import { ChatKittyUnsubscribe } from './model/chatkitty.unsubscribe';
 import { CurrentUser } from './model/current-user/current-user.model';
 import { GetCurrentUserResult } from './model/current-user/get/current-user.get.result';
 import {

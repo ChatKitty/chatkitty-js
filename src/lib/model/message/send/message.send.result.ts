@@ -1,4 +1,4 @@
-import { ChatKittySucceededResult } from '../../chatkitty.result';
+import { ChatKittySucceededResult } from '../../../chatkitty.result';
 import { FileUserMessage, TextUserMessage } from '../message.model';
 
 export type SendMessageResult = SentTextMessageResult | SentFileMessageResult;

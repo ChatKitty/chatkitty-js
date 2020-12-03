@@ -1,4 +1,4 @@
-import { ChatKittyError } from '../../chatkitty.error';
+import { ChatKittyError } from '../../../chatkitty.error';
 
 export class AccessDeniedSessionError extends ChatKittyError {
   constructor() {

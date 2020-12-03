@@ -1,4 +1,4 @@
-import { ChatKittySucceededResult } from '../../chatkitty.result';
+import { ChatKittySucceededResult } from '../../../chatkitty.result';
 import { Channel } from '../channel.model';
 
 export type JoinChannelResult = JoinedChannelResult;

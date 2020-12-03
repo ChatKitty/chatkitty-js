@@ -1,4 +1,4 @@
-import { ChatKittyFile } from '../chatkitty.file';
+import { ChatKittyFile } from '../../chatkitty.file';
 import { UserProperties } from '../user/user.properties';
 
 export type Message = SystemMessage | UserMessage;

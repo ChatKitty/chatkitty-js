@@ -1,5 +1,5 @@
+import { ChatKittyError } from '../../../chatkitty.error';
 import { Channel } from '../../channel/channel.model';
-import { ChatKittyError } from '../../chatkitty.error';
 
 export class NoActiveChatSessionChatKittyError extends ChatKittyError {
   constructor(public channel: Channel) {

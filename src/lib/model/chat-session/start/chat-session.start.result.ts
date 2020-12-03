@@ -1,4 +1,4 @@
-import { ChatKittySucceededResult } from '../../chatkitty.result';
+import { ChatKittySucceededResult } from '../../../chatkitty.result';
 import { ChatSession } from '../chat-session.model';
 
 export type StartChatSessionResult = StartedChatSessionResult;

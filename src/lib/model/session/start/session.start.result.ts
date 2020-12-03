@@ -1,7 +1,7 @@
 import {
   ChatKittyFailedResult,
   ChatKittySucceededResult,
-} from '../../chatkitty.result';
+} from '../../../chatkitty.result';
 import { Session } from '../session.model';
 
 import { AccessDeniedSessionError } from './session.error';

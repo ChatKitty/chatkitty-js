@@ -1,4 +1,4 @@
-import { ChatKittyError } from '../../chatkitty.error';
+import { ChatKittyError } from '../../../chatkitty.error';
 import { Channel } from '../channel.model';
 
 export class ChannelNotPubliclyJoinableChatKittyError extends ChatKittyError {

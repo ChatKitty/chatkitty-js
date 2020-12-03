@@ -1,5 +1,5 @@
-import { ChatKittyPaginator } from '../../chatkitty.paginator';
-import { ChatKittySucceededResult } from '../../chatkitty.result';
+import { ChatKittyPaginator } from '../../../chatkitty.paginator';
+import { ChatKittySucceededResult } from '../../../chatkitty.result';
 import { Message } from '../message.model';
 
 export class GetMessagesResult extends ChatKittySucceededResult {
