@@ -1,3 +1,4 @@
+import { ChatKittyUploadProgressListener } from '../../../chatkitty.upload';
 import { Channel } from '../../channel/channel.model';
 
 export type SendMessageRequest =
@@ -12,6 +13,7 @@ export declare class SendChannelTextMessageRequest {
 export declare class SendChannelFileMessageRequest {
   channel: Channel;
   file: File;
+  progressListener?: ChatKittyUploadProgressListener;
 }
 
 export function sendChannelTextMessage(

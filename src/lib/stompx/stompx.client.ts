@@ -221,11 +221,11 @@ export class StompXClient {
 
     data.append('file', request.blob);
 
-    if (request.properties) {
-      request.properties.forEach((value, key) => {
-        data.append(key, value);
-      });
-    }
+    request.properties?.forEach((value, key) => {
+      data.append(key, value);
+    });
+
+    request.progressListener?.onStarted?.();
 
     this.axios({
       method: 'post',
@@ -233,16 +233,21 @@ export class StompXClient {
       url: request.stream,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data', Grant: request.grant },
+      onUploadProgress: (progressEvent) => {
+        request.progressListener?.onProgress?.(
+          progressEvent.loaded / progressEvent.total
+        );
+      },
     })
       .then((response) => {
-        if (request.onSuccess) {
-          request.onSuccess(response.data);
-        }
+        request.progressListener?.onCompleted?.();
+
+        request.onSuccess?.(response.data);
       })
-      .catch(() => {
-        if (request.onError) {
-          // TODO
-        }
+      .catch((error) => {
+        request.progressListener?.onFailed?.();
+
+        request.onError?.(error);
       });
   }
 

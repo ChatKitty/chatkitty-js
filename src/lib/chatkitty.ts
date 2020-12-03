@@ -7,6 +7,7 @@ import { UnknownChatKittyError } from './chatkitty.error';
 import { ChatkittyObserver } from './chatkitty.observer';
 import { ChatKittyPaginator } from './chatkitty.paginator';
 import { ChatKittyUnsubscribe } from './chatkitty.unsubscribe';
+import { ChatKittyUploadResult } from './chatkitty.upload';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
@@ -384,6 +385,23 @@ export default class ChatKitty {
               resolve(
                 new SentFileMessageResult(this.messageMapper.map(message))
               );
+            },
+            progressListener: {
+              onStarted: () => request.progressListener?.onStarted?.(),
+              onProgress: (progress) =>
+                request.progressListener?.onProgress(progress),
+              onCompleted: () =>
+                request.progressListener?.onCompleted(
+                  ChatKittyUploadResult.COMPLETED
+                ),
+              onFailed: () =>
+                request.progressListener?.onCompleted(
+                  ChatKittyUploadResult.FAILED
+                ),
+              onCancelled: () =>
+                request.progressListener?.onCompleted(
+                  ChatKittyUploadResult.CANCELLED
+                ),
             },
           });
         }
