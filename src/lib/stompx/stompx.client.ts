@@ -12,6 +12,7 @@ import { StompXPerformActionRequest } from './request/stompx.perform-action.requ
 import { StompXRelayResourceRequest } from './request/stompx.relay-resource.request';
 import { StompXSendToStreamRequest } from './request/stompx.send-to-stream.request';
 import { StompXConfiguration } from './stompx.configuration';
+import { StompXError } from './stompx.error';
 import { StompXEvent } from './stompx.event';
 import { StompXEventHandler } from './stompx.event-handler';
 
@@ -29,6 +30,16 @@ export class StompXClient {
   private readonly pendingActions: Map<
     string,
     (resource: unknown) => void
+  > = new Map();
+
+  private readonly pendingRelayErrors: Map<
+    string,
+    (error: StompXError) => void
+  > = new Map();
+
+  private readonly pendingActionErrors: Map<
+    string,
+    (error: StompXError) => void
   > = new Map();
 
   private readonly eventHandlers: Map<
@@ -105,6 +116,45 @@ export class StompXClient {
     });
 
     const successSubscription = this.rxStomp.connected$.subscribe(() => {
+      this.rxStomp
+        .watch('/user/queue/v1/errors', {
+          id: StompXClient.generateSubscriptionId(),
+        })
+        .subscribe((message) => {
+          const error: StompXError = JSON.parse(message.body);
+
+          const subscription = message.headers['subscription-id'];
+          const receipt = message.headers['receipt-id'];
+
+          if (subscription) {
+            const handler = this.pendingRelayErrors.get(subscription);
+
+            if (handler) {
+              handler(error);
+
+              this.pendingRelayErrors.delete(subscription);
+            }
+          }
+
+          if (receipt) {
+            const handler = this.pendingActionErrors.get(receipt);
+
+            if (handler) {
+              handler(error);
+
+              this.pendingActionErrors.delete(receipt);
+            }
+          }
+
+          if (!subscription && !receipt) {
+            this.pendingActionErrors.forEach((handler) => {
+              handler(error);
+            });
+
+            this.pendingActionErrors.clear();
+          }
+        });
+
       request.onSuccess();
 
       successSubscription.unsubscribe();
@@ -113,9 +163,15 @@ export class StompXClient {
   }
 
   public relayResource<R>(request: StompXRelayResourceRequest<R>) {
+    const subscriptionId = StompXClient.generateSubscriptionId();
+
+    if (request.onError) {
+      this.pendingRelayErrors.set(subscriptionId, request.onError);
+    }
+
     this.rxStomp
       .watch(request.destination, {
-        id: StompXClient.generateSubscriptionId(),
+        id: subscriptionId,
       })
       .subscribe((message) => {
         request.onSuccess(JSON.parse(message.body).resource);
@@ -143,10 +199,10 @@ export class StompXClient {
 
         const receipt = message.headers['receipt-id'];
 
-        if (receipt !== undefined) {
+        if (receipt) {
           const action = this.pendingActions.get(receipt);
 
-          if (action !== undefined) {
+          if (action) {
             action(event.resource);
 
             this.pendingActions.delete(receipt);
@@ -168,6 +224,8 @@ export class StompXClient {
 
     return () => {
       subscription.unsubscribe();
+
+      this.topics.delete(request.topic);
     };
   }
 
@@ -204,6 +262,10 @@ export class StompXClient {
         receipt,
         request.onSuccess as (resource: unknown) => void
       );
+    }
+
+    if (request.onError) {
+      this.pendingActionErrors.set(receipt, request.onError);
     }
 
     this.rxStomp.publish({

@@ -11,6 +11,7 @@ import { ChatKittyUploadResult } from './chatkitty.upload';
 import { Channel } from './model/channel/channel.model';
 import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
+  CreateChannelFailedResult,
   CreateChannelResult,
   CreatedChannelResult,
 } from './model/channel/create/channel.create.result';
@@ -228,6 +229,14 @@ export default class ChatKitty {
           body: request,
           onSuccess: (channel) => {
             resolve(new CreatedChannelResult(channel));
+          },
+          onError: (error) => {
+            resolve(
+              new CreateChannelFailedResult({
+                ...error,
+                type: error.error,
+              })
+            );
           },
         });
       }
