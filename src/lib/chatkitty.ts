@@ -225,10 +225,7 @@ export default class ChatKitty {
       } else {
         this.client.performAction<Channel>({
           destination: this.currentUser._actions.createChannel,
-          body: {
-            type: request.type,
-            name: request.name,
-          },
+          body: request,
           onSuccess: (channel) => {
             resolve(new CreatedChannelResult(channel));
           },
