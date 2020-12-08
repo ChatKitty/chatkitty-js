@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "JS SDK for the ChatKitty Chat API",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
