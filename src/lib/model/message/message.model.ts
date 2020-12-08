@@ -52,14 +52,10 @@ export declare class FileUserMessage implements MessageProperties {
   file: ChatKittyFile;
 }
 
-export function isTextMessage(
-  message: Message
-): message is TextMessage {
+export function isTextMessage(message: Message): message is TextMessage {
   return (message as TextMessage).body !== undefined;
 }
 
-export function isFileMessage(
-  message: Message
-): message is FileMessage {
+export function isFileMessage(message: Message): message is FileMessage {
   return (message as FileMessage).file !== undefined;
 }

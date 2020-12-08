@@ -11,11 +11,8 @@ export declare class GetUserRequest {
   name?: string;
 }
 
-export function getUser(
-  param: unknown
-): param is GetUserRequest {
+export function getUser(param: unknown): param is GetUserRequest {
   const request = param as GetUserRequest;
 
   return request.id !== undefined || request.name !== undefined;
 }
-

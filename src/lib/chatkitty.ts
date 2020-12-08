@@ -69,13 +69,13 @@ import {
 } from './model/session/start/session.start.result';
 import { NotAGroupChannelChatKittyError } from './model/user/get/user.get.error';
 import {
-  GetMembersRequest,
   getUser,
-  GetUserRequest, GetUsersRequest
+  GetUserRequest,
+  GetUsersRequest,
 } from './model/user/get/user.get.request';
 import {
   GetUserResult,
-  GetUsersResult
+  GetUsersResult,
 } from './model/user/get/user.get.result';
 import { User } from './model/user/user.model';
 import { StompXClient } from './stompx/stompx.client';
@@ -489,13 +489,12 @@ export default class ChatKitty {
 
       if (getUser(param)) {
         if (param.id) {
-          relay = ChatKitty.userRelay(param.id)
-        } else  {
+          relay = ChatKitty.userRelay(param.id);
+        } else {
           relay = ''; // TODO
         }
-
       } else {
-        relay = ChatKitty.userRelay(param)
+        relay = ChatKitty.userRelay(param);
       }
 
       this.client.relayResource<User>({
