@@ -1,14 +1,14 @@
 import { ChatKittyFile } from '../../chatkitty.file';
-import { UserProperties } from '../user/user.properties';
+import { User } from '../user/user.model';
 
-export type Message = SystemMessage | UserMessage;
-
-interface MessageProperties {
+export interface MessageProperties {
   id: number;
   type: string;
   createdTime: string;
   properties: unknown;
 }
+
+export type Message = SystemMessage | UserMessage;
 
 export type SystemMessage = TextSystemMessage | FileSystemMessage;
 
@@ -39,7 +39,7 @@ export declare class TextUserMessage implements MessageProperties {
   type: string;
   createdTime: string;
   properties: unknown;
-  user: UserProperties;
+  user: User;
   body: string;
 }
 
@@ -48,7 +48,7 @@ export declare class FileUserMessage implements MessageProperties {
   type: string;
   createdTime: string;
   properties: unknown;
-  user: UserProperties;
+  user: User;
   file: ChatKittyFile;
 }
 

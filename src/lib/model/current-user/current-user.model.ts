@@ -1,7 +1,11 @@
-export declare class CurrentUser {
-  id: number;
-  name: string;
+import { UserProperties } from '../user/user.model';
+
+export declare class CurrentUser implements UserProperties {
+  displayName: string;
   displayPictureUrl: string;
+  id: number;
+  isGuest: string;
+  name: string;
   properties: unknown;
   _relays: CurrentUserRelays;
   _topics: CurrentUserTopics;

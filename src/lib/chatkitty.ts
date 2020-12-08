@@ -67,6 +67,17 @@ import {
   StartedSessionResult,
   StartSessionResult,
 } from './model/session/start/session.start.result';
+import { NotAGroupChannelChatKittyError } from './model/user/get/user.get.error';
+import {
+  GetMembersRequest,
+  getUser,
+  GetUserRequest, GetUsersRequest
+} from './model/user/get/user.get.request';
+import {
+  GetUserResult,
+  GetUsersResult
+} from './model/user/get/user.get.result';
+import { User } from './model/user/user.model';
 import { StompXClient } from './stompx/stompx.client';
 
 export default class ChatKitty {
@@ -90,6 +101,10 @@ export default class ChatKitty {
 
   private static channelRelay(id: number): string {
     return '/application/v1/channels/' + id + '.relay';
+  }
+
+  private static userRelay(id: number): string {
+    return '/application/v1/users/' + id + '.relay';
   }
 
   private readonly client: StompXClient;
@@ -452,5 +467,43 @@ export default class ChatKitty {
     });
 
     return () => unsubscribe;
+  }
+
+  public getUsers(request: GetUsersRequest): Promise<GetUsersResult> {
+    return new Promise((resolve, reject) => {
+      if (!request.channel._relays.members) {
+        reject(new NotAGroupChannelChatKittyError(request.channel));
+      } else {
+        ChatKittyPaginator.createInstance<User>(
+          this.client,
+          request.channel._relays.members,
+          'users'
+        ).then((paginator) => resolve(new GetUsersResult(paginator)));
+      }
+    });
+  }
+
+  public getUser(param: number | GetUserRequest): Promise<GetUserResult> {
+    return new Promise((resolve) => {
+      let relay: string;
+
+      if (getUser(param)) {
+        if (param.id) {
+          relay = ChatKitty.userRelay(param.id)
+        } else  {
+          relay = ''; // TODO
+        }
+
+      } else {
+        relay = ChatKitty.userRelay(param)
+      }
+
+      this.client.relayResource<User>({
+        destination: relay,
+        onSuccess: (user) => {
+          resolve(new GetUserResult(user));
+        },
+      });
+    });
   }
 }
