@@ -1,7 +1,10 @@
+import { Message } from '../message/message.model';
+
 export declare class Channel {
   id: number;
   type: string;
   name: string;
+  lastReceivedMessage: Message
   properties: unknown;
   _relays: ChannelRelays;
   _topics: ChannelTopics;
