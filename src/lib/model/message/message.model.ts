@@ -14,6 +14,10 @@ export type SystemMessage = TextSystemMessage | FileSystemMessage;
 
 export type UserMessage = TextUserMessage | FileUserMessage;
 
+export type TextMessage = TextSystemMessage | TextUserMessage;
+
+export type FileMessage = FileSystemMessage | FileUserMessage;
+
 export declare class TextSystemMessage implements MessageProperties {
   id: number;
   type: string;
@@ -48,8 +52,14 @@ export declare class FileUserMessage implements MessageProperties {
   file: ChatKittyFile;
 }
 
+export function isTextMessage(
+  message: Message
+): message is TextMessage {
+  return (message as TextMessage).body !== undefined;
+}
+
 export function isFileMessage(
   message: Message
-): message is FileSystemMessage | FileUserMessage {
-  return (message as { file: ChatKittyFile }).file !== undefined;
+): message is FileMessage {
+  return (message as FileMessage).file !== undefined;
 }
