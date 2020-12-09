@@ -2,7 +2,11 @@
 
 <p align="center">
   <img src="https://www.chatkitty.com/images/banner-logo-dark.png" alt="ChatKitty: Cloud Chat Platform" width="315">
+  <br/>
+  <a href="https://github.com/slatedocs/slate/actions?query=workflow%3ABuild+branch%3Amain"><img src="https://github.com/slatedocs/slate/workflows/Build/badge.svg?branch=main" alt="Build Status"></a>  
 </p>
+
+[![NPM](https://nodei.co/npm/chatkitty.png)](https://www.npmjs.com/package/chatkitty)
 
 <p align="center">ChatKitty helps you build real-time chat without any back-end.</p>
 
@@ -31,3 +35,50 @@ Features
 * **Delivery and read receipts** - See when messages get delivered and read.
 
 * **Link preview generation** - Messages with links get rich media previews.
+
+#### Reliability
+
+#### Low Latency 
+
+#### Reliability
+
+#### Cross-platform support
+
+#### Simple and convenient API
+
+Sample code:
+
+```js
+let kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
+
+useEffect(() => {
+  // start real-time chat session
+  let result = kitty.startChatSession({
+    channel: channel,
+    onReceivedMessage: (message) => {
+      showMessage(message); // update your UI as new chat events occur
+    },
+  });
+
+  return result.session.end;
+}, []);
+```
+
+## Installation
+### Install with NPM
+```bash
+npm install chatkitty
+```
+
+### Install with Yarn
+```bash
+yarn add chatkitty
+```
+
+## How to use
+
+## API Documentation
+
+## Questions? Need Help? Found a bug?
+
+## Contributing
