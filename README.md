@@ -3,10 +3,8 @@
 <p align="center">
   <img src="https://www.chatkitty.com/images/banner-logo-dark.png" alt="ChatKitty: Cloud Chat Platform" width="315">
   <br/>
-  <a href="https://github.com/slatedocs/slate/actions?query=workflow%3ABuild+branch%3Amain"><img src="https://github.com/slatedocs/slate/workflows/Build/badge.svg?branch=main" alt="Build Status"></a>  
+  <a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>  
 </p>
-
-[![NPM](https://nodei.co/npm/chatkitty.png)](https://www.npmjs.com/package/chatkitty)
 
 <p align="center">ChatKitty helps you build real-time chat without any back-end.</p>
 
