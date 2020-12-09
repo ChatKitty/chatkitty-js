@@ -4,4 +4,5 @@ export declare class CreateChannelRequest {
   type: string;
   name?: string;
   members?: ChatkittyResourceReference[];
+  properties?: unknown;
 }
