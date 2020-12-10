@@ -1,11 +1,11 @@
 {
   "name": "chatkitty",
   "version": "0.0.36",
-  "description": "JS SDK for the ChatKitty Chat API",
+  "description": "JS SDK for the ChatKitty Chat Platform",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "repository": "https://github.com/ChatKitty/chatkitty-js",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "keywords": [
     "chat",
     "messaging",
