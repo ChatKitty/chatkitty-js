@@ -116,11 +116,11 @@ typing indicators, delivery and read receipts, emoji and like reactions, etc, yo
 
 ```js
 kitty.startChatSession({
-      channel: channel,
-      onReceivedMessage: (message) => { 
-        // Do something with the new message
-      },
-    });
+  channel: channel,
+  onReceivedMessage: (message) => {
+    // Do something with the new message
+  },
+});
 ```
 
 ## API Documentation
