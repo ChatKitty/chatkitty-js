@@ -15,6 +15,7 @@ export declare class Channel {
 export declare class ChannelRelays {
   self: string;
   messages: string;
+  unread?: string;
   members?: string;
 }
 

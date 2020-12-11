@@ -15,10 +15,12 @@ import {
   CreateChannelResult,
   CreatedChannelResult,
 } from './model/channel/create/channel.create.result';
+import { GetChannelReadRequest } from './model/channel/get/channel.get.request';
 import {
+  GetChannelExistsResult,
   GetChannelResult,
   GetChannelsCountResult,
-  GetChannelsResult,
+  GetChannelsResult
 } from './model/channel/get/channel.get.result';
 import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
 import { JoinChannelRequest } from './model/channel/join/channel.join.request';
@@ -324,6 +326,21 @@ export default class ChatKitty {
           resolve(new GetChannelResult(channel));
         },
       });
+    });
+  }
+
+  public getChannelUnread(request: GetChannelReadRequest): Promise<GetChannelExistsResult> {
+    return new Promise((resolve, reject) => {
+      if (!request.channel._relays.unread) {
+        reject(new NotAGroupChannelChatKittyError(request.channel));
+      } else {
+        this.client.relayResource<{exists: boolean}>({
+          destination: request.channel._relays.unread,
+          onSuccess: (resource) => {
+            resolve(new GetChannelExistsResult(resource.exists));
+          },
+        });
+      }
     });
   }
 
