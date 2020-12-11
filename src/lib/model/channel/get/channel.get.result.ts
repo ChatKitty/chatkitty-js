@@ -14,8 +14,8 @@ export class GetChannelsResult extends ChatKittySucceededResult {
   }
 }
 
-export class GetChannelExistsResult extends ChatKittySucceededResult {
-  constructor(public exist: boolean) {
+export class GetChannelUnreadResult extends ChatKittySucceededResult {
+  constructor(public unread: boolean) {
     super();
   }
 }

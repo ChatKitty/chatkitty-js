@@ -17,10 +17,10 @@ import {
 } from './model/channel/create/channel.create.result';
 import { GetChannelReadRequest } from './model/channel/get/channel.get.request';
 import {
-  GetChannelExistsResult,
   GetChannelResult,
   GetChannelsCountResult,
   GetChannelsResult,
+  GetChannelUnreadResult,
 } from './model/channel/get/channel.get.result';
 import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
 import { JoinChannelRequest } from './model/channel/join/channel.join.request';
@@ -353,12 +353,12 @@ export default class ChatKitty {
 
   public getChannelUnread(
     request: GetChannelReadRequest
-  ): Promise<GetChannelExistsResult> {
+  ): Promise<GetChannelUnreadResult> {
     return new Promise((resolve) => {
       this.client.relayResource<{ exists: boolean }>({
         destination: request.channel._relays.unread,
         onSuccess: (resource) => {
-          resolve(new GetChannelExistsResult(resource.exists));
+          resolve(new GetChannelUnreadResult(resource.exists));
         },
       });
     });
