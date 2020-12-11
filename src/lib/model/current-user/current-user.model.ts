@@ -18,6 +18,8 @@ export declare class CurrentUserRelays {
   writeFileAccessGrant: string;
   channels: string;
   joinableChannels: string;
+  unreadChannelsCount: string;
+  unreadChannels: string;
 }
 
 export declare class CurrentUserTopics {

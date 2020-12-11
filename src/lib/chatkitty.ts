@@ -17,6 +17,7 @@ import {
 } from './model/channel/create/channel.create.result';
 import {
   GetChannelResult,
+  GetChannelsCountResult,
   GetChannelsResult,
 } from './model/channel/get/channel.get.result';
 import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
@@ -280,6 +281,35 @@ export default class ChatKitty {
         ChatKittyPaginator.createInstance<Channel>(
           this.client,
           this.currentUser._relays.joinableChannels,
+          'channels'
+        ).then((paginator) => resolve(new GetChannelsResult(paginator)));
+      }
+    });
+  }
+
+  public getUnreadChannelsCount(): Promise<GetChannelsCountResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        this.client.relayResource<{ count: number }>({
+          destination: this.currentUser._relays.unreadChannelsCount,
+          onSuccess: (resource) => {
+            resolve(new GetChannelsCountResult(resource.count));
+          },
+        });
+      }
+    });
+  }
+
+  public getUnreadChannels(): Promise<GetChannelsResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        ChatKittyPaginator.createInstance<Channel>(
+          this.client,
+          this.currentUser._relays.unreadChannels,
           'channels'
         ).then((paginator) => resolve(new GetChannelsResult(paginator)));
       }
