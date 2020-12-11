@@ -6,6 +6,7 @@ export interface MessageProperties {
   type: string;
   createdTime: string;
   properties: unknown;
+  _actions: MessageActions;
 }
 
 export type Message = SystemMessage | UserMessage;
@@ -24,6 +25,7 @@ export declare class TextSystemMessage implements MessageProperties {
   createdTime: string;
   properties: unknown;
   body: string;
+  _actions: MessageActions;
 }
 
 export declare class FileSystemMessage implements MessageProperties {
@@ -32,6 +34,7 @@ export declare class FileSystemMessage implements MessageProperties {
   createdTime: string;
   properties: unknown;
   file: ChatKittyFile;
+  _actions: MessageActions;
 }
 
 export declare class TextUserMessage implements MessageProperties {
@@ -41,6 +44,7 @@ export declare class TextUserMessage implements MessageProperties {
   properties: unknown;
   user: User;
   body: string;
+  _actions: MessageActions;
 }
 
 export declare class FileUserMessage implements MessageProperties {
@@ -50,6 +54,11 @@ export declare class FileUserMessage implements MessageProperties {
   properties: unknown;
   user: User;
   file: ChatKittyFile;
+  _actions: MessageActions;
+}
+
+export declare class MessageActions {
+  read: string;
 }
 
 export function isTextMessage(message: Message): message is TextMessage {

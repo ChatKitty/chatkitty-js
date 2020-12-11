@@ -15,7 +15,7 @@ export declare class Channel {
 export declare class ChannelRelays {
   self: string;
   messages: string;
-  unread?: string;
+  unread: string;
   members?: string;
 }
 
@@ -27,6 +27,7 @@ export declare class ChannelTopics {
 export declare class ChannelActions {
   message: string;
   join?: string;
+  read: string;
 }
 
 export declare class ChannelStreams {

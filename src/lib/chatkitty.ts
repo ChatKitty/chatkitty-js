@@ -20,7 +20,7 @@ import {
   GetChannelExistsResult,
   GetChannelResult,
   GetChannelsCountResult,
-  GetChannelsResult
+  GetChannelsResult,
 } from './model/channel/get/channel.get.result';
 import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
 import { JoinChannelRequest } from './model/channel/join/channel.join.request';
@@ -28,6 +28,7 @@ import {
   JoinChannelResult,
   JoinedChannelResult,
 } from './model/channel/join/channel.join.result';
+import { ReadChannelRequest } from './model/channel/read/channel.read.request';
 import { ChatSession } from './model/chat-session/chat-session.model';
 import { NoActiveChatSessionChatKittyError } from './model/chat-session/start/chat-session.start.error';
 import { StartChatSessionRequest } from './model/chat-session/start/chat-session.start.request';
@@ -49,6 +50,7 @@ import {
   Message,
   TextUserMessage,
 } from './model/message/message.model';
+import { ReadMessageRequest } from './model/message/read/message.read.request';
 import {
   sendChannelFileMessage,
   sendChannelTextMessage,
@@ -289,6 +291,37 @@ export default class ChatKitty {
     });
   }
 
+  public getChannel(id: number): Promise<GetChannelResult> {
+    return new Promise((resolve) => {
+      this.client.relayResource<Channel>({
+        destination: ChatKitty.channelRelay(id),
+        onSuccess: (channel) => {
+          resolve(new GetChannelResult(channel));
+        },
+      });
+    });
+  }
+
+  public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        if (request.channel._actions.join) {
+          this.client.performAction<Channel>({
+            destination: request.channel._actions.join,
+            body: request,
+            onSuccess: (channel) => {
+              resolve(new JoinedChannelResult(channel));
+            },
+          });
+        } else {
+          reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
+        }
+      }
+    });
+  }
+
   public getUnreadChannelsCount(): Promise<GetChannelsCountResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
@@ -318,49 +351,23 @@ export default class ChatKitty {
     });
   }
 
-  public getChannel(id: number): Promise<GetChannelResult> {
+  public getChannelUnread(
+    request: GetChannelReadRequest
+  ): Promise<GetChannelExistsResult> {
     return new Promise((resolve) => {
-      this.client.relayResource<Channel>({
-        destination: ChatKitty.channelRelay(id),
-        onSuccess: (channel) => {
-          resolve(new GetChannelResult(channel));
+      this.client.relayResource<{ exists: boolean }>({
+        destination: request.channel._relays.unread,
+        onSuccess: (resource) => {
+          resolve(new GetChannelExistsResult(resource.exists));
         },
       });
     });
   }
 
-  public getChannelUnread(request: GetChannelReadRequest): Promise<GetChannelExistsResult> {
-    return new Promise((resolve, reject) => {
-      if (!request.channel._relays.unread) {
-        reject(new NotAGroupChannelChatKittyError(request.channel));
-      } else {
-        this.client.relayResource<{exists: boolean}>({
-          destination: request.channel._relays.unread,
-          onSuccess: (resource) => {
-            resolve(new GetChannelExistsResult(resource.exists));
-          },
-        });
-      }
-    });
-  }
-
-  public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
-      } else {
-        if (request.channel._actions.join) {
-          this.client.performAction<Channel>({
-            destination: request.channel._actions.join,
-            body: request,
-            onSuccess: (channel) => {
-              resolve(new JoinedChannelResult(channel));
-            },
-          });
-        } else {
-          reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
-        }
-      }
+  public readChannel(request: ReadChannelRequest) {
+    this.client.performAction<never>({
+      destination: request.channel._actions.read,
+      body: {},
     });
   }
 
@@ -489,6 +496,13 @@ export default class ChatKitty {
           (message) => this.messageMapper.map(message)
         ).then((paginator) => resolve(new GetMessagesResult(paginator)));
       }
+    });
+  }
+
+  public readMessage(request: ReadMessageRequest) {
+    this.client.performAction<never>({
+      destination: request.message._actions.read,
+      body: {},
     });
   }
 
