@@ -193,6 +193,7 @@ export class StompXClient {
       .watch(request.topic, {
         id: StompXClient.generateSubscriptionId(),
         receipt: subscriptionReceipt,
+        ack: 'client-individual'
       })
       .subscribe((message) => {
         const event: StompXEvent<unknown> = JSON.parse(message.body);
@@ -218,6 +219,8 @@ export class StompXClient {
             }
           });
         }
+
+        message.ack();
       });
 
     this.topics.set(request.topic, subscription);
