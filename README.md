@@ -13,6 +13,8 @@
 
 <a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>  
 
+[![Build Status](https://travis-ci.com/ChatKitty/chatkitty-js.svg?branch=master)](https://travis-ci.com/ChatKitty/chatkitty-js)
+
 Features
 ------------
 * **Private chat** - Provide secure and encrypted direct messaging to your users.
