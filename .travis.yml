@@ -6,7 +6,7 @@ cache:
   directories:
     - '$HOME/.npm'
 script:
-  - typedoc --out docs src/libs
+  - typedoc --out docs src/lib
 deploy:
   provider: pages
   local_dir: docs
