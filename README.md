@@ -130,6 +130,8 @@ Please see the documentation for this SDK at the [ChatKitty Website](https://doc
 
 The source code of the website can be found [here](https://github.com/ChatKitty/chatkitty-api-docs). Contributions are welcome!
 
+A complete SDK reference document is hosted at https://chatkitty.github.io/chatkitty-js/
+
 ## Questions? Need Help? Found a bug?
 If you've got questions about setup, usage, special feature implementation in your chat app, or just want to chat with a 
 ChatKitty dev, please feel free to [start a thread in our Discussions tab](https://github.com/ChatKitty/chatkitty-js/discussions)!
