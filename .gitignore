@@ -3,6 +3,7 @@
 build
 node_modules
 coverage
+docs
 *.log
 yarn.lock
 .DS_Store
