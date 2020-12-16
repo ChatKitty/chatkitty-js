@@ -6,7 +6,7 @@ cache:
   directories:
     - '$HOME/.npm'
 script:
-  - typedoc --out docs src/lib
+  - typedoc --name "ChatKitty JS SDK Reference" --out docs src/lib --plugin typedoc-plugin-extras --favicon .docs/favicon.ico
   - cp -a .docs/. docs
 deploy:
   provider: pages
