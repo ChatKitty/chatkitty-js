@@ -7,7 +7,7 @@ cache:
     - '$HOME/.npm'
 script:
   - typedoc --out docs src/lib
-  - touch docs/.nojekyll
+  - cp -a .docs/. docs
 deploy:
   provider: pages
   local_dir: docs
