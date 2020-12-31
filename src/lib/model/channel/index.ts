@@ -1,4 +1,4 @@
-import { Message } from '../message/model';
+import { Message } from '../message';
 
 export declare class Channel {
   id: number;

@@ -1,5 +1,5 @@
-import { ChatKittyFile } from '../../chatkitty';
-import { User } from '../user/model';
+import { ChatKittyFile } from '../../file';
+import { User } from '../user';
 
 export interface MessageProperties {
   id: number;

@@ -1,4 +1,4 @@
-import { UserProperties } from '../user/model';
+import { UserProperties } from '../user';
 
 export declare class CurrentUser implements UserProperties {
   displayName: string;

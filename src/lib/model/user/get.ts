@@ -1,11 +1,9 @@
-import {
-  ChatKittyError,
-  ChatKittyPaginator,
-  ChatKittySucceededResult,
-} from '../../chatkitty';
-import { Channel } from '../channel/model';
+import { ChatKittyError } from '../../error';
+import { ChatKittyPaginator } from '../../paginator';
+import { ChatKittySucceededResult } from '../../result';
+import { Channel } from '../channel';
 
-import { User } from './model';
+import { User } from './index';
 
 export type GetUsersRequest = GetMembersRequest;
 

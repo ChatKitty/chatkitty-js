@@ -1,16 +1,13 @@
-import {
-  ChatKittyError,
-  ChatKittyFailedResult,
-  ChatkittyResourceReference,
-  ChatKittySucceededResult,
-} from '../../chatkitty';
+import { ChatKittyError } from '../../error';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
+import { ChatKittyModelReference } from '../index';
 
-import { Channel } from './model';
+import { Channel } from './index';
 
 export declare class CreateChannelRequest {
   type: string;
   name?: string;
-  members?: ChatkittyResourceReference[];
+  members?: ChatKittyModelReference[];
   properties?: unknown;
 }
 

@@ -1,6 +1,7 @@
-import { ChatKittyPaginator, ChatKittySucceededResult } from '../../chatkitty';
+import { ChatKittyPaginator } from '../../paginator';
+import { ChatKittySucceededResult } from '../../result';
 
-import { Channel } from './model';
+import { Channel } from './index';
 
 export declare class GetChannelReadRequest {
   channel: Channel;

@@ -1,10 +1,7 @@
-import {
-  ChatKittyError,
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from '../../chatkitty';
+import { ChatKittyError } from '../../error';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
 
-import { Session } from './model';
+import { Session } from './index';
 
 export declare class StartSessionRequest {
   username: string;

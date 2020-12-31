@@ -1,6 +1,6 @@
-import { ChatKittySucceededResult } from '../../chatkitty';
+import { ChatKittySucceededResult } from '../../result';
 
-import { CurrentUser } from './model';
+import { CurrentUser } from './index';
 
 export type UpdateCurrentUserResult = UpdatedCurrentUserResult;
 

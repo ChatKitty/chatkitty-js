@@ -1,6 +1,7 @@
-import { ChatKittyError, ChatKittySucceededResult } from '../../chatkitty';
+import { ChatKittyError } from '../../error';
+import { ChatKittySucceededResult } from '../../result';
 
-import { Channel } from './model';
+import { Channel } from './index';
 
 export declare class JoinChannelRequest {
   channel: Channel;

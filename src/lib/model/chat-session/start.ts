@@ -1,8 +1,9 @@
-import { ChatKittyError, ChatKittySucceededResult } from '../../chatkitty';
-import { Channel } from '../channel/model';
-import { Message } from '../message/model';
+import { ChatKittyError } from '../../error';
+import { ChatKittySucceededResult } from '../../result';
+import { Channel } from '../channel';
+import { Message } from '../message';
 
-import { ChatSession } from './model';
+import { ChatSession } from './index';
 
 export declare class StartChatSessionRequest {
   channel: Channel;

@@ -2,47 +2,49 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
+import { UnknownChatKittyError } from './error';
+import { ChatKittyUploadResult } from './file';
+import { Channel } from './model/channel';
 import {
   CreateChannelFailedResult,
   CreateChannelRequest,
   CreateChannelResult,
-  CreatedChannelResult,
+  CreatedChannelResult
 } from './model/channel/create';
 import {
   GetChannelReadRequest,
   GetChannelResult,
   GetChannelsCountResult,
   GetChannelsResult,
-  GetChannelUnreadResult,
+  GetChannelUnreadResult
 } from './model/channel/get';
 import {
   ChannelNotPubliclyJoinableChatKittyError,
   JoinChannelRequest,
   JoinChannelResult,
-  JoinedChannelResult,
+  JoinedChannelResult
 } from './model/channel/join';
-import { Channel } from './model/channel/model';
 import { ReadChannelRequest } from './model/channel/read';
-import { ChatSession } from './model/chat-session/model';
+import { ChatSession } from './model/chat-session';
 import {
   NoActiveChatSessionChatKittyError,
   StartChatSessionRequest,
   StartChatSessionResult,
-  StartedChatSessionResult,
+  StartedChatSessionResult
 } from './model/chat-session/start';
+import { CurrentUser } from './model/current-user';
 import { GetCurrentUserResult } from './model/current-user/get';
-import { CurrentUser } from './model/current-user/model';
 import {
   UpdateCurrentUserResult,
-  UpdatedCurrentUserResult,
+  UpdatedCurrentUserResult
 } from './model/current-user/update';
-import { GetMessagesRequest, GetMessagesResult } from './model/message/get';
 import {
   FileUserMessage,
   isFileMessage,
   Message,
-  TextUserMessage,
-} from './model/message/model';
+  TextUserMessage
+} from './model/message';
+import { GetMessagesRequest, GetMessagesResult } from './model/message/get';
 import { ReadMessageRequest } from './model/message/read';
 import {
   SendChannelFileMessageRequest,
@@ -50,7 +52,7 @@ import {
   SendMessageRequest,
   SendMessageResult,
   SentFileMessageResult,
-  SentTextMessageResult,
+  SentTextMessageResult
 } from './model/message/send';
 import {
   AccessDeniedSessionError,
@@ -58,17 +60,19 @@ import {
   NoActiveSessionChatKittyError,
   StartedSessionResult,
   StartSessionRequest,
-  StartSessionResult,
+  StartSessionResult
 } from './model/session/start';
+import { User } from './model/user';
 import {
   GetUserRequest,
   GetUserResult,
   GetUsersRequest,
   GetUsersResult,
-  NotAGroupChannelChatKittyError,
+  NotAGroupChannelChatKittyError
 } from './model/user/get';
-import { User } from './model/user/model';
-import StompX, { StompXPage } from './stompx';
+import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
+import { ChatKittyPaginator } from './paginator';
+import StompX from './stompx';
 
 export default class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();
@@ -113,7 +117,7 @@ export default class ChatKitty {
     this.client = new StompX({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
       host: configuration.host || 'api.chatkitty.com',
-      isDebug: !environment.production,
+      isDebug: !environment.production
     });
   }
 
@@ -140,18 +144,18 @@ export default class ChatKitty {
                 destination: user._relays.writeFileAccessGrant,
                 onSuccess: (grant) => {
                   this.writeFileGrant = grant.grant;
-                },
+                }
               });
 
               this.client.relayResource<{ grant: string }>({
                 destination: user._relays.readFileAccessGrant,
                 onSuccess: (grant) => {
                   this.messageMapper = new MessageMapper(grant.grant);
-                },
+                }
               });
 
               resolve(new StartedSessionResult({ user: user }));
-            },
+            }
           });
         },
         onError: (error) => {
@@ -162,7 +166,7 @@ export default class ChatKitty {
           } else {
             resolve(new AccessDeniedSessionResult(new UnknownChatKittyError()));
           }
-        },
+        }
       });
     });
   }
@@ -171,7 +175,7 @@ export default class ChatKitty {
     this.client.disconnect({
       onSuccess: () => {
         this.currentUserNextSubject.next(null);
-      },
+      }
     });
   }
 
@@ -181,7 +185,7 @@ export default class ChatKitty {
         destination: ChatKitty.currentUserRelay,
         onSuccess: (user) => {
           resolve(new GetCurrentUserResult(user));
-        },
+        }
       });
     });
   }
@@ -216,7 +220,7 @@ export default class ChatKitty {
             this.currentUserNextSubject.next(user);
 
             resolve(new UpdatedCurrentUserResult(user));
-          },
+          }
         });
       }
     });
@@ -239,10 +243,10 @@ export default class ChatKitty {
             resolve(
               new CreateChannelFailedResult({
                 ...error,
-                type: error.error,
+                type: error.error
               })
             );
-          },
+          }
         });
       }
     });
@@ -282,7 +286,7 @@ export default class ChatKitty {
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelResult(channel));
-        },
+        }
       });
     });
   }
@@ -298,7 +302,7 @@ export default class ChatKitty {
             body: request,
             onSuccess: (channel) => {
               resolve(new JoinedChannelResult(channel));
-            },
+            }
           });
         } else {
           reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
@@ -316,7 +320,7 @@ export default class ChatKitty {
           destination: this.currentUser._relays.unreadChannelsCount,
           onSuccess: (resource) => {
             resolve(new GetChannelsCountResult(resource.count));
-          },
+          }
         });
       }
     });
@@ -344,7 +348,7 @@ export default class ChatKitty {
         destination: request.channel._relays.unread,
         onSuccess: (resource) => {
           resolve(new GetChannelUnreadResult(resource.exists));
-        },
+        }
       });
     });
   }
@@ -352,7 +356,7 @@ export default class ChatKitty {
   public readChannel(request: ReadChannelRequest) {
     this.client.performAction<never>({
       destination: request.channel._actions.read,
-      body: {},
+      body: {}
     });
   }
 
@@ -371,7 +375,7 @@ export default class ChatKitty {
         event: 'thread.message.created',
         onSuccess: (message) => {
           onReceivedMessage(this.messageMapper.map(message));
-        },
+        }
       });
     }
 
@@ -379,7 +383,7 @@ export default class ChatKitty {
       topic: request.channel._topics.self,
       callback: () => {
         const messagesUnsubscribe = this.client.listenToTopic({
-          topic: request.channel._topics.messages,
+          topic: request.channel._topics.messages
         });
 
         unsubscribe = () => {
@@ -395,7 +399,7 @@ export default class ChatKitty {
 
           this.chatSessions.delete(request.channel.id);
         };
-      },
+      }
     });
 
     const session = {
@@ -404,7 +408,7 @@ export default class ChatKitty {
         if (unsubscribe) {
           unsubscribe();
         }
-      },
+      }
     };
 
     this.chatSessions.set(request.channel.id, session);
@@ -426,13 +430,13 @@ export default class ChatKitty {
             destination: request.channel._actions.message,
             body: {
               type: 'TEXT',
-              body: request.body,
+              body: request.body
             },
             onSuccess: (message) => {
               resolve(
                 new SentTextMessageResult(this.messageMapper.map(message))
               );
-            },
+            }
           });
         }
 
@@ -461,8 +465,8 @@ export default class ChatKitty {
               onCancelled: () =>
                 request.progressListener?.onCompleted(
                   ChatKittyUploadResult.CANCELLED
-                ),
-            },
+                )
+            }
           });
         }
       }
@@ -487,7 +491,7 @@ export default class ChatKitty {
   public readMessage(request: ReadMessageRequest) {
     this.client.performAction<never>({
       destination: request.message._actions.read,
-      body: {},
+      body: {}
     });
   }
 
@@ -509,7 +513,7 @@ export default class ChatKitty {
         } else {
           onNextOrObserver.onNext(notification);
         }
-      },
+      }
     });
 
     return () => unsubscribe;
@@ -547,7 +551,7 @@ export default class ChatKitty {
         destination: relay,
         onSuccess: (user) => {
           resolve(new GetUserResult(user));
-        },
+        }
       });
     });
   }
@@ -557,167 +561,6 @@ export declare class ChatKittyConfiguration {
   apiKey: string;
   isSecure?: boolean;
   host?: string;
-}
-
-export interface ChatKittyResult {
-  succeeded: boolean;
-  cancelled: boolean;
-  failed: boolean;
-}
-
-export abstract class ChatKittySucceededResult implements ChatKittyResult {
-  succeeded = true;
-  cancelled = false;
-  failed = false;
-}
-
-export abstract class ChatKittyCancelledResult implements ChatKittyResult {
-  succeeded = false;
-  cancelled = true;
-  failed = false;
-}
-
-export abstract class ChatKittyFailedResult implements ChatKittyResult {
-  succeeded = false;
-  cancelled = false;
-  failed = true;
-  abstract error: ChatKittyError;
-}
-
-export declare class ChatkittyResourceReference {
-  id: number;
-}
-
-export class ChatKittyPaginator<I> {
-  static async createInstance<I>(
-    client: StompX,
-    relay: string,
-    contentName: string,
-    mapper?: (item: I) => I
-  ): Promise<ChatKittyPaginator<I>> {
-    const page = await new Promise<StompXPage>((resolve) => {
-      client.relayResource<StompXPage>({
-        destination: relay,
-        onSuccess: (resource) => resolve(resource),
-      });
-    });
-
-    let items: I[] = [];
-
-    if (page._embedded) {
-      items = page._embedded[contentName] as I[];
-    }
-
-    if (mapper) {
-      items = items.map((item) => mapper(item));
-    }
-
-    return new ChatKittyPaginator<I>(
-      items,
-      client,
-      contentName,
-      page._relays.prev,
-      page._relays.next
-    );
-  }
-
-  private constructor(
-    public items: I[],
-    private client: StompX,
-    private contentName: string,
-    private prevRelay?: string,
-    private nextRelay?: string
-  ) {}
-
-  get hasPrevPage(): boolean {
-    return !!this.prevRelay;
-  }
-
-  get hasNextPage(): boolean {
-    return !!this.nextRelay;
-  }
-
-  async prevPage(): Promise<ChatKittyPaginator<I>> {
-    return this.getPage(this.prevRelay);
-  }
-
-  async nextPage(): Promise<ChatKittyPaginator<I>> {
-    return this.getPage(this.nextRelay);
-  }
-
-  private async getPage(relay?: string): Promise<ChatKittyPaginator<I>> {
-    const page = await new Promise<StompXPage>((resolve, reject) => {
-      if (relay) {
-        this.client.relayResource<StompXPage>({
-          destination: relay,
-          onSuccess: (resource) => resolve(resource),
-        });
-      } else {
-        reject(new PageOutOfBoundsChatKittyError());
-      }
-    });
-
-    let items: I[] = [];
-
-    if (page._embedded) {
-      items = page._embedded[this.contentName] as I[];
-    }
-
-    return new ChatKittyPaginator<I>(
-      items,
-      this.client,
-      this.contentName,
-      page._relays.prev,
-      page._relays.next
-    );
-  }
-}
-
-export interface ChatkittyObserver<T> {
-  onNext: (value: T) => void;
-  onError: (value: ChatKittyError) => void;
-  onComplete: () => void;
-}
-
-export type ChatKittyUnsubscribe = () => void;
-
-export declare class ChatKittyFile {
-  type: string;
-  url: string;
-  name: string;
-  contentType: string;
-  size: number;
-}
-
-export enum ChatKittyUploadResult {
-  COMPLETED,
-  FAILED,
-  CANCELLED,
-}
-
-export interface ChatKittyUploadProgressListener {
-  onStarted: () => void;
-  onProgress: (progress: number) => void;
-  onCompleted: (result: ChatKittyUploadResult) => void;
-}
-
-export abstract class ChatKittyError {
-  protected constructor(public type: string, public message: string) {}
-}
-
-export class UnknownChatKittyError extends ChatKittyError {
-  constructor() {
-    super('UnknownChatKittyError', 'An unknown error has occurred.');
-  }
-}
-
-export class PageOutOfBoundsChatKittyError extends ChatKittyError {
-  constructor() {
-    super(
-      'PageOutOfBoundsChatKittyError',
-      "You've requested a page that doesn't exists."
-    );
-  }
 }
 
 class MessageMapper {
@@ -733,12 +576,12 @@ class MessageMapper {
         ...message,
         file: {
           ...message.file,
-          url: message.file.url + `?grant=${this.readFileGrant}`,
-        },
+          url: message.file.url + `?grant=${this.readFileGrant}`
+        }
       };
     } else {
       return {
-        ...message,
+        ...message
       };
     }
   }

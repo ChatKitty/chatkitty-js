@@ -1,10 +1,8 @@
-import {
-  ChatKittySucceededResult,
-  ChatKittyUploadProgressListener,
-} from '../../chatkitty';
-import { Channel } from '../channel/model';
+import { ChatKittyUploadProgressListener } from '../../file';
+import { ChatKittySucceededResult } from '../../result';
+import { Channel } from '../channel';
 
-import { FileUserMessage, TextUserMessage } from './model';
+import { FileUserMessage, TextUserMessage } from './index';
 
 export type SendMessageRequest =
   | SendChannelTextMessageRequest

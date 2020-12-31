@@ -1,4 +1,4 @@
-import { CurrentUser } from '../current-user/model';
+import { CurrentUser } from '../current-user';
 
 export declare class Session {
   user: CurrentUser;
