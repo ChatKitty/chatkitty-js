@@ -64,11 +64,11 @@ import {
 } from './model/session/start';
 import { User } from './model/user';
 import {
+  CannotHaveMembersChatKittyError,
   GetUserRequest,
   GetUserResult,
   GetUsersRequest,
-  GetUsersResult,
-  NotAGroupChannelChatKittyError
+  GetUsersResult
 } from './model/user/get';
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './paginator';
@@ -522,7 +522,7 @@ export default class ChatKitty {
   public getUsers(request: GetUsersRequest): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (!request.channel._relays.members) {
-        reject(new NotAGroupChannelChatKittyError(request.channel));
+        reject(new CannotHaveMembersChatKittyError(request.channel));
       } else {
         ChatKittyPaginator.createInstance<User>(
           this.client,
