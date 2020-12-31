@@ -2,88 +2,73 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
-import { ChatKittyConfiguration } from './chatkitty.configuration';
-import { UnknownChatKittyError } from './chatkitty.error';
-import { ChatkittyObserver } from './chatkitty.observer';
-import { ChatKittyPaginator } from './chatkitty.paginator';
-import { ChatKittyUnsubscribe } from './chatkitty.unsubscribe';
-import { ChatKittyUploadResult } from './chatkitty.upload';
-import { Channel } from './model/channel/channel.model';
-import { CreateChannelRequest } from './model/channel/create/channel.create.request';
 import {
   CreateChannelFailedResult,
+  CreateChannelRequest,
   CreateChannelResult,
   CreatedChannelResult,
-} from './model/channel/create/channel.create.result';
-import { GetChannelReadRequest } from './model/channel/get/channel.get.request';
+} from './model/channel/create';
 import {
+  GetChannelReadRequest,
   GetChannelResult,
   GetChannelsCountResult,
   GetChannelsResult,
   GetChannelUnreadResult,
-} from './model/channel/get/channel.get.result';
-import { ChannelNotPubliclyJoinableChatKittyError } from './model/channel/join/channel.join.error';
-import { JoinChannelRequest } from './model/channel/join/channel.join.request';
+} from './model/channel/get';
 import {
+  ChannelNotPubliclyJoinableChatKittyError,
+  JoinChannelRequest,
   JoinChannelResult,
   JoinedChannelResult,
-} from './model/channel/join/channel.join.result';
-import { ReadChannelRequest } from './model/channel/read/channel.read.request';
-import { ChatSession } from './model/chat-session/chat-session.model';
-import { NoActiveChatSessionChatKittyError } from './model/chat-session/start/chat-session.start.error';
-import { StartChatSessionRequest } from './model/chat-session/start/chat-session.start.request';
+} from './model/channel/join';
+import { Channel } from './model/channel/model';
+import { ReadChannelRequest } from './model/channel/read';
+import { ChatSession } from './model/chat-session/model';
 import {
+  NoActiveChatSessionChatKittyError,
+  StartChatSessionRequest,
   StartChatSessionResult,
   StartedChatSessionResult,
-} from './model/chat-session/start/chat-session.start.result';
-import { CurrentUser } from './model/current-user/current-user.model';
-import { GetCurrentUserResult } from './model/current-user/get/current-user.get.result';
+} from './model/chat-session/start';
+import { GetCurrentUserResult } from './model/current-user/get';
+import { CurrentUser } from './model/current-user/model';
 import {
   UpdateCurrentUserResult,
   UpdatedCurrentUserResult,
-} from './model/current-user/update/current-user.update.result';
-import { GetMessagesRequest } from './model/message/get/message.get.request';
-import { GetMessagesResult } from './model/message/get/message.get.result';
-import MessageMapper from './model/message/message.mapper';
+} from './model/current-user/update';
+import { GetMessagesRequest, GetMessagesResult } from './model/message/get';
 import {
   FileUserMessage,
+  isFileMessage,
   Message,
   TextUserMessage,
-} from './model/message/message.model';
-import { ReadMessageRequest } from './model/message/read/message.read.request';
+} from './model/message/model';
+import { ReadMessageRequest } from './model/message/read';
 import {
-  sendChannelFileMessage,
-  sendChannelTextMessage,
+  SendChannelFileMessageRequest,
+  SendChannelTextMessageRequest,
   SendMessageRequest,
-} from './model/message/send/message.send.request';
-import {
   SendMessageResult,
   SentFileMessageResult,
   SentTextMessageResult,
-} from './model/message/send/message.send.result';
-import { Notification } from './model/notification/notification.model';
+} from './model/message/send';
 import {
   AccessDeniedSessionError,
-  NoActiveSessionChatKittyError,
-} from './model/session/start/session.error';
-import { StartSessionRequest } from './model/session/start/session.start.request';
-import {
   AccessDeniedSessionResult,
+  NoActiveSessionChatKittyError,
   StartedSessionResult,
+  StartSessionRequest,
   StartSessionResult,
-} from './model/session/start/session.start.result';
-import { NotAGroupChannelChatKittyError } from './model/user/get/user.get.error';
+} from './model/session/start';
 import {
-  getUser,
   GetUserRequest,
-  GetUsersRequest,
-} from './model/user/get/user.get.request';
-import {
   GetUserResult,
+  GetUsersRequest,
   GetUsersResult,
-} from './model/user/get/user.get.result';
-import { User } from './model/user/user.model';
-import { StompXClient } from './stompx/stompx.client';
+  NotAGroupChannelChatKittyError,
+} from './model/user/get';
+import { User } from './model/user/model';
+import StompX, { StompXPage } from './stompx';
 
 export default class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();
@@ -112,7 +97,7 @@ export default class ChatKitty {
     return '/application/v1/users/' + id + '.relay';
   }
 
-  private readonly client: StompXClient;
+  private readonly client: StompX;
 
   private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(
     null
@@ -125,7 +110,7 @@ export default class ChatKitty {
   private messageMapper: MessageMapper = new MessageMapper('');
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
-    this.client = new StompXClient({
+    this.client = new StompX({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
       host: configuration.host || 'api.chatkitty.com',
       isDebug: !environment.production,
@@ -566,4 +551,213 @@ export default class ChatKitty {
       });
     });
   }
+}
+
+export declare class ChatKittyConfiguration {
+  apiKey: string;
+  isSecure?: boolean;
+  host?: string;
+}
+
+export interface ChatKittyResult {
+  succeeded: boolean;
+  cancelled: boolean;
+  failed: boolean;
+}
+
+export abstract class ChatKittySucceededResult implements ChatKittyResult {
+  succeeded = true;
+  cancelled = false;
+  failed = false;
+}
+
+export abstract class ChatKittyCancelledResult implements ChatKittyResult {
+  succeeded = false;
+  cancelled = true;
+  failed = false;
+}
+
+export abstract class ChatKittyFailedResult implements ChatKittyResult {
+  succeeded = false;
+  cancelled = false;
+  failed = true;
+  abstract error: ChatKittyError;
+}
+
+export declare class ChatkittyResourceReference {
+  id: number;
+}
+
+export class ChatKittyPaginator<I> {
+  static async createInstance<I>(
+    client: StompX,
+    relay: string,
+    contentName: string,
+    mapper?: (item: I) => I
+  ): Promise<ChatKittyPaginator<I>> {
+    const page = await new Promise<StompXPage>((resolve) => {
+      client.relayResource<StompXPage>({
+        destination: relay,
+        onSuccess: (resource) => resolve(resource),
+      });
+    });
+
+    let items: I[] = [];
+
+    if (page._embedded) {
+      items = page._embedded[contentName] as I[];
+    }
+
+    if (mapper) {
+      items = items.map((item) => mapper(item));
+    }
+
+    return new ChatKittyPaginator<I>(
+      items,
+      client,
+      contentName,
+      page._relays.prev,
+      page._relays.next
+    );
+  }
+
+  private constructor(
+    public items: I[],
+    private client: StompX,
+    private contentName: string,
+    private prevRelay?: string,
+    private nextRelay?: string
+  ) {}
+
+  get hasPrevPage(): boolean {
+    return !!this.prevRelay;
+  }
+
+  get hasNextPage(): boolean {
+    return !!this.nextRelay;
+  }
+
+  async prevPage(): Promise<ChatKittyPaginator<I>> {
+    return this.getPage(this.prevRelay);
+  }
+
+  async nextPage(): Promise<ChatKittyPaginator<I>> {
+    return this.getPage(this.nextRelay);
+  }
+
+  private async getPage(relay?: string): Promise<ChatKittyPaginator<I>> {
+    const page = await new Promise<StompXPage>((resolve, reject) => {
+      if (relay) {
+        this.client.relayResource<StompXPage>({
+          destination: relay,
+          onSuccess: (resource) => resolve(resource),
+        });
+      } else {
+        reject(new PageOutOfBoundsChatKittyError());
+      }
+    });
+
+    let items: I[] = [];
+
+    if (page._embedded) {
+      items = page._embedded[this.contentName] as I[];
+    }
+
+    return new ChatKittyPaginator<I>(
+      items,
+      this.client,
+      this.contentName,
+      page._relays.prev,
+      page._relays.next
+    );
+  }
+}
+
+export interface ChatkittyObserver<T> {
+  onNext: (value: T) => void;
+  onError: (value: ChatKittyError) => void;
+  onComplete: () => void;
+}
+
+export type ChatKittyUnsubscribe = () => void;
+
+export declare class ChatKittyFile {
+  type: string;
+  url: string;
+  name: string;
+  contentType: string;
+  size: number;
+}
+
+export enum ChatKittyUploadResult {
+  COMPLETED,
+  FAILED,
+  CANCELLED,
+}
+
+export interface ChatKittyUploadProgressListener {
+  onStarted: () => void;
+  onProgress: (progress: number) => void;
+  onCompleted: (result: ChatKittyUploadResult) => void;
+}
+
+export abstract class ChatKittyError {
+  protected constructor(public type: string, public message: string) {}
+}
+
+export class UnknownChatKittyError extends ChatKittyError {
+  constructor() {
+    super('UnknownChatKittyError', 'An unknown error has occurred.');
+  }
+}
+
+export class PageOutOfBoundsChatKittyError extends ChatKittyError {
+  constructor() {
+    super(
+      'PageOutOfBoundsChatKittyError',
+      "You've requested a page that doesn't exists."
+    );
+  }
+}
+
+class MessageMapper {
+  readonly readFileGrant: string;
+
+  constructor(grant: string) {
+    this.readFileGrant = grant;
+  }
+
+  public map<M extends Message>(message: M): M {
+    if (isFileMessage(message)) {
+      return {
+        ...message,
+        file: {
+          ...message.file,
+          url: message.file.url + `?grant=${this.readFileGrant}`,
+        },
+      };
+    } else {
+      return {
+        ...message,
+      };
+    }
+  }
+}
+
+function sendChannelTextMessage(
+  request: SendMessageRequest
+): request is SendChannelTextMessageRequest {
+  return (request as SendChannelTextMessageRequest).body !== undefined;
+}
+
+function sendChannelFileMessage(
+  request: SendMessageRequest
+): request is SendChannelFileMessageRequest {
+  return (request as SendChannelFileMessageRequest).file !== undefined;
+}
+
+function getUser(param: unknown): param is GetUserRequest {
+  const request = param as GetUserRequest;
+
+  return request.id !== undefined || request.name !== undefined;
 }
