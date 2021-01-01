@@ -516,7 +516,7 @@ export default class ChatKitty {
       if (!this.chatSessions.has(request.channel.id)) {
         reject(new NoActiveChatSessionChatKittyError(request.channel));
       } else {
-        this.stompX.performAction<void>({
+        this.stompX.performAction<never>({
           destination: request.channel._actions.keystrokes,
           body: {
             keys: request.keys,
