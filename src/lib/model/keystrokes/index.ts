@@ -5,6 +5,6 @@ export declare class Keystrokes {
 }
 
 export declare class KeystrokesRelays {
-  user: string;
   thread: string;
+  user: string;
 }

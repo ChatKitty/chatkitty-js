@@ -36,7 +36,7 @@ export class ChatKittyPaginator<I> {
 
   private constructor(
     public items: I[],
-    private client: StompX,
+    private stompX: StompX,
     private contentName: string,
     private prevRelay?: string,
     private nextRelay?: string
@@ -61,7 +61,7 @@ export class ChatKittyPaginator<I> {
   private async getPage(relay?: string): Promise<ChatKittyPaginator<I>> {
     const page = await new Promise<StompXPage>((resolve, reject) => {
       if (relay) {
-        this.client.relayResource<StompXPage>({
+        this.stompX.relayResource<StompXPage>({
           destination: relay,
           onSuccess: (resource) => resolve(resource),
         });
@@ -78,7 +78,7 @@ export class ChatKittyPaginator<I> {
 
     return new ChatKittyPaginator<I>(
       items,
-      this.client,
+      this.stompX,
       this.contentName,
       page._relays.prev,
       page._relays.next

@@ -39,7 +39,7 @@ import {
   UpdatedCurrentUserResult,
 } from './model/current-user/update';
 import { Keystrokes } from './model/keystrokes';
-import { SendChannelKeystrokesRequest } from './model/keystrokes/send';
+import { SendKeystrokesRequest } from './model/keystrokes/send';
 import {
   FileUserMessage,
   isFileMessage,
@@ -103,7 +103,7 @@ export default class ChatKitty {
     return '/application/v1/users/' + id + '.relay';
   }
 
-  private readonly client: StompX;
+  private readonly stompX: StompX;
 
   private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(
     null
@@ -116,7 +116,7 @@ export default class ChatKitty {
   private messageMapper: MessageMapper = new MessageMapper('');
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
-    this.client = new StompX({
+    this.stompX = new StompX({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
       host: configuration.host || 'api.chatkitty.com',
       isDebug: !environment.production,
@@ -127,29 +127,29 @@ export default class ChatKitty {
     request: StartSessionRequest
   ): Promise<StartSessionResult> {
     return new Promise((resolve) => {
-      this.client.connect({
+      this.stompX.connect({
         apiKey: this.configuration.apiKey,
         username: request.username,
         authParams: request.authParams,
         onSuccess: () => {
-          this.client.relayResource<CurrentUser>({
+          this.stompX.relayResource<CurrentUser>({
             destination: ChatKitty.currentUserRelay,
             onSuccess: (user) => {
               this.currentUser = user;
 
-              this.client.listenToTopic({ topic: user._topics.channels });
-              this.client.listenToTopic({ topic: user._topics.notifications });
+              this.stompX.listenToTopic({ topic: user._topics.channels });
+              this.stompX.listenToTopic({ topic: user._topics.notifications });
 
               this.currentUserNextSubject.next(user);
 
-              this.client.relayResource<{ grant: string }>({
+              this.stompX.relayResource<{ grant: string }>({
                 destination: user._relays.writeFileAccessGrant,
                 onSuccess: (grant) => {
                   this.writeFileGrant = grant.grant;
                 },
               });
 
-              this.client.relayResource<{ grant: string }>({
+              this.stompX.relayResource<{ grant: string }>({
                 destination: user._relays.readFileAccessGrant,
                 onSuccess: (grant) => {
                   this.messageMapper = new MessageMapper(grant.grant);
@@ -174,7 +174,7 @@ export default class ChatKitty {
   }
 
   public endSession() {
-    this.client.disconnect({
+    this.stompX.disconnect({
       onSuccess: () => {
         this.currentUserNextSubject.next(null);
       },
@@ -183,7 +183,7 @@ export default class ChatKitty {
 
   public getCurrentUser(): Promise<GetCurrentUserResult> {
     return new Promise((resolve) => {
-      this.client.relayResource<CurrentUser>({
+      this.stompX.relayResource<CurrentUser>({
         destination: ChatKitty.currentUserRelay,
         onSuccess: (user) => {
           resolve(new GetCurrentUserResult(user));
@@ -215,7 +215,7 @@ export default class ChatKitty {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        this.client.performAction<CurrentUser>({
+        this.stompX.performAction<CurrentUser>({
           destination: this.currentUser._actions.update,
           body: update(this.currentUser),
           onSuccess: (user) => {
@@ -235,7 +235,7 @@ export default class ChatKitty {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        this.client.performAction<Channel>({
+        this.stompX.performAction<Channel>({
           destination: this.currentUser._actions.createChannel,
           body: request,
           onSuccess: (channel) => {
@@ -260,7 +260,7 @@ export default class ChatKitty {
         reject(new NoActiveSessionChatKittyError());
       } else {
         ChatKittyPaginator.createInstance<Channel>(
-          this.client,
+          this.stompX,
           this.currentUser._relays.channels,
           'channels'
         ).then((paginator) => resolve(new GetChannelsResult(paginator)));
@@ -274,7 +274,7 @@ export default class ChatKitty {
         reject(new NoActiveSessionChatKittyError());
       } else {
         ChatKittyPaginator.createInstance<Channel>(
-          this.client,
+          this.stompX,
           this.currentUser._relays.joinableChannels,
           'channels'
         ).then((paginator) => resolve(new GetChannelsResult(paginator)));
@@ -284,7 +284,7 @@ export default class ChatKitty {
 
   public getChannel(id: number): Promise<GetChannelResult> {
     return new Promise((resolve) => {
-      this.client.relayResource<Channel>({
+      this.stompX.relayResource<Channel>({
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelResult(channel));
@@ -299,7 +299,7 @@ export default class ChatKitty {
         reject(new NoActiveSessionChatKittyError());
       } else {
         if (request.channel._actions.join) {
-          this.client.performAction<Channel>({
+          this.stompX.performAction<Channel>({
             destination: request.channel._actions.join,
             body: request,
             onSuccess: (channel) => {
@@ -318,7 +318,7 @@ export default class ChatKitty {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        this.client.relayResource<{ count: number }>({
+        this.stompX.relayResource<{ count: number }>({
           destination: this.currentUser._relays.unreadChannelsCount,
           onSuccess: (resource) => {
             resolve(new GetChannelsCountResult(resource.count));
@@ -334,7 +334,7 @@ export default class ChatKitty {
         reject(new NoActiveSessionChatKittyError());
       } else {
         ChatKittyPaginator.createInstance<Channel>(
-          this.client,
+          this.stompX,
           this.currentUser._relays.unreadChannels,
           'channels'
         ).then((paginator) => resolve(new GetChannelsResult(paginator)));
@@ -346,7 +346,7 @@ export default class ChatKitty {
     request: GetChannelReadRequest
   ): Promise<GetChannelUnreadResult> {
     return new Promise((resolve) => {
-      this.client.relayResource<{ exists: boolean }>({
+      this.stompX.relayResource<{ exists: boolean }>({
         destination: request.channel._relays.unread,
         onSuccess: (resource) => {
           resolve(new GetChannelUnreadResult(resource.exists));
@@ -356,7 +356,7 @@ export default class ChatKitty {
   }
 
   public readChannel(request: ReadChannelRequest) {
-    this.client.performAction<never>({
+    this.stompX.performAction<never>({
       destination: request.channel._actions.read,
       body: {},
     });
@@ -374,7 +374,7 @@ export default class ChatKitty {
     const onReceivedKeystrokes = request.onReceivedKeystrokes;
 
     if (onReceivedMessage) {
-      receivedMessageUnsubscribe = this.client.listenForEvent<Message>({
+      receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
         topic: request.channel._topics.messages,
         event: 'thread.message.created',
         onSuccess: (message) => {
@@ -384,7 +384,7 @@ export default class ChatKitty {
     }
 
     if (onReceivedKeystrokes) {
-      receivedKeystrokesUnsubscribe = this.client.listenForEvent<Keystrokes>({
+      receivedKeystrokesUnsubscribe = this.stompX.listenForEvent<Keystrokes>({
         topic: request.channel._topics.keystrokes,
         event: 'thread.keystrokes.created',
         onSuccess: (keystrokes) => {
@@ -393,14 +393,14 @@ export default class ChatKitty {
       });
     }
 
-    const channelUnsubscribe = this.client.listenToTopic({
+    const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
       callback: () => {
-        const messagesUnsubscribe = this.client.listenToTopic({
+        const messagesUnsubscribe = this.stompX.listenToTopic({
           topic: request.channel._topics.messages,
         });
 
-        const keystrokesUnsubscribe = this.client.listenToTopic({
+        const keystrokesUnsubscribe = this.stompX.listenToTopic({
           topic: request.channel._topics.keystrokes,
         });
 
@@ -442,7 +442,7 @@ export default class ChatKitty {
         reject(new NoActiveChatSessionChatKittyError(request.channel));
       } else {
         if (sendChannelTextMessage(request)) {
-          this.client.performAction<TextUserMessage>({
+          this.stompX.performAction<TextUserMessage>({
             destination: request.channel._actions.message,
             body: {
               type: 'TEXT',
@@ -457,7 +457,7 @@ export default class ChatKitty {
         }
 
         if (sendChannelFileMessage(request)) {
-          this.client.sendToStream<FileUserMessage>({
+          this.stompX.sendToStream<FileUserMessage>({
             stream: request.channel._streams.messages,
             grant: <string>this.writeFileGrant,
             blob: request.file,
@@ -495,7 +495,7 @@ export default class ChatKitty {
         reject(new NoActiveChatSessionChatKittyError(request.channel));
       } else {
         ChatKittyPaginator.createInstance<Message>(
-          this.client,
+          this.stompX,
           request.channel._relays.messages,
           'messages',
           (message) => this.messageMapper.map(message)
@@ -505,18 +505,18 @@ export default class ChatKitty {
   }
 
   public readMessage(request: ReadMessageRequest) {
-    this.client.performAction<never>({
+    this.stompX.performAction<never>({
       destination: request.message._actions.read,
       body: {},
     });
   }
 
-  public sendKeystrokes(request: SendChannelKeystrokesRequest): Promise<void> {
+  public sendKeystrokes(request: SendKeystrokesRequest): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!this.chatSessions.has(request.channel.id)) {
         reject(new NoActiveChatSessionChatKittyError(request.channel));
       } else {
-        this.client.performAction<void>({
+        this.stompX.performAction<void>({
           destination: request.channel._actions.keystrokes,
           body: {
             keys: request.keys,
@@ -537,7 +537,7 @@ export default class ChatKitty {
       throw new NoActiveSessionChatKittyError();
     }
 
-    const unsubscribe = this.client.listenForEvent<Notification>({
+    const unsubscribe = this.stompX.listenForEvent<Notification>({
       topic: this.currentUser._topics.notifications,
       event: 'me.notification.created',
       onSuccess: (notification) => {
@@ -558,7 +558,7 @@ export default class ChatKitty {
         reject(new CannotHaveMembersChatKittyError(request.channel));
       } else {
         ChatKittyPaginator.createInstance<User>(
-          this.client,
+          this.stompX,
           request.channel._relays.members,
           'users'
         ).then((paginator) => resolve(new GetUsersResult(paginator)));
@@ -580,7 +580,7 @@ export default class ChatKitty {
         relay = ChatKitty.userRelay(param);
       }
 
-      this.client.relayResource<User>({
+      this.stompX.relayResource<User>({
         destination: relay,
         onSuccess: (user) => {
           resolve(new GetUserResult(user));
