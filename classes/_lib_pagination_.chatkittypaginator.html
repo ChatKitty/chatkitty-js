@@ -99,11 +99,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_pagination_.chatkittypaginator.html#client" class="tsd-kind-icon">client</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_pagination_.chatkittypaginator.html#contentname" class="tsd-kind-icon">content<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_pagination_.chatkittypaginator.html#items" class="tsd-kind-icon">items</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_pagination_.chatkittypaginator.html#nextrelay" class="tsd-kind-icon">next<wbr>Relay</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_pagination_.chatkittypaginator.html#prevrelay" class="tsd-kind-icon">prev<wbr>Relay</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_pagination_.chatkittypaginator.html#stompx" class="tsd-kind-icon">stompX</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -131,13 +131,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Chat<wbr>Kitty<wbr>Paginator<span class="tsd-signature-symbol">(</span>items<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">[]</span>, client<span class="tsd-signature-symbol">: </span><a href="_lib_stompx_.stompx.html" class="tsd-signature-type">StompX</a>, contentName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, prevRelay<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, nextRelay<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_pagination_.chatkittypaginator.html" class="tsd-signature-type">ChatKittyPaginator</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Chat<wbr>Kitty<wbr>Paginator<span class="tsd-signature-symbol">(</span>items<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">[]</span>, stompX<span class="tsd-signature-symbol">: </span><a href="_lib_stompx_.stompx.html" class="tsd-signature-type">StompX</a>, contentName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, prevRelay<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, nextRelay<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_pagination_.chatkittypaginator.html" class="tsd-signature-type">ChatKittyPaginator</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L35">lib/pagination.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L35">lib/pagination.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -146,7 +146,7 @@
 									<h5>items: <span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5>client: <a href="_lib_stompx_.stompx.html" class="tsd-signature-type">StompX</a></h5>
+									<h5>stompX: <a href="_lib_stompx_.stompx.html" class="tsd-signature-type">StompX</a></h5>
 								</li>
 								<li>
 									<h5>contentName: <span class="tsd-signature-type">string</span></h5>
@@ -166,22 +166,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="client" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> client</h3>
-					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="_lib_stompx_.stompx.html" class="tsd-signature-type">StompX</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L39">lib/pagination.ts:39</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="contentname" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> content<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">content<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L40">lib/pagination.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L40">lib/pagination.ts:40</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,7 +181,7 @@
 					<div class="tsd-signature tsd-kind-icon">items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L38">lib/pagination.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L38">lib/pagination.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">next<wbr>Relay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L42">lib/pagination.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L42">lib/pagination.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +201,17 @@
 					<div class="tsd-signature tsd-kind-icon">prev<wbr>Relay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L41">lib/pagination.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L41">lib/pagination.ts:41</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="stompx" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> stompX</h3>
+					<div class="tsd-signature tsd-kind-icon">stompX<span class="tsd-signature-symbol">:</span> <a href="_lib_stompx_.stompx.html" class="tsd-signature-type">StompX</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L39">lib/pagination.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,7 +228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L49">lib/pagination.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L49">lib/pagination.ts:49</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -245,7 +245,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L45">lib/pagination.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L45">lib/pagination.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -265,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L61">lib/pagination.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L61">lib/pagination.ts:61</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -288,7 +288,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L57">lib/pagination.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L57">lib/pagination.ts:57</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_lib_pagination_.chatkittypaginator.html" class="tsd-signature-type">ChatKittyPaginator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -305,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L53">lib/pagination.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L53">lib/pagination.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_lib_pagination_.chatkittypaginator.html" class="tsd-signature-type">ChatKittyPaginator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -322,7 +322,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3cf5c21/src/lib/pagination.ts#L5">lib/pagination.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/24177da/src/lib/pagination.ts#L5">lib/pagination.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -374,9 +374,6 @@
 								<a href="_lib_pagination_.chatkittypaginator.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_pagination_.chatkittypaginator.html#client" class="tsd-kind-icon">client</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_lib_pagination_.chatkittypaginator.html#contentname" class="tsd-kind-icon">content<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -387,6 +384,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_lib_pagination_.chatkittypaginator.html#prevrelay" class="tsd-kind-icon">prev<wbr>Relay</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_lib_pagination_.chatkittypaginator.html#stompx" class="tsd-kind-icon">stompX</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_lib_pagination_.chatkittypaginator.html#hasnextpage" class="tsd-kind-icon">has<wbr>Next<wbr>Page</a>
@@ -447,7 +447,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/1/2021 at 11:08:05 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/1/2021 at 11:22:54 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
