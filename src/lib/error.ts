@@ -7,12 +7,3 @@ export class UnknownChatKittyError extends ChatKittyError {
     super('UnknownChatKittyError', 'An unknown error has occurred.');
   }
 }
-
-export class PageOutOfBoundsChatKittyError extends ChatKittyError {
-  constructor() {
-    super(
-      'PageOutOfBoundsChatKittyError',
-      "You've requested a page that doesn't exists."
-    );
-  }
-}

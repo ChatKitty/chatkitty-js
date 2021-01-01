@@ -1,4 +1,4 @@
-import { PageOutOfBoundsChatKittyError } from './error';
+import { ChatKittyError } from './error';
 import StompX, { StompXPage } from './stompx';
 
 export class ChatKittyPaginator<I> {
@@ -82,6 +82,15 @@ export class ChatKittyPaginator<I> {
       this.contentName,
       page._relays.prev,
       page._relays.next
+    );
+  }
+}
+
+export class PageOutOfBoundsChatKittyError extends ChatKittyError {
+  constructor() {
+    super(
+      'PageOutOfBoundsChatKittyError',
+      "You've requested a page that doesn't exists."
     );
   }
 }

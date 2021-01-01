@@ -1,4 +1,4 @@
-import { ChatKittyPaginator } from '../../paginator';
+import { ChatKittyPaginator } from '../../pagination';
 import { ChatKittySucceededResult } from '../../result';
 import { Channel } from '../channel';
 

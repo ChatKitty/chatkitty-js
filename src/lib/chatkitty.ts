@@ -9,20 +9,20 @@ import {
   CreateChannelFailedResult,
   CreateChannelRequest,
   CreateChannelResult,
-  CreatedChannelResult
+  CreatedChannelResult,
 } from './model/channel/create';
 import {
   GetChannelReadRequest,
   GetChannelResult,
   GetChannelsCountResult,
   GetChannelsResult,
-  GetChannelUnreadResult
+  GetChannelUnreadResult,
 } from './model/channel/get';
 import {
   ChannelNotPubliclyJoinableChatKittyError,
   JoinChannelRequest,
   JoinChannelResult,
-  JoinedChannelResult
+  JoinedChannelResult,
 } from './model/channel/join';
 import { ReadChannelRequest } from './model/channel/read';
 import { ChatSession } from './model/chat-session';
@@ -30,19 +30,21 @@ import {
   NoActiveChatSessionChatKittyError,
   StartChatSessionRequest,
   StartChatSessionResult,
-  StartedChatSessionResult
+  StartedChatSessionResult,
 } from './model/chat-session/start';
 import { CurrentUser } from './model/current-user';
 import { GetCurrentUserResult } from './model/current-user/get';
 import {
   UpdateCurrentUserResult,
-  UpdatedCurrentUserResult
+  UpdatedCurrentUserResult,
 } from './model/current-user/update';
+import { Keystrokes } from './model/keystrokes';
+import { SendChannelKeystrokesRequest } from './model/keystrokes/send';
 import {
   FileUserMessage,
   isFileMessage,
   Message,
-  TextUserMessage
+  TextUserMessage,
 } from './model/message';
 import { GetMessagesRequest, GetMessagesResult } from './model/message/get';
 import { ReadMessageRequest } from './model/message/read';
@@ -52,7 +54,7 @@ import {
   SendMessageRequest,
   SendMessageResult,
   SentFileMessageResult,
-  SentTextMessageResult
+  SentTextMessageResult,
 } from './model/message/send';
 import {
   AccessDeniedSessionError,
@@ -60,7 +62,7 @@ import {
   NoActiveSessionChatKittyError,
   StartedSessionResult,
   StartSessionRequest,
-  StartSessionResult
+  StartSessionResult,
 } from './model/session/start';
 import { User } from './model/user';
 import {
@@ -68,10 +70,10 @@ import {
   GetUserRequest,
   GetUserResult,
   GetUsersRequest,
-  GetUsersResult
+  GetUsersResult,
 } from './model/user/get';
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
-import { ChatKittyPaginator } from './paginator';
+import { ChatKittyPaginator } from './pagination';
 import StompX from './stompx';
 
 export default class ChatKitty {
@@ -117,7 +119,7 @@ export default class ChatKitty {
     this.client = new StompX({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
       host: configuration.host || 'api.chatkitty.com',
-      isDebug: !environment.production
+      isDebug: !environment.production,
     });
   }
 
@@ -144,18 +146,18 @@ export default class ChatKitty {
                 destination: user._relays.writeFileAccessGrant,
                 onSuccess: (grant) => {
                   this.writeFileGrant = grant.grant;
-                }
+                },
               });
 
               this.client.relayResource<{ grant: string }>({
                 destination: user._relays.readFileAccessGrant,
                 onSuccess: (grant) => {
                   this.messageMapper = new MessageMapper(grant.grant);
-                }
+                },
               });
 
               resolve(new StartedSessionResult({ user: user }));
-            }
+            },
           });
         },
         onError: (error) => {
@@ -166,7 +168,7 @@ export default class ChatKitty {
           } else {
             resolve(new AccessDeniedSessionResult(new UnknownChatKittyError()));
           }
-        }
+        },
       });
     });
   }
@@ -175,7 +177,7 @@ export default class ChatKitty {
     this.client.disconnect({
       onSuccess: () => {
         this.currentUserNextSubject.next(null);
-      }
+      },
     });
   }
 
@@ -185,7 +187,7 @@ export default class ChatKitty {
         destination: ChatKitty.currentUserRelay,
         onSuccess: (user) => {
           resolve(new GetCurrentUserResult(user));
-        }
+        },
       });
     });
   }
@@ -220,7 +222,7 @@ export default class ChatKitty {
             this.currentUserNextSubject.next(user);
 
             resolve(new UpdatedCurrentUserResult(user));
-          }
+          },
         });
       }
     });
@@ -243,10 +245,10 @@ export default class ChatKitty {
             resolve(
               new CreateChannelFailedResult({
                 ...error,
-                type: error.error
+                type: error.error,
               })
             );
-          }
+          },
         });
       }
     });
@@ -286,7 +288,7 @@ export default class ChatKitty {
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelResult(channel));
-        }
+        },
       });
     });
   }
@@ -302,7 +304,7 @@ export default class ChatKitty {
             body: request,
             onSuccess: (channel) => {
               resolve(new JoinedChannelResult(channel));
-            }
+            },
           });
         } else {
           reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
@@ -320,7 +322,7 @@ export default class ChatKitty {
           destination: this.currentUser._relays.unreadChannelsCount,
           onSuccess: (resource) => {
             resolve(new GetChannelsCountResult(resource.count));
-          }
+          },
         });
       }
     });
@@ -348,7 +350,7 @@ export default class ChatKitty {
         destination: request.channel._relays.unread,
         onSuccess: (resource) => {
           resolve(new GetChannelUnreadResult(resource.exists));
-        }
+        },
       });
     });
   }
@@ -356,7 +358,7 @@ export default class ChatKitty {
   public readChannel(request: ReadChannelRequest) {
     this.client.performAction<never>({
       destination: request.channel._actions.read,
-      body: {}
+      body: {},
     });
   }
 
@@ -366,8 +368,10 @@ export default class ChatKitty {
     let unsubscribe: () => void;
 
     let receivedMessageUnsubscribe: () => void;
+    let receivedKeystrokesUnsubscribe: () => void;
 
     const onReceivedMessage = request.onReceivedMessage;
+    const onReceivedKeystrokes = request.onReceivedKeystrokes;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.client.listenForEvent<Message>({
@@ -375,7 +379,17 @@ export default class ChatKitty {
         event: 'thread.message.created',
         onSuccess: (message) => {
           onReceivedMessage(this.messageMapper.map(message));
-        }
+        },
+      });
+    }
+
+    if (onReceivedKeystrokes) {
+      receivedKeystrokesUnsubscribe = this.client.listenForEvent<Keystrokes>({
+        topic: request.channel._topics.keystrokes,
+        event: 'thread.keystrokes.created',
+        onSuccess: (keystrokes) => {
+          onReceivedKeystrokes(keystrokes);
+        },
       });
     }
 
@@ -383,23 +397,25 @@ export default class ChatKitty {
       topic: request.channel._topics.self,
       callback: () => {
         const messagesUnsubscribe = this.client.listenToTopic({
-          topic: request.channel._topics.messages
+          topic: request.channel._topics.messages,
+        });
+
+        const keystrokesUnsubscribe = this.client.listenToTopic({
+          topic: request.channel._topics.keystrokes,
         });
 
         unsubscribe = () => {
-          if (receivedMessageUnsubscribe) {
-            receivedMessageUnsubscribe();
-          }
+          receivedKeystrokesUnsubscribe?.();
+          receivedMessageUnsubscribe?.();
 
-          if (messagesUnsubscribe) {
-            messagesUnsubscribe();
-          }
+          keystrokesUnsubscribe?.();
+          messagesUnsubscribe?.();
 
           channelUnsubscribe();
 
           this.chatSessions.delete(request.channel.id);
         };
-      }
+      },
     });
 
     const session = {
@@ -408,7 +424,7 @@ export default class ChatKitty {
         if (unsubscribe) {
           unsubscribe();
         }
-      }
+      },
     };
 
     this.chatSessions.set(request.channel.id, session);
@@ -430,13 +446,13 @@ export default class ChatKitty {
             destination: request.channel._actions.message,
             body: {
               type: 'TEXT',
-              body: request.body
+              body: request.body,
             },
             onSuccess: (message) => {
               resolve(
                 new SentTextMessageResult(this.messageMapper.map(message))
               );
-            }
+            },
           });
         }
 
@@ -465,8 +481,8 @@ export default class ChatKitty {
               onCancelled: () =>
                 request.progressListener?.onCompleted(
                   ChatKittyUploadResult.CANCELLED
-                )
-            }
+                ),
+            },
           });
         }
       }
@@ -491,7 +507,24 @@ export default class ChatKitty {
   public readMessage(request: ReadMessageRequest) {
     this.client.performAction<never>({
       destination: request.message._actions.read,
-      body: {}
+      body: {},
+    });
+  }
+
+  public sendKeystrokes(request: SendChannelKeystrokesRequest): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.chatSessions.has(request.channel.id)) {
+        reject(new NoActiveChatSessionChatKittyError(request.channel));
+      } else {
+        this.client.performAction<void>({
+          destination: request.channel._actions.keystrokes,
+          body: {
+            keys: request.keys,
+          },
+        });
+
+        resolve();
+      }
     });
   }
 
@@ -513,7 +546,7 @@ export default class ChatKitty {
         } else {
           onNextOrObserver.onNext(notification);
         }
-      }
+      },
     });
 
     return () => unsubscribe;
@@ -551,7 +584,7 @@ export default class ChatKitty {
         destination: relay,
         onSuccess: (user) => {
           resolve(new GetUserResult(user));
-        }
+        },
       });
     });
   }
@@ -576,12 +609,12 @@ class MessageMapper {
         ...message,
         file: {
           ...message.file,
-          url: message.file.url + `?grant=${this.readFileGrant}`
-        }
+          url: message.file.url + `?grant=${this.readFileGrant}`,
+        },
       };
     } else {
       return {
-        ...message
+        ...message,
       };
     }
   }

@@ -22,10 +22,12 @@ export declare class ChannelRelays {
 export declare class ChannelTopics {
   self: string;
   messages: string;
+  keystrokes: string;
 }
 
 export declare class ChannelActions {
   message: string;
+  keystrokes: string;
   join?: string;
   read: string;
 }

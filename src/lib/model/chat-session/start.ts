@@ -1,6 +1,7 @@
 import { ChatKittyError } from '../../error';
 import { ChatKittySucceededResult } from '../../result';
 import { Channel } from '../channel';
+import { Keystrokes } from '../keystrokes';
 import { Message } from '../message';
 
 import { ChatSession } from './index';
@@ -8,6 +9,7 @@ import { ChatSession } from './index';
 export declare class StartChatSessionRequest {
   channel: Channel;
   onReceivedMessage?: (message: Message) => void;
+  onReceivedKeystrokes?: (keystrokes: Keystrokes) => void;
 }
 
 export type StartChatSessionResult = StartedChatSessionResult;
