@@ -86,8 +86,13 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#channel" class="tsd-kind-icon">channel</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onparticipantenteredchat" class="tsd-kind-icon">on<wbr>Participant<wbr>Entered<wbr>Chat</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onparticipantleftchat" class="tsd-kind-icon">on<wbr>Participant<wbr>Left<wbr>Chat</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onparticipantpresencechanged" class="tsd-kind-icon">on<wbr>Participant<wbr>Presence<wbr>Changed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onreceivedkeystrokes" class="tsd-kind-icon">on<wbr>Received<wbr>Keystrokes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onreceivedmessage" class="tsd-kind-icon">on<wbr>Received<wbr>Message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#ontypingstarted" class="tsd-kind-icon">on<wbr>Typing<wbr>Started</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_chat_session_start_.startchatsessionrequest.html#ontypingstopped" class="tsd-kind-icon">on<wbr>Typing<wbr>Stopped</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,7 +106,37 @@
 					<div class="tsd-signature tsd-kind-icon">channel<span class="tsd-signature-symbol">:</span> <a href="_lib_model_channel_index_.channel.html" class="tsd-signature-type">Channel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b2de988/src/lib/model/chat-session/start.ts#L10">lib/model/chat-session/start.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L11">lib/model/chat-session/start.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onparticipantenteredchat" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Participant<wbr>Entered<wbr>Chat</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Participant<wbr>Entered<wbr>Chat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="_lib_model_user_index_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L16">lib/model/chat-session/start.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onparticipantleftchat" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Participant<wbr>Left<wbr>Chat</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Participant<wbr>Left<wbr>Chat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="_lib_model_user_index_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L17">lib/model/chat-session/start.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onparticipantpresencechanged" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Participant<wbr>Presence<wbr>Changed</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Participant<wbr>Presence<wbr>Changed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="_lib_model_user_index_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L18">lib/model/chat-session/start.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -111,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Received<wbr>Keystrokes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>keystrokes<span class="tsd-signature-symbol">: </span><a href="_lib_model_keystrokes_index_.keystrokes.html" class="tsd-signature-type">Keystrokes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b2de988/src/lib/model/chat-session/start.ts#L12">lib/model/chat-session/start.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L13">lib/model/chat-session/start.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -121,7 +156,27 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Received<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../modules/_lib_model_message_index_.html#message" class="tsd-signature-type">Message</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b2de988/src/lib/model/chat-session/start.ts#L11">lib/model/chat-session/start.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L12">lib/model/chat-session/start.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="ontypingstarted" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Typing<wbr>Started</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Typing<wbr>Started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="_lib_model_user_index_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L14">lib/model/chat-session/start.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="ontypingstopped" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Typing<wbr>Stopped</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Typing<wbr>Stopped<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="_lib_model_user_index_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/79d5796/src/lib/model/chat-session/start.ts#L15">lib/model/chat-session/start.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -152,10 +207,25 @@
 								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#channel" class="tsd-kind-icon">channel</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onparticipantenteredchat" class="tsd-kind-icon">on<wbr>Participant<wbr>Entered<wbr>Chat</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onparticipantleftchat" class="tsd-kind-icon">on<wbr>Participant<wbr>Left<wbr>Chat</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onparticipantpresencechanged" class="tsd-kind-icon">on<wbr>Participant<wbr>Presence<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onreceivedkeystrokes" class="tsd-kind-icon">on<wbr>Received<wbr>Keystrokes</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#onreceivedmessage" class="tsd-kind-icon">on<wbr>Received<wbr>Message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#ontypingstarted" class="tsd-kind-icon">on<wbr>Typing<wbr>Started</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_chat_session_start_.startchatsessionrequest.html#ontypingstopped" class="tsd-kind-icon">on<wbr>Typing<wbr>Stopped</a>
 							</li>
 						</ul>
 					</li>
@@ -199,7 +269,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/1/2021 at 11:28:08 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/2/2021 at 8:52:05 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
