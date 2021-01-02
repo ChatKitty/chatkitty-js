@@ -23,6 +23,8 @@ export declare class ChannelTopics {
   self: string;
   messages: string;
   keystrokes: string;
+  typing: string;
+  participants: string;
 }
 
 export declare class ChannelActions {

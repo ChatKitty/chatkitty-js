@@ -367,11 +367,21 @@ export default class ChatKitty {
   ): StartChatSessionResult {
     let unsubscribe: () => void;
 
-    let receivedMessageUnsubscribe: () => void;
-    let receivedKeystrokesUnsubscribe: () => void;
-
     const onReceivedMessage = request.onReceivedMessage;
     const onReceivedKeystrokes = request.onReceivedKeystrokes;
+    const onParticipantEnteredChat = request.onParticipantEnteredChat;
+    const onParticipantLeftChat = request.onParticipantLeftChat;
+    const onTypingStarted = request.onTypingStarted;
+    const onTypingStopped = request.onTypingStopped;
+    const onParticipantPresenceChanged = request.onParticipantPresenceChanged;
+
+    let receivedMessageUnsubscribe: () => void;
+    let receivedKeystrokesUnsubscribe: () => void;
+    let participantEnteredChatUnsubscribe: () => void;
+    let participantLeftChatUnsubscribe: () => void;
+    let typingStartedUnsubscribe: () => void;
+    let typingStoppedUnsubscribe: () => void;
+    let participantPresenceChangedUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -393,6 +403,56 @@ export default class ChatKitty {
       });
     }
 
+    if (onTypingStarted) {
+      typingStartedUnsubscribe = this.stompX.listenForEvent<User>({
+        topic: request.channel._topics.typing,
+        event: 'thread.typing.started',
+        onSuccess: (user) => {
+          onTypingStarted(user);
+        },
+      });
+    }
+
+    if (onTypingStopped) {
+      typingStoppedUnsubscribe = this.stompX.listenForEvent<User>({
+        topic: request.channel._topics.typing,
+        event: 'thread.typing.stopped',
+        onSuccess: (user) => {
+          onTypingStopped(user);
+        },
+      });
+    }
+
+    if (onParticipantEnteredChat) {
+      participantEnteredChatUnsubscribe = this.stompX.listenForEvent<User>({
+        topic: request.channel._topics.participants,
+        event: 'channel.participant.active',
+        onSuccess: (user) => {
+          onParticipantEnteredChat(user);
+        },
+      });
+    }
+
+    if (onParticipantLeftChat) {
+      participantLeftChatUnsubscribe = this.stompX.listenForEvent<User>({
+        topic: request.channel._topics.participants,
+        event: 'channel.participant.inactive',
+        onSuccess: (user) => {
+          onParticipantLeftChat(user);
+        },
+      });
+    }
+
+    if (onParticipantPresenceChanged) {
+      participantPresenceChangedUnsubscribe = this.stompX.listenForEvent<User>({
+        topic: request.channel._topics.participants,
+        event: 'participant.presence.changed',
+        onSuccess: (user) => {
+          onParticipantPresenceChanged(user);
+        },
+      });
+    }
+
     const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
       callback: () => {
@@ -404,10 +464,25 @@ export default class ChatKitty {
           topic: request.channel._topics.keystrokes,
         });
 
+        const typingUnsubscribe = this.stompX.listenToTopic({
+          topic: request.channel._topics.typing,
+        });
+
+        const participantsUnsubscribe = this.stompX.listenToTopic({
+          topic: request.channel._topics.participants,
+        });
+
         unsubscribe = () => {
+          participantPresenceChangedUnsubscribe?.();
+          participantLeftChatUnsubscribe?.();
+          participantEnteredChatUnsubscribe?.();
+          typingStoppedUnsubscribe?.();
+          typingStartedUnsubscribe?.();
           receivedKeystrokesUnsubscribe?.();
           receivedMessageUnsubscribe?.();
 
+          participantsUnsubscribe?.();
+          typingUnsubscribe?.();
           keystrokesUnsubscribe?.();
           messagesUnsubscribe?.();
 
