@@ -184,6 +184,12 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
   <span class="hljs-attr">onReceivedMessage</span>: <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> {
     <span class="hljs-comment">// Do something with the new message</span>
   },
+  <span class="hljs-attr">onReceivedKeystrokes</span>: <span class="hljs-function">(<span class="hljs-params">keystrokes</span>) =&gt;</span> {},
+  <span class="hljs-attr">onTypingStarted</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {},
+  <span class="hljs-attr">onTypingStopped</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {},
+  <span class="hljs-attr">onParticipantEnteredChat</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {},
+  <span class="hljs-attr">onParticipantLeftChat</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {},
+  <span class="hljs-attr">onParticipantPresenceChanged</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {},
 });</code></pre>
 				<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
 					<h2>API Documentation</h2>
@@ -211,7 +217,10 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
 					<h2>Acknowledgements</h2>
 				</a>
 				<ul>
+					<li><a href="https://github.com/axios/axios">axios</a></li>
+					<li><a href="https://github.com/ReactiveX/RxJS">RxJS</a></li>
 					<li><a href="https://github.com/stomp-js/rx-stomp">RxStomp</a></li>
+					<li><a href="https://github.com/inexorabletash/text-encoding">text-encoding</a></li>
 				</ul>
 			</div>
 		</div>
@@ -349,7 +358,7 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/2/2021 at 8:52:05 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/5/2021 at 11:34:50 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
