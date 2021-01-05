@@ -122,6 +122,12 @@ kitty.startChatSession({
   onReceivedMessage: (message) => {
     // Do something with the new message
   },
+  onReceivedKeystrokes: (keystrokes) => {},
+  onTypingStarted: (user) => {},
+  onTypingStopped: (user) => {},
+  onParticipantEnteredChat: (user) => {},
+  onParticipantLeftChat: (user) => {},
+  onParticipantPresenceChanged: (user) => {},
 });
 ```
 
@@ -147,4 +153,7 @@ and add tests if applicable before submitting a Pull Request. We are very happy 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Acknowledgements
+* [axios](https://github.com/axios/axios)
+* [RxJS](https://github.com/ReactiveX/RxJS)
 * [RxStomp](https://github.com/stomp-js/rx-stomp)
+* [text-encoding](https://github.com/inexorabletash/text-encoding)
