@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@stomp/rx-stomp": "^0.3.5",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "rxjs": "^6.6.3",
     "text-encoding": "^0.7.0"
   },
