@@ -135,7 +135,7 @@ kitty.startChatSession({
 Name | Parameter Type | Description
 ---- | -------------- | -----------
 `onReceivedMessage` | `Message` | Called when a message is sent to this channel.
-`onReceivedKeystrokes` | `Keystrokes` | Called when typing keystrokes made by users actively chatting in this channel.
+`onReceivedKeystrokes` | `Keystrokes` | Called when typing keystrokes are made by users actively chatting in this channel.
 `onTypingStarted` | `User` | Called when a user starts typing in this channel.
 `onTypingStopped` | `User` | Called when a user stops typing in this channel.
 `onParticipantEnteredChat` | `User` | Called when another user starts an active chat session in this channel.
