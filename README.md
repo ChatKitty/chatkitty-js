@@ -143,6 +143,8 @@ kitty.startChatSession({
 });
 ```
 
+All handler methods are optional, so you only needed to register handlers for chat events your application cares about.
+
 #### Chat session event handler methods
 Name | Parameter Type | Description
 ---- | -------------- | -----------
