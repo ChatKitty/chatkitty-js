@@ -120,7 +120,7 @@ typing indicators, delivery and read receipts, emoji and like reactions, etc, yo
 kitty.startChatSession({
   channel: channel,
   onReceivedMessage: (message) => {
-    // Do something with the new message
+    // handle received messages
   },
   onReceivedKeystrokes: (keystrokes) => {},
   onTypingStarted: (user) => {},
