@@ -131,6 +131,17 @@ kitty.startChatSession({
 });
 ```
 
+#### Chat session event handler methods
+Name | Parameter Type | Description
+---- | -------------- | -----------
+`onReceivedMessage` | `Message` | Called when a message is sent to this channel.
+`onReceivedKeystrokes` | `Keystrokes` | Called when typing keystrokes made by users actively chatting in this channel.
+`onTypingStarted` | `User` | Called when a user starts typing in this channel.
+`onTypingStopped` | `User` | Called when a user stops typing in this channel.
+`onParticipantEnteredChat` | `User` | Called when another user starts an active chat session in this channel.
+`onParticipantLeftChat` | `User` | Called when another user ends their active chat session in this channel.
+`onParticipantPresenceChanged` | `User` | Called when a member of this channel changes their presence status or goes online or offline.
+
 ## API Documentation
 Please see the documentation for this SDK at the [ChatKitty Website](https://docs.chatkitty.com/javascript/).
 
