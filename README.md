@@ -122,12 +122,24 @@ kitty.startChatSession({
   onReceivedMessage: (message) => {
     // handle received messages
   },
-  onReceivedKeystrokes: (keystrokes) => {},
-  onTypingStarted: (user) => {},
-  onTypingStopped: (user) => {},
-  onParticipantEnteredChat: (user) => {},
-  onParticipantLeftChat: (user) => {},
-  onParticipantPresenceChanged: (user) => {},
+  onReceivedKeystrokes: (keystrokes) => {
+    // handle received typing keystrokes
+  },
+  onTypingStarted: (user) => {
+    // handle user starts typing
+  },
+  onTypingStopped: (user) => {
+    // handle user stops typing
+  },
+  onParticipantEnteredChat: (user) => {
+    // handle user who just entered the chat
+  },
+  onParticipantLeftChat: (user) => {
+    // handle user who just left the chat
+  },
+  onParticipantPresenceChanged: (user) => {
+    // handle user who became online, offline, do not distrub, invisible
+  },
 });
 ```
 
