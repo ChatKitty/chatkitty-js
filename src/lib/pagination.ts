@@ -30,7 +30,8 @@ export class ChatKittyPaginator<I> {
       client,
       contentName,
       page._relays.prev,
-      page._relays.next
+      page._relays.next,
+      mapper
     );
   }
 
@@ -39,7 +40,8 @@ export class ChatKittyPaginator<I> {
     private stompX: StompX,
     private contentName: string,
     private prevRelay?: string,
-    private nextRelay?: string
+    private nextRelay?: string,
+    private mapper?: (item: I) => I
   ) {}
 
   get hasPrevPage(): boolean {
@@ -74,6 +76,12 @@ export class ChatKittyPaginator<I> {
 
     if (page._embedded) {
       items = page._embedded[this.contentName] as I[];
+    }
+
+    const mapper = this.mapper;
+
+    if (mapper) {
+      items = items.map((item) => mapper(item));
     }
 
     return new ChatKittyPaginator<I>(
