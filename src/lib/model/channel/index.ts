@@ -31,6 +31,7 @@ export declare class ChannelActions {
   message: string;
   keystrokes: string;
   join?: string;
+  leave?: string;
   read: string;
 }
 

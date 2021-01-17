@@ -3,13 +3,13 @@ import StompX, { StompXPage } from './stompx';
 
 export class ChatKittyPaginator<I> {
   static async createInstance<I>(
-    client: StompX,
+    stompX: StompX,
     relay: string,
     contentName: string,
     mapper?: (item: I) => I
   ): Promise<ChatKittyPaginator<I>> {
     const page = await new Promise<StompXPage>((resolve) => {
-      client.relayResource<StompXPage>({
+      stompX.relayResource<StompXPage>({
         destination: relay,
         onSuccess: (resource) => resolve(resource),
       });
@@ -27,7 +27,7 @@ export class ChatKittyPaginator<I> {
 
     return new ChatKittyPaginator<I>(
       items,
-      client,
+      stompX,
       contentName,
       page._relays.prev,
       page._relays.next,

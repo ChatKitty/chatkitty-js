@@ -24,6 +24,11 @@ import {
   JoinChannelResult,
   JoinedChannelResult,
 } from './model/channel/join';
+import {
+  LeaveChannelRequest,
+  LeaveChannelResult,
+  LeftChannelResult, NotAChannelMemberChatKittyError
+} from './model/channel/leave';
 import { ReadChannelRequest } from './model/channel/read';
 import { ChatSession } from './model/chat-session';
 import {
@@ -308,6 +313,26 @@ export default class ChatKitty {
           });
         } else {
           reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
+        }
+      }
+    });
+  }
+
+  public leaveChannel(request: LeaveChannelRequest): Promise<LeaveChannelResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        if (request.channel._actions.leave) {
+          this.stompX.performAction<Channel>({
+            destination: request.channel._actions.leave,
+            body: request,
+            onSuccess: (channel) => {
+              resolve(new LeftChannelResult(channel));
+            },
+          });
+        } else {
+          reject(new NotAChannelMemberChatKittyError(request.channel));
         }
       }
     });
