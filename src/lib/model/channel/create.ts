@@ -4,16 +4,16 @@ import { ChatKittyModelReference } from '../index';
 
 import { Channel } from './index';
 
+export type CreateChannelResult =
+  | CreatedChannelResult
+  | CreateChannelFailedResult;
+
 export declare class CreateChannelRequest {
   type: string;
   name?: string;
   members?: ChatKittyModelReference[];
   properties?: unknown;
 }
-
-export type CreateChannelResult =
-  | CreatedChannelResult
-  | CreateChannelFailedResult;
 
 export class CreatedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {

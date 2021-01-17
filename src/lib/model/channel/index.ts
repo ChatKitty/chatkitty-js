@@ -1,9 +1,40 @@
 import { Message } from '../message';
+import { User } from '../user';
 
-export declare class Channel {
+export type Channel = PublicChannel | DirectChannel;
+
+export interface ChannelProperties {
   id: number;
   type: string;
   name: string;
+  creator?: User;
+  lastReceivedMessage?: Message;
+  properties: unknown;
+  _relays: ChannelRelays;
+  _topics: ChannelTopics;
+  _actions: ChannelActions;
+  _streams: ChannelStreams;
+}
+
+export declare class DirectChannel implements ChannelProperties {
+  id: number;
+  type: string;
+  name: string;
+  creator?: User;
+  members: User[];
+  lastReceivedMessage?: Message;
+  properties: unknown;
+  _relays: ChannelRelays;
+  _topics: ChannelTopics;
+  _actions: ChannelActions;
+  _streams: ChannelStreams;
+}
+
+export declare class PublicChannel implements ChannelProperties {
+  id: number;
+  type: string;
+  name: string;
+  creator?: User;
   lastReceivedMessage?: Message;
   properties: unknown;
   _relays: ChannelRelays;
@@ -37,4 +68,12 @@ export declare class ChannelActions {
 
 export declare class ChannelStreams {
   messages: string;
+}
+
+export function isPublicChannel(channel: Channel): channel is PublicChannel {
+  return channel.type === 'PUBLIC';
+}
+
+export function isDirectChannel(channel: Channel): channel is DirectChannel {
+  return channel.type === 'DIRECT';
 }

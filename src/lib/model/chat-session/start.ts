@@ -7,6 +7,8 @@ import { User } from '../user';
 
 import { ChatSession } from './index';
 
+export type StartChatSessionResult = StartedChatSessionResult;
+
 export declare class StartChatSessionRequest {
   channel: Channel;
   onReceivedMessage?: (message: Message) => void;
@@ -17,8 +19,6 @@ export declare class StartChatSessionRequest {
   onParticipantLeftChat?: (user: User) => void;
   onParticipantPresenceChanged?: (user: User) => void;
 }
-
-export type StartChatSessionResult = StartedChatSessionResult;
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {
   constructor(public session: ChatSession) {

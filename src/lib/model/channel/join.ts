@@ -3,11 +3,11 @@ import { ChatKittySucceededResult } from '../../result';
 
 import { Channel } from './index';
 
+export type JoinChannelResult = JoinedChannelResult;
+
 export declare class JoinChannelRequest {
   channel: Channel;
 }
-
-export type JoinChannelResult = JoinedChannelResult;
 
 export class JoinedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {

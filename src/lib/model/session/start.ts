@@ -3,14 +3,14 @@ import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
 
 import { Session } from './index';
 
+export type StartSessionResult =
+  | StartedSessionResult
+  | AccessDeniedSessionResult;
+
 export declare class StartSessionRequest {
   username: string;
   authParams?: unknown;
 }
-
-export type StartSessionResult =
-  | StartedSessionResult
-  | AccessDeniedSessionResult;
 
 export class StartedSessionResult extends ChatKittySucceededResult {
   constructor(public session: Session) {
