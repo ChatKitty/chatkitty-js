@@ -71,11 +71,10 @@ import {
 } from './model/session/start';
 import { User } from './model/user';
 import {
-  CannotHaveMembersChatKittyError,
+  CannotHaveMembersChatKittyError, GetChannelMembersRequest,
   GetUserRequest,
   GetUserResult,
-  GetUsersRequest,
-  GetUsersResult,
+  GetUsersResult
 } from './model/user/get';
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
@@ -652,7 +651,7 @@ export default class ChatKitty {
     return () => unsubscribe;
   }
 
-  public getUsers(request: GetUsersRequest): Promise<GetUsersResult> {
+  public getChannelMembers(request: GetChannelMembersRequest): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (!request.channel._relays.members) {
         reject(new CannotHaveMembersChatKittyError(request.channel));
@@ -660,6 +659,20 @@ export default class ChatKitty {
         ChatKittyPaginator.createInstance<User>(
           this.stompX,
           request.channel._relays.members,
+          'users'
+        ).then((paginator) => resolve(new GetUsersResult(paginator)));
+      }
+    });
+  }
+
+  public getContacts(): Promise<GetUsersResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        ChatKittyPaginator.createInstance<User>(
+          this.stompX,
+          this.currentUser._relays.contacts,
           'users'
         ).then((paginator) => resolve(new GetUsersResult(paginator)));
       }

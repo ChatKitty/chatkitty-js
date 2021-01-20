@@ -5,9 +5,7 @@ import { Channel } from '../channel';
 
 import { User } from './index';
 
-export type GetUsersRequest = GetMembersRequest;
-
-export declare class GetMembersRequest {
+export declare class GetChannelMembersRequest {
   channel: Channel;
 }
 

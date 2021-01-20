@@ -20,6 +20,7 @@ export declare class CurrentUserRelays {
   joinableChannels: string;
   unreadChannelsCount: string;
   unreadChannels: string;
+  contacts: string;
 }
 
 export declare class CurrentUserTopics {
