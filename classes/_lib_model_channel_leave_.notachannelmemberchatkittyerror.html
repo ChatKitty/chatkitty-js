@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>PageOutOfBoundsChatKittyError | ChatKitty JS SDK</title>
+	<title>NotAChannelMemberChatKittyError | ChatKitty JS SDK</title>
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,13 +57,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_lib_pagination_.html">&quot;lib/pagination&quot;</a>
+					<a href="../modules/_lib_model_channel_leave_.html">&quot;lib/model/channel/leave&quot;</a>
 				</li>
 				<li>
-					<a href="_lib_pagination_.pageoutofboundschatkittyerror.html">PageOutOfBoundsChatKittyError</a>
+					<a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html">NotAChannelMemberChatKittyError</a>
 				</li>
 			</ul>
-			<h1>Class PageOutOfBoundsChatKittyError</h1>
+			<h1>Class NotAChannelMemberChatKittyError</h1>
 		</div>
 	</div>
 </header>
@@ -77,7 +77,7 @@
 						<a href="_lib_error_.chatkittyerror.html" class="tsd-signature-type">ChatKittyError</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">PageOutOfBoundsChatKittyError</span>
+								<span class="target">NotAChannelMemberChatKittyError</span>
 							</li>
 						</ul>
 					</li>
@@ -90,14 +90,15 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_lib_pagination_.pageoutofboundschatkittyerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_pagination_.pageoutofboundschatkittyerror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_pagination_.pageoutofboundschatkittyerror.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#channel" class="tsd-kind-icon">channel</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,23 +110,39 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Page<wbr>Out<wbr>OfBounds<wbr>Chat<wbr>Kitty<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_pagination_.pageoutofboundschatkittyerror.html" class="tsd-signature-type">PageOutOfBoundsChatKittyError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>NotAChannel<wbr>Member<wbr>Chat<wbr>Kitty<wbr>Error<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/_lib_model_channel_index_.html#channel" class="tsd-signature-type">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html" class="tsd-signature-type">NotAChannelMemberChatKittyError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_lib_error_.chatkittyerror.html">ChatKittyError</a>.<a href="_lib_error_.chatkittyerror.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/16c51f8/src/lib/pagination.ts#L97">lib/pagination.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/16c51f8/src/lib/model/channel/leave.ts#L18">lib/model/channel/leave.ts:18</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_lib_pagination_.pageoutofboundschatkittyerror.html" class="tsd-signature-type">PageOutOfBoundsChatKittyError</a></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>channel: <a href="../modules/_lib_model_channel_index_.html#channel" class="tsd-signature-type">Channel</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html" class="tsd-signature-type">NotAChannelMemberChatKittyError</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="channel" class="tsd-anchor"></a>
+					<h3>channel</h3>
+					<div class="tsd-signature tsd-kind-icon">channel<span class="tsd-signature-symbol">:</span> <a href="../modules/_lib_model_channel_index_.html#channel" class="tsd-signature-type">Channel</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/16c51f8/src/lib/model/channel/leave.ts#L19">lib/model/channel/leave.ts:19</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
@@ -157,33 +174,45 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/_lib_pagination_.html">&quot;lib/pagination&quot;</a>
+						<a href="../modules/_lib_model_channel_leave_.html">&quot;lib/model/channel/leave&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_lib_pagination_.chatkittypaginator.html" class="tsd-kind-icon">Chat<wbr>Kitty<wbr>Paginator</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_lib_model_channel_leave_.leavechannelrequest.html" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_lib_model_channel_leave_.leftchannelresult.html" class="tsd-kind-icon">Left<wbr>Channel<wbr>Result</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="_lib_pagination_.pageoutofboundschatkittyerror.html" class="tsd-kind-icon">Page<wbr>Out<wbr>OfBounds<wbr>Chat<wbr>Kitty<wbr>Error</a>
+						<a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html" class="tsd-kind-icon">NotAChannel<wbr>Member<wbr>Chat<wbr>Kitty<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_lib_pagination_.pageoutofboundschatkittyerror.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#channel" class="tsd-kind-icon">channel</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_lib_pagination_.pageoutofboundschatkittyerror.html#message" class="tsd-kind-icon">message</a>
+								<a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_lib_pagination_.pageoutofboundschatkittyerror.html#type" class="tsd-kind-icon">type</a>
+								<a href="_lib_model_channel_leave_.notachannelmemberchatkittyerror.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/_lib_model_channel_leave_.html#leavechannelresult" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_lib_model_channel_leave_.html#leftchannel" class="tsd-kind-icon">left<wbr>Channel</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -197,6 +226,7 @@
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>

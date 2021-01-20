@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;lib/observer&quot; | ChatKitty JS SDK</title>
+	<title>&quot;lib/model/channel/leave&quot; | ChatKitty JS SDK</title>
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_lib_observer_.html">&quot;lib/observer&quot;</a>
+					<a href="_lib_model_channel_leave_.html">&quot;lib/model/channel/leave&quot;</a>
 				</li>
 			</ul>
-			<h1>Module &quot;lib/observer&quot;</h1>
+			<h1>Module &quot;lib/model/channel/leave&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -72,15 +72,23 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
+							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/_lib_observer_.chatkittyobserver.html" class="tsd-kind-icon">Chatkitty<wbr>Observer</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_lib_model_channel_leave_.leavechannelrequest.html" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Request</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_lib_model_channel_leave_.leftchannelresult.html" class="tsd-kind-icon">Left<wbr>Channel<wbr>Result</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_lib_model_channel_leave_.notachannelmemberchatkittyerror.html" class="tsd-kind-icon">NotAChannel<wbr>Member<wbr>Chat<wbr>Kitty<wbr>Error</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_lib_observer_.html#chatkittyunsubscribe" class="tsd-kind-icon">Chat<wbr>Kitty<wbr>Unsubscribe</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_lib_model_channel_leave_.html#leavechannelresult" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Result</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_lib_model_channel_leave_.html#leftchannel" class="tsd-kind-icon">left<wbr>Channel</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,29 +97,40 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="chatkittyunsubscribe" class="tsd-anchor"></a>
-					<h3>Chat<wbr>Kitty<wbr>Unsubscribe</h3>
-					<div class="tsd-signature tsd-kind-icon">Chat<wbr>Kitty<wbr>Unsubscribe<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<a name="leavechannelresult" class="tsd-anchor"></a>
+					<h3>Leave<wbr>Channel<wbr>Result</h3>
+					<div class="tsd-signature tsd-kind-icon">Leave<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/_lib_model_channel_leave_.leftchannelresult.html" class="tsd-signature-type">LeftChannelResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/16c51f8/src/lib/observer.ts#L9">lib/observer.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/16c51f8/src/lib/model/channel/leave.ts#L6">lib/model/channel/leave.ts:6</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="leftchannel" class="tsd-anchor"></a>
+					<h3>left<wbr>Channel</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">left<wbr>Channel<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="_lib_model_channel_leave_.html#leavechannelresult" class="tsd-signature-type">LeaveChannelResult</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">LeftChannelResult</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/16c51f8/src/lib/model/channel/leave.ts#L27">lib/model/channel/leave.ts:27</a></li>
 								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <a href="_lib_model_channel_leave_.html#leavechannelresult" class="tsd-signature-type">LeaveChannelResult</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">LeftChannelResult</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -122,17 +141,26 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="_lib_observer_.html">&quot;lib/observer&quot;</a>
+						<a href="_lib_model_channel_leave_.html">&quot;lib/model/channel/leave&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../interfaces/_lib_observer_.chatkittyobserver.html" class="tsd-kind-icon">Chatkitty<wbr>Observer</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_lib_model_channel_leave_.leavechannelrequest.html" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_lib_model_channel_leave_.leftchannelresult.html" class="tsd-kind-icon">Left<wbr>Channel<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_lib_model_channel_leave_.notachannelmemberchatkittyerror.html" class="tsd-kind-icon">NotAChannel<wbr>Member<wbr>Chat<wbr>Kitty<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="_lib_observer_.html#chatkittyunsubscribe" class="tsd-kind-icon">Chat<wbr>Kitty<wbr>Unsubscribe</a>
+						<a href="_lib_model_channel_leave_.html#leavechannelresult" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_lib_model_channel_leave_.html#leftchannel" class="tsd-kind-icon">left<wbr>Channel</a>
 					</li>
 				</ul>
 			</nav>
