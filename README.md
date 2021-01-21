@@ -159,7 +159,7 @@ Name | Parameter Type | Description
 ## API Documentation
 Please see the documentation for this SDK at the [ChatKitty Website](https://docs.chatkitty.com/javascript/).
 
-The source code of the website can be found [here](https://github.com/ChatKitty/chatkitty-api-docs). Contributions are welcome!
+The source code of the website can be found [here](https://github.com/ChatKitty/chatkitty-api-docs). Contributions are welcomed!
 
 A complete SDK reference document is hosted at https://chatkitty.github.io/chatkitty-js/
 
