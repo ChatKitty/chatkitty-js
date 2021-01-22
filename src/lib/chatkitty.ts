@@ -143,6 +143,7 @@ export default class ChatKitty {
 
               this.stompX.listenToTopic({ topic: user._topics.channels });
               this.stompX.listenToTopic({ topic: user._topics.notifications });
+              this.stompX.listenToTopic({ topic: user._topics.contacts });
 
               this.currentUserNextSubject.next(user);
 
@@ -692,6 +693,30 @@ export default class ChatKitty {
         });
       }
     });
+  }
+
+  public onContactPresenceChanged(
+    onNextOrObserver:
+      | ChatkittyObserver<User>
+      | ((contact: User) => void)
+  ): ChatKittyUnsubscribe {
+    if (this.currentUser === undefined) {
+      throw new NoActiveSessionChatKittyError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<User>({
+      topic: this.currentUser._topics.contacts,
+      event: 'contact.presence.changed',
+      onSuccess: (contact) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(contact);
+        } else {
+          onNextOrObserver.onNext(contact);
+        }
+      },
+    });
+
+    return () => unsubscribe;
   }
 
   public getUser(param: number | GetUserRequest): Promise<GetUserResult> {
