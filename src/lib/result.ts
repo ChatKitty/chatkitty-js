@@ -24,3 +24,9 @@ export abstract class ChatKittyFailedResult implements ChatKittyResult {
   failed = true;
   abstract error: ChatKittyError;
 }
+
+export class GetCountResult extends ChatKittySucceededResult {
+  constructor(public count: number) {
+    super();
+  }
+}

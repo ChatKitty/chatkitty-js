@@ -21,6 +21,7 @@ export declare class CurrentUserRelays {
   unreadChannelsCount: string;
   unreadChannels: string;
   contacts: string;
+  onlineContactsCount: string;
 }
 
 export declare class CurrentUserTopics {

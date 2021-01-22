@@ -14,7 +14,6 @@ import {
 import {
   GetChannelReadRequest,
   GetChannelResult,
-  GetChannelsCountResult,
   GetChannelsResult,
   GetChannelUnreadResult,
 } from './model/channel/get';
@@ -78,6 +77,7 @@ import {
 } from './model/user/get';
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
+import { GetCountResult } from './result';
 import StompX from './stompx';
 
 export default class ChatKitty {
@@ -337,7 +337,7 @@ export default class ChatKitty {
     });
   }
 
-  public getUnreadChannelsCount(): Promise<GetChannelsCountResult> {
+  public getUnreadChannelsCount(): Promise<GetCountResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
@@ -345,7 +345,7 @@ export default class ChatKitty {
         this.stompX.relayResource<{ count: number }>({
           destination: this.currentUser._relays.unreadChannelsCount,
           onSuccess: (resource) => {
-            resolve(new GetChannelsCountResult(resource.count));
+            resolve(new GetCountResult(resource.count));
           },
         });
       }
@@ -540,7 +540,7 @@ export default class ChatKitty {
       if (!this.chatSessions.has(request.channel.id)) {
         reject(new NoActiveChatSessionChatKittyError(request.channel));
       } else {
-        if (sendChannelTextMessage(request)) {
+        if (isSendChannelTextMessageRequest(request)) {
           this.stompX.performAction<TextUserMessage>({
             destination: request.channel._actions.message,
             body: {
@@ -555,7 +555,7 @@ export default class ChatKitty {
           });
         }
 
-        if (sendChannelFileMessage(request)) {
+        if (isSendChannelFileMessageRequest(request)) {
           this.stompX.sendToStream<FileUserMessage>({
             stream: request.channel._streams.messages,
             grant: <string>this.writeFileGrant,
@@ -679,11 +679,26 @@ export default class ChatKitty {
     });
   }
 
+  public getOnlineContactsCount(): Promise<GetCountResult> {
+    return new Promise((resolve, reject) => {
+      if (this.currentUser === undefined) {
+        reject(new NoActiveSessionChatKittyError());
+      } else {
+        this.stompX.relayResource<{ count: number }>({
+          destination: this.currentUser._relays.onlineContactsCount,
+          onSuccess: (resource) => {
+            resolve(new GetCountResult(resource.count));
+          },
+        });
+      }
+    });
+  }
+
   public getUser(param: number | GetUserRequest): Promise<GetUserResult> {
     return new Promise((resolve) => {
       let relay: string;
 
-      if (getUser(param)) {
+      if (isGetUserRequest(param)) {
         if (param.id) {
           relay = ChatKitty.userRelay(param.id);
         } else {
@@ -733,20 +748,20 @@ class MessageMapper {
   }
 }
 
-function sendChannelTextMessage(
+function isSendChannelTextMessageRequest(
   request: SendMessageRequest
 ): request is SendChannelTextMessageRequest {
   return (request as SendChannelTextMessageRequest).body !== undefined;
 }
 
-function sendChannelFileMessage(
+function isSendChannelFileMessageRequest(
   request: SendMessageRequest
 ): request is SendChannelFileMessageRequest {
   return (request as SendChannelFileMessageRequest).file !== undefined;
 }
 
-function getUser(param: unknown): param is GetUserRequest {
+function isGetUserRequest(param: unknown): param is GetUserRequest {
   const request = param as GetUserRequest;
 
-  return request.id !== undefined || request.name !== undefined;
+  return request?.id !== undefined || request?.name !== undefined;
 }

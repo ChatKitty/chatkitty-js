@@ -7,12 +7,6 @@ export declare class GetChannelReadRequest {
   channel: Channel;
 }
 
-export class GetChannelsCountResult extends ChatKittySucceededResult {
-  constructor(public count: number) {
-    super();
-  }
-}
-
 export class GetChannelsResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<Channel>) {
     super();
