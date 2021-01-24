@@ -12,9 +12,9 @@ import {
   CreatedChannelResult,
 } from './model/channel/create';
 import {
-  GetChannelReadRequest,
   GetChannelResult,
   GetChannelsResult,
+  GetChannelUnreadRequest,
   GetChannelUnreadResult,
 } from './model/channel/get';
 import {
@@ -373,7 +373,7 @@ export default class ChatKitty {
   }
 
   public getChannelUnread(
-    request: GetChannelReadRequest
+    request: GetChannelUnreadRequest
   ): Promise<GetChannelUnreadResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<{ exists: boolean }>({

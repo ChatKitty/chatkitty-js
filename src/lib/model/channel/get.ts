@@ -3,7 +3,7 @@ import { ChatKittySucceededResult } from '../../result';
 
 import { Channel } from './index';
 
-export declare class GetChannelReadRequest {
+export declare class GetChannelUnreadRequest {
   channel: Channel;
 }
 
