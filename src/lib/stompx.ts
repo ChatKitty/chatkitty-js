@@ -159,6 +159,7 @@ export default class StompX {
 
     this.rxStomp
       .watch(request.destination, {
+        ...request.parameters,
         id: subscriptionId,
       })
       .subscribe((message) => {
@@ -369,6 +370,10 @@ export declare class StompXPageRelays {
   last?: string;
 }
 
+export declare class StompXRelayParameters {
+  [key: string]: unknown;
+}
+
 export declare class StompXPerformActionRequest<R> {
   destination: string;
   body: unknown;
@@ -378,6 +383,7 @@ export declare class StompXPerformActionRequest<R> {
 
 export declare class StompXRelayResourceRequest<R> {
   destination: string;
+  parameters?: StompXRelayParameters;
   onSuccess: (resource: R) => void;
   onError?: (error: StompXError) => void;
 }

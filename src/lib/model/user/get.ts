@@ -5,6 +5,10 @@ import { Channel } from '../channel';
 
 import { User } from './index';
 
+export declare class GetContactsRequest {
+  filter?: GetContactsFilter;
+}
+
 export declare class GetChannelMembersRequest {
   channel: Channel;
 }
@@ -25,6 +29,7 @@ export class GetUserResult extends ChatKittySucceededResult {
     super();
   }
 }
+
 export class CannotHaveMembersChatKittyError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(
@@ -32,4 +37,8 @@ export class CannotHaveMembersChatKittyError extends ChatKittyError {
       `Channel ${channel.name} is not a group channel and cannot have members.`
     );
   }
+}
+
+export declare class GetContactsFilter {
+  online: boolean;
 }

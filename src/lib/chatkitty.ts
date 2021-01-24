@@ -26,7 +26,8 @@ import {
 import {
   LeaveChannelRequest,
   LeaveChannelResult,
-  LeftChannelResult, NotAChannelMemberChatKittyError
+  LeftChannelResult,
+  NotAChannelMemberChatKittyError,
 } from './model/channel/leave';
 import { ReadChannelRequest } from './model/channel/read';
 import { ChatSession } from './model/chat-session';
@@ -70,10 +71,12 @@ import {
 } from './model/session/start';
 import { User } from './model/user';
 import {
-  CannotHaveMembersChatKittyError, GetChannelMembersRequest,
+  CannotHaveMembersChatKittyError,
+  GetChannelMembersRequest,
+  GetContactsRequest,
   GetUserRequest,
   GetUserResult,
-  GetUsersResult
+  GetUsersResult,
 } from './model/user/get';
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
@@ -264,11 +267,11 @@ export default class ChatKitty {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        ChatKittyPaginator.createInstance<Channel>(
-          this.stompX,
-          this.currentUser._relays.channels,
-          'channels'
-        ).then((paginator) => resolve(new GetChannelsResult(paginator)));
+        ChatKittyPaginator.createInstance<Channel>({
+          stompX: this.stompX,
+          relay: this.currentUser._relays.channels,
+          contentName: 'channels',
+        }).then((paginator) => resolve(new GetChannelsResult(paginator)));
       }
     });
   }
@@ -278,11 +281,11 @@ export default class ChatKitty {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        ChatKittyPaginator.createInstance<Channel>(
-          this.stompX,
-          this.currentUser._relays.joinableChannels,
-          'channels'
-        ).then((paginator) => resolve(new GetChannelsResult(paginator)));
+        ChatKittyPaginator.createInstance<Channel>({
+          stompX: this.stompX,
+          relay: this.currentUser._relays.joinableChannels,
+          contentName: 'channels',
+        }).then((paginator) => resolve(new GetChannelsResult(paginator)));
       }
     });
   }
@@ -318,7 +321,9 @@ export default class ChatKitty {
     });
   }
 
-  public leaveChannel(request: LeaveChannelRequest): Promise<LeaveChannelResult> {
+  public leaveChannel(
+    request: LeaveChannelRequest
+  ): Promise<LeaveChannelResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
@@ -358,11 +363,11 @@ export default class ChatKitty {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        ChatKittyPaginator.createInstance<Channel>(
-          this.stompX,
-          this.currentUser._relays.unreadChannels,
-          'channels'
-        ).then((paginator) => resolve(new GetChannelsResult(paginator)));
+        ChatKittyPaginator.createInstance<Channel>({
+          stompX: this.stompX,
+          relay: this.currentUser._relays.unreadChannels,
+          contentName: 'channels',
+        }).then((paginator) => resolve(new GetChannelsResult(paginator)));
       }
     });
   }
@@ -594,12 +599,12 @@ export default class ChatKitty {
       if (!this.chatSessions.has(request.channel.id)) {
         reject(new NoActiveChatSessionChatKittyError(request.channel));
       } else {
-        ChatKittyPaginator.createInstance<Message>(
-          this.stompX,
-          request.channel._relays.messages,
-          'messages',
-          (message) => this.messageMapper.map(message)
-        ).then((paginator) => resolve(new GetMessagesResult(paginator)));
+        ChatKittyPaginator.createInstance<Message>({
+          stompX: this.stompX,
+          relay: request.channel._relays.messages,
+          contentName: 'messages',
+          mapper: (message) => this.messageMapper.map(message),
+        }).then((paginator) => resolve(new GetMessagesResult(paginator)));
       }
     });
   }
@@ -652,41 +657,65 @@ export default class ChatKitty {
     return () => unsubscribe;
   }
 
-  public getChannelMembers(request: GetChannelMembersRequest): Promise<GetUsersResult> {
+  public getChannelMembers(
+    request: GetChannelMembersRequest
+  ): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (!request.channel._relays.members) {
         reject(new CannotHaveMembersChatKittyError(request.channel));
       } else {
-        ChatKittyPaginator.createInstance<User>(
-          this.stompX,
-          request.channel._relays.members,
-          'users'
-        ).then((paginator) => resolve(new GetUsersResult(paginator)));
+        ChatKittyPaginator.createInstance<User>({
+          stompX: this.stompX,
+          relay: request.channel._relays.members,
+          contentName: 'users',
+        }).then((paginator) => resolve(new GetUsersResult(paginator)));
       }
     });
   }
 
-  public getContacts(): Promise<GetUsersResult> {
+  public getContacts(
+    request: GetContactsRequest | undefined
+  ): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
-        ChatKittyPaginator.createInstance<User>(
-          this.stompX,
-          this.currentUser._relays.contacts,
-          'users'
-        ).then((paginator) => resolve(new GetUsersResult(paginator)));
+        let parameters: Record<string, unknown> | undefined = undefined;
+
+        if (isGetContactsRequest(request)) {
+          parameters = {
+            ...request.filter,
+          };
+        }
+
+        ChatKittyPaginator.createInstance<User>({
+          stompX: this.stompX,
+          relay: this.currentUser._relays.contacts,
+          contentName: 'users',
+          parameters: parameters,
+        }).then((paginator) => resolve(new GetUsersResult(paginator)));
       }
     });
   }
 
-  public getOnlineContactsCount(): Promise<GetCountResult> {
+  public getContactsCount(
+    request: GetContactsRequest | undefined
+  ): Promise<GetCountResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionChatKittyError());
       } else {
+        let parameters: Record<string, unknown> | undefined = undefined;
+
+        if (isGetContactsRequest(request)) {
+          parameters = {
+            ...request.filter,
+          };
+        }
+
         this.stompX.relayResource<{ count: number }>({
-          destination: this.currentUser._relays.onlineContactsCount,
+          destination: this.currentUser._relays.contactsCount,
+          parameters: parameters,
           onSuccess: (resource) => {
             resolve(new GetCountResult(resource.count));
           },
@@ -696,9 +725,7 @@ export default class ChatKitty {
   }
 
   public onContactPresenceChanged(
-    onNextOrObserver:
-      | ChatkittyObserver<User>
-      | ((contact: User) => void)
+    onNextOrObserver: ChatkittyObserver<User> | ((contact: User) => void)
   ): ChatKittyUnsubscribe {
     if (this.currentUser === undefined) {
       throw new NoActiveSessionChatKittyError();
@@ -789,4 +816,10 @@ function isGetUserRequest(param: unknown): param is GetUserRequest {
   const request = param as GetUserRequest;
 
   return request?.id !== undefined || request?.name !== undefined;
+}
+
+function isGetContactsRequest(param: unknown): param is GetContactsRequest {
+  const request = param as GetContactsRequest;
+
+  return request?.filter !== undefined;
 }

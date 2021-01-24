@@ -3,14 +3,12 @@ import StompX, { StompXPage } from './stompx';
 
 export class ChatKittyPaginator<I> {
   static async createInstance<I>(
-    stompX: StompX,
-    relay: string,
-    contentName: string,
-    mapper?: (item: I) => I
+    request: CreatePaginatorRequest<I>
   ): Promise<ChatKittyPaginator<I>> {
     const page = await new Promise<StompXPage>((resolve) => {
-      stompX.relayResource<StompXPage>({
-        destination: relay,
+      request.stompX.relayResource<StompXPage>({
+        destination: request.relay,
+        parameters: request.parameters,
         onSuccess: (resource) => resolve(resource),
       });
     });
@@ -18,8 +16,10 @@ export class ChatKittyPaginator<I> {
     let items: I[] = [];
 
     if (page._embedded) {
-      items = page._embedded[contentName] as I[];
+      items = page._embedded[request.contentName] as I[];
     }
+
+    const mapper = request.mapper;
 
     if (mapper) {
       items = items.map((item) => mapper(item));
@@ -27,10 +27,11 @@ export class ChatKittyPaginator<I> {
 
     return new ChatKittyPaginator<I>(
       items,
-      stompX,
-      contentName,
+      request.stompX,
+      request.contentName,
       page._relays.prev,
       page._relays.next,
+      request.parameters,
       mapper
     );
   }
@@ -41,6 +42,7 @@ export class ChatKittyPaginator<I> {
     private contentName: string,
     private prevRelay?: string,
     private nextRelay?: string,
+    private parameters?: Record<string, unknown>,
     private mapper?: (item: I) => I
   ) {}
 
@@ -89,9 +91,19 @@ export class ChatKittyPaginator<I> {
       this.stompX,
       this.contentName,
       page._relays.prev,
-      page._relays.next
+      page._relays.next,
+      this.parameters,
+      this.mapper
     );
   }
+}
+
+export declare class CreatePaginatorRequest<I>{
+  stompX: StompX
+  relay: string
+  contentName: string
+  parameters?: Record<string, unknown>
+  mapper?: (item: I) => I
 }
 
 export class PageOutOfBoundsChatKittyError extends ChatKittyError {
