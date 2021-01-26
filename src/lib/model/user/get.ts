@@ -13,11 +13,6 @@ export declare class GetChannelMembersRequest {
   channel: Channel;
 }
 
-export declare class GetUserRequest {
-  id?: null;
-  name?: string;
-}
-
 export class GetUsersResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<User>) {
     super();
@@ -40,5 +35,6 @@ export class CannotHaveMembersError extends ChatKittyError {
 }
 
 export declare class GetContactsFilter {
-  online: boolean;
+  name?: string;
+  online?: boolean;
 }

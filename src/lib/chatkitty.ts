@@ -74,7 +74,6 @@ import {
   CannotHaveMembersError,
   GetChannelMembersRequest,
   GetContactsRequest,
-  GetUserRequest,
   GetUserResult,
   GetUsersResult,
 } from './model/user/get';
@@ -116,8 +115,8 @@ export default class ChatKitty {
     null
   );
 
-  private currentUser: CurrentUser | undefined;
-  private writeFileGrant: string | undefined;
+  private currentUser?: CurrentUser;
+  private writeFileGrant?: string;
   private chatSessions: Map<number, ChatSession> = new Map();
 
   private messageMapper: MessageMapper = new MessageMapper('');
@@ -673,9 +672,7 @@ export default class ChatKitty {
     });
   }
 
-  public getContacts(
-    request: GetContactsRequest | undefined
-  ): Promise<GetUsersResult> {
+  public getContacts(request?: GetContactsRequest): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
         reject(new NoActiveSessionError());
@@ -699,7 +696,7 @@ export default class ChatKitty {
   }
 
   public getContactsCount(
-    request: GetContactsRequest | undefined
+    request?: GetContactsRequest
   ): Promise<GetCountResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
@@ -746,22 +743,10 @@ export default class ChatKitty {
     return () => unsubscribe;
   }
 
-  public getUser(param: number | GetUserRequest): Promise<GetUserResult> {
+  public getUser(param: number): Promise<GetUserResult> {
     return new Promise((resolve) => {
-      let relay: string;
-
-      if (isGetUserRequest(param)) {
-        if (param.id) {
-          relay = ChatKitty.userRelay(param.id);
-        } else {
-          relay = ''; // TODO
-        }
-      } else {
-        relay = ChatKitty.userRelay(param);
-      }
-
       this.stompX.relayResource<User>({
-        destination: relay,
+        destination: ChatKitty.userRelay(param),
         onSuccess: (user) => {
           resolve(new GetUserResult(user));
         },
@@ -810,12 +795,6 @@ function isSendChannelFileMessageRequest(
   request: SendMessageRequest
 ): request is SendChannelFileMessageRequest {
   return (request as SendChannelFileMessageRequest).file !== undefined;
-}
-
-function isGetUserRequest(param: unknown): param is GetUserRequest {
-  const request = param as GetUserRequest;
-
-  return request?.id !== undefined || request?.name !== undefined;
 }
 
 function isGetContactsRequest(param: unknown): param is GetContactsRequest {
