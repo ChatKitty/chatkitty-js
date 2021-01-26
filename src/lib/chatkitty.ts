@@ -18,7 +18,7 @@ import {
   GetChannelUnreadResult,
 } from './model/channel/get';
 import {
-  ChannelNotPubliclyJoinableChatKittyError,
+  ChannelNotPubliclyJoinableError,
   JoinChannelRequest,
   JoinChannelResult,
   JoinedChannelResult,
@@ -27,12 +27,12 @@ import {
   LeaveChannelRequest,
   LeaveChannelResult,
   LeftChannelResult,
-  NotAChannelMemberChatKittyError,
+  NotAChannelMemberError,
 } from './model/channel/leave';
 import { ReadChannelRequest } from './model/channel/read';
 import { ChatSession } from './model/chat-session';
 import {
-  NoActiveChatSessionChatKittyError,
+  NoActiveChatSessionError,
   StartChatSessionRequest,
   StartChatSessionResult,
   StartedChatSessionResult,
@@ -64,14 +64,14 @@ import {
 import {
   AccessDeniedSessionError,
   AccessDeniedSessionResult,
-  NoActiveSessionChatKittyError,
+  NoActiveSessionError,
   StartedSessionResult,
   StartSessionRequest,
   StartSessionResult,
 } from './model/session/start';
 import { User } from './model/user';
 import {
-  CannotHaveMembersChatKittyError,
+  CannotHaveMembersError,
   GetChannelMembersRequest,
   GetContactsRequest,
   GetUserRequest,
@@ -221,7 +221,7 @@ export default class ChatKitty {
   ): Promise<UpdateCurrentUserResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         this.stompX.performAction<CurrentUser>({
           destination: this.currentUser._actions.update,
@@ -241,7 +241,7 @@ export default class ChatKitty {
   ): Promise<CreateChannelResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         this.stompX.performAction<Channel>({
           destination: this.currentUser._actions.createChannel,
@@ -265,7 +265,7 @@ export default class ChatKitty {
   public getChannels(): Promise<GetChannelsResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         ChatKittyPaginator.createInstance<Channel>({
           stompX: this.stompX,
@@ -279,7 +279,7 @@ export default class ChatKitty {
   public getJoinableChannels(): Promise<GetChannelsResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         ChatKittyPaginator.createInstance<Channel>({
           stompX: this.stompX,
@@ -304,7 +304,7 @@ export default class ChatKitty {
   public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         if (request.channel._actions.join) {
           this.stompX.performAction<Channel>({
@@ -315,7 +315,7 @@ export default class ChatKitty {
             },
           });
         } else {
-          reject(new ChannelNotPubliclyJoinableChatKittyError(request.channel));
+          reject(new ChannelNotPubliclyJoinableError(request.channel));
         }
       }
     });
@@ -326,7 +326,7 @@ export default class ChatKitty {
   ): Promise<LeaveChannelResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         if (request.channel._actions.leave) {
           this.stompX.performAction<Channel>({
@@ -337,7 +337,7 @@ export default class ChatKitty {
             },
           });
         } else {
-          reject(new NotAChannelMemberChatKittyError(request.channel));
+          reject(new NotAChannelMemberError(request.channel));
         }
       }
     });
@@ -346,7 +346,7 @@ export default class ChatKitty {
   public getUnreadChannelsCount(): Promise<GetCountResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         this.stompX.relayResource<{ count: number }>({
           destination: this.currentUser._relays.unreadChannelsCount,
@@ -361,7 +361,7 @@ export default class ChatKitty {
   public getUnreadChannels(): Promise<GetChannelsResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         ChatKittyPaginator.createInstance<Channel>({
           stompX: this.stompX,
@@ -544,7 +544,7 @@ export default class ChatKitty {
   public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
     return new Promise((resolve, reject) => {
       if (!this.chatSessions.has(request.channel.id)) {
-        reject(new NoActiveChatSessionChatKittyError(request.channel));
+        reject(new NoActiveChatSessionError(request.channel));
       } else {
         if (isSendChannelTextMessageRequest(request)) {
           this.stompX.performAction<TextUserMessage>({
@@ -597,7 +597,7 @@ export default class ChatKitty {
   public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
     return new Promise((resolve, reject) => {
       if (!this.chatSessions.has(request.channel.id)) {
-        reject(new NoActiveChatSessionChatKittyError(request.channel));
+        reject(new NoActiveChatSessionError(request.channel));
       } else {
         ChatKittyPaginator.createInstance<Message>({
           stompX: this.stompX,
@@ -619,7 +619,7 @@ export default class ChatKitty {
   public sendKeystrokes(request: SendKeystrokesRequest): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!this.chatSessions.has(request.channel.id)) {
-        reject(new NoActiveChatSessionChatKittyError(request.channel));
+        reject(new NoActiveChatSessionError(request.channel));
       } else {
         this.stompX.performAction<never>({
           destination: request.channel._actions.keystrokes,
@@ -639,7 +639,7 @@ export default class ChatKitty {
       | ((notification: Notification) => void)
   ): ChatKittyUnsubscribe {
     if (this.currentUser === undefined) {
-      throw new NoActiveSessionChatKittyError();
+      throw new NoActiveSessionError();
     }
 
     const unsubscribe = this.stompX.listenForEvent<Notification>({
@@ -662,7 +662,7 @@ export default class ChatKitty {
   ): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (!request.channel._relays.members) {
-        reject(new CannotHaveMembersChatKittyError(request.channel));
+        reject(new CannotHaveMembersError(request.channel));
       } else {
         ChatKittyPaginator.createInstance<User>({
           stompX: this.stompX,
@@ -678,7 +678,7 @@ export default class ChatKitty {
   ): Promise<GetUsersResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         let parameters: Record<string, unknown> | undefined = undefined;
 
@@ -703,7 +703,7 @@ export default class ChatKitty {
   ): Promise<GetCountResult> {
     return new Promise((resolve, reject) => {
       if (this.currentUser === undefined) {
-        reject(new NoActiveSessionChatKittyError());
+        reject(new NoActiveSessionError());
       } else {
         let parameters: Record<string, unknown> | undefined = undefined;
 
@@ -728,7 +728,7 @@ export default class ChatKitty {
     onNextOrObserver: ChatkittyObserver<User> | ((contact: User) => void)
   ): ChatKittyUnsubscribe {
     if (this.currentUser === undefined) {
-      throw new NoActiveSessionChatKittyError();
+      throw new NoActiveSessionError();
     }
 
     const unsubscribe = this.stompX.listenForEvent<User>({

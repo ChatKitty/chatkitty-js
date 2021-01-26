@@ -70,7 +70,7 @@ export class ChatKittyPaginator<I> {
           onSuccess: (resource) => resolve(resource),
         });
       } else {
-        reject(new PageOutOfBoundsChatKittyError());
+        reject(new PageOutOfBoundsError());
       }
     });
 
@@ -98,18 +98,18 @@ export class ChatKittyPaginator<I> {
   }
 }
 
-export declare class CreatePaginatorRequest<I>{
-  stompX: StompX
-  relay: string
-  contentName: string
-  parameters?: Record<string, unknown>
-  mapper?: (item: I) => I
+export declare class CreatePaginatorRequest<I> {
+  stompX: StompX;
+  relay: string;
+  contentName: string;
+  parameters?: Record<string, unknown>;
+  mapper?: (item: I) => I;
 }
 
-export class PageOutOfBoundsChatKittyError extends ChatKittyError {
+export class PageOutOfBoundsError extends ChatKittyError {
   constructor() {
     super(
-      'PageOutOfBoundsChatKittyError',
+      'PageOutOfBoundsError',
       "You've requested a page that doesn't exists."
     );
   }

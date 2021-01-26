@@ -32,10 +32,10 @@ export function startedChatSession(
   return (result as StartedChatSessionResult).session !== undefined;
 }
 
-export class NoActiveChatSessionChatKittyError extends ChatKittyError {
+export class NoActiveChatSessionError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(
-      'NoActiveChatSessionChatKittyError',
+      'NoActiveChatSessionError',
       `You haven't started a chat session for the channel ${channel.name}.`
     );
   }

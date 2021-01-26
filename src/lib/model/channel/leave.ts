@@ -15,10 +15,10 @@ export class LeftChannelResult extends ChatKittySucceededResult {
   }
 }
 
-export class NotAChannelMemberChatKittyError extends ChatKittyError {
+export class NotAChannelMemberError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(
-      'NotAChannelMemberChatKittyError',
+      'NotAChannelMemberError',
       `You are not a member of channel ${channel.name}.`
     );
   }

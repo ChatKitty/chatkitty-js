@@ -30,10 +30,10 @@ export class GetUserResult extends ChatKittySucceededResult {
   }
 }
 
-export class CannotHaveMembersChatKittyError extends ChatKittyError {
+export class CannotHaveMembersError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(
-      'CannotHaveMembersChatKittyError',
+      'CannotHaveMembersError',
       `Channel ${channel.name} is not a group channel and cannot have members.`
     );
   }

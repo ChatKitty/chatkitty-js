@@ -39,11 +39,8 @@ export class AccessDeniedSessionError extends ChatKittyError {
   }
 }
 
-export class NoActiveSessionChatKittyError extends ChatKittyError {
+export class NoActiveSessionError extends ChatKittyError {
   constructor() {
-    super(
-      'NoActiveSessionChatKittyError',
-      "You're not connected to ChatKitty."
-    );
+    super('NoActiveSessionError', "You're not connected to ChatKitty.");
   }
 }

@@ -15,10 +15,10 @@ export class JoinedChannelResult extends ChatKittySucceededResult {
   }
 }
 
-export class ChannelNotPubliclyJoinableChatKittyError extends ChatKittyError {
+export class ChannelNotPubliclyJoinableError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(
-      'ChannelNotPubliclyJoinableChatKittyError',
+      'ChannelNotPubliclyJoinableError',
       `The channel ${channel.name} can't be joined without an invite.`
     );
   }
