@@ -167,14 +167,14 @@ export default class StompX {
       });
   }
 
-  public listenToTopic(request: StompxListenToTopicRequest): () => void {
+  public listenToTopic(request: StompXListenToTopicRequest): () => void {
     const subscriptionReceipt = StompX.generateReceipt();
 
-    const callback = request.callback;
+    const onSuccess = request.onSuccess;
 
-    if (callback) {
+    if (onSuccess) {
       this.rxStomp.watchForReceipt(subscriptionReceipt, () => {
-        callback();
+        onSuccess();
       });
     }
 
@@ -344,9 +344,9 @@ export declare class StompXListenForEventRequest<R> {
   onSuccess: (resource: R) => void;
 }
 
-export declare class StompxListenToTopicRequest {
+export declare class StompXListenToTopicRequest {
   topic: string;
-  callback?: () => void;
+  onSuccess?: () => void;
 }
 
 export declare class StompXPage {

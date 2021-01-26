@@ -484,7 +484,7 @@ export default class ChatKitty {
 
     const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
-      callback: () => {
+      onSuccess: () => {
         const messagesUnsubscribe = this.stompX.listenToTopic({
           topic: request.channel._topics.messages,
         });
