@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>NoActiveSessionChatKittyError | ChatKitty JS SDK</title>
+	<title>CannotHaveMembersError | ChatKitty JS SDK</title>
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,13 +57,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_lib_model_session_start_.html">&quot;lib/model/session/start&quot;</a>
+					<a href="../modules/_lib_model_user_get_.html">&quot;lib/model/user/get&quot;</a>
 				</li>
 				<li>
-					<a href="_lib_model_session_start_.noactivesessionchatkittyerror.html">NoActiveSessionChatKittyError</a>
+					<a href="_lib_model_user_get_.cannothavememberserror.html">CannotHaveMembersError</a>
 				</li>
 			</ul>
-			<h1>Class NoActiveSessionChatKittyError</h1>
+			<h1>Class CannotHaveMembersError</h1>
 		</div>
 	</div>
 </header>
@@ -77,7 +77,7 @@
 						<a href="_lib_error_.chatkittyerror.html" class="tsd-signature-type">ChatKittyError</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">NoActiveSessionChatKittyError</span>
+								<span class="target">CannotHaveMembersError</span>
 							</li>
 						</ul>
 					</li>
@@ -90,14 +90,15 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_lib_model_session_start_.noactivesessionchatkittyerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_lib_model_user_get_.cannothavememberserror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_model_session_start_.noactivesessionchatkittyerror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_model_session_start_.noactivesessionchatkittyerror.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_model_user_get_.cannothavememberserror.html#channel" class="tsd-kind-icon">channel</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_model_user_get_.cannothavememberserror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_lib_model_user_get_.cannothavememberserror.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,23 +110,39 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>NoActive<wbr>Session<wbr>Chat<wbr>Kitty<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_model_session_start_.noactivesessionchatkittyerror.html" class="tsd-signature-type">NoActiveSessionChatKittyError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Cannot<wbr>Have<wbr>Members<wbr>Error<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/_lib_model_channel_index_.html#channel" class="tsd-signature-type">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_model_user_get_.cannothavememberserror.html" class="tsd-signature-type">CannotHaveMembersError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_lib_error_.chatkittyerror.html">ChatKittyError</a>.<a href="_lib_error_.chatkittyerror.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f709d15/src/lib/model/session/start.ts#L42">lib/model/session/start.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3c1177b/src/lib/model/user/get.ts#L33">lib/model/user/get.ts:33</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_lib_model_session_start_.noactivesessionchatkittyerror.html" class="tsd-signature-type">NoActiveSessionChatKittyError</a></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>channel: <a href="../modules/_lib_model_channel_index_.html#channel" class="tsd-signature-type">Channel</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_lib_model_user_get_.cannothavememberserror.html" class="tsd-signature-type">CannotHaveMembersError</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="channel" class="tsd-anchor"></a>
+					<h3>channel</h3>
+					<div class="tsd-signature tsd-kind-icon">channel<span class="tsd-signature-symbol">:</span> <a href="../modules/_lib_model_channel_index_.html#channel" class="tsd-signature-type">Channel</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3c1177b/src/lib/model/user/get.ts#L34">lib/model/user/get.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
@@ -133,7 +150,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_lib_error_.chatkittyerror.html">ChatKittyError</a>.<a href="_lib_error_.chatkittyerror.html#message">message</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f709d15/src/lib/error.ts#L2">lib/error.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3c1177b/src/lib/error.ts#L2">lib/error.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -144,7 +161,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_lib_error_.chatkittyerror.html">ChatKittyError</a>.<a href="_lib_error_.chatkittyerror.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f709d15/src/lib/error.ts#L2">lib/error.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/3c1177b/src/lib/error.ts#L2">lib/error.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,47 +174,50 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/_lib_model_session_start_.html">&quot;lib/model/session/start&quot;</a>
+						<a href="../modules/_lib_model_user_get_.html">&quot;lib/model/user/get&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="_lib_model_session_start_.accessdeniedsessionerror.html" class="tsd-kind-icon">Access<wbr>Denied<wbr>Session<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="_lib_model_session_start_.accessdeniedsessionresult.html" class="tsd-kind-icon">Access<wbr>Denied<wbr>Session<wbr>Result</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="_lib_model_session_start_.noactivesessionchatkittyerror.html" class="tsd-kind-icon">No<wbr>Active<wbr>Session<wbr>Chat<wbr>Kitty<wbr>Error</a>
+						<a href="_lib_model_user_get_.cannothavememberserror.html" class="tsd-kind-icon">Cannot<wbr>Have<wbr>Members<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_lib_model_session_start_.noactivesessionchatkittyerror.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_lib_model_user_get_.cannothavememberserror.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_lib_model_user_get_.cannothavememberserror.html#channel" class="tsd-kind-icon">channel</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_lib_model_session_start_.noactivesessionchatkittyerror.html#message" class="tsd-kind-icon">message</a>
+								<a href="_lib_model_user_get_.cannothavememberserror.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_lib_model_session_start_.noactivesessionchatkittyerror.html#type" class="tsd-kind-icon">type</a>
+								<a href="_lib_model_user_get_.cannothavememberserror.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="_lib_model_session_start_.startsessionrequest.html" class="tsd-kind-icon">Start<wbr>Session<wbr>Request</a>
+						<a href="_lib_model_user_get_.getchannelmembersrequest.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Members<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="_lib_model_session_start_.startedsessionresult.html" class="tsd-kind-icon">Started<wbr>Session<wbr>Result</a>
+						<a href="_lib_model_user_get_.getcontactsfilter.html" class="tsd-kind-icon">Get<wbr>Contacts<wbr>Filter</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/_lib_model_session_start_.html#startsessionresult" class="tsd-kind-icon">Start<wbr>Session<wbr>Result</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_lib_model_user_get_.getcontactsrequest.html" class="tsd-kind-icon">Get<wbr>Contacts<wbr>Request</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_lib_model_session_start_.html#startedsession" class="tsd-kind-icon">started<wbr>Session</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_lib_model_user_get_.getuserrequest.html" class="tsd-kind-icon">Get<wbr>User<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_lib_model_user_get_.getuserresult.html" class="tsd-kind-icon">Get<wbr>User<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_lib_model_user_get_.getusersresult.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Result</a>
 					</li>
 				</ul>
 			</nav>
@@ -212,6 +232,7 @@
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
@@ -231,7 +252,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/24/2021 at 7:09:38 AM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 1/26/2021 at 12:56:12 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
