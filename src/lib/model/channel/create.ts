@@ -1,12 +1,9 @@
-import { ChatKittyError } from '../../error';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
 import { ChatKittyModelReference } from '../index';
 
 import { Channel } from './index';
 
-export type CreateChannelResult =
-  | CreatedChannelResult
-  | CreateChannelFailedResult;
+export type CreateChannelResult = CreatedChannelResult | ChatKittyFailedResult;
 
 export declare class CreateChannelRequest {
   type: string;
@@ -17,12 +14,6 @@ export declare class CreateChannelRequest {
 
 export class CreatedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
-    super();
-  }
-}
-
-export class CreateChannelFailedResult extends ChatKittyFailedResult {
-  constructor(public error: ChatKittyError) {
     super();
   }
 }

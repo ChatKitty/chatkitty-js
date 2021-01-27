@@ -1,8 +1,10 @@
-import { ChatKittySucceededResult } from '../../result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
 
 import { CurrentUser } from './index';
 
-export type UpdateCurrentUserResult = UpdatedCurrentUserResult;
+export type UpdateCurrentUserResult =
+  | UpdatedCurrentUserResult
+  | ChatKittyFailedResult;
 
 export class UpdatedCurrentUserResult extends ChatKittySucceededResult {
   constructor(public user: CurrentUser) {

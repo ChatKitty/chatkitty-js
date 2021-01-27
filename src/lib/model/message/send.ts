@@ -1,5 +1,5 @@
 import { ChatKittyUploadProgressListener } from '../../file';
-import { ChatKittySucceededResult } from '../../result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
 import { Channel } from '../channel';
 
 import { FileUserMessage, TextUserMessage } from './index';
@@ -19,7 +19,9 @@ export declare class SendChannelFileMessageRequest {
   progressListener?: ChatKittyUploadProgressListener;
 }
 
-export type SendMessageResult = SentTextMessageResult | SentFileMessageResult;
+export type SendMessageResult = SentMessageResult | ChatKittyFailedResult;
+
+export type SentMessageResult = SentTextMessageResult | SentFileMessageResult;
 
 export class SentTextMessageResult extends ChatKittySucceededResult {
   constructor(public message: TextUserMessage) {
@@ -34,7 +36,7 @@ export class SentFileMessageResult extends ChatKittySucceededResult {
 }
 
 export function sentTextMessage(
-  result: SendMessageResult
+  result: SentMessageResult
 ): result is SentTextMessageResult {
   return (
     (result as SentTextMessageResult).message !== undefined &&
@@ -43,7 +45,7 @@ export function sentTextMessage(
 }
 
 export function sentFileMessage(
-  result: SendMessageResult
+  result: SentMessageResult
 ): result is SentFileMessageResult {
   return (
     (result as SentFileMessageResult).message !== undefined &&

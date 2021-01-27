@@ -1,15 +1,16 @@
 import { ChatKittyError } from './error';
-import StompX, { StompXPage } from './stompx';
+import StompX, { StompXError, StompXPage } from './stompx';
 
 export class ChatKittyPaginator<I> {
   static async createInstance<I>(
     request: CreatePaginatorRequest<I>
   ): Promise<ChatKittyPaginator<I>> {
-    const page = await new Promise<StompXPage>((resolve) => {
+    const page = await new Promise<StompXPage>((resolve, reject) => {
       request.stompX.relayResource<StompXPage>({
         destination: request.relay,
         parameters: request.parameters,
         onSuccess: (resource) => resolve(resource),
+        onError: (error) => reject(error),
       });
     });
 
@@ -68,6 +69,7 @@ export class ChatKittyPaginator<I> {
         this.stompX.relayResource<StompXPage>({
           destination: relay,
           onSuccess: (resource) => resolve(resource),
+          onError: (error) => reject(error),
         });
       } else {
         reject(new PageOutOfBoundsError());
@@ -104,6 +106,7 @@ export declare class CreatePaginatorRequest<I> {
   contentName: string;
   parameters?: Record<string, unknown>;
   mapper?: (item: I) => I;
+  onError?: (error: StompXError) => void;
 }
 
 export class PageOutOfBoundsError extends ChatKittyError {

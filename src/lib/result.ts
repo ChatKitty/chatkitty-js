@@ -18,14 +18,17 @@ export abstract class ChatKittyCancelledResult implements ChatKittyResult {
   failed = false;
 }
 
-export abstract class ChatKittyFailedResult implements ChatKittyResult {
+export class ChatKittyFailedResult implements ChatKittyResult {
   succeeded = false;
   cancelled = false;
   failed = true;
-  abstract error: ChatKittyError;
+
+  constructor(public error: ChatKittyError) {}
 }
 
-export class GetCountResult extends ChatKittySucceededResult {
+export type GetCountResult = GetCountSucceedResult | ChatKittyFailedResult;
+
+export class GetCountSucceedResult extends ChatKittySucceededResult {
   constructor(public count: number) {
     super();
   }

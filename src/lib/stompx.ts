@@ -95,15 +95,7 @@ export default class StompX {
 
     this.rxStomp.activate();
 
-    const errorSubscription = this.rxStomp.stompErrors$.subscribe((frame) => {
-      request.onError(JSON.parse(frame.body));
-
-      errorSubscription.unsubscribe();
-
-      this.rxStomp.deactivate();
-    });
-
-    const successSubscription = this.rxStomp.connected$.subscribe(() => {
+    this.rxStomp.connected$.subscribe(() => {
       this.rxStomp
         .watch('/user/queue/v1/errors', {
           id: StompX.generateSubscriptionId(),
@@ -144,9 +136,24 @@ export default class StompX {
         });
 
       request.onSuccess();
+    });
 
-      successSubscription.unsubscribe();
-      errorSubscription.unsubscribe();
+    this.rxStomp.stompErrors$.subscribe((frame) => {
+      const error = JSON.parse(frame.body);
+
+      request.onError(error);
+
+      if (error.error == 'AccessDeniedError') {
+        this.rxStomp.deactivate();
+      }
+    });
+
+    this.rxStomp.webSocketErrors$.subscribe(() => {
+      request.onError({
+        error: 'ChatKittyConnectionError',
+        message: 'Could not connect to ChatKitty',
+        timestamp: new Date().toISOString(),
+      });
     });
   }
 
@@ -407,7 +414,7 @@ export declare class StompXEvent<R> {
 export declare class StompXError {
   error: string;
   message: string;
-  time: string;
+  timestamp: string;
 }
 
 export declare class StompXEventHandler<R> {

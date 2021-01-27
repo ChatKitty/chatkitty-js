@@ -1,13 +1,13 @@
 import { ChatKittyError } from '../../error';
-import { ChatKittySucceededResult } from '../../result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
 
 import { Channel } from './index';
-
-export type JoinChannelResult = JoinedChannelResult;
 
 export declare class JoinChannelRequest {
   channel: Channel;
 }
+
+export type JoinChannelResult = JoinedChannelResult | ChatKittyFailedResult;
 
 export class JoinedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
