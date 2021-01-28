@@ -235,189 +235,207 @@ export default class ChatKitty {
   public updateCurrentUser(
     update: (user: CurrentUser) => CurrentUser
   ): Promise<UpdateCurrentUserResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        this.stompX.performAction<CurrentUser>({
-          destination: this.currentUser._actions.update,
-          body: update(this.currentUser),
-          onSuccess: (user) => {
-            this.currentUserNextSubject.next(user);
+    const currentUser = this.currentUser;
 
-            resolve(new UpdatedCurrentUserResult(user));
-          },
-          onError: (error) => {
-            resolve(new ChatKittyFailedResult(error));
-          },
-        });
-      }
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<CurrentUser>({
+        destination: currentUser._actions.update,
+        body: update(currentUser),
+        onSuccess: (user) => {
+          this.currentUserNextSubject.next(user);
+
+          resolve(new UpdatedCurrentUserResult(user));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
   public createChannel(
     request: CreateChannelRequest
   ): Promise<CreateChannelResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        this.stompX.performAction<Channel>({
-          destination: this.currentUser._actions.createChannel,
-          body: request,
-          onSuccess: (channel) => {
-            resolve(new CreatedChannelResult(channel));
-          },
-          onError: (error) => {
-            resolve(new ChatKittyFailedResult(error));
-          },
-        });
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: currentUser._actions.createChannel,
+        body: request,
+        onSuccess: (channel) => {
+          resolve(new CreatedChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
   public getChannels(request?: GetChannelsRequest): Promise<GetChannelsResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        let relay = this.currentUser._relays.channels;
+    const currentUser = this.currentUser;
 
-        if (isGetChannelsRequest(request)) {
-          if (request.joinable) {
-            relay = this.currentUser._relays.joinableChannels;
-          }
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
 
-          if (request.filter?.unread) {
-            relay = this.currentUser._relays.unreadChannels;
-          }
+    return new Promise((resolve) => {
+      let relay = currentUser._relays.channels;
+
+      if (isGetChannelsRequest(request)) {
+        if (request.joinable) {
+          relay = currentUser._relays.joinableChannels;
         }
 
-        ChatKittyPaginator.createInstance<Channel>({
-          stompX: this.stompX,
-          relay: relay,
-          contentName: 'channels',
-        })
-          .then((paginator) =>
-            resolve(new GetChannelsSucceededResult(paginator))
-          )
-          .catch((error) => resolve(new ChatKittyFailedResult(error)));
+        if (request.filter?.unread) {
+          relay = currentUser._relays.unreadChannels;
+        }
       }
+
+      ChatKittyPaginator.createInstance<Channel>({
+        stompX: this.stompX,
+        relay: relay,
+        contentName: 'channels',
+      })
+        .then((paginator) => resolve(new GetChannelsSucceededResult(paginator)))
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
   public getChannel(id: number): Promise<GetChannelResult> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelSucceededResult(channel));
         },
         onError: (error) => {
-          reject(new ChatKittyFailedResult(error));
+          resolve(new ChatKittyFailedResult(error));
         },
       });
     });
   }
 
   public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        if (request.channel._actions.join) {
-          this.stompX.performAction<Channel>({
-            destination: request.channel._actions.join,
-            body: request,
-            onSuccess: (channel) => {
-              resolve(new JoinedChannelResult(channel));
-            },
-            onError: (error) => {
-              resolve(new ChatKittyFailedResult(error));
-            },
-          });
-        } else {
-          reject(new ChannelNotPubliclyJoinableError(request.channel));
-        }
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const destination = request.channel._actions.join;
+
+    if (!destination) {
+      throw new ChannelNotPubliclyJoinableError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: destination,
+        body: request,
+        onSuccess: (channel) => {
+          resolve(new JoinedChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
   public leaveChannel(
     request: LeaveChannelRequest
   ): Promise<LeaveChannelResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        if (request.channel._actions.leave) {
-          this.stompX.performAction<Channel>({
-            destination: request.channel._actions.leave,
-            body: request,
-            onSuccess: (channel) => {
-              resolve(new LeftChannelResult(channel));
-            },
-            onError: (error) => {
-              resolve(new ChatKittyFailedResult(error));
-            },
-          });
-        } else {
-          reject(new NotAChannelMemberError(request.channel));
-        }
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const destination = request.channel._actions.leave;
+
+    if (!destination) {
+      throw new NotAChannelMemberError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: destination,
+        body: request,
+        onSuccess: (channel) => {
+          resolve(new LeftChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
   public getUnreadChannelsCount(): Promise<GetCountResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        this.stompX.relayResource<{ count: number }>({
-          destination: this.currentUser._relays.unreadChannelsCount,
-          onSuccess: (resource) => {
-            resolve(new GetCountSucceedResult(resource.count));
-          },
-          onError: (error) => {
-            resolve(new ChatKittyFailedResult(error));
-          },
-        });
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.relayResource<{ count: number }>({
+        destination: currentUser._relays.unreadChannelsCount,
+        onSuccess: (resource) => {
+          resolve(new GetCountSucceedResult(resource.count));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
   public getChannelUnread(
     request: GetChannelUnreadRequest
   ): Promise<GetChannelUnreadResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        this.stompX.relayResource<{ exists: boolean }>({
-          destination: request.channel._relays.unread,
-          onSuccess: (resource) => {
-            resolve(new GetChannelUnreadSucceededResult(resource.exists));
-          },
-          onError: (error) => {
-            resolve(new ChatKittyFailedResult(error));
-          },
-        });
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.relayResource<{ exists: boolean }>({
+        destination: request.channel._relays.unread,
+        onSuccess: (resource) => {
+          resolve(new GetChannelUnreadSucceededResult(resource.exists));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
   public readChannel(request: ReadChannelRequest): Promise<ReadChannelResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        this.stompX.performAction<never>({
-          destination: request.channel._actions.read,
-          body: {},
-          onError: (error) => resolve(new ChatKittyFailedResult(error)),
-        });
-        resolve(new ReadChannelSucceededResult());
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<never>({
+        destination: request.channel._actions.read,
+        body: {},
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+      resolve(new ReadChannelSucceededResult());
     });
   }
 
@@ -571,77 +589,79 @@ export default class ChatKitty {
   }
 
   public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
-    return new Promise((resolve, reject) => {
-      if (!this.chatSessions.has(request.channel.id)) {
-        reject(new NoActiveChatSessionError(request.channel));
-      } else {
-        if (isSendChannelTextMessageRequest(request)) {
-          this.stompX.performAction<TextUserMessage>({
-            destination: request.channel._actions.message,
-            body: {
-              type: 'TEXT',
-              body: request.body,
-            },
-            onSuccess: (message) => {
-              resolve(
-                new SentTextMessageResult(this.messageMapper.map(message))
-              );
-            },
-            onError: (error) => {
-              resolve(new ChatKittyFailedResult(error));
-            },
-          });
-        }
+    const currentUser = this.currentUser;
 
-        if (isSendChannelFileMessageRequest(request)) {
-          this.stompX.sendToStream<FileUserMessage>({
-            stream: request.channel._streams.messages,
-            grant: <string>this.writeFileGrant,
-            blob: request.file,
-            onSuccess: (message) => {
-              resolve(
-                new SentFileMessageResult(this.messageMapper.map(message))
-              );
-            },
-            progressListener: {
-              onStarted: () => request.progressListener?.onStarted?.(),
-              onProgress: (progress) =>
-                request.progressListener?.onProgress(progress),
-              onCompleted: () =>
-                request.progressListener?.onCompleted(
-                  ChatKittyUploadResult.COMPLETED
-                ),
-              onFailed: () =>
-                request.progressListener?.onCompleted(
-                  ChatKittyUploadResult.FAILED
-                ),
-              onCancelled: () =>
-                request.progressListener?.onCompleted(
-                  ChatKittyUploadResult.CANCELLED
-                ),
-            },
-          });
-        }
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    if (!this.chatSessions.has(request.channel.id)) {
+      throw new NoActiveChatSessionError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      if (isSendChannelTextMessageRequest(request)) {
+        this.stompX.performAction<TextUserMessage>({
+          destination: request.channel._actions.message,
+          body: {
+            type: 'TEXT',
+            body: request.body,
+          },
+          onSuccess: (message) => {
+            resolve(new SentTextMessageResult(this.messageMapper.map(message)));
+          },
+          onError: (error) => {
+            resolve(new ChatKittyFailedResult(error));
+          },
+        });
+      }
+
+      if (isSendChannelFileMessageRequest(request)) {
+        this.stompX.sendToStream<FileUserMessage>({
+          stream: request.channel._streams.messages,
+          grant: <string>this.writeFileGrant,
+          blob: request.file,
+          onSuccess: (message) => {
+            resolve(new SentFileMessageResult(this.messageMapper.map(message)));
+          },
+          progressListener: {
+            onStarted: () => request.progressListener?.onStarted?.(),
+            onProgress: (progress) =>
+              request.progressListener?.onProgress(progress),
+            onCompleted: () =>
+              request.progressListener?.onCompleted(
+                ChatKittyUploadResult.COMPLETED
+              ),
+            onFailed: () =>
+              request.progressListener?.onCompleted(
+                ChatKittyUploadResult.FAILED
+              ),
+            onCancelled: () =>
+              request.progressListener?.onCompleted(
+                ChatKittyUploadResult.CANCELLED
+              ),
+          },
+        });
       }
     });
   }
 
   public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
-    return new Promise((resolve, reject) => {
-      if (!this.chatSessions.has(request.channel.id)) {
-        reject(new NoActiveChatSessionError(request.channel));
-      } else {
-        ChatKittyPaginator.createInstance<Message>({
-          stompX: this.stompX,
-          relay: request.channel._relays.messages,
-          contentName: 'messages',
-          mapper: (message) => this.messageMapper.map(message),
-        })
-          .then((paginator) =>
-            resolve(new GetMessagesSucceededResult(paginator))
-          )
-          .catch((error) => resolve(new ChatKittyFailedResult(error)));
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      ChatKittyPaginator.createInstance<Message>({
+        stompX: this.stompX,
+        relay: request.channel._relays.messages,
+        contentName: 'messages',
+        mapper: (message) => this.messageMapper.map(message),
+      })
+        .then((paginator) => resolve(new GetMessagesSucceededResult(paginator)))
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
@@ -655,20 +675,26 @@ export default class ChatKitty {
   public sendKeystrokes(
     request: SendKeystrokesRequest
   ): Promise<SendKeystrokeResult> {
-    return new Promise((resolve, reject) => {
-      if (!this.chatSessions.has(request.channel.id)) {
-        reject(new NoActiveChatSessionError(request.channel));
-      } else {
-        this.stompX.performAction<never>({
-          destination: request.channel._actions.keystrokes,
-          body: {
-            keys: request.keys,
-          },
-          onError: (error) => resolve(new ChatKittyFailedResult(error)),
-        });
+    const currentUser = this.currentUser;
 
-        resolve(new SentKeystrokeResult());
-      }
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    if (!this.chatSessions.has(request.channel.id)) {
+      throw new NoActiveChatSessionError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<never>({
+        destination: request.channel._actions.keystrokes,
+        body: {
+          keys: request.keys,
+        },
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+
+      resolve(new SentKeystrokeResult());
     });
   }
 
@@ -677,12 +703,14 @@ export default class ChatKitty {
       | ChatkittyObserver<Notification>
       | ((notification: Notification) => void)
   ): ChatKittyUnsubscribe {
-    if (this.currentUser === undefined) {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
       throw new NoActiveSessionError();
     }
 
     const unsubscribe = this.stompX.listenForEvent<Notification>({
-      topic: this.currentUser._topics.notifications,
+      topic: currentUser._topics.notifications,
       event: 'me.notification.created',
       onSuccess: (notification) => {
         if (typeof onNextOrObserver === 'function') {
@@ -699,82 +727,96 @@ export default class ChatKitty {
   public getChannelMembers(
     request: GetChannelMembersRequest
   ): Promise<GetUsersResult> {
-    return new Promise((resolve, reject) => {
-      if (!request.channel._relays.members) {
-        reject(new CannotHaveMembersError(request.channel));
-      } else {
-        ChatKittyPaginator.createInstance<User>({
-          stompX: this.stompX,
-          relay: request.channel._relays.members,
-          contentName: 'users',
-        })
-          .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
-          .catch((error) => resolve(new ChatKittyFailedResult(error)));
-      }
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const relay = request.channel._relays.members;
+
+    if (!relay) {
+      throw new CannotHaveMembersError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      ChatKittyPaginator.createInstance<User>({
+        stompX: this.stompX,
+        relay: relay,
+        contentName: 'users',
+      })
+        .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
   public getContacts(request?: GetContactsRequest): Promise<GetUsersResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        let parameters: Record<string, unknown> | undefined = undefined;
+    const currentUser = this.currentUser;
 
-        if (isGetContactsRequest(request)) {
-          parameters = {
-            ...request.filter,
-          };
-        }
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
 
-        ChatKittyPaginator.createInstance<User>({
-          stompX: this.stompX,
-          relay: this.currentUser._relays.contacts,
-          contentName: 'users',
-          parameters: parameters,
-        })
-          .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
-          .catch((error) => resolve(new ChatKittyFailedResult(error)));
+    return new Promise((resolve) => {
+      let parameters: Record<string, unknown> | undefined = undefined;
+
+      if (isGetContactsRequest(request)) {
+        parameters = {
+          ...request.filter,
+        };
       }
+
+      ChatKittyPaginator.createInstance<User>({
+        stompX: this.stompX,
+        relay: currentUser._relays.contacts,
+        contentName: 'users',
+        parameters: parameters,
+      })
+        .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
   public getContactsCount(
     request?: GetContactsRequest
   ): Promise<GetCountResult> {
-    return new Promise((resolve, reject) => {
-      if (this.currentUser === undefined) {
-        reject(new NoActiveSessionError());
-      } else {
-        let parameters: Record<string, unknown> | undefined = undefined;
+    const currentUser = this.currentUser;
 
-        if (isGetContactsRequest(request)) {
-          parameters = {
-            ...request.filter,
-          };
-        }
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
 
-        this.stompX.relayResource<{ count: number }>({
-          destination: this.currentUser._relays.contactsCount,
-          parameters: parameters,
-          onSuccess: (resource) => {
-            resolve(new GetCountSucceedResult(resource.count));
-          },
-          onError: (error) => resolve(new ChatKittyFailedResult(error)),
-        });
+    return new Promise((resolve) => {
+      let parameters: Record<string, unknown> | undefined = undefined;
+
+      if (isGetContactsRequest(request)) {
+        parameters = {
+          ...request.filter,
+        };
       }
+
+      this.stompX.relayResource<{ count: number }>({
+        destination: currentUser._relays.contactsCount,
+        parameters: parameters,
+        onSuccess: (resource) => {
+          resolve(new GetCountSucceedResult(resource.count));
+        },
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
     });
   }
 
   public onContactPresenceChanged(
     onNextOrObserver: ChatkittyObserver<User> | ((contact: User) => void)
   ): ChatKittyUnsubscribe {
-    if (this.currentUser === undefined) {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
       throw new NoActiveSessionError();
     }
 
     const unsubscribe = this.stompX.listenForEvent<User>({
-      topic: this.currentUser._topics.contacts,
+      topic: currentUser._topics.contacts,
       event: 'contact.presence.changed',
       onSuccess: (contact) => {
         if (typeof onNextOrObserver === 'function') {
