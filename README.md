@@ -7,7 +7,7 @@
 
 <p align="center">ChatKitty helps you build real-time chat without any back-end.</p>
 
-<p align="center"><img src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-2/screenshot-channel-chat-screen-another-user.png" width=344 alt="Realtime Chat Demo"></p>
+<p align="center"><img src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-4/screenshot-simple-typing-indicator.png" width=344 alt="Realtime Chat Demo"></p>
 
 <p align="center"><em>The example above was created with ChatKitty. Check it out at <a href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em></p>
 
