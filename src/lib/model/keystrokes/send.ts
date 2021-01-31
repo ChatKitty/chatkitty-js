@@ -10,4 +10,7 @@ export declare class SendChannelKeystrokesRequest {
 
 export type SendKeystrokeResult = SentKeystrokeResult | ChatKittyFailedResult;
 
-export declare class SentKeystrokeResult {}
+export declare class SentKeystrokeResult {
+  channel: Channel;
+  keys: string;
+}

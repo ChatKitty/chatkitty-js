@@ -694,7 +694,7 @@ export default class ChatKitty {
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
 
-      resolve(new SentKeystrokeResult());
+      resolve({ ...request });
     });
   }
 

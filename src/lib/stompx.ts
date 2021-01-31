@@ -139,7 +139,17 @@ export default class StompX {
     });
 
     this.rxStomp.stompErrors$.subscribe((frame) => {
-      const error = JSON.parse(frame.body);
+      let error;
+
+      try {
+        error = JSON.parse(frame.body);
+      } catch (e) {
+        error = {
+          error: 'UnknownChatKittyError',
+          message: 'An unknown error occurred.',
+          timestamp: new Date().toISOString(),
+        };
+      }
 
       request.onError(error);
 
