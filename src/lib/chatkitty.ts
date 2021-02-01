@@ -56,7 +56,6 @@ import { Keystrokes } from './model/keystrokes';
 import {
   SendKeystrokeResult,
   SendKeystrokesRequest,
-  SentKeystrokeResult,
 } from './model/keystrokes/send';
 import {
   FileUserMessage,
@@ -166,6 +165,7 @@ export default class ChatKitty {
               this.stompX.listenToTopic({ topic: user._topics.channels });
               this.stompX.listenToTopic({ topic: user._topics.notifications });
               this.stompX.listenToTopic({ topic: user._topics.contacts });
+              this.stompX.listenToTopic({ topic: user._topics.participants });
 
               this.currentUserNextSubject.next(user);
 
@@ -823,6 +823,54 @@ export default class ChatKitty {
           onNextOrObserver(contact);
         } else {
           onNextOrObserver.onNext(contact);
+        }
+      },
+    });
+
+    return () => unsubscribe;
+  }
+
+  public onParticipantStartedTyping(
+    onNextOrObserver: ChatkittyObserver<User> | ((participant: User) => void)
+  ): ChatKittyUnsubscribe {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<User>({
+      topic: currentUser._topics.participants,
+      event: 'participant.typing.started',
+      onSuccess: (participant) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(participant);
+        } else {
+          onNextOrObserver.onNext(participant);
+        }
+      },
+    });
+
+    return () => unsubscribe;
+  }
+
+  public onParticipantStoppedTyping(
+    onNextOrObserver: ChatkittyObserver<User> | ((participant: User) => void)
+  ): ChatKittyUnsubscribe {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<User>({
+      topic: currentUser._topics.participants,
+      event: 'participant.typing.stopped',
+      onSuccess: (participant) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(participant);
+        } else {
+          onNextOrObserver.onNext(participant);
         }
       },
     });

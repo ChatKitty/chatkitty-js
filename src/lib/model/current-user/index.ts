@@ -28,6 +28,7 @@ export declare class CurrentUserTopics {
   channels: string;
   notifications: string;
   contacts: string;
+  participants: string;
 }
 
 export declare class CurrentUserActions {
