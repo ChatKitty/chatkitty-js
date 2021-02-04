@@ -157,6 +157,8 @@ export default class ChatKitty {
         username: request.username,
         authParams: request.authParams,
         onSuccess: () => {
+          console.log('ON SUCCESS');
+
           this.stompX.relayResource<CurrentUser>({
             destination: ChatKitty.currentUserRelay,
             onSuccess: (user) => {
@@ -451,6 +453,7 @@ export default class ChatKitty {
     const onTypingStarted = request.onTypingStarted;
     const onTypingStopped = request.onTypingStopped;
     const onParticipantPresenceChanged = request.onParticipantPresenceChanged;
+    const onMessageUpdated = request.onMessageUpdated;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -459,6 +462,7 @@ export default class ChatKitty {
     let typingStartedUnsubscribe: () => void;
     let typingStoppedUnsubscribe: () => void;
     let participantPresenceChangedUnsubscribe: () => void;
+    let messageUpdatedUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -530,6 +534,16 @@ export default class ChatKitty {
       });
     }
 
+    if (onMessageUpdated) {
+      messageUpdatedUnsubscribe = this.stompX.listenForEvent<Message>({
+        topic: request.channel._topics.messages,
+        event: 'thread.message.updated',
+        onSuccess: (message) => {
+          onMessageUpdated(message);
+        },
+      });
+    }
+
     const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
       onSuccess: () => {
@@ -550,6 +564,7 @@ export default class ChatKitty {
         });
 
         unsubscribe = () => {
+          messageUpdatedUnsubscribe?.();
           participantPresenceChangedUnsubscribe?.();
           participantLeftChatUnsubscribe?.();
           participantEnteredChatUnsubscribe?.();

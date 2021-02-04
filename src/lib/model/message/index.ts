@@ -25,6 +25,7 @@ export declare class TextSystemMessage implements MessageProperties {
   createdTime: string;
   properties: unknown;
   body: string;
+  links: [MessageLink];
   _actions: MessageActions;
 }
 
@@ -44,6 +45,7 @@ export declare class TextUserMessage implements MessageProperties {
   properties: unknown;
   user: User;
   body: string;
+  links: [MessageLink];
   _actions: MessageActions;
 }
 
@@ -55,6 +57,25 @@ export declare class FileUserMessage implements MessageProperties {
   user: User;
   file: ChatKittyFile;
   _actions: MessageActions;
+}
+
+export declare class MessageLink {
+  source: string;
+  startPosition: number;
+  endPosition: number;
+  preview?: MessageLinkPreview;
+}
+
+export declare class MessageLinkPreview {
+  url: string;
+  title: string;
+  image: MessageLinkPreviewImage;
+  description?: string;
+  siteName?: string;
+}
+
+export declare class MessageLinkPreviewImage {
+  source: string;
 }
 
 export declare class MessageActions {

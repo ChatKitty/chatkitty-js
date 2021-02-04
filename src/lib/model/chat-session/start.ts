@@ -18,6 +18,7 @@ export declare class StartChatSessionRequest {
   onParticipantEnteredChat?: (user: User) => void;
   onParticipantLeftChat?: (user: User) => void;
   onParticipantPresenceChanged?: (user: User) => void;
+  onMessageUpdated?: (message: Message) => void;
 }
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {
