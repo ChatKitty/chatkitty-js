@@ -104,8 +104,6 @@ import StompX from './stompx';
 export default class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();
 
-  private static readonly currentUserRelay = '/application/v1/users/me.relay';
-
   public static getInstance(apiKey: string): ChatKitty {
     let instance = ChatKitty._instances.get(apiKey);
 
@@ -152,42 +150,36 @@ export default class ChatKitty {
     request: StartSessionRequest
   ): Promise<StartSessionResult> {
     return new Promise((resolve) => {
-      this.stompX.connect({
+      this.stompX.connect<CurrentUser>({
         apiKey: this.configuration.apiKey,
         username: request.username,
         authParams: request.authParams,
-        onSuccess: () => {
-          console.log('ON SUCCESS');
+        onSuccess: (user) => {
+          this.stompX.listenToTopic({ topic: user._topics.channels });
+          this.stompX.listenToTopic({ topic: user._topics.notifications });
+          this.stompX.listenToTopic({ topic: user._topics.contacts });
+          this.stompX.listenToTopic({ topic: user._topics.participants });
 
-          this.stompX.relayResource<CurrentUser>({
-            destination: ChatKitty.currentUserRelay,
-            onSuccess: (user) => {
-              this.currentUser = user;
-
-              this.stompX.listenToTopic({ topic: user._topics.channels });
-              this.stompX.listenToTopic({ topic: user._topics.notifications });
-              this.stompX.listenToTopic({ topic: user._topics.contacts });
-              this.stompX.listenToTopic({ topic: user._topics.participants });
-
-              this.currentUserNextSubject.next(user);
-
-              this.stompX.relayResource<{ grant: string }>({
-                destination: user._relays.writeFileAccessGrant,
-                onSuccess: (grant) => {
-                  this.writeFileGrant = grant.grant;
-                },
-              });
-
-              this.stompX.relayResource<{ grant: string }>({
-                destination: user._relays.readFileAccessGrant,
-                onSuccess: (grant) => {
-                  this.messageMapper = new MessageMapper(grant.grant);
-                },
-              });
-
-              resolve(new StartedSessionResult({ user: user }));
+          this.stompX.relayResource<{ grant: string }>({
+            destination: user._relays.writeFileAccessGrant,
+            onSuccess: (grant) => {
+              this.writeFileGrant = grant.grant;
             },
           });
+
+          this.stompX.relayResource<{ grant: string }>({
+            destination: user._relays.readFileAccessGrant,
+            onSuccess: (grant) => {
+              this.messageMapper = new MessageMapper(grant.grant);
+            },
+          });
+
+          resolve(new StartedSessionResult({ user: user }));
+        },
+        onConnected: (user) => {
+          this.currentUser = user;
+
+          this.currentUserNextSubject.next(user);
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -205,9 +197,15 @@ export default class ChatKitty {
   }
 
   public getCurrentUser(): Promise<GetCurrentUserResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
     return new Promise((resolve) => {
       this.stompX.relayResource<CurrentUser>({
-        destination: ChatKitty.currentUserRelay,
+        destination: currentUser._relays.self,
         onSuccess: (user) => {
           resolve(new GetCurrentUserSuccessfulResult(user));
         },

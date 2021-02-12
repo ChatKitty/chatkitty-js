@@ -35,6 +35,8 @@ export default class StompX {
     Set<StompXEventHandler<unknown>>
   > = new Map();
 
+  private connected = false;
+
   constructor(configuration: StompXConfiguration) {
     let httpScheme: string;
     if (configuration.isSecure) {
@@ -72,7 +74,7 @@ export default class StompX {
     };
   }
 
-  public connect(request: StompXConnectRequest) {
+  public connect<U>(request: StompXConnectRequest<U>) {
     let brokerURL =
       this.rxStompConfig.brokerURL +
       '?' +
@@ -96,46 +98,57 @@ export default class StompX {
     this.rxStomp.activate();
 
     this.rxStomp.connected$.subscribe(() => {
-      this.rxStomp
-        .watch('/user/queue/v1/errors', {
-          id: StompX.generateSubscriptionId(),
-        })
-        .subscribe((message) => {
-          const error: StompXError = JSON.parse(message.body);
+      this.relayResource<U>({
+        destination: '/application/v1/users/me.relay',
+        onSuccess: (user) => {
+          request.onConnected(user);
 
-          const subscription = message.headers['subscription-id'];
-          const receipt = message.headers['receipt-id'];
+          if (!this.connected) {
+            this.rxStomp
+              .watch('/user/queue/v1/errors', {
+                id: StompX.generateSubscriptionId(),
+              })
+              .subscribe((message) => {
+                const error: StompXError = JSON.parse(message.body);
 
-          if (subscription) {
-            const handler = this.pendingRelayErrors.get(subscription);
+                const subscription = message.headers['subscription-id'];
+                const receipt = message.headers['receipt-id'];
 
-            if (handler) {
-              handler(error);
+                if (subscription) {
+                  const handler = this.pendingRelayErrors.get(subscription);
 
-              this.pendingRelayErrors.delete(subscription);
-            }
+                  if (handler) {
+                    handler(error);
+
+                    this.pendingRelayErrors.delete(subscription);
+                  }
+                }
+
+                if (receipt) {
+                  const handler = this.pendingActionErrors.get(receipt);
+
+                  if (handler) {
+                    handler(error);
+
+                    this.pendingActionErrors.delete(receipt);
+                  }
+                }
+
+                if (!subscription && !receipt) {
+                  this.pendingActionErrors.forEach((handler) => {
+                    handler(error);
+                  });
+
+                  this.pendingActionErrors.clear();
+                }
+              });
+
+            request.onSuccess(user);
+
+            this.connected = true;
           }
-
-          if (receipt) {
-            const handler = this.pendingActionErrors.get(receipt);
-
-            if (handler) {
-              handler(error);
-
-              this.pendingActionErrors.delete(receipt);
-            }
-          }
-
-          if (!subscription && !receipt) {
-            this.pendingActionErrors.forEach((handler) => {
-              handler(error);
-            });
-
-            this.pendingActionErrors.clear();
-          }
-        });
-
-      request.onSuccess();
+        },
+      });
     });
 
     this.rxStomp.stompErrors$.subscribe((frame) => {
@@ -326,6 +339,8 @@ export default class StompX {
     this.rxStomp.deactivate();
 
     request.onSuccess();
+
+    this.connected = false;
   }
 
   private static generateSubscriptionId(): string {
@@ -343,11 +358,12 @@ export declare class StompXConfiguration {
   public isDebug: boolean;
 }
 
-export declare class StompXConnectRequest {
+export declare class StompXConnectRequest<U> {
   apiKey: string;
   username: string;
   authParams?: unknown;
-  onSuccess: () => void;
+  onSuccess: (user: U) => void;
+  onConnected: (user: U) => void;
   onError: (error: StompXError) => void;
 }
 
