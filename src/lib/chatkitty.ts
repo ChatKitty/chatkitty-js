@@ -435,7 +435,7 @@ export default class ChatKitty {
         body: {},
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
-      resolve(new ReadChannelSucceededResult());
+      resolve({ channel: request.channel });
     });
   }
 

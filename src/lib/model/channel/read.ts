@@ -10,4 +10,6 @@ export type ReadChannelResult =
   | ReadChannelSucceededResult
   | ChatKittyFailedResult;
 
-export declare class ReadChannelSucceededResult {}
+export declare class ReadChannelSucceededResult {
+  channel: Channel;
+}
