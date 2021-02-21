@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 	<link rel="icon" href="favicon.ico" />
 </head>
 <body>
@@ -41,8 +42,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -52,11 +51,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>ChatKitty JS SDK</h1>
 		</div>
 	</div>
@@ -125,19 +119,20 @@
 					<h4>Simple and convenient API</h4>
 				</a>
 				<p>Sample code:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">kitty</span><span style="color: #000000"> = </span><span style="color: #001080">ChatKitty</span><span style="color: #000000">.</span><span style="color: #795E26">getInstance</span><span style="color: #000000">(</span><span style="color: #0070C1">CHATKITTY_API_KEY</span><span style="color: #000000">);</span>
 
-useEffect(<span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-comment">// start real-time chat session</span>
-  <span class="hljs-keyword">let</span> result = kitty.startChatSession({
-    <span class="hljs-attr">channel</span>: channel,
-    <span class="hljs-attr">onReceivedMessage</span>: <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> {
-      showMessage(message); <span class="hljs-comment">// update your UI as new chat events occur</span>
-    },
-  });
+<span style="color: #795E26">useEffect</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #008000">// start real-time chat session</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">result</span><span style="color: #000000"> = </span><span style="color: #001080">kitty</span><span style="color: #000000">.</span><span style="color: #795E26">startChatSession</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">channel:</span><span style="color: #000000"> </span><span style="color: #001080">channel</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">onReceivedMessage</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">message</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #795E26">showMessage</span><span style="color: #000000">(</span><span style="color: #001080">message</span><span style="color: #000000">); </span><span style="color: #008000">// update your UI as new chat events occur</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  });</span>
 
-  <span class="hljs-keyword">return</span> result.session.end;
-}, []);</code></pre>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">session</span><span style="color: #000000">.</span><span style="color: #001080">end</span><span style="color: #000000">;</span>
+<span style="color: #000000">}, []);</span>
+</code></pre>
 				<p>We&#39;ve spent a lot of time thinking of the right abstractions and implementing our API to be straightforward
 				and easy to use - making you more productive.</p>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
@@ -146,11 +141,13 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
 				<a href="#install-with-npm" id="install-with-npm" style="color: inherit; text-decoration: none;">
 					<h3>Install with NPM</h3>
 				</a>
-				<pre><code class="language-bash">npm install chatkitty</code></pre>
+				<pre><code class="language-bash"><span style="color: #000000">npm install chatkitty</span>
+</code></pre>
 				<a href="#install-with-yarn" id="install-with-yarn" style="color: inherit; text-decoration: none;">
 					<h3>Install with Yarn</h3>
 				</a>
-				<pre><code class="language-bash">yarn add chatkitty</code></pre>
+				<pre><code class="language-bash"><span style="color: #000000">yarn add chatkitty</span>
+</code></pre>
 				<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
 					<h2>How to use</h2>
 				</a>
@@ -164,45 +161,48 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
 					<h3>Initialize the SDK with your API key</h3>
 				</a>
 				<p>With your API key you can initialize a new instance of the <a href="https://chatkitty.github.io/chatkitty-js/classes/_lib_chatkitty_.chatkitty.html">ChatKitty JS client</a>:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);</code></pre>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">kitty</span><span style="color: #000000"> = </span><span style="color: #001080">ChatKitty</span><span style="color: #000000">.</span><span style="color: #795E26">getInstance</span><span style="color: #000000">(</span><span style="color: #0070C1">CHATKITTY_API_KEY</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#starting-a-user-session" id="starting-a-user-session" style="color: inherit; text-decoration: none;">
 					<h3>Starting a user session</h3>
 				</a>
 				<p>To make calls to ChatKitty as a user, a user session must be started.</p>
 				<p>You can start a user session using the unique username of a user and optional authentication
 				parameters to secure the user session.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">await</span> kitty.startSession({
-  <span class="hljs-attr">username</span>: email,
-});</code></pre>
+				<pre><code class="language-js"><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">kitty</span><span style="color: #000000">.</span><span style="color: #795E26">startSession</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #001080">email</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+</code></pre>
 				<a href="#starting-a-chat-session" id="starting-a-chat-session" style="color: inherit; text-decoration: none;">
 					<h3>Starting a chat session</h3>
 				</a>
 				<p>Before a user can begin sending and receiving real-time messages and use in-app chat features like
 				typing indicators, delivery and read receipts, emoji and like reactions, etc, you&#39;ll need to start a chat session.</p>
-				<pre><code class="language-js">kitty.startChatSession({
-  <span class="hljs-attr">channel</span>: channel,
-  <span class="hljs-attr">onReceivedMessage</span>: <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle received messages</span>
-  },
-  <span class="hljs-attr">onReceivedKeystrokes</span>: <span class="hljs-function">(<span class="hljs-params">keystrokes</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle received typing keystrokes</span>
-  },
-  <span class="hljs-attr">onTypingStarted</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle user starts typing</span>
-  },
-  <span class="hljs-attr">onTypingStopped</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle user stops typing</span>
-  },
-  <span class="hljs-attr">onParticipantEnteredChat</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle user who just entered the chat</span>
-  },
-  <span class="hljs-attr">onParticipantLeftChat</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle user who just left the chat</span>
-  },
-  <span class="hljs-attr">onParticipantPresenceChanged</span>: <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
-    <span class="hljs-comment">// handle user who became online, offline, do not distrub, invisible</span>
-  },
-});</code></pre>
+				<pre><code class="language-js"><span style="color: #001080">kitty</span><span style="color: #000000">.</span><span style="color: #795E26">startChatSession</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">channel:</span><span style="color: #000000"> </span><span style="color: #001080">channel</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onReceivedMessage</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">message</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle received messages</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onReceivedKeystrokes</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">keystrokes</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle received typing keystrokes</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onTypingStarted</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle user starts typing</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onTypingStopped</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle user stops typing</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onParticipantEnteredChat</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle user who just entered the chat</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onParticipantLeftChat</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle user who just left the chat</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">onParticipantPresenceChanged</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// handle user who became online, offline, do not distrub, invisible</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">});</span>
+</code></pre>
 				<p>All handler methods are optional, so you only needed to register handlers for chat events your application cares about.</p>
 				<a href="#chat-session-event-handler-methods" id="chat-session-event-handler-methods" style="color: inherit; text-decoration: none;">
 					<h4>Chat session event handler methods</h4>
@@ -287,107 +287,98 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_chatkitty_.html">&quot;lib/chatkitty&quot;</a>
+						<a href="modules/chatkitty.html">chatkitty</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_error_.html">&quot;lib/error&quot;</a>
+						<a href="modules/error.html">error</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_file_.html">&quot;lib/file&quot;</a>
+						<a href="modules/file.html">file</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_channel_create_.html">&quot;lib/model/channel/create&quot;</a>
+						<a href="modules/model.html">model</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_channel_get_.html">&quot;lib/model/channel/get&quot;</a>
+						<a href="modules/model_channel.html">model/channel</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_channel_index_.html">&quot;lib/model/channel/index&quot;</a>
+						<a href="modules/model_channel_create.html">model/channel/create</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_channel_join_.html">&quot;lib/model/channel/join&quot;</a>
+						<a href="modules/model_channel_get.html">model/channel/get</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_channel_leave_.html">&quot;lib/model/channel/leave&quot;</a>
+						<a href="modules/model_channel_join.html">model/channel/join</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_channel_read_.html">&quot;lib/model/channel/read&quot;</a>
+						<a href="modules/model_channel_leave.html">model/channel/leave</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_chat_session_index_.html">&quot;lib/model/chat-<wbr>session/index&quot;</a>
+						<a href="modules/model_channel_read.html">model/channel/read</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_chat_session_start_.html">&quot;lib/model/chat-<wbr>session/start&quot;</a>
+						<a href="modules/model_chat_session.html">model/chat-<wbr>session</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_current_user_get_.html">&quot;lib/model/current-<wbr>user/get&quot;</a>
+						<a href="modules/model_chat_session_start.html">model/chat-<wbr>session/start</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_current_user_index_.html">&quot;lib/model/current-<wbr>user/index&quot;</a>
+						<a href="modules/model_current_user.html">model/current-<wbr>user</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_current_user_update_.html">&quot;lib/model/current-<wbr>user/update&quot;</a>
+						<a href="modules/model_current_user_get.html">model/current-<wbr>user/get</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_index_.html">&quot;lib/model/index&quot;</a>
+						<a href="modules/model_current_user_update.html">model/current-<wbr>user/update</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_keystrokes_index_.html">&quot;lib/model/keystrokes/index&quot;</a>
+						<a href="modules/model_keystrokes.html">model/keystrokes</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_keystrokes_send_.html">&quot;lib/model/keystrokes/send&quot;</a>
+						<a href="modules/model_keystrokes_send.html">model/keystrokes/send</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_message_get_.html">&quot;lib/model/message/get&quot;</a>
+						<a href="modules/model_message.html">model/message</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_message_index_.html">&quot;lib/model/message/index&quot;</a>
+						<a href="modules/model_message_get.html">model/message/get</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_message_read_.html">&quot;lib/model/message/read&quot;</a>
+						<a href="modules/model_message_read.html">model/message/read</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_message_send_.html">&quot;lib/model/message/send&quot;</a>
+						<a href="modules/model_message_send.html">model/message/send</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_notification_index_.html">&quot;lib/model/notification/index&quot;</a>
+						<a href="modules/model_notification.html">model/notification</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_session_index_.html">&quot;lib/model/session/index&quot;</a>
+						<a href="modules/model_session.html">model/session</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_session_start_.html">&quot;lib/model/session/start&quot;</a>
+						<a href="modules/model_session_start.html">model/session/start</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_user_get_.html">&quot;lib/model/user/get&quot;</a>
+						<a href="modules/model_user.html">model/user</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_model_user_index_.html">&quot;lib/model/user/index&quot;</a>
+						<a href="modules/model_user_get.html">model/user/get</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_observer_.html">&quot;lib/observer&quot;</a>
+						<a href="modules/observer.html">observer</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_pagination_.html">&quot;lib/pagination&quot;</a>
+						<a href="modules/pagination.html">pagination</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_result_.html">&quot;lib/result&quot;</a>
+						<a href="modules/result.html">result</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_lib_stompx_.html">&quot;lib/stompx&quot;</a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class=" tsd-kind-module tsd-is-external">
-						<a href="modules/_environments_environment_.html">&quot;environments/environment&quot;</a>
+						<a href="modules/stompx.html">stompx</a>
 					</li>
 				</ul>
 			</nav>
@@ -421,7 +412,7 @@ useEffect(<span class="hljs-function">() =&gt;</span> {
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 2/21/2021 at 10:41:34 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 2/21/2021 at 10:45:11 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
