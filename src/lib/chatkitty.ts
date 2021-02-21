@@ -155,6 +155,7 @@ export default class ChatKitty {
         username: request.username,
         authParams: request.authParams,
         onSuccess: (user) => {
+          this.stompX.listenToTopic({ topic: user._topics.self });
           this.stompX.listenToTopic({ topic: user._topics.channels });
           this.stompX.listenToTopic({ topic: user._topics.notifications });
           this.stompX.listenToTopic({ topic: user._topics.contacts });
