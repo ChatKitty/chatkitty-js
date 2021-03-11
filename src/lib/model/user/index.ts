@@ -15,3 +15,7 @@ export declare class User implements UserProperties {
   name: string;
   properties: unknown;
 }
+
+export declare class ChatKittyUserReference {
+  username: string;
+}
