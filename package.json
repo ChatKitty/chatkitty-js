@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -46,7 +46,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@stomp/rx-stomp": "^0.3.5",
+    "@stomp/rx-stomp": "^1.1.0",
     "axios": "^0.21.1",
     "rxjs": "^6.6.3",
     "text-encoding": "^0.7.0"

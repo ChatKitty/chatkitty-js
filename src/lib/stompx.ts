@@ -61,6 +61,7 @@ export default class StompX {
       brokerURL: brokerUrl,
 
       stompVersions: new Versions(['1.2']),
+      connectionTimeout: 5000,
       heartbeatIncoming: 5000,
       heartbeatOutgoing: 5000,
       forceBinaryWSFrames: true,
