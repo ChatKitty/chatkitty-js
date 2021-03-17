@@ -31,10 +31,7 @@ import {
   LeftChannelResult,
   NotAChannelMemberError,
 } from './model/channel/leave';
-import {
-  ReadChannelRequest,
-  ReadChannelResult,
-} from './model/channel/read';
+import { ReadChannelRequest, ReadChannelResult } from './model/channel/read';
 import { ChatSession } from './model/chat-session';
 import {
   NoActiveChatSessionError,
@@ -81,7 +78,7 @@ import {
   StartedSessionResult,
   StartSessionInProgressError,
   StartSessionRequest,
-  StartSessionResult
+  StartSessionResult,
 } from './model/session/start';
 import { User } from './model/user';
 import {
@@ -191,6 +188,8 @@ export default class ChatKitty {
           this.currentUser = user;
 
           this.currentUserNextSubject.next(user);
+
+          resolve(new StartedSessionResult({ user: user }));
         },
         onError: (error) => {
           this.isStartingSession = false;
