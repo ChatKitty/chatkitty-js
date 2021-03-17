@@ -34,7 +34,6 @@ import {
 import {
   ReadChannelRequest,
   ReadChannelResult,
-  ReadChannelSucceededResult,
 } from './model/channel/read';
 import { ChatSession } from './model/chat-session';
 import {
@@ -80,8 +79,9 @@ import {
 import {
   NoActiveSessionError,
   StartedSessionResult,
+  StartSessionInProgressError,
   StartSessionRequest,
-  StartSessionResult,
+  StartSessionResult
 } from './model/session/start';
 import { User } from './model/user';
 import {
@@ -138,6 +138,8 @@ export default class ChatKitty {
 
   private messageMapper: MessageMapper = new MessageMapper('');
 
+  private isStartingSession = false;
+
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.stompX = new StompX({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
@@ -149,6 +151,12 @@ export default class ChatKitty {
   public startSession(
     request: StartSessionRequest
   ): Promise<StartSessionResult> {
+    if (this.isStartingSession) {
+      throw new StartSessionInProgressError();
+    }
+
+    this.isStartingSession = true;
+
     return new Promise((resolve) => {
       this.stompX.connect<CurrentUser>({
         apiKey: this.configuration.apiKey,
@@ -175,6 +183,8 @@ export default class ChatKitty {
             },
           });
 
+          this.isStartingSession = false;
+
           resolve(new StartedSessionResult({ user: user }));
         },
         onConnected: (user) => {
@@ -183,6 +193,8 @@ export default class ChatKitty {
           this.currentUserNextSubject.next(user);
         },
         onError: (error) => {
+          this.isStartingSession = false;
+
           resolve(new ChatKittyFailedResult(error));
         },
       });

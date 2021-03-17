@@ -22,6 +22,12 @@ export function startedSession(
   return (result as StartedSessionResult).session !== undefined;
 }
 
+export class StartSessionInProgressError extends ChatKittyError {
+  constructor() {
+    super('StartSessionInProgressError', 'A start session request is already in progress.');
+  }
+}
+
 export class NoActiveSessionError extends ChatKittyError {
   constructor() {
     super('NoActiveSessionError', "You're not connected to ChatKitty.");
