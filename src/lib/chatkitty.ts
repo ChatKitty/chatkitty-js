@@ -60,6 +60,8 @@ import {
   TextUserMessage,
 } from './model/message';
 import {
+  GetLastReadMessageRequest,
+  GetLastReadMessageResult,
   GetMessagesRequest,
   GetMessagesResult,
   GetMessagesSucceededResult,
@@ -694,6 +696,25 @@ export default class ChatKitty {
     this.stompX.performAction<never>({
       destination: request.message._actions.read,
       body: {},
+    });
+  }
+
+  public getLastReadMessage(
+    request: GetLastReadMessageRequest
+  ): Promise<GetLastReadMessageResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<Message>({
+        destination: request.channel._relays.last_read_message,
+        parameters: {
+          username: request.username,
+        },
+        onSuccess: (resource) => {
+          resolve(new GetLastReadMessageResult(resource));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
