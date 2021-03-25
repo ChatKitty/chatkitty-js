@@ -100,7 +100,7 @@ import {
 } from './result';
 import StompX from './stompx';
 
-export default class ChatKitty {
+export class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();
 
   public static getInstance(apiKey: string): ChatKitty {
@@ -989,3 +989,5 @@ function isSendChannelFileMessageRequest(
 ): request is SendChannelFileMessageRequest {
   return (request as SendChannelFileMessageRequest).file !== undefined;
 }
+
+export default ChatKitty;

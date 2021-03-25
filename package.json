@@ -73,7 +73,7 @@
     "prettier": "^2.2.1",
     "standard-version": "^9.1.1",
     "ts-node": "^9.1.1",
-    "typedoc": "^0.20.27",
+    "typedoc": "^0.20.34",
     "typedoc-plugin-extras": "^1.1.7",
     "typescript": "^4.1.5"
   },
