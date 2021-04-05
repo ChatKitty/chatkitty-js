@@ -1,9 +1,29 @@
-import { ChatKittyError } from '../../error';
-import { ChatKittyPaginator } from '../../pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
-import { Channel } from '../channel';
+import { Channel } from './channel';
+import { ChatKittyError } from './error';
+import { ChatKittyPaginator } from './pagination';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
-import { User } from './index';
+export interface UserProperties {
+  id: number;
+  name: string;
+  displayName: string;
+  displayPictureUrl: string;
+  isGuest: string;
+  properties: unknown;
+}
+
+export declare class User implements UserProperties {
+  displayName: string;
+  displayPictureUrl: string;
+  id: number;
+  isGuest: string;
+  name: string;
+  properties: unknown;
+}
+
+export declare class ChatKittyUserReference {
+  username: string;
+}
 
 export declare class GetContactsRequest {
   filter?: GetContactsFilter;

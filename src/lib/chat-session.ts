@@ -1,11 +1,15 @@
-import { ChatKittyError } from '../../error';
-import { ChatKittySucceededResult } from '../../result';
-import { Channel } from '../channel';
-import { Keystrokes } from '../keystrokes';
-import { Message } from '../message';
-import { User } from '../user';
+import { Channel } from './channel';
+import { ChatKittyError } from './error';
+import { Keystrokes } from './keystrokes';
+import { Message } from './message';
+import { ChatKittyUnsubscribe } from './observer';
+import { ChatKittySucceededResult } from './result';
+import { User } from './user';
 
-import { ChatSession } from './index';
+export declare class ChatSession {
+  channel: Channel;
+  end: ChatKittyUnsubscribe;
+}
 
 export type StartChatSessionResult = StartedChatSessionResult;
 

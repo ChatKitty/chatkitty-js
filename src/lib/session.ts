@@ -1,7 +1,10 @@
-import { ChatKittyError } from '../../error';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from '../../result';
+import { CurrentUser } from './current-user';
+import { ChatKittyError } from './error';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
-import { Session } from './index';
+export declare class Session {
+  user: CurrentUser;
+}
 
 export type StartSessionResult = StartedSessionResult | ChatKittyFailedResult;
 
@@ -24,7 +27,10 @@ export function startedSession(
 
 export class StartSessionInProgressError extends ChatKittyError {
   constructor() {
-    super('StartSessionInProgressError', 'A start session request is already in progress.');
+    super(
+      'StartSessionInProgressError',
+      'A start session request is already in progress.'
+    );
   }
 }
 

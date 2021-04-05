@@ -2,14 +2,12 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
-import { ChatKittyUploadResult } from './file';
-import { Channel } from './model/channel';
 import {
+  Channel,
+  ChannelNotPubliclyJoinableError,
   CreateChannelRequest,
   CreateChannelResult,
   CreatedChannelResult,
-} from './model/channel/create';
-import {
   GetChannelResult,
   GetChannelsRequest,
   GetChannelsResult,
@@ -18,79 +16,54 @@ import {
   GetChannelUnreadRequest,
   GetChannelUnreadResult,
   GetChannelUnreadSucceededResult,
-} from './model/channel/get';
-import {
-  ChannelNotPubliclyJoinableError,
   JoinChannelRequest,
   JoinChannelResult,
   JoinedChannelResult,
-} from './model/channel/join';
-import {
   LeaveChannelRequest,
   LeaveChannelResult,
   LeftChannelResult,
   NotAChannelMemberError,
-} from './model/channel/leave';
-import { ReadChannelRequest, ReadChannelResult } from './model/channel/read';
-import { ChatSession } from './model/chat-session';
+  ReadChannelRequest,
+  ReadChannelResult,
+} from './channel';
 import {
+  ChatSession,
   NoActiveChatSessionError,
   StartChatSessionRequest,
   StartChatSessionResult,
   StartedChatSessionResult,
-} from './model/chat-session/start';
-import { CurrentUser } from './model/current-user';
+} from './chat-session';
 import {
+  CurrentUser,
   GetCurrentUserResult,
   GetCurrentUserSuccessfulResult,
-} from './model/current-user/get';
-import {
   UpdateCurrentUserResult,
   UpdatedCurrentUserResult,
-} from './model/current-user/update';
-import { Keystrokes } from './model/keystrokes';
+} from './current-user';
+import { ChatKittyUploadResult } from './file';
 import {
+  Keystrokes,
   SendKeystrokeResult,
   SendKeystrokesRequest,
-} from './model/keystrokes/send';
+} from './keystrokes';
 import {
   FileUserMessage,
-  isFileMessage,
-  Message,
-  TextUserMessage,
-} from './model/message';
-import {
   GetLastReadMessageRequest,
   GetLastReadMessageResult,
   GetMessagesRequest,
   GetMessagesResult,
   GetMessagesSucceededResult,
-} from './model/message/get';
-import { ReadMessageRequest } from './model/message/read';
-import {
+  isFileMessage,
+  Message,
+  ReadMessageRequest,
   SendChannelFileMessageRequest,
   SendChannelTextMessageRequest,
   SendMessageRequest,
   SendMessageResult,
   SentFileMessageResult,
   SentTextMessageResult,
-} from './model/message/send';
-import {
-  NoActiveSessionError,
-  StartedSessionResult,
-  StartSessionInProgressError,
-  StartSessionRequest,
-  StartSessionResult,
-} from './model/session/start';
-import { User } from './model/user';
-import {
-  CannotHaveMembersError,
-  GetChannelMembersRequest,
-  GetContactsRequest,
-  GetUserResult,
-  GetUsersResult,
-  GetUsersSucceededResult,
-} from './model/user/get';
+  TextUserMessage,
+} from './message';
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
@@ -98,7 +71,23 @@ import {
   GetCountResult,
   GetCountSucceedResult,
 } from './result';
+import {
+  NoActiveSessionError,
+  StartedSessionResult,
+  StartSessionInProgressError,
+  StartSessionRequest,
+  StartSessionResult,
+} from './session';
 import StompX from './stompx';
+import {
+  CannotHaveMembersError,
+  GetChannelMembersRequest,
+  GetContactsRequest,
+  GetUserResult,
+  GetUsersResult,
+  GetUsersSucceededResult,
+  User,
+} from './user';
 
 export class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();

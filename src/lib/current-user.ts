@@ -1,4 +1,5 @@
-import { UserProperties } from '../user';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import { UserProperties } from './user';
 
 export declare class CurrentUser implements UserProperties {
   displayName: string;
@@ -35,4 +36,30 @@ export declare class CurrentUserTopics {
 export declare class CurrentUserActions {
   update: string;
   createChannel: string;
+}
+
+export type GetCurrentUserResult =
+  | GetCurrentUserSuccessfulResult
+  | ChatKittyFailedResult;
+
+export class GetCurrentUserSuccessfulResult extends ChatKittySucceededResult {
+  constructor(public user: CurrentUser) {
+    super();
+  }
+}
+
+export type UpdateCurrentUserResult =
+  | UpdatedCurrentUserResult
+  | ChatKittyFailedResult;
+
+export class UpdatedCurrentUserResult extends ChatKittySucceededResult {
+  constructor(public user: CurrentUser) {
+    super();
+  }
+}
+
+export function updatedCurrentUser(
+  result: UpdateCurrentUserResult
+): result is UpdatedCurrentUserResult {
+  return (result as UpdatedCurrentUserResult).user !== undefined;
 }
