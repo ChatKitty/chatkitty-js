@@ -69,6 +69,7 @@ export declare class ChannelActions {
   join?: string;
   leave?: string;
   read: string;
+  mute: string;
 }
 
 export declare class ChannelStreams {
@@ -172,6 +173,42 @@ export function joinedChannel(
   result: JoinChannelResult
 ): result is JoinedChannelResult {
   return (result as JoinedChannelResult).channel !== undefined;
+}
+
+export declare class MuteChannelRequest {
+  channel: Channel;
+}
+
+export type MuteChannelResult = MutedChannelResult | ChatKittyFailedResult;
+
+export class MutedChannelResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export function mutedChannel(
+  result: MuteChannelResult
+): result is MutedChannelResult {
+  return (result as MutedChannelResult).channel !== undefined;
+}
+
+export declare class UnmuteChannelRequest {
+  channel: Channel;
+}
+
+export type UnmuteChannelResult = UnmutedChannelResult | ChatKittyFailedResult;
+
+export class UnmutedChannelResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export function unmutedChannel(
+  result: UnmuteChannelResult
+): result is UnmutedChannelResult {
+  return (result as UnmutedChannelResult).channel !== undefined;
 }
 
 export declare class LeaveChannelRequest {

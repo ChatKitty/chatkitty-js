@@ -22,9 +22,15 @@ import {
   LeaveChannelRequest,
   LeaveChannelResult,
   LeftChannelResult,
+  MuteChannelRequest,
+  MuteChannelResult,
+  MutedChannelResult,
   NotAChannelMemberError,
   ReadChannelRequest,
   ReadChannelResult,
+  UnmuteChannelRequest,
+  UnmuteChannelResult,
+  UnmutedChannelResult,
 } from './channel';
 import {
   ChatSession,
@@ -439,6 +445,54 @@ export class ChatKitty {
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
       resolve({ channel: request.channel });
+    });
+  }
+
+  public muteChannel(request: MuteChannelRequest): Promise<MuteChannelResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: request.channel._actions.mute,
+        body: {
+          state: 'ON',
+        },
+        onSuccess: (channel) => {
+          resolve(new MutedChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  public unmuteChannel(
+    request: UnmuteChannelRequest
+  ): Promise<UnmuteChannelResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: request.channel._actions.mute,
+        body: {
+          state: 'OFF',
+        },
+        onSuccess: (channel) => {
+          resolve(new UnmutedChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
