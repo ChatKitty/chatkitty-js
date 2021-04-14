@@ -1,5 +1,9 @@
 import { Channel } from './channel';
-import { ChatKittyFile, ChatKittyUploadProgressListener } from './file';
+import {
+  ChatKittyFile,
+  ChatKittyUploadProgressListener,
+  CreateChatKittyFileProperties
+} from './file';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
@@ -133,7 +137,7 @@ export declare class SendChannelTextMessageRequest {
 
 export declare class SendChannelFileMessageRequest {
   channel: Channel;
-  file: File;
+  file: CreateChatKittyFileProperties;
   progressListener?: ChatKittyUploadProgressListener;
 }
 

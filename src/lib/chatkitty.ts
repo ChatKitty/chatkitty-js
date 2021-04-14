@@ -43,8 +43,10 @@ import {
   CurrentUser,
   GetCurrentUserResult,
   GetCurrentUserSuccessfulResult,
-  UpdateCurrentUserResult,
-  UpdatedCurrentUserResult,
+  UpdateCurrentUserDisplayPictureRequest,
+  UpdateCurrentUserDisplayPictureResult,
+  UpdateCurrentUserResult, UpdatedCurrentUserDisplayPictureResult,
+  UpdatedCurrentUserResult
 } from './current-user';
 import { ChatKittyUploadResult } from './file';
 import {
@@ -263,6 +265,59 @@ export class ChatKitty {
           resolve(new ChatKittyFailedResult(error));
         },
       });
+    });
+  }
+
+  public updateCurrentUserDisplayPicture(
+    request: UpdateCurrentUserDisplayPictureRequest
+  ): Promise<UpdateCurrentUserDisplayPictureResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      const file = request.file;
+
+      if (file instanceof File) {
+        this.stompX.sendToStream<CurrentUser>({
+          stream: currentUser._streams.displayPicture,
+          grant: <string>this.writeFileGrant,
+          blob: file,
+          onSuccess: (user) => {
+            resolve(new UpdatedCurrentUserDisplayPictureResult(user));
+          },
+          progressListener: {
+            onStarted: () => request.progressListener?.onStarted?.(),
+            onProgress: (progress) =>
+              request.progressListener?.onProgress(progress),
+            onCompleted: () =>
+              request.progressListener?.onCompleted(
+                ChatKittyUploadResult.COMPLETED
+              ),
+            onFailed: () =>
+              request.progressListener?.onCompleted(
+                ChatKittyUploadResult.FAILED
+              ),
+            onCancelled: () =>
+              request.progressListener?.onCompleted(
+                ChatKittyUploadResult.CANCELLED
+              ),
+          },
+        });
+      } else {
+        this.stompX.performAction<CurrentUser>({
+          destination: currentUser._actions.updateDisplayPicture,
+          body: file,
+          onSuccess: (user) => {
+            resolve(new UpdatedCurrentUserResult(user));
+          },
+          onError: (error) => {
+            resolve(new ChatKittyFailedResult(error));
+          },
+        });
+      }
     });
   }
 
@@ -687,31 +742,49 @@ export class ChatKitty {
       }
 
       if (isSendChannelFileMessageRequest(request)) {
-        this.stompX.sendToStream<FileUserMessage>({
-          stream: request.channel._streams.messages,
-          grant: <string>this.writeFileGrant,
-          blob: request.file,
-          onSuccess: (message) => {
-            resolve(new SentFileMessageResult(this.messageMapper.map(message)));
-          },
-          progressListener: {
-            onStarted: () => request.progressListener?.onStarted?.(),
-            onProgress: (progress) =>
-              request.progressListener?.onProgress(progress),
-            onCompleted: () =>
-              request.progressListener?.onCompleted(
-                ChatKittyUploadResult.COMPLETED
-              ),
-            onFailed: () =>
-              request.progressListener?.onCompleted(
-                ChatKittyUploadResult.FAILED
-              ),
-            onCancelled: () =>
-              request.progressListener?.onCompleted(
-                ChatKittyUploadResult.CANCELLED
-              ),
-          },
-        });
+        const file = request.file;
+
+        if (file instanceof File) {
+          this.stompX.sendToStream<FileUserMessage>({
+            stream: request.channel._streams.messages,
+            grant: <string>this.writeFileGrant,
+            blob: file,
+            onSuccess: (message) => {
+              resolve(new SentFileMessageResult(this.messageMapper.map(message)));
+            },
+            progressListener: {
+              onStarted: () => request.progressListener?.onStarted?.(),
+              onProgress: (progress) =>
+                request.progressListener?.onProgress(progress),
+              onCompleted: () =>
+                request.progressListener?.onCompleted(
+                  ChatKittyUploadResult.COMPLETED
+                ),
+              onFailed: () =>
+                request.progressListener?.onCompleted(
+                  ChatKittyUploadResult.FAILED
+                ),
+              onCancelled: () =>
+                request.progressListener?.onCompleted(
+                  ChatKittyUploadResult.CANCELLED
+                ),
+            },
+          });
+        } else {
+          this.stompX.performAction<FileUserMessage>({
+            destination: request.channel._actions.message,
+            body: {
+              type: 'FILE',
+              file: file,
+            },
+            onSuccess: (message) => {
+              resolve(new SentFileMessageResult(this.messageMapper.map(message)));
+            },
+            onError: (error) => {
+              resolve(new ChatKittyFailedResult(error));
+            },
+          });
+        }
       }
     });
   }

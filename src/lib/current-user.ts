@@ -1,3 +1,7 @@
+import {
+  ChatKittyUploadProgressListener,
+  CreateChatKittyFileProperties
+} from './file';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { UserProperties } from './user';
 
@@ -11,6 +15,7 @@ export declare class CurrentUser implements UserProperties {
   _relays: CurrentUserRelays;
   _topics: CurrentUserTopics;
   _actions: CurrentUserActions;
+  _streams: CurrentUserStreams;
 }
 
 export declare class CurrentUserRelays {
@@ -36,6 +41,11 @@ export declare class CurrentUserTopics {
 export declare class CurrentUserActions {
   update: string;
   createChannel: string;
+  updateDisplayPicture: string;
+}
+
+export declare class CurrentUserStreams {
+  displayPicture: string;
 }
 
 export type GetCurrentUserResult =
@@ -62,4 +72,26 @@ export function updatedCurrentUser(
   result: UpdateCurrentUserResult
 ): result is UpdatedCurrentUserResult {
   return (result as UpdatedCurrentUserResult).user !== undefined;
+}
+
+export declare class UpdateCurrentUserDisplayPictureRequest {
+  file: CreateChatKittyFileProperties;
+  progressListener?: ChatKittyUploadProgressListener;
+}
+
+export type UpdateCurrentUserDisplayPictureResult =
+  | UpdatedCurrentUserResult
+  | ChatKittyFailedResult;
+
+
+export class UpdatedCurrentUserDisplayPictureResult extends ChatKittySucceededResult {
+  constructor(public user: CurrentUser) {
+    super();
+  }
+}
+
+export function updatedCurrentUserDisplayPicture(
+  result: UpdateCurrentUserDisplayPictureResult
+): result is UpdatedCurrentUserDisplayPictureResult {
+  return (result as UpdatedCurrentUserDisplayPictureResult).user !== undefined;
 }

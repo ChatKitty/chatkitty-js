@@ -6,6 +6,17 @@ export declare class ChatKittyFile {
   size: number;
 }
 
+export type CreateChatKittyFileProperties =
+  CreateChatKittyExternalFileProperties |
+  File;
+
+export declare class CreateChatKittyExternalFileProperties {
+  url: string;
+  name: string;
+  contentType: string;
+  size: number;
+}
+
 export enum ChatKittyUploadResult {
   COMPLETED,
   FAILED,
