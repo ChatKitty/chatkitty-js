@@ -6,6 +6,10 @@ import SockJS from 'sockjs-client';
 import { v4 } from 'uuid';
 
 export default class StompX {
+  private readonly host: string;
+
+  private readonly isSecure: boolean;
+
   private readonly baseUrl: string;
 
   private readonly rxStompConfig: RxStompConfig;
@@ -46,6 +50,10 @@ export default class StompX {
       scheme = 'http';
     }
 
+    this.host = configuration.host;
+
+    this.isSecure = configuration.isSecure;
+
     this.baseUrl = scheme + '://' + configuration.host;
 
     this.rxStompConfig = {
@@ -76,9 +84,29 @@ export default class StompX {
       ...this.rxStompConfig,
       connectHeaders: headers,
       webSocketFactory: () => {
-        return new SockJS(
-          this.baseUrl + `/stompx?api_key=${encodeURIComponent(request.apiKey)}`
-        );
+        let scheme: string;
+
+        if (this.isSecure) {
+          scheme = 'wss';
+        } else {
+          scheme = 'ws';
+        }
+
+        const host = this.host;
+
+        if (typeof WebSocket === 'function') {
+          return new WebSocket(
+            `${scheme}://${host}/stompx/websocket?api_key=${encodeURIComponent(
+              request.apiKey
+            )}`
+          );
+        } else {
+          return new SockJS(
+            `${this.baseUrl}/stompx?api_key=${encodeURIComponent(
+              request.apiKey
+            )}`
+          );
+        }
       },
     });
 
