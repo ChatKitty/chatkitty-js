@@ -2,15 +2,37 @@ import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
 import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
-import SockJS from 'sockjs-client';
 import { v4 } from 'uuid';
+
+let TransportFallback: { default: { new (arg: string): unknown } };
+
+import('sockjs-client')
+  .then((sockjs) => {
+    TransportFallback = sockjs;
+  })
+  .catch((error) => {
+    ErrorMessageTransportFallback.errorMessage = error.message;
+
+    TransportFallback = { default: ErrorMessageTransportFallback };
+  });
+
+class ErrorMessageTransportFallback {
+  static errorMessage: string;
+
+  constructor() {
+    throw new Error(
+      'Encountered error when attempting to use transport fallback: ' +
+        ErrorMessageTransportFallback.errorMessage
+    );
+  }
+}
 
 export default class StompX {
   private readonly host: string;
 
-  private readonly isSecure: boolean;
+  private readonly wsScheme: string;
 
-  private readonly baseUrl: string;
+  private readonly httpScheme: string;
 
   private readonly rxStompConfig: RxStompConfig;
 
@@ -43,18 +65,15 @@ export default class StompX {
   private connected = false;
 
   constructor(configuration: StompXConfiguration) {
-    let scheme: string;
-    if (configuration.isSecure) {
-      scheme = 'https';
-    } else {
-      scheme = 'http';
-    }
-
     this.host = configuration.host;
 
-    this.isSecure = configuration.isSecure;
-
-    this.baseUrl = scheme + '://' + configuration.host;
+    if (configuration.isSecure) {
+      this.wsScheme = 'wss';
+      this.httpScheme = 'https';
+    } else {
+      this.wsScheme = 'ws';
+      this.httpScheme = 'http';
+    }
 
     this.rxStompConfig = {
       stompVersions: new Versions(['1.2']),
@@ -84,25 +103,19 @@ export default class StompX {
       ...this.rxStompConfig,
       connectHeaders: headers,
       webSocketFactory: () => {
-        let scheme: string;
-
-        if (this.isSecure) {
-          scheme = 'wss';
-        } else {
-          scheme = 'ws';
-        }
-
         const host = this.host;
 
         if (typeof WebSocket === 'function') {
           return new WebSocket(
-            `${scheme}://${host}/stompx/websocket?api_key=${encodeURIComponent(
+            `${
+              this.wsScheme
+            }://${host}/stompx/websocket?api_key=${encodeURIComponent(
               request.apiKey
             )}`
           );
         } else {
-          return new SockJS(
-            `${this.baseUrl}/stompx?api_key=${encodeURIComponent(
+          return new TransportFallback.default(
+            `${this.httpScheme}://${host}/stompx?api_key=${encodeURIComponent(
               request.apiKey
             )}`
           );
@@ -328,7 +341,7 @@ export default class StompX {
 
     this.axios({
       method: 'post',
-      baseURL: this.baseUrl,
+      baseURL: this.httpScheme + '://' + this.host,
       url: request.stream,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data', Grant: request.grant },
