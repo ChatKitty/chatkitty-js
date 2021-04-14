@@ -2,10 +2,11 @@ import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
 import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
+import SockJS from 'sockjs-client';
 import { v4 } from 'uuid';
 
 export default class StompX {
-  private readonly httpBaseUrl: string;
+  private readonly baseUrl: string;
 
   private readonly rxStompConfig: RxStompConfig;
 
@@ -38,33 +39,20 @@ export default class StompX {
   private connected = false;
 
   constructor(configuration: StompXConfiguration) {
-    let httpScheme: string;
+    let scheme: string;
     if (configuration.isSecure) {
-      httpScheme = 'https';
+      scheme = 'https';
     } else {
-      httpScheme = 'http';
+      scheme = 'http';
     }
 
-    this.httpBaseUrl = httpScheme + '://' + configuration.host;
-
-    let wsScheme: string;
-    if (configuration.isSecure) {
-      wsScheme = 'wss';
-    } else {
-      wsScheme = 'ws';
-    }
-
-    const brokerUrl =
-      wsScheme + '://' + configuration.host + '/stompx/websocket';
+    this.baseUrl = scheme + '://' + configuration.host;
 
     this.rxStompConfig = {
-      brokerURL: brokerUrl,
-
       stompVersions: new Versions(['1.2']),
       connectionTimeout: 5000,
       heartbeatIncoming: 5000,
       heartbeatOutgoing: 5000,
-      forceBinaryWSFrames: true,
       appendMissingNULLonIncoming: true,
 
       debug: (message) => {
@@ -76,11 +64,6 @@ export default class StompX {
   }
 
   public connect<U>(request: StompXConnectRequest<U>) {
-    const brokerURL =
-      this.rxStompConfig.brokerURL +
-      '?' +
-      `api_key=${encodeURIComponent(request.apiKey)}`;
-
     const headers: StompHeaders = {
       'StompX-User': request.username,
     };
@@ -91,8 +74,12 @@ export default class StompX {
 
     this.rxStomp.configure({
       ...this.rxStompConfig,
-      brokerURL: brokerURL,
       connectHeaders: headers,
+      webSocketFactory: () => {
+        return new SockJS(
+          this.baseUrl + `/stompx?api_key=${encodeURIComponent(request.apiKey)}`
+        );
+      },
     });
 
     this.rxStomp.activate();
@@ -313,7 +300,7 @@ export default class StompX {
 
     this.axios({
       method: 'post',
-      baseURL: this.httpBaseUrl,
+      baseURL: this.baseUrl,
       url: request.stream,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data', Grant: request.grant },
