@@ -1,5 +1,5 @@
 import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
-import { Versions } from '@stomp/stompjs';
+import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
@@ -76,24 +76,23 @@ export default class StompX {
   }
 
   public connect<U>(request: StompXConnectRequest<U>) {
-    let brokerURL =
+    const brokerURL =
       this.rxStompConfig.brokerURL +
       '?' +
-      `api_key=${encodeURIComponent(
-        request.apiKey
-      )}&stompx_user=${encodeURIComponent(request.username)}`;
+      `api_key=${encodeURIComponent(request.apiKey)}`;
+
+    const headers: StompHeaders = {
+      'StompX-User': request.username,
+    };
 
     if (request.authParams) {
-      brokerURL =
-        brokerURL +
-        `&stompx_auth_params=${encodeURIComponent(
-          JSON.stringify(request.authParams)
-        )}`;
+      headers['StompX-Auth-Params'] = JSON.stringify(request.authParams);
     }
 
     this.rxStomp.configure({
       ...this.rxStompConfig,
       brokerURL: brokerURL,
+      connectHeaders: headers,
     });
 
     this.rxStomp.activate();
