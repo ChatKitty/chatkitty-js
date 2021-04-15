@@ -2,7 +2,7 @@ import { Channel } from './channel';
 import {
   ChatKittyFile,
   ChatKittyUploadProgressListener,
-  CreateChatKittyFileProperties
+  CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';

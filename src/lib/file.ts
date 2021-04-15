@@ -7,8 +7,8 @@ export declare class ChatKittyFile {
 }
 
 export type CreateChatKittyFileProperties =
-  CreateChatKittyExternalFileProperties |
-  File;
+  | CreateChatKittyExternalFileProperties
+  | File;
 
 export declare class CreateChatKittyExternalFileProperties {
   url: string;

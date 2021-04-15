@@ -1,6 +1,6 @@
 import {
   ChatKittyUploadProgressListener,
-  CreateChatKittyFileProperties
+  CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { UserProperties } from './user';
@@ -82,7 +82,6 @@ export declare class UpdateCurrentUserDisplayPictureRequest {
 export type UpdateCurrentUserDisplayPictureResult =
   | UpdatedCurrentUserResult
   | ChatKittyFailedResult;
-
 
 export class UpdatedCurrentUserDisplayPictureResult extends ChatKittySucceededResult {
   constructor(public user: CurrentUser) {

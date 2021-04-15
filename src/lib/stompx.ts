@@ -91,6 +91,8 @@ export default class StompX {
   }
 
   public connect<U>(request: StompXConnectRequest<U>) {
+    const host = this.host;
+
     const headers: StompHeaders = {
       'StompX-User': request.username,
     };
@@ -99,28 +101,25 @@ export default class StompX {
       headers['StompX-Auth-Params'] = JSON.stringify(request.authParams);
     }
 
+    if (typeof WebSocket === 'function') {
+      this.rxStompConfig.brokerURL = `${
+        this.wsScheme
+      }://${host}/stompx/websocket?api_key=${encodeURIComponent(
+        request.apiKey
+      )}`;
+    } else {
+      this.rxStompConfig.webSocketFactory = () => {
+        return new TransportFallback.default(
+          `${this.httpScheme}://${host}/stompx?api_key=${encodeURIComponent(
+            request.apiKey
+          )}`
+        );
+      };
+    }
+
     this.rxStomp.configure({
       ...this.rxStompConfig,
       connectHeaders: headers,
-      webSocketFactory: () => {
-        const host = this.host;
-
-        if (typeof WebSocket === 'function') {
-          return new WebSocket(
-            `${
-              this.wsScheme
-            }://${host}/stompx/websocket?api_key=${encodeURIComponent(
-              request.apiKey
-            )}`
-          );
-        } else {
-          return new TransportFallback.default(
-            `${this.httpScheme}://${host}/stompx?api_key=${encodeURIComponent(
-              request.apiKey
-            )}`
-          );
-        }
-      },
     });
 
     this.rxStomp.activate();

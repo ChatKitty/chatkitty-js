@@ -45,8 +45,9 @@ import {
   GetCurrentUserSuccessfulResult,
   UpdateCurrentUserDisplayPictureRequest,
   UpdateCurrentUserDisplayPictureResult,
-  UpdateCurrentUserResult, UpdatedCurrentUserDisplayPictureResult,
-  UpdatedCurrentUserResult
+  UpdateCurrentUserResult,
+  UpdatedCurrentUserDisplayPictureResult,
+  UpdatedCurrentUserResult,
 } from './current-user';
 import { ChatKittyUploadResult } from './file';
 import {
@@ -750,7 +751,9 @@ export class ChatKitty {
             grant: <string>this.writeFileGrant,
             blob: file,
             onSuccess: (message) => {
-              resolve(new SentFileMessageResult(this.messageMapper.map(message)));
+              resolve(
+                new SentFileMessageResult(this.messageMapper.map(message))
+              );
             },
             progressListener: {
               onStarted: () => request.progressListener?.onStarted?.(),
@@ -778,7 +781,9 @@ export class ChatKitty {
               file: file,
             },
             onSuccess: (message) => {
-              resolve(new SentFileMessageResult(this.messageMapper.map(message)));
+              resolve(
+                new SentFileMessageResult(this.messageMapper.map(message))
+              );
             },
             onError: (error) => {
               resolve(new ChatKittyFailedResult(error));
