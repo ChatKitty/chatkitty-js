@@ -80,7 +80,6 @@ export default class StompX {
       connectionTimeout: 5000,
       heartbeatIncoming: 5000,
       heartbeatOutgoing: 5000,
-      appendMissingNULLonIncoming: true,
 
       debug: (message) => {
         if (configuration.isDebug) {
@@ -88,6 +87,11 @@ export default class StompX {
         }
       },
     };
+
+    if (typeof navigator != 'undefined' && navigator.product == 'ReactNative') {
+      this.rxStompConfig.forceBinaryWSFrames = true;
+      this.rxStompConfig.appendMissingNULLonIncoming = true;
+    }
   }
 
   public connect<U>(request: StompXConnectRequest<U>) {
