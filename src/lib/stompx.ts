@@ -218,14 +218,16 @@ export default class StompX {
       this.pendingRelayErrors.set(subscriptionId, request.onError);
     }
 
-    this.rxStomp
-      .watch(request.destination, {
+    this.rxStomp.stompClient.subscribe(
+      request.destination,
+      (message) => {
+        request.onSuccess(JSON.parse(message.body).resource);
+      },
+      {
         ...request.parameters,
         id: subscriptionId,
-      })
-      .subscribe((message) => {
-        request.onSuccess(JSON.parse(message.body).resource);
-      });
+      }
+    );
   }
 
   public listenToTopic(request: StompXListenToTopicRequest): () => void {
