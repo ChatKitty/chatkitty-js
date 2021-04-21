@@ -206,12 +206,15 @@ export class ChatKitty {
   }
 
   public endSession(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.stompX.disconnect({
         onSuccess: () => {
           this.currentUserNextSubject.next(null);
 
           resolve();
+        },
+        onError: (e) => {
+          reject(e);
         },
       });
     });

@@ -373,11 +373,14 @@ export default class StompX {
   }
 
   public disconnect(request: StompXDisconnectRequest) {
-    this.rxStomp.deactivate().then(() => {
-      this.connected = false;
+    this.rxStomp
+      .deactivate()
+      .then(() => {
+        this.connected = false;
 
-      request.onSuccess();
-    });
+        request.onSuccess();
+      })
+      .catch((e) => request.onError(e));
   }
 
   private static generateSubscriptionId(): string {
@@ -406,6 +409,7 @@ export declare class StompXConnectRequest<U> {
 
 export declare class StompXDisconnectRequest {
   onSuccess: () => void;
+  onError: (e: unknown) => void;
 }
 
 export declare class StompXListenForEventRequest<R> {
