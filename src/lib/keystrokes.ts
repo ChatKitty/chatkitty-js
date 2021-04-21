@@ -1,5 +1,5 @@
 import { Channel } from './channel';
-import { ChatKittyFailedResult } from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
 export declare class Keystrokes {
   username: string;
@@ -21,7 +21,8 @@ export declare class SendChannelKeystrokesRequest {
 
 export type SendKeystrokeResult = SentKeystrokeResult | ChatKittyFailedResult;
 
-export declare class SentKeystrokeResult {
-  channel: Channel;
-  keys: string;
+export class SentKeystrokeResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel, public keys: string) {
+    super();
+  }
 }

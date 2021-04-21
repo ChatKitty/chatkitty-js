@@ -312,6 +312,10 @@ export default class StompX {
   public performAction<R>(request: StompXPerformActionRequest<R>) {
     const receipt = StompX.generateReceipt();
 
+    if (request.onSent) {
+      this.rxStomp.watchForReceipt(receipt, request.onSent);
+    }
+
     if (request.onSuccess) {
       this.pendingActions.set(
         receipt,
@@ -443,6 +447,7 @@ export declare class StompXRelayParameters {
 export declare class StompXPerformActionRequest<R> {
   destination: string;
   body: unknown;
+  onSent?: () => void;
   onSuccess?: (resource: R) => void;
   onError?: (error: StompXError) => void;
 }

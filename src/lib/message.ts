@@ -126,6 +126,16 @@ export declare class ReadMessageRequest {
   message: Message;
 }
 
+export type ReadMessageResult =
+  | ReadMessageSucceededResult
+  | ChatKittyFailedResult;
+
+export class ReadMessageSucceededResult extends ChatKittySucceededResult {
+  constructor(public message: Message) {
+    super();
+  }
+}
+
 export type SendMessageRequest =
   | SendChannelTextMessageRequest
   | SendChannelFileMessageRequest;

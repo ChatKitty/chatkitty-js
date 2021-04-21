@@ -28,6 +28,7 @@ import {
   NotAChannelMemberError,
   ReadChannelRequest,
   ReadChannelResult,
+  ReadChannelSucceededResult,
   UnmuteChannelRequest,
   UnmuteChannelResult,
   UnmutedChannelResult,
@@ -52,8 +53,10 @@ import {
 import { ChatKittyUploadResult } from './file';
 import {
   Keystrokes,
+  SendChannelKeystrokesRequest,
   SendKeystrokeResult,
   SendKeystrokesRequest,
+  SentKeystrokeResult,
 } from './keystrokes';
 import {
   FileUserMessage,
@@ -65,6 +68,8 @@ import {
   isFileMessage,
   Message,
   ReadMessageRequest,
+  ReadMessageResult,
+  ReadMessageSucceededResult,
   SendChannelFileMessageRequest,
   SendChannelTextMessageRequest,
   SendMessageRequest,
@@ -502,10 +507,9 @@ export class ChatKitty {
       this.stompX.performAction<never>({
         destination: request.channel._actions.read,
         body: {},
+        onSent: () => resolve(new ReadChannelSucceededResult(request.channel)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
-
-      resolve({ channel: request.channel });
     });
   }
 
@@ -822,14 +826,14 @@ export class ChatKitty {
     });
   }
 
-  public readMessage(request: ReadMessageRequest): Promise<void> {
+  public readMessage(request: ReadMessageRequest): Promise<ReadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.performAction<never>({
         destination: request.message._actions.read,
         body: {},
+        onSent: () => resolve(new ReadMessageSucceededResult(request.message)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
-
-      resolve();
     });
   }
 
@@ -871,10 +875,10 @@ export class ChatKitty {
         body: {
           keys: request.keys,
         },
+        onSent: () =>
+          resolve(new SentKeystrokeResult(request.channel, request.keys)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
-
-      resolve({ ...request });
     });
   }
 
