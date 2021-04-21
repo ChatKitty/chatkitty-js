@@ -369,11 +369,11 @@ export default class StompX {
   }
 
   public disconnect(request: StompXDisconnectRequest) {
-    this.rxStomp.deactivate();
+    this.rxStomp.deactivate().then(() => {
+      this.connected = false;
 
-    request.onSuccess();
-
-    this.connected = false;
+      request.onSuccess();
+    });
   }
 
   private static generateSubscriptionId(): string {

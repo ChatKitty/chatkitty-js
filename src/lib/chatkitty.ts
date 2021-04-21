@@ -200,11 +200,15 @@ export class ChatKitty {
     });
   }
 
-  public endSession() {
-    this.stompX.disconnect({
-      onSuccess: () => {
-        this.currentUserNextSubject.next(null);
-      },
+  public endSession(): Promise<void> {
+    return new Promise((resolve) => {
+      this.stompX.disconnect({
+        onSuccess: () => {
+          this.currentUserNextSubject.next(null);
+
+          resolve();
+        },
+      });
     });
   }
 
@@ -500,6 +504,7 @@ export class ChatKitty {
         body: {},
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
+
       resolve({ channel: request.channel });
     });
   }
@@ -710,8 +715,12 @@ export class ChatKitty {
     return new StartedChatSessionResult(session);
   }
 
-  public endChatSession(session: ChatSession) {
-    session.end();
+  public endChatSession(session: ChatSession): Promise<void> {
+    return new Promise((resolve) => {
+      session.end();
+
+      resolve();
+    });
   }
 
   public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
@@ -813,10 +822,14 @@ export class ChatKitty {
     });
   }
 
-  public readMessage(request: ReadMessageRequest) {
-    this.stompX.performAction<never>({
-      destination: request.message._actions.read,
-      body: {},
+  public readMessage(request: ReadMessageRequest): Promise<void> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<never>({
+        destination: request.message._actions.read,
+        body: {},
+      });
+
+      resolve();
     });
   }
 
