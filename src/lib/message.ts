@@ -184,3 +184,7 @@ export function sentFileMessage(
     result.message.type === 'FILE'
   );
 }
+
+export declare class GetUnreadMessagesCountRequest {
+  channel: Channel;
+}

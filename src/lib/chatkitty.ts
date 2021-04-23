@@ -53,7 +53,6 @@ import {
 import { ChatKittyUploadResult } from './file';
 import {
   Keystrokes,
-  SendChannelKeystrokesRequest,
   SendKeystrokeResult,
   SendKeystrokesRequest,
   SentKeystrokeResult,
@@ -65,6 +64,7 @@ import {
   GetMessagesRequest,
   GetMessagesResult,
   GetMessagesSucceededResult,
+  GetUnreadMessagesCountRequest,
   isFileMessage,
   Message,
   ReadMessageRequest,
@@ -829,6 +829,25 @@ export class ChatKitty {
     });
   }
 
+  public getUnreadMessagesCount(
+    request: GetUnreadMessagesCountRequest
+  ): Promise<GetCountResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<{ count: number }>({
+        destination: request.channel._relays.messagesCount,
+        parameters: {
+          unread: true,
+        },
+        onSuccess: (resource) => {
+          resolve(new GetCountSucceedResult(resource.count));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
   public readMessage(request: ReadMessageRequest): Promise<ReadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.performAction<never>({
@@ -845,7 +864,7 @@ export class ChatKitty {
   ): Promise<GetLastReadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Message>({
-        destination: request.channel._relays.last_read_message,
+        destination: request.channel._relays.lastReadMessage,
         parameters: {
           username: request.username,
         },

@@ -50,7 +50,8 @@ export declare class PublicChannel implements ChannelProperties {
 export declare class ChannelRelays {
   self: string;
   messages: string;
-  last_read_message: string;
+  messagesCount: string;
+  lastReadMessage: string;
   unread: string;
   members?: string;
 }
