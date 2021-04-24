@@ -1,6 +1,7 @@
 import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
 import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
 
@@ -36,9 +37,9 @@ export default class StompX {
 
   private readonly rxStompConfig: RxStompConfig;
 
-  private readonly rxStomp: RxStomp = new RxStomp();
+  private readonly axios: AxiosInstance;
 
-  private readonly axios: AxiosInstance = Axios;
+  private readonly rxStomp: RxStomp = new RxStomp();
 
   private readonly topics: Map<string, Subscription> = new Map();
 
@@ -92,6 +93,10 @@ export default class StompX {
       this.rxStompConfig.forceBinaryWSFrames = true;
       this.rxStompConfig.appendMissingNULLonIncoming = true;
     }
+
+    this.axios = Axios.create({
+      baseURL: this.httpScheme + '://' + this.host,
+    });
   }
 
   public connect<U>(request: StompXConnectRequest<U>) {
@@ -350,7 +355,6 @@ export default class StompX {
 
     this.axios({
       method: 'post',
-      baseURL: this.httpScheme + '://' + this.host,
       url: request.stream,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data', Grant: request.grant },
