@@ -71,6 +71,7 @@ export declare class ChannelActions {
   leave?: string;
   read: string;
   mute: string;
+  clearHistory: string;
 }
 
 export declare class ChannelStreams {
@@ -248,6 +249,20 @@ export type ReadChannelResult =
   | ChatKittyFailedResult;
 
 export class ReadChannelSucceededResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export declare class ClearChannelHistoryRequest {
+  channel: Channel;
+}
+
+export type ClearChannelHistoryResult =
+  | ClearChannelHistorySucceededResult
+  | ChatKittyFailedResult;
+
+export class ClearChannelHistorySucceededResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
     super();
   }

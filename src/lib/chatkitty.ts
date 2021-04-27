@@ -5,6 +5,9 @@ import { environment } from '../environments/environment';
 import {
   Channel,
   ChannelNotPubliclyJoinableError,
+  ClearChannelHistoryRequest,
+  ClearChannelHistoryResult,
+  ClearChannelHistorySucceededResult,
   CreateChannelRequest,
   CreateChannelResult,
   CreatedChannelResult,
@@ -58,6 +61,9 @@ import {
   SentKeystrokeResult,
 } from './keystrokes';
 import {
+  DeleteMessageForMeRequest,
+  DeleteMessageForMeResult,
+  DeleteMessageForMeSucceededResult,
   FileUserMessage,
   GetLastReadMessageRequest,
   GetLastReadMessageResult,
@@ -167,6 +173,7 @@ export class ChatKitty {
         onSuccess: (user) => {
           this.stompX.listenToTopic({ topic: user._topics.self });
           this.stompX.listenToTopic({ topic: user._topics.channels });
+          this.stompX.listenToTopic({ topic: user._topics.messages });
           this.stompX.listenToTopic({ topic: user._topics.notifications });
           this.stompX.listenToTopic({ topic: user._topics.contacts });
           this.stompX.listenToTopic({ topic: user._topics.participants });
@@ -564,6 +571,26 @@ export class ChatKitty {
     });
   }
 
+  public clearChannelHistory(
+    request: ClearChannelHistoryRequest
+  ): Promise<ClearChannelHistoryResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<never>({
+        destination: request.channel._actions.clearHistory,
+        body: {},
+        onSuccess: (channel) =>
+          resolve(new ClearChannelHistorySucceededResult(channel)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
   public startChatSession(
     request: StartChatSessionRequest
   ): StartChatSessionResult {
@@ -874,6 +901,20 @@ export class ChatKitty {
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
         },
+      });
+    });
+  }
+
+  public deleteMessageForMe(
+    request: DeleteMessageForMeRequest
+  ): Promise<DeleteMessageForMeResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<Message>({
+        destination: request.message._actions.deleteForMe,
+        body: {},
+        onSuccess: (resource) =>
+          resolve(new DeleteMessageForMeSucceededResult(resource)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
   }

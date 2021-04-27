@@ -87,6 +87,7 @@ export declare class MessageLinkPreviewImage {
 
 export declare class MessageActions {
   read: string;
+  deleteForMe: string;
 }
 
 export function isTextMessage(message: Message): message is TextMessage {
@@ -131,6 +132,20 @@ export type ReadMessageResult =
   | ChatKittyFailedResult;
 
 export class ReadMessageSucceededResult extends ChatKittySucceededResult {
+  constructor(public message: Message) {
+    super();
+  }
+}
+
+export declare class DeleteMessageForMeRequest {
+  message: Message;
+}
+
+export type DeleteMessageForMeResult =
+  | DeleteMessageForMeSucceededResult
+  | ChatKittyFailedResult;
+
+export class DeleteMessageForMeSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }
