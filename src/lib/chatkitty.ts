@@ -607,6 +607,7 @@ export class ChatKitty {
     const onTypingStopped = request.onTypingStopped;
     const onParticipantPresenceChanged = request.onParticipantPresenceChanged;
     const onMessageUpdated = request.onMessageUpdated;
+    const onChannelUpdated = request.onChannelUpdated;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -616,6 +617,7 @@ export class ChatKitty {
     let typingStoppedUnsubscribe: () => void;
     let participantPresenceChangedUnsubscribe: () => void;
     let messageUpdatedUnsubscribe: () => void;
+    let channelUpdatedUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -697,6 +699,16 @@ export class ChatKitty {
       });
     }
 
+    if (onChannelUpdated) {
+      channelUpdatedUnsubscribe = this.stompX.listenForEvent<Channel>({
+        topic: request.channel._topics.self,
+        event: 'channel.self.updated',
+        onSuccess: (channel) => {
+          onChannelUpdated(channel);
+        },
+      });
+    }
+
     const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
       onSuccess: () => {
@@ -717,6 +729,7 @@ export class ChatKitty {
         });
 
         unsubscribe = () => {
+          channelUpdatedUnsubscribe?.();
           messageUpdatedUnsubscribe?.();
           participantPresenceChangedUnsubscribe?.();
           participantLeftChatUnsubscribe?.();
