@@ -144,6 +144,7 @@ export class ChatKitty {
   private writeFileGrant?: string;
   private chatSessions: Map<number, ChatSession> = new Map();
 
+  private channelMapper: ChannelMapper;
   private messageMapper: MessageMapper = new MessageMapper('');
 
   private isStartingSession = false;
@@ -154,6 +155,8 @@ export class ChatKitty {
       host: configuration.host || 'api.chatkitty.com',
       isDebug: !environment.production,
     });
+
+    this.channelMapper = new ChannelMapper(this.stompX);
   }
 
   public startSession(
@@ -355,7 +358,9 @@ export class ChatKitty {
         destination: currentUser._actions.createChannel,
         body: request,
         onSuccess: (channel) => {
-          resolve(new CreatedChannelResult(channel));
+          this.channelMapper
+            .map(channel)
+            .then((channel) => resolve(new CreatedChannelResult(channel)));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -388,6 +393,7 @@ export class ChatKitty {
         stompX: this.stompX,
         relay: relay,
         contentName: 'channels',
+        asyncMapper: (item) => this.channelMapper.map(item),
       })
         .then((paginator) => resolve(new GetChannelsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
@@ -399,7 +405,9 @@ export class ChatKitty {
       this.stompX.relayResource<Channel>({
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
-          resolve(new GetChannelSucceededResult(channel));
+          this.channelMapper
+            .map(channel)
+            .then((channel) => resolve(new GetChannelSucceededResult(channel)));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -426,7 +434,9 @@ export class ChatKitty {
         destination: destination,
         body: request,
         onSuccess: (channel) => {
-          resolve(new JoinedChannelResult(channel));
+          this.channelMapper
+            .map(channel)
+            .then((channel) => resolve(new JoinedChannelResult(channel)));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -455,7 +465,9 @@ export class ChatKitty {
         destination: destination,
         body: request,
         onSuccess: (channel) => {
-          resolve(new LeftChannelResult(channel));
+          this.channelMapper
+            .map(channel)
+            .then((channel) => resolve(new LeftChannelResult(channel)));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -537,7 +549,9 @@ export class ChatKitty {
           state: 'ON',
         },
         onSuccess: (channel) => {
-          resolve(new MutedChannelResult(channel));
+          this.channelMapper
+            .map(channel)
+            .then((channel) => resolve(new MutedChannelResult(channel)));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -562,7 +576,9 @@ export class ChatKitty {
           state: 'OFF',
         },
         onSuccess: (channel) => {
-          resolve(new UnmutedChannelResult(channel));
+          this.channelMapper
+            .map(channel)
+            .then((channel) => resolve(new UnmutedChannelResult(channel)));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -984,11 +1000,13 @@ export class ChatKitty {
       topic: currentUser._topics.channels,
       event: 'me.channel.joined',
       onSuccess: (channel) => {
-        if (typeof onNextOrObserver === 'function') {
-          onNextOrObserver(channel);
-        } else {
-          onNextOrObserver.onNext(channel);
-        }
+        this.channelMapper.map(channel).then((channel) => {
+          if (typeof onNextOrObserver === 'function') {
+            onNextOrObserver(channel);
+          } else {
+            onNextOrObserver.onNext(channel);
+          }
+        });
       },
     });
 
@@ -1165,6 +1183,26 @@ export declare class ChatKittyConfiguration {
   apiKey: string;
   isSecure?: boolean;
   host?: string;
+}
+
+class ChannelMapper {
+  constructor(private stompX: StompX) {}
+
+  public map<C extends Channel>(channel: C): Promise<C> {
+    return new Promise((resolve, reject) => {
+      this.stompX.relayResource<Message>({
+        destination: channel._relays.lastReceivedMessage,
+        onSuccess: (resource) => {
+          channel.lastReceivedMessage = resource;
+
+          resolve(channel);
+        },
+        onError: (error) => {
+          reject(error);
+        },
+      });
+    });
+  }
 }
 
 class MessageMapper {

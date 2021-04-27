@@ -22,8 +22,18 @@ export class ChatKittyPaginator<I> {
 
     const mapper = request.mapper;
 
+    const asyncMapper = request.asyncMapper;
+
     if (mapper) {
       items = items.map((item) => mapper(item));
+    } else if (asyncMapper) {
+      const mappedItems: I[] = [];
+
+      for (const item of items) {
+        mappedItems.concat(await asyncMapper(item));
+      }
+
+      items = mappedItems;
     }
 
     return new ChatKittyPaginator<I>(
@@ -33,7 +43,8 @@ export class ChatKittyPaginator<I> {
       page._relays.prev,
       page._relays.next,
       request.parameters,
-      mapper
+      mapper,
+      asyncMapper
     );
   }
 
@@ -44,7 +55,8 @@ export class ChatKittyPaginator<I> {
     private prevRelay?: string,
     private nextRelay?: string,
     private parameters?: Record<string, unknown>,
-    private mapper?: (item: I) => I
+    private mapper?: (item: I) => I,
+    private asyncMapper?: (item: I) => Promise<I>
   ) {}
 
   get hasPrevPage(): boolean {
@@ -84,8 +96,18 @@ export class ChatKittyPaginator<I> {
 
     const mapper = this.mapper;
 
+    const asyncMapper = this.asyncMapper;
+
     if (mapper) {
       items = items.map((item) => mapper(item));
+    } else if (asyncMapper) {
+      const mappedItems: I[] = [];
+
+      for (const item of items) {
+        mappedItems.concat(await asyncMapper(item));
+      }
+
+      items = mappedItems;
     }
 
     return new ChatKittyPaginator<I>(
@@ -95,7 +117,8 @@ export class ChatKittyPaginator<I> {
       page._relays.prev,
       page._relays.next,
       this.parameters,
-      this.mapper
+      this.mapper,
+      this.asyncMapper
     );
   }
 }
@@ -106,6 +129,7 @@ export declare class CreatePaginatorRequest<I> {
   contentName: string;
   parameters?: Record<string, unknown>;
   mapper?: (item: I) => I;
+  asyncMapper?: (item: I) => Promise<I>;
   onError?: (error: StompXError) => void;
 }
 

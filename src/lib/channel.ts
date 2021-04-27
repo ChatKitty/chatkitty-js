@@ -51,6 +51,7 @@ export declare class ChannelRelays {
   self: string;
   messages: string;
   messagesCount: string;
+  lastReceivedMessage: string;
   lastReadMessage: string;
   unread: string;
   members?: string;
