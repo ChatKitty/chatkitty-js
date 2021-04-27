@@ -358,9 +358,7 @@ export class ChatKitty {
         destination: currentUser._actions.createChannel,
         body: request,
         onSuccess: (channel) => {
-          this.channelMapper
-            .map(channel)
-            .then((channel) => resolve(new CreatedChannelResult(channel)));
+          resolve(new CreatedChannelResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -393,7 +391,6 @@ export class ChatKitty {
         stompX: this.stompX,
         relay: relay,
         contentName: 'channels',
-        asyncMapper: (item) => this.channelMapper.map(item),
       })
         .then((paginator) => resolve(new GetChannelsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
@@ -405,9 +402,7 @@ export class ChatKitty {
       this.stompX.relayResource<Channel>({
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
-          this.channelMapper
-            .map(channel)
-            .then((channel) => resolve(new GetChannelSucceededResult(channel)));
+          resolve(new GetChannelSucceededResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -434,9 +429,7 @@ export class ChatKitty {
         destination: destination,
         body: request,
         onSuccess: (channel) => {
-          this.channelMapper
-            .map(channel)
-            .then((channel) => resolve(new JoinedChannelResult(channel)));
+          resolve(new JoinedChannelResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -465,9 +458,7 @@ export class ChatKitty {
         destination: destination,
         body: request,
         onSuccess: (channel) => {
-          this.channelMapper
-            .map(channel)
-            .then((channel) => resolve(new LeftChannelResult(channel)));
+          resolve(new LeftChannelResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -549,9 +540,7 @@ export class ChatKitty {
           state: 'ON',
         },
         onSuccess: (channel) => {
-          this.channelMapper
-            .map(channel)
-            .then((channel) => resolve(new MutedChannelResult(channel)));
+          resolve(new MutedChannelResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -576,9 +565,7 @@ export class ChatKitty {
           state: 'OFF',
         },
         onSuccess: (channel) => {
-          this.channelMapper
-            .map(channel)
-            .then((channel) => resolve(new UnmutedChannelResult(channel)));
+          resolve(new UnmutedChannelResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1000,13 +987,11 @@ export class ChatKitty {
       topic: currentUser._topics.channels,
       event: 'me.channel.joined',
       onSuccess: (channel) => {
-        this.channelMapper.map(channel).then((channel) => {
-          if (typeof onNextOrObserver === 'function') {
-            onNextOrObserver(channel);
-          } else {
-            onNextOrObserver.onNext(channel);
-          }
-        });
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(channel);
+        } else {
+          onNextOrObserver.onNext(channel);
+        }
       },
     });
 
