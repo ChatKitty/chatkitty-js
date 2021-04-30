@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TextUserMessage | ChatKitty JS SDK</title>
+	<title>MessageRelays | ChatKitty JS SDK</title>
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,10 +59,10 @@
 					<a href="../modules/message.html">message</a>
 				</li>
 				<li>
-					<a href="message.textusermessage.html">TextUserMessage</a>
+					<a href="message.messagerelays.html">MessageRelays</a>
 				</li>
 			</ul>
-			<h1>Class TextUserMessage</h1>
+			<h1>Class MessageRelays</h1>
 		</div>
 	</div>
 </header>
@@ -73,14 +73,8 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">TextUserMessage</span>
+						<span class="target">MessageRelays</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/message.messageproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">MessageProperties</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -90,21 +84,14 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="message.textusermessage.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="message.messagerelays.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#_actions" class="tsd-kind-icon">_actions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#_relays" class="tsd-kind-icon">_relays</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#body" class="tsd-kind-icon">body</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#createdtime" class="tsd-kind-icon">created<wbr>Time</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#links" class="tsd-kind-icon">links</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#properties" class="tsd-kind-icon">properties</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.textusermessage.html#user" class="tsd-kind-icon">user</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.messagerelays.html#readreceipts" class="tsd-kind-icon">read<wbr>Receipts</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.messagerelays.html#self" class="tsd-kind-icon">self</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,13 +103,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Text<wbr>User<wbr>Message<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="message.textusermessage.html" class="tsd-signature-type" data-tsd-kind="Class">TextUserMessage</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Message<wbr>Relays<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="message.messagerelays.html" class="tsd-signature-type" data-tsd-kind="Class">MessageRelays</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="message.textusermessage.html" class="tsd-signature-type" data-tsd-kind="Class">TextUserMessage</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="message.messagerelays.html" class="tsd-signature-type" data-tsd-kind="Class">MessageRelays</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -130,98 +117,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_actions" class="tsd-anchor"></a>
-					<h3>_actions</h3>
-					<div class="tsd-signature tsd-kind-icon">_actions<span class="tsd-signature-symbol">:</span> <a href="message.messageactions.html" class="tsd-signature-type" data-tsd-kind="Class">MessageActions</a></div>
+					<a name="readreceipts" class="tsd-anchor"></a>
+					<h3>read<wbr>Receipts</h3>
+					<div class="tsd-signature tsd-kind-icon">read<wbr>Receipts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/message.messageproperties.html">MessageProperties</a>.<a href="../interfaces/message.messageproperties.html#_actions">_actions</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L60">message.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L95">message.ts:95</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_relays" class="tsd-anchor"></a>
-					<h3>_relays</h3>
-					<div class="tsd-signature tsd-kind-icon">_relays<span class="tsd-signature-symbol">:</span> <a href="message.messagerelays.html" class="tsd-signature-type" data-tsd-kind="Class">MessageRelays</a></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/message.messageproperties.html">MessageProperties</a>.<a href="../interfaces/message.messageproperties.html#_relays">_relays</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L59">message.ts:59</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="body" class="tsd-anchor"></a>
-					<h3>body</h3>
-					<div class="tsd-signature tsd-kind-icon">body<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="self" class="tsd-anchor"></a>
+					<h3>self</h3>
+					<div class="tsd-signature tsd-kind-icon">self<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L57">message.ts:57</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="createdtime" class="tsd-anchor"></a>
-					<h3>created<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">created<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/message.messageproperties.html">MessageProperties</a>.<a href="../interfaces/message.messageproperties.html#createdtime">createdTime</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L54">message.ts:54</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/message.messageproperties.html">MessageProperties</a>.<a href="../interfaces/message.messageproperties.html#id">id</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L52">message.ts:52</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="links" class="tsd-anchor"></a>
-					<h3>links</h3>
-					<div class="tsd-signature tsd-kind-icon">links<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><a href="message.messagelink.html" class="tsd-signature-type" data-tsd-kind="Class">MessageLink</a><span class="tsd-signature-symbol">]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L58">message.ts:58</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="properties" class="tsd-anchor"></a>
-					<h3>properties</h3>
-					<div class="tsd-signature tsd-kind-icon">properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/message.messageproperties.html">MessageProperties</a>.<a href="../interfaces/message.messageproperties.html#properties">properties</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L55">message.ts:55</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/message.messageproperties.html">MessageProperties</a>.<a href="../interfaces/message.messageproperties.html#type">type</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L53">message.ts:53</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="user.user-1.html" class="tsd-signature-type" data-tsd-kind="Class">User</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L56">message.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/message.ts#L94">message.ts:94</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -327,9 +238,24 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="message.messagelinkpreviewimage.html" class="tsd-kind-icon">Message<wbr>Link<wbr>Preview<wbr>Image</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="message.messagerelays.html" class="tsd-kind-icon">Message<wbr>Relays</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="message.messagerelays.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="message.messagerelays.html#readreceipts" class="tsd-kind-icon">read<wbr>Receipts</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="message.messagerelays.html#self" class="tsd-kind-icon">self</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="message.readmessagerequest.html" class="tsd-kind-icon">Read<wbr>Message<wbr>Request</a>
 					</li>
@@ -351,45 +277,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="message.textsystemmessage.html" class="tsd-kind-icon">Text<wbr>System<wbr>Message</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="message.textusermessage.html" class="tsd-kind-icon">Text<wbr>User<wbr>Message</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="message.textusermessage.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#_actions" class="tsd-kind-icon">_actions</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#_relays" class="tsd-kind-icon">_relays</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#body" class="tsd-kind-icon">body</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#createdtime" class="tsd-kind-icon">created<wbr>Time</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#links" class="tsd-kind-icon">links</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#properties" class="tsd-kind-icon">properties</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="message.textusermessage.html#user" class="tsd-kind-icon">user</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/message.messageproperties.html" class="tsd-kind-icon">Message<wbr>Properties</a>
 					</li>

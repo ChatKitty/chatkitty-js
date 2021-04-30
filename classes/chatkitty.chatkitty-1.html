@@ -90,7 +90,6 @@
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="chatkitty.chatkitty-1.html#channelmapper" class="tsd-kind-icon">channel<wbr>Mapper</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="chatkitty.chatkitty-1.html#chatsessions" class="tsd-kind-icon">chat<wbr>Sessions</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="chatkitty.chatkitty-1.html#currentuser" class="tsd-kind-icon">current<wbr>User</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="chatkitty.chatkitty-1.html#currentusernextsubject" class="tsd-kind-icon">current<wbr>User<wbr>Next<wbr>Subject</a></li>
@@ -117,6 +116,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getcontactscount" class="tsd-kind-icon">get<wbr>Contacts<wbr>Count</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getcurrentuser" class="tsd-kind-icon">get<wbr>Current<wbr>User</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getlastreadmessage" class="tsd-kind-icon">get<wbr>Last<wbr>Read<wbr>Message</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getmessagereadreceipts" class="tsd-kind-icon">get<wbr>Message<wbr>Read<wbr>Receipts</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getmessages" class="tsd-kind-icon">get<wbr>Messages</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getunreadchannelscount" class="tsd-kind-icon">get<wbr>Unread<wbr>Channels<wbr>Count</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#getunreadmessagescount" class="tsd-kind-icon">get<wbr>Unread<wbr>Messages<wbr>Count</a></li>
@@ -124,9 +124,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#joinchannel" class="tsd-kind-icon">join<wbr>Channel</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#leavechannel" class="tsd-kind-icon">leave<wbr>Channel</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#mutechannel" class="tsd-kind-icon">mute<wbr>Channel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#onchanneljoined" class="tsd-kind-icon">on<wbr>Channel<wbr>Joined</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#onchannelupdated" class="tsd-kind-icon">on<wbr>Channel<wbr>Updated</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#oncontactpresencechanged" class="tsd-kind-icon">on<wbr>Contact<wbr>Presence<wbr>Changed</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#oncurrentuserchanged" class="tsd-kind-icon">on<wbr>Current<wbr>User<wbr>Changed</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#onjoinedchannel" class="tsd-kind-icon">on<wbr>Joined<wbr>Channel</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#onnotificationreceived" class="tsd-kind-icon">on<wbr>Notification<wbr>Received</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#onparticipantstartedtyping" class="tsd-kind-icon">on<wbr>Participant<wbr>Started<wbr>Typing</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="chatkitty.chatkitty-1.html#onparticipantstoppedtyping" class="tsd-kind-icon">on<wbr>Participant<wbr>Stopped<wbr>Typing</a></li>
@@ -159,7 +160,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L150">chatkitty.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L155">chatkitty.ts:155</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -176,22 +177,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="channelmapper" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> channel<wbr>Mapper</h3>
-					<div class="tsd-signature tsd-kind-icon">channel<wbr>Mapper<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ChannelMapper</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L147">chatkitty.ts:147</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="chatsessions" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> chat<wbr>Sessions</h3>
 					<div class="tsd-signature tsd-kind-icon">chat<wbr>Sessions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><a href="chat_session.chatsession.html" class="tsd-signature-type" data-tsd-kind="Class">ChatSession</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L145">chatkitty.ts:145</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L151">chatkitty.ts:151</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +192,7 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>User<span class="tsd-signature-symbol">:</span> <a href="current_user.currentuser.html" class="tsd-signature-type" data-tsd-kind="Class">CurrentUser</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L143">chatkitty.ts:143</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L149">chatkitty.ts:149</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>User<wbr>Next<wbr>Subject<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BehaviorSubject</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="current_user.currentuser.html" class="tsd-signature-type" data-tsd-kind="Class">CurrentUser</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L139">chatkitty.ts:139</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L145">chatkitty.ts:145</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Starting<wbr>Session<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L150">chatkitty.ts:150</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L155">chatkitty.ts:155</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">message<wbr>Mapper<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MessageMapper</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L148">chatkitty.ts:148</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L153">chatkitty.ts:153</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">stompX<span class="tsd-signature-symbol">:</span> <a href="stompx.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L137">chatkitty.ts:137</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L143">chatkitty.ts:143</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -251,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">write<wbr>File<wbr>Grant<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L144">chatkitty.ts:144</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L150">chatkitty.ts:150</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -261,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">_instances<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="chatkitty.chatkitty-1.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKitty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L113">chatkitty.ts:113</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L119">chatkitty.ts:119</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -278,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L577">chatkitty.ts:577</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L580">chatkitty.ts:580</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -301,7 +292,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L347">chatkitty.ts:347</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L350">chatkitty.ts:350</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -324,7 +315,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L924">chatkitty.ts:924</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L950">chatkitty.ts:950</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -347,7 +338,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L768">chatkitty.ts:768</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L794">chatkitty.ts:794</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -370,7 +361,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L218">chatkitty.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L221">chatkitty.ts:221</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -387,7 +378,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L400">chatkitty.ts:400</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L403">chatkitty.ts:403</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -410,7 +401,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1014">chatkitty.ts:1014</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1064">chatkitty.ts:1064</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -433,7 +424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L490">chatkitty.ts:490</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L493">chatkitty.ts:493</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -456,7 +447,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L370">chatkitty.ts:370</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L373">chatkitty.ts:373</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -479,7 +470,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1040">chatkitty.ts:1040</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1112">chatkitty.ts:1112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -502,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1067">chatkitty.ts:1067</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1139">chatkitty.ts:1139</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -525,7 +516,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L233">chatkitty.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L236">chatkitty.ts:236</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/current_user.html#getcurrentuserresult" class="tsd-signature-type" data-tsd-kind="Type alias">GetCurrentUserResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -542,7 +533,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L905">chatkitty.ts:905</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L931">chatkitty.ts:931</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -556,6 +547,29 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getmessagereadreceipts" class="tsd-anchor"></a>
+					<h3>get<wbr>Message<wbr>Read<wbr>Receipts</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Message<wbr>Read<wbr>Receipts<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><a href="read_receipt.getreadreceiptsrequest.html" class="tsd-signature-type" data-tsd-kind="Class">GetReadReceiptsRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/read_receipt.html#getreadreceiptsresult" class="tsd-signature-type" data-tsd-kind="Type alias">GetReadReceiptsResult</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1090">chatkitty.ts:1090</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <a href="read_receipt.getreadreceiptsrequest.html" class="tsd-signature-type" data-tsd-kind="Class">GetReadReceiptsRequest</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/read_receipt.html#getreadreceiptsresult" class="tsd-signature-type" data-tsd-kind="Type alias">GetReadReceiptsResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getmessages" class="tsd-anchor"></a>
 					<h3>get<wbr>Messages</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -565,7 +579,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L856">chatkitty.ts:856</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L882">chatkitty.ts:882</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -588,7 +602,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L470">chatkitty.ts:470</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L473">chatkitty.ts:473</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/result.html#getcountresult" class="tsd-signature-type" data-tsd-kind="Type alias">GetCountResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -605,7 +619,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L875">chatkitty.ts:875</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L901">chatkitty.ts:901</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -628,7 +642,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1168">chatkitty.ts:1168</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1240">chatkitty.ts:1240</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -651,7 +665,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L414">chatkitty.ts:414</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L417">chatkitty.ts:417</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -674,7 +688,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L441">chatkitty.ts:441</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L444">chatkitty.ts:444</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -697,7 +711,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L529">chatkitty.ts:529</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L532">chatkitty.ts:532</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -711,6 +725,52 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onchanneljoined" class="tsd-anchor"></a>
+					<h3>on<wbr>Channel<wbr>Joined</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Channel<wbr>Joined<span class="tsd-signature-symbol">(</span>onNextOrObserver<span class="tsd-signature-symbol">: </span><a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1016">chatkitty.ts:1016</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>onNextOrObserver: <a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onchannelupdated" class="tsd-anchor"></a>
+					<h3>on<wbr>Channel<wbr>Updated</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Channel<wbr>Updated<span class="tsd-signature-symbol">(</span>onNextOrObserver<span class="tsd-signature-symbol">: </span><a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1040">chatkitty.ts:1040</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>onNextOrObserver: <a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="oncontactpresencechanged" class="tsd-anchor"></a>
 					<h3>on<wbr>Contact<wbr>Presence<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -720,7 +780,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1096">chatkitty.ts:1096</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1168">chatkitty.ts:1168</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -743,36 +803,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L253">chatkitty.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L256">chatkitty.ts:256</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>onNextOrObserver: <a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="current_user.currentuser.html" class="tsd-signature-type" data-tsd-kind="Class">CurrentUser</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="current_user.currentuser.html" class="tsd-signature-type" data-tsd-kind="Class">CurrentUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="onjoinedchannel" class="tsd-anchor"></a>
-					<h3>on<wbr>Joined<wbr>Channel</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Joined<wbr>Channel<span class="tsd-signature-symbol">(</span>onNextOrObserver<span class="tsd-signature-symbol">: </span><a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L990">chatkitty.ts:990</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>onNextOrObserver: <a href="../interfaces/observer.chatkittyobserver.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatkittyObserver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="../modules/channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../modules/observer.html#chatkittyunsubscribe" class="tsd-signature-type" data-tsd-kind="Type alias">ChatKittyUnsubscribe</a></h4>
@@ -789,7 +826,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L964">chatkitty.ts:964</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L990">chatkitty.ts:990</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -812,7 +849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1120">chatkitty.ts:1120</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1192">chatkitty.ts:1192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -835,7 +872,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L1144">chatkitty.ts:1144</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L1216">chatkitty.ts:1216</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -858,7 +895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L512">chatkitty.ts:512</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L515">chatkitty.ts:515</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -881,7 +918,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L894">chatkitty.ts:894</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L920">chatkitty.ts:920</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -904,7 +941,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L938">chatkitty.ts:938</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L964">chatkitty.ts:964</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -927,7 +964,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L776">chatkitty.ts:776</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L802">chatkitty.ts:802</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -950,7 +987,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L597">chatkitty.ts:597</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L600">chatkitty.ts:600</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -973,7 +1010,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L162">chatkitty.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L165">chatkitty.ts:165</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -996,7 +1033,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L552">chatkitty.ts:552</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L555">chatkitty.ts:555</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1019,7 +1056,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L269">chatkitty.ts:269</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L272">chatkitty.ts:272</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1060,7 +1097,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L294">chatkitty.ts:294</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L297">chatkitty.ts:297</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1083,7 +1120,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L129">chatkitty.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L135">chatkitty.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1106,7 +1143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L115">chatkitty.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L121">chatkitty.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1129,7 +1166,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/2f248c1/src/lib/chatkitty.ts#L133">chatkitty.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/a58f52d/src/lib/chatkitty.ts#L139">chatkitty.ts:139</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1187,6 +1224,9 @@
 						<a href="../modules/pagination.html">pagination</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/read_receipt.html">read-<wbr>receipt</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/result.html">result</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -1212,9 +1252,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="chatkitty.chatkitty-1.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="chatkitty.chatkitty-1.html#channelmapper" class="tsd-kind-icon">channel<wbr>Mapper</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="chatkitty.chatkitty-1.html#chatsessions" class="tsd-kind-icon">chat<wbr>Sessions</a>
@@ -1280,6 +1317,9 @@
 								<a href="chatkitty.chatkitty-1.html#getlastreadmessage" class="tsd-kind-icon">get<wbr>Last<wbr>Read<wbr>Message</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="chatkitty.chatkitty-1.html#getmessagereadreceipts" class="tsd-kind-icon">get<wbr>Message<wbr>Read<wbr>Receipts</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="chatkitty.chatkitty-1.html#getmessages" class="tsd-kind-icon">get<wbr>Messages</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1301,13 +1341,16 @@
 								<a href="chatkitty.chatkitty-1.html#mutechannel" class="tsd-kind-icon">mute<wbr>Channel</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="chatkitty.chatkitty-1.html#onchanneljoined" class="tsd-kind-icon">on<wbr>Channel<wbr>Joined</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="chatkitty.chatkitty-1.html#onchannelupdated" class="tsd-kind-icon">on<wbr>Channel<wbr>Updated</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="chatkitty.chatkitty-1.html#oncontactpresencechanged" class="tsd-kind-icon">on<wbr>Contact<wbr>Presence<wbr>Changed</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="chatkitty.chatkitty-1.html#oncurrentuserchanged" class="tsd-kind-icon">on<wbr>Current<wbr>User<wbr>Changed</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="chatkitty.chatkitty-1.html#onjoinedchannel" class="tsd-kind-icon">on<wbr>Joined<wbr>Channel</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="chatkitty.chatkitty-1.html#onnotificationreceived" class="tsd-kind-icon">on<wbr>Notification<wbr>Received</a>
@@ -1397,7 +1440,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 4/27/2021 at 8:37:38 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 4/30/2021 at 9:09:16 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
