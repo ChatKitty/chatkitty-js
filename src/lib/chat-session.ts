@@ -3,6 +3,7 @@ import { ChatKittyError } from './error';
 import { Keystrokes } from './keystrokes';
 import { Message } from './message';
 import { ChatKittyUnsubscribe } from './observer';
+import { ReadReceipt } from './read-receipt';
 import { ChatKittySucceededResult } from './result';
 import { User } from './user';
 
@@ -24,6 +25,7 @@ export declare class StartChatSessionRequest {
   onParticipantPresenceChanged?: (user: User) => void;
   onMessageUpdated?: (message: Message) => void;
   onChannelUpdated?: (channel: Channel) => void;
+  onMessageRead?: (message: Message, receipt: ReadReceipt) => void;
 }
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {

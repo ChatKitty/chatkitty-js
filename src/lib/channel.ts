@@ -63,6 +63,7 @@ export declare class ChannelTopics {
   keystrokes: string;
   typing: string;
   participants: string;
+  readReceipts: string;
 }
 
 export declare class ChannelActions {

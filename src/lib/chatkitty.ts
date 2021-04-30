@@ -87,6 +87,12 @@ import {
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
+  GetReadReceiptsRequest,
+  GetReadReceiptsResult,
+  GetReadReceiptsSucceededResult,
+  ReadReceipt,
+} from './read-receipt';
+import {
   ChatKittyFailedResult,
   GetCountResult,
   GetCountSucceedResult,
@@ -144,7 +150,6 @@ export class ChatKitty {
   private writeFileGrant?: string;
   private chatSessions: Map<number, ChatSession> = new Map();
 
-  private channelMapper: ChannelMapper;
   private messageMapper: MessageMapper = new MessageMapper('');
 
   private isStartingSession = false;
@@ -155,8 +160,6 @@ export class ChatKitty {
       host: configuration.host || 'api.chatkitty.com',
       isDebug: !environment.production,
     });
-
-    this.channelMapper = new ChannelMapper(this.stompX);
   }
 
   public startSession(
@@ -608,6 +611,7 @@ export class ChatKitty {
     const onParticipantPresenceChanged = request.onParticipantPresenceChanged;
     const onMessageUpdated = request.onMessageUpdated;
     const onChannelUpdated = request.onChannelUpdated;
+    const onMessageRead = request.onMessageRead;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -618,6 +622,7 @@ export class ChatKitty {
     let participantPresenceChangedUnsubscribe: () => void;
     let messageUpdatedUnsubscribe: () => void;
     let channelUpdatedUnsubscribe: () => void;
+    let messageReadUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -709,6 +714,21 @@ export class ChatKitty {
       });
     }
 
+    if (onMessageRead) {
+      messageReadUnsubscribe = this.stompX.listenForEvent<ReadReceipt>({
+        topic: request.channel._topics.readReceipts,
+        event: 'message.read_receipt.created',
+        onSuccess: (receipt) => {
+          this.stompX.relayResource<Message>({
+            destination: receipt._relays.message,
+            onSuccess: (message) => {
+              onMessageRead(message, receipt);
+            },
+          });
+        },
+      });
+    }
+
     const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
       onSuccess: () => {
@@ -728,7 +748,12 @@ export class ChatKitty {
           topic: request.channel._topics.participants,
         });
 
+        const readReceiptsUnsubscribe = this.stompX.listenToTopic({
+          topic: request.channel._topics.readReceipts,
+        });
+
         unsubscribe = () => {
+          messageReadUnsubscribe?.();
           channelUpdatedUnsubscribe?.();
           messageUpdatedUnsubscribe?.();
           participantPresenceChangedUnsubscribe?.();
@@ -739,6 +764,7 @@ export class ChatKitty {
           receivedKeystrokesUnsubscribe?.();
           receivedMessageUnsubscribe?.();
 
+          readReceiptsUnsubscribe?.();
           participantsUnsubscribe?.();
           typingUnsubscribe?.();
           keystrokesUnsubscribe?.();
@@ -987,7 +1013,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onJoinedChannel(
+  public onChannelJoined(
     onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -999,6 +1025,30 @@ export class ChatKitty {
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
       event: 'me.channel.joined',
+      onSuccess: (channel) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(channel);
+        } else {
+          onNextOrObserver.onNext(channel);
+        }
+      },
+    });
+
+    return () => unsubscribe;
+  }
+
+  public onChannelUpdated(
+    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<Channel>({
+      topic: currentUser._topics.channels,
+      event: 'me.channel.updated',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);
@@ -1033,6 +1083,28 @@ export class ChatKitty {
         contentName: 'users',
       })
         .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
+    });
+  }
+
+  public getMessageReadReceipts(
+    request: GetReadReceiptsRequest
+  ): Promise<GetReadReceiptsResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      ChatKittyPaginator.createInstance<ReadReceipt>({
+        stompX: this.stompX,
+        relay: request.message._relays.readReceipts,
+        contentName: 'receipts',
+      })
+        .then((paginator) =>
+          resolve(new GetReadReceiptsSucceededResult(paginator))
+        )
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
@@ -1181,26 +1253,6 @@ export declare class ChatKittyConfiguration {
   apiKey: string;
   isSecure?: boolean;
   host?: string;
-}
-
-class ChannelMapper {
-  constructor(private stompX: StompX) {}
-
-  public map<C extends Channel>(channel: C): Promise<C> {
-    return new Promise((resolve, reject) => {
-      this.stompX.relayResource<Message>({
-        destination: channel._relays.lastReceivedMessage,
-        onSuccess: (resource) => {
-          channel.lastReceivedMessage = resource;
-
-          resolve(channel);
-        },
-        onError: (error) => {
-          reject(error);
-        },
-      });
-    });
-  }
 }
 
 class MessageMapper {

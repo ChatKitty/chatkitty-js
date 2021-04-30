@@ -23,6 +23,7 @@ export interface MessageProperties {
   type: string;
   createdTime: string;
   properties: unknown;
+  _relays: MessageRelays;
   _actions: MessageActions;
 }
 
@@ -33,6 +34,7 @@ export declare class TextSystemMessage implements MessageProperties {
   properties: unknown;
   body: string;
   links: [MessageLink];
+  _relays: MessageRelays;
   _actions: MessageActions;
 }
 
@@ -42,6 +44,7 @@ export declare class FileSystemMessage implements MessageProperties {
   createdTime: string;
   properties: unknown;
   file: ChatKittyFile;
+  _relays: MessageRelays;
   _actions: MessageActions;
 }
 
@@ -53,6 +56,7 @@ export declare class TextUserMessage implements MessageProperties {
   user: User;
   body: string;
   links: [MessageLink];
+  _relays: MessageRelays;
   _actions: MessageActions;
 }
 
@@ -63,6 +67,7 @@ export declare class FileUserMessage implements MessageProperties {
   properties: unknown;
   user: User;
   file: ChatKittyFile;
+  _relays: MessageRelays;
   _actions: MessageActions;
 }
 
@@ -83,6 +88,11 @@ export declare class MessageLinkPreview {
 
 export declare class MessageLinkPreviewImage {
   source: string;
+}
+
+export declare class MessageRelays {
+  self: string;
+  readReceipts: string;
 }
 
 export declare class MessageActions {
