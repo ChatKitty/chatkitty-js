@@ -1,7 +1,6 @@
 import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
 import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
-import axios from 'axios';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
 
@@ -79,8 +78,8 @@ export default class StompX {
     this.rxStompConfig = {
       stompVersions: new Versions(['1.2']),
       connectionTimeout: 5000,
-      heartbeatIncoming: 0,
-      heartbeatOutgoing: 5000,
+      heartbeatIncoming: 5000,
+      heartbeatOutgoing: 300000,
 
       debug: (message) => {
         if (configuration.isDebug) {
