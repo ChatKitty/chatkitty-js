@@ -78,7 +78,7 @@ export default class StompX {
     this.rxStompConfig = {
       stompVersions: new Versions(['1.2']),
       connectionTimeout: 5000,
-      heartbeatIncoming: 5000,
+      heartbeatIncoming: 10000,
       heartbeatOutgoing: 300000,
 
       debug: (message) => {

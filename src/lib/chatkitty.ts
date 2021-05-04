@@ -11,6 +11,7 @@ import {
   CreateChannelRequest,
   CreateChannelResult,
   CreatedChannelResult,
+  DirectChannel,
   GetChannelResult,
   GetChannelsRequest,
   GetChannelsResult,
@@ -19,6 +20,9 @@ import {
   GetChannelUnreadRequest,
   GetChannelUnreadResult,
   GetChannelUnreadSucceededResult,
+  HideChannelRequest,
+  HideChannelResult,
+  HideChannelSucceededResult,
   JoinChannelRequest,
   JoinChannelResult,
   JoinedChannelResult,
@@ -597,6 +601,18 @@ export class ChatKitty {
     });
   }
 
+  public hideChannel(request: HideChannelRequest): Promise<HideChannelResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<DirectChannel>({
+        destination: request.channel._actions.hide,
+        body: {},
+        onSuccess: (resource) =>
+          resolve(new HideChannelSucceededResult(resource)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
   public startChatSession(
     request: StartChatSessionRequest
   ): StartChatSessionResult {
@@ -1087,7 +1103,7 @@ export class ChatKitty {
     });
   }
 
-  public getMessageReadReceipts(
+  public getReadReceipts(
     request: GetReadReceiptsRequest
   ): Promise<GetReadReceiptsResult> {
     const currentUser = this.currentUser;
