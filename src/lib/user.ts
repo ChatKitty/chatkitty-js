@@ -52,6 +52,18 @@ export class GetUserResult extends ChatKittySucceededResult {
   }
 }
 
+export declare class BlockUserRequest {
+  user: User;
+}
+
+export type BlockUserResult = BlockUserSucceededResult | ChatKittyFailedResult;
+
+export class BlockUserSucceededResult extends ChatKittySucceededResult {
+  constructor(public user: User) {
+    super();
+  }
+}
+
 export class CannotHaveMembersError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(

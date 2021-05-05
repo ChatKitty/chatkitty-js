@@ -28,6 +28,7 @@ export declare class CurrentUserRelays {
   unreadChannels: string;
   contactsCount: string;
   contacts: string;
+  userBlockListItems: string;
 }
 
 export declare class CurrentUserTopics {
@@ -37,6 +38,7 @@ export declare class CurrentUserTopics {
   notifications: string;
   contacts: string;
   participants: string;
+  users: string;
 }
 
 export declare class CurrentUserActions {

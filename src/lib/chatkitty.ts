@@ -110,6 +110,9 @@ import {
 } from './session';
 import StompX from './stompx';
 import {
+  BlockUserRequest,
+  BlockUserResult,
+  BlockUserSucceededResult,
   CannotHaveMembersError,
   GetChannelMembersRequest,
   GetContactsRequest,
@@ -118,6 +121,14 @@ import {
   GetUsersSucceededResult,
   User,
 } from './user';
+import {
+  DeleteUserBlockListItemRequest,
+  DeleteUserBlockListItemResult,
+  DeleteUserBlockListItemSucceededResult,
+  GetUserBlockListResult,
+  GetUserBlockListSucceededResult,
+  UserBlockListItem,
+} from './user-block-list-item';
 
 export class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();
@@ -187,6 +198,7 @@ export class ChatKitty {
           this.stompX.listenToTopic({ topic: user._topics.notifications });
           this.stompX.listenToTopic({ topic: user._topics.contacts });
           this.stompX.listenToTopic({ topic: user._topics.participants });
+          this.stompX.listenToTopic({ topic: user._topics.users });
 
           this.stompX.relayResource<{ grant: string }>({
             destination: user._relays.writeFileAccessGrant,
@@ -1260,6 +1272,53 @@ export class ChatKitty {
         onSuccess: (user) => {
           resolve(new GetUserResult(user));
         },
+      });
+    });
+  }
+
+  public blockUser(request: BlockUserRequest): Promise<BlockUserResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<User>({
+        destination: `/application/v1/users/${request.user.id}.block`,
+        body: {},
+        onSuccess: (resource) => {
+          resolve(new BlockUserSucceededResult(resource));
+        },
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
+  public getUserBlockList(): Promise<GetUserBlockListResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      ChatKittyPaginator.createInstance<UserBlockListItem>({
+        stompX: this.stompX,
+        relay: currentUser._relays.userBlockListItems,
+        contentName: 'items',
+      })
+        .then((paginator) =>
+          resolve(new GetUserBlockListSucceededResult(paginator))
+        )
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
+    });
+  }
+
+  public deleteUserBlockListItem(
+    request: DeleteUserBlockListItemRequest
+  ): Promise<DeleteUserBlockListItemResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<User>({
+        destination: request.item._actions.delete,
+        body: {},
+        onSuccess: (resource) =>
+          resolve(new DeleteUserBlockListItemSucceededResult(resource)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
   }
