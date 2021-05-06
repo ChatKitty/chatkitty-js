@@ -4,6 +4,9 @@ import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pkg = require('../package.json');
+
 let TransportFallback: { default: { new (arg: string): unknown } };
 
 import('sockjs-client')
@@ -103,6 +106,7 @@ export default class StompX {
 
     const headers: StompHeaders = {
       'StompX-User': request.username,
+      'StompX-User-Agent': `ChatKitty-JS/${pkg.version}`,
     };
 
     if (request.authParams) {
