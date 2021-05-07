@@ -46,9 +46,8 @@
       "es2017",
       "dom"
     ],
-    "types": [ "node" ],
+    "types": [],
     "typeRoots": [
-      "node_modules/@types",
       "src/types"
     ]
   },
