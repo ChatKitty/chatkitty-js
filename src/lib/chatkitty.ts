@@ -410,6 +410,9 @@ export class ChatKitty {
         stompX: this.stompX,
         relay: relay,
         contentName: 'channels',
+        parameters: {
+          name: request?.filter?.name,
+        },
       })
         .then((paginator) => resolve(new GetChannelsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));

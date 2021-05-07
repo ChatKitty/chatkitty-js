@@ -116,6 +116,7 @@ export declare class GetChannelsRequest {
 }
 
 export declare class GetChannelsFilter {
+  name?: string;
   unread?: boolean;
 }
 
