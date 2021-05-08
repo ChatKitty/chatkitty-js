@@ -74,6 +74,7 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.channelactions.html" class="tsd-kind-icon">Channel<wbr>Actions</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.channelnotinvitableerror.html" class="tsd-kind-icon">Channel<wbr>Not<wbr>Invitable<wbr>Error</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.channelnotpubliclyjoinableerror.html" class="tsd-kind-icon">Channel<wbr>Not<wbr>Publicly<wbr>Joinable<wbr>Error</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.channelrelays.html" class="tsd-kind-icon">Channel<wbr>Relays</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.channelstreams.html" class="tsd-kind-icon">Channel<wbr>Streams</a></li>
@@ -82,7 +83,6 @@
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.clearchannelhistorysucceededresult.html" class="tsd-kind-icon">Clear<wbr>Channel<wbr>History<wbr>Succeeded<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.createchannelrequest.html" class="tsd-kind-icon">Create<wbr>Channel<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.createdchannelresult.html" class="tsd-kind-icon">Created<wbr>Channel<wbr>Result</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.directchannel.html" class="tsd-kind-icon">Direct<wbr>Channel</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.getchannelsucceededresult.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Succeeded<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.getchannelunreadrequest.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Unread<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.getchannelunreadsucceededresult.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Unread<wbr>Succeeded<wbr>Result</a></li>
@@ -91,6 +91,8 @@
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.getchannelssucceededresult.html" class="tsd-kind-icon">Get<wbr>Channels<wbr>Succeeded<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.hidechannelrequest.html" class="tsd-kind-icon">Hide<wbr>Channel<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.hidechannelsucceededresult.html" class="tsd-kind-icon">Hide<wbr>Channel<wbr>Succeeded<wbr>Result</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.inviteuserrequest.html" class="tsd-kind-icon">Invite<wbr>User<wbr>Request</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.inviteduserresult.html" class="tsd-kind-icon">Invited<wbr>User<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.joinchannelrequest.html" class="tsd-kind-icon">Join<wbr>Channel<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.joinedchannelresult.html" class="tsd-kind-icon">Joined<wbr>Channel<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.leavechannelrequest.html" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Request</a></li>
@@ -98,7 +100,6 @@
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.mutechannelrequest.html" class="tsd-kind-icon">Mute<wbr>Channel<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.mutedchannelresult.html" class="tsd-kind-icon">Muted<wbr>Channel<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.notachannelmembererror.html" class="tsd-kind-icon">NotAChannel<wbr>Member<wbr>Error</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.publicchannel.html" class="tsd-kind-icon">Public<wbr>Channel</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.readchannelrequest.html" class="tsd-kind-icon">Read<wbr>Channel<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.readchannelsucceededresult.html" class="tsd-kind-icon">Read<wbr>Channel<wbr>Succeeded<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/channel.unmutechannelrequest.html" class="tsd-kind-icon">Unmute<wbr>Channel<wbr>Request</a></li>
@@ -117,13 +118,17 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#channel-1" class="tsd-kind-icon">Channel</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#clearchannelhistoryresult" class="tsd-kind-icon">Clear<wbr>Channel<wbr>History<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#createchannelresult" class="tsd-kind-icon">Create<wbr>Channel<wbr>Result</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#directchannel" class="tsd-kind-icon">Direct<wbr>Channel</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#getchannelresult" class="tsd-kind-icon">Get<wbr>Channel<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#getchannelunreadresult" class="tsd-kind-icon">Get<wbr>Channel<wbr>Unread<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#getchannelsresult" class="tsd-kind-icon">Get<wbr>Channels<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#hidechannelresult" class="tsd-kind-icon">Hide<wbr>Channel<wbr>Result</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#inviteuserresult" class="tsd-kind-icon">Invite<wbr>User<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#joinchannelresult" class="tsd-kind-icon">Join<wbr>Channel<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#leavechannelresult" class="tsd-kind-icon">Leave<wbr>Channel<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#mutechannelresult" class="tsd-kind-icon">Mute<wbr>Channel<wbr>Result</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#privatechannel" class="tsd-kind-icon">Private<wbr>Channel</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#publicchannel" class="tsd-kind-icon">Public<wbr>Channel</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#readchannelresult" class="tsd-kind-icon">Read<wbr>Channel<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="channel.html#unmutechannelresult" class="tsd-kind-icon">Unmute<wbr>Channel<wbr>Result</a></li>
 							</ul>
@@ -132,7 +137,9 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#createdchannel" class="tsd-kind-icon">created<wbr>Channel</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#inviteduser" class="tsd-kind-icon">invited<wbr>User</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#isdirectchannel" class="tsd-kind-icon">is<wbr>Direct<wbr>Channel</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#isprivatechannel" class="tsd-kind-icon">is<wbr>Private<wbr>Channel</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#ispublicchannel" class="tsd-kind-icon">is<wbr>Public<wbr>Channel</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#joinedchannel" class="tsd-kind-icon">joined<wbr>Channel</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="channel.html#leftchannel" class="tsd-kind-icon">left<wbr>Channel</a></li>
@@ -148,10 +155,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
 					<a name="channel-1" class="tsd-anchor"></a>
 					<h3>Channel</h3>
-					<div class="tsd-signature tsd-kind-icon">Channel<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.publicchannel.html" class="tsd-signature-type" data-tsd-kind="Class">PublicChannel</a><span class="tsd-signature-symbol"> | </span><a href="../classes/channel.directchannel.html" class="tsd-signature-type" data-tsd-kind="Class">DirectChannel</a></div>
+					<div class="tsd-signature tsd-kind-icon">Channel<span class="tsd-signature-symbol">:</span> <a href="channel.html#directchannel" class="tsd-signature-type" data-tsd-kind="Type alias">DirectChannel</a><span class="tsd-signature-symbol"> | </span><a href="channel.html#publicchannel" class="tsd-signature-type" data-tsd-kind="Type alias">PublicChannel</a><span class="tsd-signature-symbol"> | </span><a href="channel.html#privatechannel" class="tsd-signature-type" data-tsd-kind="Type alias">PrivateChannel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L8">channel.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L8">channel.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -161,7 +168,7 @@
 					<div class="tsd-signature tsd-kind-icon">Clear<wbr>Channel<wbr>History<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.clearchannelhistorysucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">ClearChannelHistorySucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L265">channel.ts:265</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L251">channel.ts:251</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -171,7 +178,17 @@
 					<div class="tsd-signature tsd-kind-icon">Create<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.createdchannelresult.html" class="tsd-signature-type" data-tsd-kind="Class">CreatedChannelResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L92">channel.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L78">channel.ts:78</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="directchannel" class="tsd-anchor"></a>
+					<h3>Direct<wbr>Channel</h3>
+					<div class="tsd-signature tsd-kind-icon">Direct<wbr>Channel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>members<span class="tsd-signature-symbol">: </span><a href="../classes/user.user-1.html" class="tsd-signature-type" data-tsd-kind="Class">User</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L23">channel.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -181,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.getchannelsucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">GetChannelSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L137">channel.ts:137</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L123">channel.ts:123</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,7 +208,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Channel<wbr>Unread<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.getchannelunreadsucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">GetChannelUnreadSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L147">channel.ts:147</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L133">channel.ts:133</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Channels<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.getchannelssucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">GetChannelsSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L127">channel.ts:127</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L113">channel.ts:113</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +228,17 @@
 					<div class="tsd-signature tsd-kind-icon">Hide<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.hidechannelsucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">HideChannelSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L279">channel.ts:279</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L265">channel.ts:265</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="inviteuserresult" class="tsd-anchor"></a>
+					<h3>Invite<wbr>User<wbr>Result</h3>
+					<div class="tsd-signature tsd-kind-icon">Invite<wbr>User<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.inviteduserresult.html" class="tsd-signature-type" data-tsd-kind="Class">InvitedUserResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L280">channel.ts:280</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">Join<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.joinedchannelresult.html" class="tsd-signature-type" data-tsd-kind="Class">JoinedChannelResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L161">channel.ts:161</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L147">channel.ts:147</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">Leave<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.leftchannelresult.html" class="tsd-signature-type" data-tsd-kind="Class">LeftChannelResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L224">channel.ts:224</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L210">channel.ts:210</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,7 +268,27 @@
 					<div class="tsd-signature tsd-kind-icon">Mute<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.mutedchannelresult.html" class="tsd-signature-type" data-tsd-kind="Class">MutedChannelResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L188">channel.ts:188</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L174">channel.ts:174</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="privatechannel" class="tsd-anchor"></a>
+					<h3>Private<wbr>Channel</h3>
+					<div class="tsd-signature tsd-kind-icon">Private<wbr>Channel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L29">channel.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="publicchannel" class="tsd-anchor"></a>
+					<h3>Public<wbr>Channel</h3>
+					<div class="tsd-signature tsd-kind-icon">Public<wbr>Channel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L27">channel.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -251,7 +298,7 @@
 					<div class="tsd-signature tsd-kind-icon">Read<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.readchannelsucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">ReadChannelSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L251">channel.ts:251</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L237">channel.ts:237</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -261,7 +308,7 @@
 					<div class="tsd-signature tsd-kind-icon">Unmute<wbr>Channel<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/channel.unmutedchannelresult.html" class="tsd-signature-type" data-tsd-kind="Class">UnmutedChannelResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L206">channel.ts:206</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L192">channel.ts:192</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -278,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L107">channel.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L93">channel.ts:93</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -292,16 +339,39 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isdirectchannel" class="tsd-anchor"></a>
-					<h3>is<wbr>Direct<wbr>Channel</h3>
+					<a name="inviteduser" class="tsd-anchor"></a>
+					<h3>invited<wbr>User</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Direct<wbr>Channel<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../classes/channel.directchannel.html" class="tsd-signature-type" data-tsd-kind="Class">DirectChannel</a></li>
+						<li class="tsd-signature tsd-kind-icon">invited<wbr>User<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="channel.html#inviteuserresult" class="tsd-signature-type" data-tsd-kind="Type alias">InviteUserResult</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../classes/channel.inviteduserresult.html" class="tsd-signature-type" data-tsd-kind="Class">InvitedUserResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L88">channel.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L288">channel.ts:288</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <a href="channel.html#inviteuserresult" class="tsd-signature-type" data-tsd-kind="Type alias">InviteUserResult</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../classes/channel.inviteduserresult.html" class="tsd-signature-type" data-tsd-kind="Class">InvitedUserResult</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="isdirectchannel" class="tsd-anchor"></a>
+					<h3>is<wbr>Direct<wbr>Channel</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Direct<wbr>Channel<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="channel.html#directchannel" class="tsd-signature-type" data-tsd-kind="Type alias">DirectChannel</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L66">channel.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -310,7 +380,30 @@
 									<h5>channel: <a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../classes/channel.directchannel.html" class="tsd-signature-type" data-tsd-kind="Class">DirectChannel</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="channel.html#directchannel" class="tsd-signature-type" data-tsd-kind="Type alias">DirectChannel</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="isprivatechannel" class="tsd-anchor"></a>
+					<h3>is<wbr>Private<wbr>Channel</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Private<wbr>Channel<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L74">channel.ts:74</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>channel: <a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -318,13 +411,13 @@
 					<a name="ispublicchannel" class="tsd-anchor"></a>
 					<h3>is<wbr>Public<wbr>Channel</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Public<wbr>Channel<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../classes/channel.publicchannel.html" class="tsd-signature-type" data-tsd-kind="Class">PublicChannel</a></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Public<wbr>Channel<span class="tsd-signature-symbol">(</span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L84">channel.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L70">channel.ts:70</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -333,7 +426,7 @@
 									<h5>channel: <a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../classes/channel.publicchannel.html" class="tsd-signature-type" data-tsd-kind="Class">PublicChannel</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">channel</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/channel.channelproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ChannelProperties</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -347,7 +440,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L178">channel.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L164">channel.ts:164</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -370,7 +463,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L241">channel.ts:241</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L227">channel.ts:227</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -393,7 +486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L196">channel.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L182">channel.ts:182</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -416,7 +509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/ba5f09a/src/lib/channel.ts#L214">channel.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/b8ade60/src/lib/channel.ts#L200">channel.ts:200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -499,6 +592,9 @@
 						<a href="../classes/channel.channelactions.html" class="tsd-kind-icon">Channel<wbr>Actions</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/channel.channelnotinvitableerror.html" class="tsd-kind-icon">Channel<wbr>Not<wbr>Invitable<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/channel.channelnotpubliclyjoinableerror.html" class="tsd-kind-icon">Channel<wbr>Not<wbr>Publicly<wbr>Joinable<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
@@ -521,9 +617,6 @@
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/channel.createdchannelresult.html" class="tsd-kind-icon">Created<wbr>Channel<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/channel.directchannel.html" class="tsd-kind-icon">Direct<wbr>Channel</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/channel.getchannelsucceededresult.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Succeeded<wbr>Result</a>
@@ -550,6 +643,12 @@
 						<a href="../classes/channel.hidechannelsucceededresult.html" class="tsd-kind-icon">Hide<wbr>Channel<wbr>Succeeded<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/channel.inviteuserrequest.html" class="tsd-kind-icon">Invite<wbr>User<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/channel.inviteduserresult.html" class="tsd-kind-icon">Invited<wbr>User<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/channel.joinchannelrequest.html" class="tsd-kind-icon">Join<wbr>Channel<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
@@ -569,9 +668,6 @@
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/channel.notachannelmembererror.html" class="tsd-kind-icon">NotAChannel<wbr>Member<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/channel.publicchannel.html" class="tsd-kind-icon">Public<wbr>Channel</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/channel.readchannelrequest.html" class="tsd-kind-icon">Read<wbr>Channel<wbr>Request</a>
@@ -598,6 +694,9 @@
 						<a href="channel.html#createchannelresult" class="tsd-kind-icon">Create<wbr>Channel<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="channel.html#directchannel" class="tsd-kind-icon">Direct<wbr>Channel</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="channel.html#getchannelresult" class="tsd-kind-icon">Get<wbr>Channel<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
@@ -610,6 +709,9 @@
 						<a href="channel.html#hidechannelresult" class="tsd-kind-icon">Hide<wbr>Channel<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="channel.html#inviteuserresult" class="tsd-kind-icon">Invite<wbr>User<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="channel.html#joinchannelresult" class="tsd-kind-icon">Join<wbr>Channel<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
@@ -617,6 +719,12 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="channel.html#mutechannelresult" class="tsd-kind-icon">Mute<wbr>Channel<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="channel.html#privatechannel" class="tsd-kind-icon">Private<wbr>Channel</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="channel.html#publicchannel" class="tsd-kind-icon">Public<wbr>Channel</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="channel.html#readchannelresult" class="tsd-kind-icon">Read<wbr>Channel<wbr>Result</a>
@@ -628,7 +736,13 @@
 						<a href="channel.html#createdchannel" class="tsd-kind-icon">created<wbr>Channel</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="channel.html#inviteduser" class="tsd-kind-icon">invited<wbr>User</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="channel.html#isdirectchannel" class="tsd-kind-icon">is<wbr>Direct<wbr>Channel</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="channel.html#isprivatechannel" class="tsd-kind-icon">is<wbr>Private<wbr>Channel</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="channel.html#ispublicchannel" class="tsd-kind-icon">is<wbr>Public<wbr>Channel</a>
@@ -673,7 +787,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 5/7/2021 at 6:27:39 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 5/8/2021 at 3:53:12 AM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
