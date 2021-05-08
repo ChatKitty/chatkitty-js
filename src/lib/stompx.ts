@@ -351,7 +351,7 @@ export default class StompX {
     };
   }
 
-  public performAction<R>(request: StompXPerformActionRequest<R>) {
+  public sendAction<R>(request: StompXPerformActionRequest<R>) {
     this.guardConnected(() => {
       const receipt = StompX.generateReceipt();
 
