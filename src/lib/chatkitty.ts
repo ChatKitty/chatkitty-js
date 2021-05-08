@@ -119,8 +119,8 @@ import {
   BlockUserSucceededResult,
   CannotHaveMembersError,
   GetChannelMembersRequest,
-  GetContactsRequest,
   GetUserResult,
+  GetUsersRequest,
   GetUsersResult,
   GetUsersSucceededResult,
   User,
@@ -1144,7 +1144,7 @@ export class ChatKitty {
     });
   }
 
-  public getContacts(request?: GetContactsRequest): Promise<GetUsersResult> {
+  public getUsers(request?: GetUsersRequest): Promise<GetUsersResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1154,7 +1154,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       let parameters: Record<string, unknown> | undefined = undefined;
 
-      if (isGetContactsRequest(request)) {
+      if (isGetUsersRequest(request)) {
         parameters = {
           ...request.filter,
         };
@@ -1171,9 +1171,7 @@ export class ChatKitty {
     });
   }
 
-  public getContactsCount(
-    request?: GetContactsRequest
-  ): Promise<GetCountResult> {
+  public getUsersCount(request?: GetUsersRequest): Promise<GetCountResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1183,7 +1181,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       let parameters: Record<string, unknown> | undefined = undefined;
 
-      if (isGetContactsRequest(request)) {
+      if (isGetUsersRequest(request)) {
         parameters = {
           ...request.filter,
         };
@@ -1200,8 +1198,8 @@ export class ChatKitty {
     });
   }
 
-  public onContactPresenceChanged(
-    onNextOrObserver: ChatkittyObserver<User> | ((contact: User) => void)
+  public onUserPresenceChanged(
+    onNextOrObserver: ChatkittyObserver<User> | ((user: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1212,11 +1210,11 @@ export class ChatKitty {
     const unsubscribe = this.stompX.listenForEvent<User>({
       topic: currentUser._topics.contacts,
       event: 'contact.presence.changed',
-      onSuccess: (contact) => {
+      onSuccess: (user) => {
         if (typeof onNextOrObserver === 'function') {
-          onNextOrObserver(contact);
+          onNextOrObserver(user);
         } else {
-          onNextOrObserver.onNext(contact);
+          onNextOrObserver.onNext(user);
         }
       },
     });
@@ -1388,8 +1386,8 @@ function isGetChannelsRequest(param: unknown): param is GetChannelsRequest {
   return request?.joinable !== undefined || request?.filter !== undefined;
 }
 
-function isGetContactsRequest(param: unknown): param is GetContactsRequest {
-  const request = param as GetContactsRequest;
+function isGetUsersRequest(param: unknown): param is GetUsersRequest {
+  const request = param as GetUsersRequest;
 
   return request?.filter !== undefined;
 }

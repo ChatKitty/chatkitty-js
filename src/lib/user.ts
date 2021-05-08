@@ -25,11 +25,11 @@ export declare class ChatKittyUserReference {
   username: string;
 }
 
-export declare class GetContactsRequest {
-  filter?: GetContactsFilter;
+export declare class GetUsersRequest {
+  filter?: GetUsersFilter;
 }
 
-export declare class GetContactsFilter {
+export declare class GetUsersFilter {
   name?: string;
   online?: boolean;
 }
