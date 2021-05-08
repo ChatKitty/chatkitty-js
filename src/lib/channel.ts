@@ -5,7 +5,7 @@ import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { ChatKittyUserReference, User } from './user';
 
-export type Channel = PublicChannel | DirectChannel;
+export type Channel = DirectChannel | PublicChannel | PrivateChannel;
 
 export interface ChannelProperties {
   id: number;
@@ -20,32 +20,13 @@ export interface ChannelProperties {
   _streams: ChannelStreams;
 }
 
-export declare class DirectChannel implements ChannelProperties {
-  id: number;
-  type: string;
-  name: string;
-  creator?: User;
+export type DirectChannel = ChannelProperties & {
   members: User[];
-  lastReceivedMessage?: Message;
-  properties: unknown;
-  _relays: ChannelRelays;
-  _topics: ChannelTopics;
-  _actions: ChannelActions;
-  _streams: ChannelStreams;
-}
+};
 
-export declare class PublicChannel implements ChannelProperties {
-  id: number;
-  type: string;
-  name: string;
-  creator?: User;
-  lastReceivedMessage?: Message;
-  properties: unknown;
-  _relays: ChannelRelays;
-  _topics: ChannelTopics;
-  _actions: ChannelActions;
-  _streams: ChannelStreams;
-}
+export type PublicChannel = ChannelProperties;
+
+export type PrivateChannel = ChannelProperties;
 
 export declare class ChannelRelays {
   self: string;
@@ -71,6 +52,7 @@ export declare class ChannelActions {
   keystrokes: string;
   join?: string;
   leave?: string;
+  invite?: string;
   read: string;
   mute: string;
   clearHistory: string;
@@ -81,12 +63,16 @@ export declare class ChannelStreams {
   messages: string;
 }
 
+export function isDirectChannel(channel: Channel): channel is DirectChannel {
+  return channel.type === 'DIRECT';
+}
+
 export function isPublicChannel(channel: Channel): channel is PublicChannel {
   return channel.type === 'PUBLIC';
 }
 
-export function isDirectChannel(channel: Channel): channel is DirectChannel {
-  return channel.type === 'DIRECT';
+export function isPrivateChannel(channel: Channel): channel is PrivateChannel {
+  return channel.type === 'PRIVATE';
 }
 
 export type CreateChannelResult = CreatedChannelResult | ChatKittyFailedResult;
@@ -283,5 +269,33 @@ export type HideChannelResult =
 export class HideChannelSucceededResult extends ChatKittySucceededResult {
   constructor(public channel: DirectChannel) {
     super();
+  }
+}
+
+export declare class InviteUserRequest {
+  channel: Channel;
+  user: ChatKittyUserReference;
+}
+
+export type InviteUserResult = InvitedUserResult | ChatKittyFailedResult;
+
+export class InvitedUserResult extends ChatKittySucceededResult {
+  constructor(public user: User) {
+    super();
+  }
+}
+
+export function invitedUser(
+  result: InviteUserResult
+): result is InvitedUserResult {
+  return (result as InvitedUserResult).user !== undefined;
+}
+
+export class ChannelNotInvitableError extends ChatKittyError {
+  constructor(public channel: Channel) {
+    super(
+      'ChannelNotInvitableError',
+      `The channel ${channel.name} does not accept invites.`
+    );
   }
 }

@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 
 import {
   Channel,
+  ChannelNotInvitableError,
   ChannelNotPubliclyJoinableError,
   ClearChannelHistoryRequest,
   ClearChannelHistoryResult,
@@ -23,6 +24,9 @@ import {
   HideChannelRequest,
   HideChannelResult,
   HideChannelSucceededResult,
+  InvitedUserResult,
+  InviteUserRequest,
+  InviteUserResult,
   JoinChannelRequest,
   JoinChannelResult,
   JoinedChannelResult,
@@ -1218,6 +1222,27 @@ export class ChatKitty {
     });
 
     return () => unsubscribe;
+  }
+
+  public inviteUser(request: InviteUserRequest): Promise<InviteUserResult> {
+    const destination = request.channel._actions.invite;
+
+    if (!destination) {
+      throw new ChannelNotInvitableError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<User>({
+        destination: destination,
+        body: {
+          user: request.user,
+        },
+        onSuccess: (resource) => {
+          resolve(new InvitedUserResult(resource));
+        },
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
   }
 
   public onParticipantStartedTyping(
