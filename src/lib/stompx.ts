@@ -316,7 +316,7 @@ export default class StompX {
     };
   }
 
-  public performAction<R>(request: StompXPerformActionRequest<R>) {
+  public sendAction<R>(request: StompXPerformActionRequest<R>) {
     const receipt = StompX.generateReceipt();
 
     if (request.onSent) {

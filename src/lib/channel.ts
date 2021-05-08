@@ -34,6 +34,7 @@ export declare class ChannelRelays {
   messagesCount: string;
   lastReceivedMessage: string;
   lastReadMessage: string;
+  calls: string;
   unread: string;
   members?: string;
 }
@@ -54,6 +55,7 @@ export declare class ChannelActions {
   leave?: string;
   invite?: string;
   read: string;
+  call: string;
   mute: string;
   clearHistory: string;
   hide: string;

@@ -29,6 +29,7 @@ export declare class CurrentUserRelays {
 export declare class CurrentUserTopics {
   self: string;
   channels: string;
+  calls: string;
   messages: string;
   notifications: string;
   contacts: string;
