@@ -410,13 +410,19 @@ export class ChatKitty {
         }
       }
 
+      const parameters: { name?: string } = {};
+
+      const name = request?.filter?.name;
+
+      if (name) {
+        parameters.name = name;
+      }
+
       ChatKittyPaginator.createInstance<Channel>({
         stompX: this.stompX,
         relay: relay,
         contentName: 'channels',
-        parameters: {
-          name: request?.filter?.name,
-        },
+        parameters: parameters,
       })
         .then((paginator) => resolve(new GetChannelsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
