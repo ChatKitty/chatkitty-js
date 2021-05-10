@@ -8,6 +8,7 @@
     "module": "commonjs",
     "declaration": true,
     "inlineSourceMap": true,
+    "allowJs": true,
     "esModuleInterop": true
     /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
     "resolveJsonModule": true
@@ -51,7 +52,7 @@
       "src/types"
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.js"],
   "exclude": ["node_modules/**"],
   "compileOnSave": false
 }

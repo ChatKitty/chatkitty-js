@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "build": "run-p build:*",
-    "build:main": "tsc -p tsconfig.json",
+    "build:main": "genversion --es6 src/lib/version.ts && tsc -p tsconfig.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",

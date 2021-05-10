@@ -4,6 +4,8 @@ import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
 
+import { version } from './version';
+
 let TransportFallback: { default: { new (arg: string): unknown } };
 
 import('sockjs-client')
@@ -103,7 +105,7 @@ export default class StompX {
 
     const headers: StompHeaders = {
       'StompX-User': request.username,
-      'StompX-User-Agent': `ChatKitty-JS`,
+      'StompX-User-Agent': `ChatKitty-JS/${version}`,
     };
 
     if (request.authParams) {
