@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "1.22.1",
+  "version": "1.22.2",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
