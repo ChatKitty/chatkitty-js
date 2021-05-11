@@ -7,7 +7,7 @@ import { ChatKittyUserReference, User } from './user';
 
 export type Channel = DirectChannel | PublicChannel | PrivateChannel;
 
-export interface ChannelProperties {
+export interface BaseChannel {
   id: number;
   type: string;
   name: string;
@@ -20,13 +20,13 @@ export interface ChannelProperties {
   _streams: ChannelStreams;
 }
 
-export type DirectChannel = ChannelProperties & {
+export type DirectChannel = BaseChannel & {
   members: User[];
 };
 
-export type PublicChannel = ChannelProperties;
+export type PublicChannel = BaseChannel;
 
-export type PrivateChannel = ChannelProperties;
+export type PrivateChannel = BaseChannel;
 
 export declare class ChannelRelays {
   self: string;

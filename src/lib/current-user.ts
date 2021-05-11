@@ -3,20 +3,14 @@ import {
   CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
-import { UserProperties } from './user';
+import { BaseUser } from './user';
 
-export declare class CurrentUser implements UserProperties {
-  displayName: string;
-  displayPictureUrl: string;
-  id: number;
-  isGuest: string;
-  name: string;
-  properties: unknown;
+export type CurrentUser = BaseUser & {
   _relays: CurrentUserRelays;
   _topics: CurrentUserTopics;
   _actions: CurrentUserActions;
   _streams: CurrentUserStreams;
-}
+};
 
 export declare class CurrentUserRelays {
   self: string;

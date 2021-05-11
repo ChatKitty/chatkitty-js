@@ -3,7 +3,7 @@ import { ChatKittyError } from './error';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
-export interface UserProperties {
+export interface BaseUser {
   id: number;
   name: string;
   displayName: string;
@@ -12,14 +12,7 @@ export interface UserProperties {
   properties: unknown;
 }
 
-export declare class User implements UserProperties {
-  displayName: string;
-  displayPictureUrl: string;
-  id: number;
-  isGuest: string;
-  name: string;
-  properties: unknown;
-}
+export type User = BaseUser;
 
 export declare class ChatKittyUserReference {
   username: string;

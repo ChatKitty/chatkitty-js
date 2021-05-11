@@ -18,7 +18,7 @@ export type TextMessage = TextSystemMessage | TextUserMessage;
 
 export type FileMessage = FileSystemMessage | FileUserMessage;
 
-export interface MessageProperties {
+export interface BaseMessage {
   id: number;
   type: string;
   createdTime: string;
@@ -27,49 +27,26 @@ export interface MessageProperties {
   _actions: MessageActions;
 }
 
-export declare class TextSystemMessage implements MessageProperties {
-  id: number;
-  type: string;
-  createdTime: string;
-  properties: unknown;
+export type BaseTextMessage = BaseMessage & {
   body: string;
   links: [MessageLink];
-  _relays: MessageRelays;
-  _actions: MessageActions;
-}
+};
 
-export declare class FileSystemMessage implements MessageProperties {
-  id: number;
-  type: string;
-  createdTime: string;
-  properties: unknown;
+export type BaseFileMessage = BaseMessage & {
   file: ChatKittyFile;
-  _relays: MessageRelays;
-  _actions: MessageActions;
-}
+};
 
-export declare class TextUserMessage implements MessageProperties {
-  id: number;
-  type: string;
-  createdTime: string;
-  properties: unknown;
+export type BaseUserMessage = BaseMessage & {
   user: User;
-  body: string;
-  links: [MessageLink];
-  _relays: MessageRelays;
-  _actions: MessageActions;
-}
+};
 
-export declare class FileUserMessage implements MessageProperties {
-  id: number;
-  type: string;
-  createdTime: string;
-  properties: unknown;
-  user: User;
-  file: ChatKittyFile;
-  _relays: MessageRelays;
-  _actions: MessageActions;
-}
+export type TextSystemMessage = BaseTextMessage;
+
+export type FileSystemMessage = BaseFileMessage;
+
+export type TextUserMessage = BaseTextMessage & BaseUserMessage;
+
+export type FileUserMessage = BaseFileMessage & BaseUserMessage;
 
 export declare class MessageLink {
   source: string;

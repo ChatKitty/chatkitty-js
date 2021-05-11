@@ -4,7 +4,7 @@ import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
 import { v4 } from 'uuid';
 
-import { version } from './version';
+import { version } from '../environment/version';
 
 let TransportFallback: { default: { new (arg: string): unknown } };
 

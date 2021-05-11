@@ -7,4 +7,5 @@ docs
 *.log
 yarn.lock
 .DS_Store
-/src/environments/environment.local.ts
+/src/environment/environment.local.ts
+/src/environment/version.ts
