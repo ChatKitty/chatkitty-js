@@ -16,6 +16,7 @@ export declare class CurrentUserRelays {
   self: string;
   readFileAccessGrant: string;
   writeFileAccessGrant: string;
+  channelsCount: string;
   channels: string;
   joinableChannels: string;
   unreadChannelsCount: string;

@@ -21,6 +21,7 @@ import {
   GetChannelUnreadRequest,
   GetChannelUnreadResult,
   GetChannelUnreadSucceededResult,
+  GetUnreadChannelsRequest,
   HideChannelRequest,
   HideChannelResult,
   HideChannelSucceededResult,
@@ -500,16 +501,27 @@ export class ChatKitty {
     });
   }
 
-  public getUnreadChannelsCount(): Promise<GetCountResult> {
+  public getUnreadChannelsCount(
+    request?: GetUnreadChannelsRequest
+  ): Promise<GetCountResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
       throw new NoActiveSessionError();
     }
 
+    const parameters: { unread: true; type?: string } = {
+      unread: true,
+    };
+
+    if (isGetChannelsUnreadRequest(request)) {
+      parameters.type = request.filter?.type;
+    }
+
     return new Promise((resolve) => {
       this.stompX.relayResource<{ count: number }>({
-        destination: currentUser._relays.unreadChannelsCount,
+        destination: currentUser._relays.channelsCount,
+        parameters: parameters,
         onSuccess: (resource) => {
           resolve(new GetCountSucceedResult(resource.count));
         },
@@ -1387,14 +1399,26 @@ class MessageMapper {
   }
 }
 
-function isGetChannelsRequest(param: unknown): param is GetChannelsRequest {
+function isGetChannelsRequest(
+  param: GetChannelsRequest | undefined
+): param is GetChannelsRequest {
   const request = param as GetChannelsRequest;
 
   return request?.joinable !== undefined || request?.filter !== undefined;
 }
 
-function isGetUsersRequest(param: unknown): param is GetUsersRequest {
+function isGetUsersRequest(
+  param: GetUsersRequest | undefined
+): param is GetUsersRequest {
   const request = param as GetUsersRequest;
+
+  return request?.filter !== undefined;
+}
+
+function isGetChannelsUnreadRequest(
+  param: GetUnreadChannelsRequest | undefined
+): param is GetUnreadChannelsRequest {
+  const request = param as GetUnreadChannelsRequest;
 
   return request?.filter !== undefined;
 }

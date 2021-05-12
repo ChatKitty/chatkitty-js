@@ -106,6 +106,14 @@ export declare class GetChannelsFilter {
   unread?: boolean;
 }
 
+export declare class GetUnreadChannelsRequest {
+  filter: GetUnreadChannelsFilter;
+}
+
+export declare class GetUnreadChannelsFilter {
+  type: string;
+}
+
 export declare class GetChannelUnreadRequest {
   channel: Channel;
 }
