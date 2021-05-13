@@ -8,4 +8,3 @@ docs
 yarn.lock
 .DS_Store
 /src/environment/environment.local.ts
-/src/environment/version.ts
