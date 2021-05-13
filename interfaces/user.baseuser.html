@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>User | ChatKitty JS SDK</title>
+	<title>BaseUser | ChatKitty JS SDK</title>
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,10 +59,10 @@
 					<a href="../modules/user.html">user</a>
 				</li>
 				<li>
-					<a href="user.user-1.html">User</a>
+					<a href="user.baseuser.html">BaseUser</a>
 				</li>
 			</ul>
-			<h1>Class User</h1>
+			<h1>Interface BaseUser</h1>
 		</div>
 	</div>
 </header>
@@ -73,14 +73,8 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">User</span>
+						<span class="target">BaseUser</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/user.userproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">UserProperties</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -88,107 +82,78 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="user.user-1.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="user.user-1.html#displayname" class="tsd-kind-icon">display<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="user.user-1.html#displaypictureurl" class="tsd-kind-icon">display<wbr>Picture<wbr>Url</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="user.user-1.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="user.user-1.html#isguest" class="tsd-kind-icon">is<wbr>Guest</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="user.user-1.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="user.user-1.html#properties" class="tsd-kind-icon">properties</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="user.baseuser.html#displayname" class="tsd-kind-icon">display<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="user.baseuser.html#displaypictureurl" class="tsd-kind-icon">display<wbr>Picture<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="user.baseuser.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="user.baseuser.html#isguest" class="tsd-kind-icon">is<wbr>Guest</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="user.baseuser.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="user.baseuser.html#properties" class="tsd-kind-icon">properties</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>User<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="user.user-1.html" class="tsd-signature-type" data-tsd-kind="Class">User</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="user.user-1.html" class="tsd-signature-type" data-tsd-kind="Class">User</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="displayname" class="tsd-anchor"></a>
 					<h3>display<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">display<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/user.userproperties.html">UserProperties</a>.<a href="../interfaces/user.userproperties.html#displayname">displayName</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/5ed32a6/src/lib/user.ts#L16">user.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/user.ts#L9">user.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="displaypictureurl" class="tsd-anchor"></a>
 					<h3>display<wbr>Picture<wbr>Url</h3>
 					<div class="tsd-signature tsd-kind-icon">display<wbr>Picture<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/user.userproperties.html">UserProperties</a>.<a href="../interfaces/user.userproperties.html#displaypictureurl">displayPictureUrl</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/5ed32a6/src/lib/user.ts#L17">user.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/user.ts#L10">user.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/user.userproperties.html">UserProperties</a>.<a href="../interfaces/user.userproperties.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/5ed32a6/src/lib/user.ts#L18">user.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/user.ts#L7">user.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="isguest" class="tsd-anchor"></a>
 					<h3>is<wbr>Guest</h3>
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Guest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/user.userproperties.html">UserProperties</a>.<a href="../interfaces/user.userproperties.html#isguest">isGuest</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/5ed32a6/src/lib/user.ts#L19">user.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/user.ts#L11">user.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="name" class="tsd-anchor"></a>
 					<h3>name</h3>
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/user.userproperties.html">UserProperties</a>.<a href="../interfaces/user.userproperties.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/5ed32a6/src/lib/user.ts#L20">user.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/user.ts#L8">user.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="properties" class="tsd-anchor"></a>
 					<h3>properties</h3>
 					<div class="tsd-signature tsd-kind-icon">properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/user.userproperties.html">UserProperties</a>.<a href="../interfaces/user.userproperties.html#properties">properties</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/5ed32a6/src/lib/user.ts#L21">user.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/user.ts#L12">user.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -254,78 +219,72 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/user_block_list_item.html">user-<wbr>block-<wbr>list-<wbr>item</a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/version.html">version</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.blockuserrequest.html" class="tsd-kind-icon">Block<wbr>User<wbr>Request</a>
+						<a href="../classes/user.blockuserrequest.html" class="tsd-kind-icon">Block<wbr>User<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.blockusersucceededresult.html" class="tsd-kind-icon">Block<wbr>User<wbr>Succeeded<wbr>Result</a>
+						<a href="../classes/user.blockusersucceededresult.html" class="tsd-kind-icon">Block<wbr>User<wbr>Succeeded<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.cannothavememberserror.html" class="tsd-kind-icon">Cannot<wbr>Have<wbr>Members<wbr>Error</a>
+						<a href="../classes/user.cannothavememberserror.html" class="tsd-kind-icon">Cannot<wbr>Have<wbr>Members<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.chatkittyuserreference.html" class="tsd-kind-icon">Chat<wbr>Kitty<wbr>User<wbr>Reference</a>
+						<a href="../classes/user.chatkittyuserreference.html" class="tsd-kind-icon">Chat<wbr>Kitty<wbr>User<wbr>Reference</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.getchannelmembersrequest.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Members<wbr>Request</a>
+						<a href="../classes/user.getchannelmembersrequest.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Members<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.getuserresult.html" class="tsd-kind-icon">Get<wbr>User<wbr>Result</a>
+						<a href="../classes/user.getuserresult.html" class="tsd-kind-icon">Get<wbr>User<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.getusersfilter.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Filter</a>
+						<a href="../classes/user.getusersfilter.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Filter</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.getusersrequest.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Request</a>
+						<a href="../classes/user.getusersrequest.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="user.getuserssucceededresult.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Succeeded<wbr>Result</a>
+						<a href="../classes/user.getuserssucceededresult.html" class="tsd-kind-icon">Get<wbr>Users<wbr>Succeeded<wbr>Result</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="user.user-1.html" class="tsd-kind-icon">User</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="user.baseuser.html" class="tsd-kind-icon">Base<wbr>User</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="user.user-1.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="user.baseuser.html#displayname" class="tsd-kind-icon">display<wbr>Name</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="user.user-1.html#displayname" class="tsd-kind-icon">display<wbr>Name</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="user.baseuser.html#displaypictureurl" class="tsd-kind-icon">display<wbr>Picture<wbr>Url</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="user.user-1.html#displaypictureurl" class="tsd-kind-icon">display<wbr>Picture<wbr>Url</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="user.baseuser.html#id" class="tsd-kind-icon">id</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="user.user-1.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="user.baseuser.html#isguest" class="tsd-kind-icon">is<wbr>Guest</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="user.user-1.html#isguest" class="tsd-kind-icon">is<wbr>Guest</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="user.baseuser.html#name" class="tsd-kind-icon">name</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="user.user-1.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="user.user-1.html#properties" class="tsd-kind-icon">properties</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="user.baseuser.html#properties" class="tsd-kind-icon">properties</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/user.userproperties.html" class="tsd-kind-icon">User<wbr>Properties</a>
-					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/user.html#blockuserresult" class="tsd-kind-icon">Block<wbr>User<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/user.html#getusersresult" class="tsd-kind-icon">Get<wbr>Users<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/user.html#user-1" class="tsd-kind-icon">User</a>
 					</li>
 				</ul>
 			</nav>
@@ -337,19 +296,17 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -358,7 +315,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 5/10/2021 at 8:36:33 AM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 5/13/2021 at 4:10:43 AM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
