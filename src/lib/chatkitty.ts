@@ -1589,7 +1589,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<User>({
+      this.stompX.sendAction<User>({
         destination: destination,
         body: {
           user: request.user,
@@ -1683,13 +1683,7 @@ export class ChatKitty {
   public startCallSession(
     request: StartCallSessionRequest
   ): Promise<StartCallSessionResult> {
-    const user = this.currentUser;
-
-    if (!user) {
-      throw new NoActiveSessionError();
-    }
-
-    return CallSession.createInstance(user, this.stompX, request).then(
+    return CallSession.createInstance(this.stompX, request).then(
       (call) => new StartedCallSessionResult(call)
     );
   }

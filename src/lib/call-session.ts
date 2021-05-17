@@ -5,24 +5,21 @@ import {
   AddCandidateCallSignal,
   AnswerOfferCallSignal,
   CallSignal,
-  ConnectPeerCallSignal,
   CreateCallSignalRequest,
   CreateOfferCallSignal,
   DisconnectPeerCallSignal,
   isAddCandidateCallSignal,
   isAnswerOfferCallSignal,
-  isConnectPeerCallSignal,
   isCreateOfferCallSignal,
   isDisconnectPeerCallSignal,
+  isSendDescriptionCallSignal,
 } from './call-signal';
-import { CurrentUser } from './current-user';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import StompX from './stompx';
 import { User } from './user';
 
 export class CallSession {
   static async createInstance(
-    user: CurrentUser,
     stompX: StompX,
     request: StartCallSessionRequest
   ): Promise<CallSession> {
@@ -45,7 +42,6 @@ export class CallSession {
             onSuccess: () => {
               resolve(
                 new CallSession(
-                  user,
                   request.call,
                   request.stream,
                   stompX,
@@ -66,12 +62,11 @@ export class CallSession {
     });
   }
 
-  private participants: Map<string, Participant> = new Map();
+  private connections: Map<number, Connection> = new Map();
 
   private readonly signalsSubscription: Subscription;
 
   constructor(
-    public readonly user: CurrentUser,
     public readonly call: Call,
     public readonly stream: MediaStream,
     private readonly stompX: StompX,
@@ -89,14 +84,28 @@ export class CallSession {
   ) {
     this.signalsSubscription = signalSubject.subscribe({
       next: (signal) => {
-        if (signal.user.name == this.user.name) return;
-
-        if (isConnectPeerCallSignal(signal)) {
-          this.onConnect(signal);
+        if (isCreateOfferCallSignal(signal)) {
+          this.onCreateOffer(signal).then();
         }
 
-        if (isCreateOfferCallSignal(signal)) {
-          this.onOffer(signal);
+        if (isAnswerOfferCallSignal(signal)) {
+          this.onAnswerOffer(signal);
+        }
+
+        if (isAddCandidateCallSignal(signal)) {
+          const connection = this.connections.get(signal.peer.id);
+
+          if (connection) {
+            connection.addCandidate(signal.payload).then();
+          }
+        }
+
+        if (isSendDescriptionCallSignal(signal)) {
+          const connection = this.connections.get(signal.peer.id);
+
+          if (connection) {
+            connection.answerOffer(signal.payload).then();
+          }
         }
 
         if (isDisconnectPeerCallSignal(signal)) {
@@ -111,74 +120,46 @@ export class CallSession {
     });
   }
 
-  private onConnect = (signal: ConnectPeerCallSignal): void => {
-    const user = signal.user;
+  private onCreateOffer = async (
+    signal: CreateOfferCallSignal
+  ): Promise<void> => {
+    const peer = signal.peer;
 
-    if (!this.participants.has(user.name)) {
-      const participant = new Participant(
-        user,
-        this,
-        this.signalSubject,
-        this.signalDispatcher,
-        this.onParticipantAddedStream
-      );
-
-      this.participants.set(user.name, participant);
-
-      this.onParticipantEnteredCall?.(user);
+    if (this.connections.has(peer.id)) {
+      return;
     }
+
+    const connection = new Connection(
+      peer,
+      this.stream,
+      this.signalDispatcher,
+      this.onParticipantAddedStream
+    );
+
+    await connection.createOffer();
+
+    this.connections.set(peer.id, connection);
   };
 
-  private onOffer = async (signal: CreateOfferCallSignal): Promise<void> => {
-    const user = signal.user;
+  private onAnswerOffer = (signal: AnswerOfferCallSignal): void => {
+    const peer = signal.peer;
 
-    const description = new RTCSessionDescription(signal.payload);
-
-    if (this.participants.has(user.name)) {
-      const participant = this.participants.get(user.name) as Participant;
-
-      try {
-        await participant.renegotiate(description);
-      } catch (err) {
-        this.signalDispatcher.dispatch({
-          type: 'SEND_ERROR',
-          payload: err,
-        });
-      }
-    } else {
-      const participant = new Participant(
-        user,
-        this,
-        this.signalSubject,
-        this.signalDispatcher,
-        this.onParticipantAddedStream
-      );
-
-      this.participants.set(user.name, participant);
-
-      this.onParticipantEnteredCall?.(user);
-
-      try {
-        await participant.renegotiate(description);
-      } catch (err) {
-        this.signalDispatcher.dispatch({
-          type: 'SEND_ERROR',
-          payload: err,
-        });
-      }
+    if (this.connections.has(peer.id)) {
+      return;
     }
+
+    const connection = new Connection(
+      peer,
+      this.stream,
+      this.signalDispatcher,
+      this.onParticipantAddedStream
+    );
+
+    this.connections.set(peer.id, connection);
   };
 
   private onDisconnect = (signal: DisconnectPeerCallSignal): void => {
-    const user = signal.user;
-
-    if (this.participants.has(user.name)) {
-      const participant = this.participants.get(user.name) as Participant;
-
-      participant.close();
-
-      this.participants.delete(user.name);
-    }
+    // .
   };
 
   end() {
@@ -190,6 +171,95 @@ export class CallSession {
 
     this.signalsSubscription.unsubscribe();
   }
+}
+
+class Connection {
+  private readonly rtcConfiguration: RTCConfiguration = {
+    iceServers: [
+      {
+        urls: 'stun:stun2.1.google.com:19302',
+      },
+    ],
+  };
+
+  private readonly offerAnswerOptions: RTCOfferOptions;
+
+  private rtcPeerConnection: RTCPeerConnection;
+
+  constructor(
+    private readonly peer: User,
+    private readonly stream: MediaStream,
+    private readonly signalDispatcher: CallSignalDispatcher,
+    private readonly onParticipantAddedStream?: (
+      user: User,
+      stream: MediaStream
+    ) => void
+  ) {
+    this.offerAnswerOptions = {
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true,
+    };
+
+    this.rtcPeerConnection = new RTCPeerConnection(this.rtcConfiguration);
+
+    this.rtcPeerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        signalDispatcher.dispatch({
+          type: 'ADD_CANDIDATE',
+          peer: { id: peer.id },
+          payload: event.candidate,
+        });
+      }
+    };
+
+    this.rtcPeerConnection.ontrack = (event) => {
+      onParticipantAddedStream?.(peer, event.streams[0]);
+    };
+
+    stream
+      .getTracks()
+      .map((track) => this.rtcPeerConnection.addTrack(track, stream));
+  }
+
+  createOffer = async () => {
+    const description = await this.rtcPeerConnection.createOffer(
+      this.offerAnswerOptions
+    );
+
+    await this.rtcPeerConnection.setLocalDescription(description);
+
+    this.signalDispatcher.dispatch({
+      type: 'SEND_DESCRIPTION',
+      peer: this.peer,
+      payload: description,
+    });
+  };
+
+  answerOffer = async (description: RTCSessionDescriptionInit) => {
+    await this.rtcPeerConnection.setRemoteDescription(description);
+
+    if (description.type === 'offer') {
+      const answer = await this.rtcPeerConnection.createAnswer(
+        this.offerAnswerOptions
+      );
+
+      await this.rtcPeerConnection.setLocalDescription(answer);
+
+      this.signalDispatcher.dispatch({
+        type: 'SEND_DESCRIPTION',
+        peer: this.peer,
+        payload: answer,
+      });
+    }
+  };
+
+  addCandidate = async (candidate: RTCIceCandidateInit): Promise<void> => {
+    await this.rtcPeerConnection.addIceCandidate(candidate);
+  };
+
+  close = (): void => {
+    this.rtcPeerConnection.close();
+  };
 }
 
 export declare class StartCallSessionRequest {
@@ -224,226 +294,5 @@ class CallSignalDispatcher {
       destination: this.call._actions.signal,
       body: request,
     });
-  };
-}
-
-class Participant {
-  private readonly rtcConfiguration: RTCConfiguration = {
-    iceServers: [
-      {
-        urls: 'stun:stun2.1.google.com:19302',
-      },
-    ],
-  };
-
-  private readonly dataConstraints?: RTCDataChannelInit;
-  private readonly offerAnswerOptions: RTCOfferOptions;
-
-  private readonly signalsSubscription: Subscription;
-
-  private peer: RTCPeerConnection;
-  private channel?: RTCDataChannel;
-
-  private isNegotiating: boolean; // Workaround for Chrome: skip nested negotiations
-
-  constructor(
-    private readonly user: User,
-    private readonly session: CallSession,
-    private readonly signalSubject: Subject<CallSignal>,
-    private readonly signalDispatcher: CallSignalDispatcher,
-    private readonly onParticipantAddedStream?: (
-      user: User,
-      stream: MediaStream
-    ) => void
-  ) {
-    this.offerAnswerOptions = {
-      offerToReceiveAudio: true,
-      offerToReceiveVideo: true,
-    };
-    this.isNegotiating = false;
-
-    this.peer = new RTCPeerConnection(this.rtcConfiguration);
-
-    const stream = this.session.stream;
-    if (stream instanceof MediaStream) {
-      this.addStream(stream);
-    }
-
-    this.peer.onicecandidate = this.onIceCandidate;
-    this.peer.onconnectionstatechange = this.onConnectionStateChange;
-    this.peer.oniceconnectionstatechange = this.onIceConnectionStateChange;
-    this.peer.onsignalingstatechange = this.onSignalingStateChange;
-    this.peer.onnegotiationneeded = this.onNegotiationNeeded;
-    this.peer.ondatachannel = this.onDataChannel;
-    this.peer.ontrack = this.dispatchRemoteStream;
-
-    this.signalsSubscription = signalSubject.subscribe({
-      next: (signal) => {
-        if (isAddCandidateCallSignal(signal)) {
-          this.onCandidate(signal);
-        }
-
-        if (isAnswerOfferCallSignal(signal)) {
-          this.onAnswer(signal);
-        }
-      },
-    });
-  }
-
-  close = (): Participant => {
-    if (this.channel) {
-      this.channel.close();
-    }
-
-    this.peer.close();
-    this.signalsSubscription.unsubscribe();
-
-    return this;
-  };
-
-  addStream = (stream: MediaStream): Participant => {
-    stream.getTracks().map((track) => this.peer.addTrack(track, stream));
-
-    return this;
-  };
-
-  renegotiate = async (
-    remoteDesc?: RTCSessionDescription
-  ): Promise<Participant> => {
-    if (remoteDesc) {
-      if (
-        remoteDesc.type === 'offer' &&
-        this.peer.signalingState !== 'stable'
-      ) {
-        await this.peer.setLocalDescription({ type: 'rollback' });
-      }
-
-      await this.peer.setRemoteDescription(remoteDesc);
-
-      if (remoteDesc.type === 'offer') {
-        const desc = await this.peer.createAnswer(this.offerAnswerOptions);
-        await this.peer.setLocalDescription(desc);
-
-        this.signalDispatcher.dispatch({
-          type: 'ANSWER_OFFER',
-          payload: this.peer.localDescription,
-        });
-      }
-    } else {
-      this.channel = this.newDataChannel(this.dataConstraints);
-
-      const desc = await this.peer.createOffer(this.offerAnswerOptions);
-
-      // prevent race condition if another side send us offer at the time
-      // when we were in process of createOffer
-      if (this.peer.signalingState === 'stable') {
-        await this.peer.setLocalDescription(desc);
-
-        this.signalDispatcher.dispatch({
-          type: 'CREATE_OFFER',
-          payload: this.peer.localDescription,
-        });
-      }
-    }
-
-    return this;
-  };
-
-  private newDataChannel = (
-    dataConstraints?: RTCDataChannelInit
-  ): RTCDataChannel => {
-    const label = Math.floor((1 + Math.random()) * 1e16)
-      .toString(16)
-      .substring(1);
-
-    return this.peer.createDataChannel(label, dataConstraints);
-  };
-
-  private onAnswer = async (signal: AnswerOfferCallSignal): Promise<void> => {
-    try {
-      await this.renegotiate(new RTCSessionDescription(signal.payload));
-    } catch (err) {
-      this.signalDispatcher.dispatch({
-        type: 'SEND_ERROR',
-        payload: err,
-      });
-    }
-  };
-
-  private onCandidate = async (
-    event: AddCandidateCallSignal
-  ): Promise<void> => {
-    try {
-      await this.peer.addIceCandidate(new RTCIceCandidate(event.payload));
-    } catch (err) {
-      this.signalDispatcher.dispatch({
-        type: 'SEND_ERROR',
-        payload: err,
-      });
-    }
-  };
-
-  private onIceCandidate = (iceEvent: RTCPeerConnectionIceEvent): void => {
-    if (iceEvent.candidate) {
-      this.signalDispatcher.dispatch({
-        type: 'ADD_CANDIDATE',
-        payload: iceEvent.candidate,
-      });
-    } else {
-      // All ICE candidates have been sent
-    }
-  };
-
-  private onConnectionStateChange = (): void => {
-    switch (this.peer.connectionState) {
-      case 'connected':
-        // The connection has become fully connected
-        break;
-      case 'disconnected':
-      case 'failed':
-      // One or more transports has terminated unexpectedly or in an error
-      // eslint-disable-next-line no-fallthrough
-      case 'closed':
-        this.session.end();
-        // The connection has been closed
-        break;
-    }
-  };
-
-  private onIceConnectionStateChange = (): void => {
-    switch (this.peer.iceConnectionState) {
-      case 'disconnected':
-      case 'failed':
-      case 'closed':
-        this.session.end();
-        break;
-    }
-  };
-
-  private onNegotiationNeeded = async (): Promise<void> => {
-    if (!this.isNegotiating) {
-      try {
-        await this.renegotiate();
-      } catch (err) {
-        this.signalDispatcher.dispatch({
-          type: 'SEND_ERROR',
-          payload: err,
-        });
-      }
-
-      this.isNegotiating = true;
-    }
-  };
-
-  private onSignalingStateChange = (): void => {
-    this.isNegotiating = this.peer.signalingState !== 'stable';
-  };
-
-  private onDataChannel = (event: RTCDataChannelEvent): void => {
-    this.channel = event.channel;
-  };
-
-  private dispatchRemoteStream = (event: RTCTrackEvent): void => {
-    this.onParticipantAddedStream?.(this.user, event.streams[0]);
   };
 }

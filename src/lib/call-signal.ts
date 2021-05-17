@@ -1,11 +1,17 @@
+import { ChatKittyModelReference } from './model';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
-export type CallSignal = ConnectPeerCallSignal;
+export type CallSignal =
+  | CreateOfferCallSignal
+  | AnswerOfferCallSignal
+  | AddCandidateCallSignal
+  | SendDescriptionCallSignal
+  | DisconnectPeerCallSignal;
 
 type CallSignalProperties = {
   type: string;
-  user: User;
+  peer: User;
   createdTime: string;
 };
 
@@ -15,35 +21,19 @@ type ClientCallSignal = {
   payload: unknown;
 } & CallSignalProperties;
 
-export type ConnectPeerCallSignal = SystemCallSignal;
+export type CreateOfferCallSignal = SystemCallSignal;
+
+export type AnswerOfferCallSignal = SystemCallSignal;
 
 export type AddCandidateCallSignal = {
   payload: RTCIceCandidateInit;
 } & ClientCallSignal;
 
-export type CreateOfferCallSignal = {
+export type SendDescriptionCallSignal = {
   payload: RTCSessionDescriptionInit;
 } & ClientCallSignal;
-
-export type AnswerOfferCallSignal = {
-  payload: RTCSessionDescriptionInit;
-} & ClientCallSignal;
-
-export type SendErrorCallSignal = ClientCallSignal;
 
 export type DisconnectPeerCallSignal = SystemCallSignal;
-
-export function isConnectPeerCallSignal(
-  signal: CallSignal
-): signal is ConnectPeerCallSignal {
-  return signal.type === 'CONNECT_PEER';
-}
-
-export function isAddCandidateCallSignal(
-  signal: CallSignal
-): signal is AddCandidateCallSignal {
-  return signal.type === 'ADD_CANDIDATE';
-}
 
 export function isCreateOfferCallSignal(
   signal: CallSignal
@@ -57,10 +47,16 @@ export function isAnswerOfferCallSignal(
   return signal.type === 'ANSWER_OFFER';
 }
 
-export function isSendErrorCallSignal(
+export function isAddCandidateCallSignal(
   signal: CallSignal
-): signal is SendErrorCallSignal {
-  return signal.type === 'SEND_ERROR';
+): signal is AddCandidateCallSignal {
+  return signal.type === 'ADD_CANDIDATE';
+}
+
+export function isSendDescriptionCallSignal(
+  signal: CallSignal
+): signal is SendDescriptionCallSignal {
+  return signal.type === 'SEND_DESCRIPTION';
 }
 
 export function isDisconnectPeerCallSignal(
@@ -71,7 +67,8 @@ export function isDisconnectPeerCallSignal(
 
 export declare class CreateCallSignalRequest {
   type: string;
-  payload: unknown;
+  peer: ChatKittyModelReference;
+  payload: RTCIceCandidateInit | RTCSessionDescriptionInit;
 }
 
 export type CreateCallSignalResult =
