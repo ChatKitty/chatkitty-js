@@ -1669,11 +1669,20 @@ export class ChatKitty {
   }
 
   public getCalls(request: GetCallsRequest): Promise<GetCallsResult> {
+    const parameters: { active?: boolean } = {};
+
+    const active = request?.filter?.active;
+
+    if (active) {
+      parameters.active = active;
+    }
+
     return new Promise((resolve) => {
       ChatKittyPaginator.createInstance<Call>({
         stompX: this.stompX,
         relay: request.channel._relays.calls,
         contentName: 'calls',
+        parameters: parameters,
       })
         .then((paginator) => resolve(new GetCallsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));

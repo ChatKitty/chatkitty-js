@@ -2,7 +2,6 @@ import { Subject, Subscription } from 'rxjs';
 
 import { Call } from './call';
 import {
-  AddCandidateCallSignal,
   AnswerOfferCallSignal,
   CallSignal,
   CreateCallSignalRequest,
@@ -214,6 +213,28 @@ class Connection {
 
     this.rtcPeerConnection.ontrack = (event) => {
       onParticipantAddedStream?.(peer, event.streams[0]);
+    };
+
+    this.rtcPeerConnection.onconnectionstatechange = () => {
+      switch (this.rtcPeerConnection.connectionState) {
+        case 'connected':
+          break;
+        case 'disconnected':
+        case 'failed':
+        case 'closed':
+          // TODO end call session
+          break;
+      }
+    };
+
+    this.rtcPeerConnection.oniceconnectionstatechange = () => {
+      switch (this.rtcPeerConnection.iceConnectionState) {
+        case 'disconnected':
+        case 'failed':
+        case 'closed':
+          // TODO end call session
+          break;
+      }
     };
 
     stream
