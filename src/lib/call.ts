@@ -3,7 +3,7 @@ import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
-export type Call = VoiceCall | VideoCall;
+export type Call = ConferenceCall | PresenterCall;
 
 type CallProperties = {
   id: number;
@@ -18,9 +18,9 @@ type CallProperties = {
   _actions: CallActions;
 };
 
-export type VoiceCall = CallProperties;
+export type ConferenceCall = CallProperties;
 
-export type VideoCall = CallProperties;
+export type PresenterCall = CallProperties;
 
 declare class CallRelays {
   self: string;
@@ -36,12 +36,12 @@ declare class CallActions {
   signal: string;
 }
 
-export function isVoiceCall(call: Call): call is VoiceCall {
-  return call.type === 'VOICE';
+export function isConferenceCall(call: Call): call is ConferenceCall {
+  return call.type === 'CONFERENCE';
 }
 
-export function isVideoCall(call: Call): call is VideoCall {
-  return call.type === 'VIDEO';
+export function isPresenterCall(call: Call): call is PresenterCall {
+  return call.type === 'PRESENTER';
 }
 
 export declare class StartCallRequest {
