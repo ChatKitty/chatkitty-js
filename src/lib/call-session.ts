@@ -173,8 +173,13 @@ export class CallSession {
 }
 
 class Connection {
-  private readonly rtcConfiguration: RTCConfiguration = {
+  private static readonly rtcConfiguration: RTCConfiguration = {
     iceServers: [
+      {
+        urls: 'turn:100.27.37.88:3478',
+        username: 'chatkitty',
+        credential: '5WEDIcZHUxhlUlsdQcqj',
+      },
       {
         urls: 'stun:stun2.1.google.com:19302',
       },
@@ -199,7 +204,7 @@ class Connection {
       offerToReceiveVideo: true,
     };
 
-    this.rtcPeerConnection = new RTCPeerConnection(this.rtcConfiguration);
+    this.rtcPeerConnection = new RTCPeerConnection(Connection.rtcConfiguration);
 
     this.rtcPeerConnection.onicecandidate = (event) => {
       if (event.candidate) {
