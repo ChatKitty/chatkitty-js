@@ -128,10 +128,11 @@ export class CallSession {
       return;
     }
 
-    const connection = new Connection(
+    const connection: Connection = new P2PConnection(
       peer,
       this.stream,
       this.signalDispatcher,
+      this.end,
       this.onParticipantAddedStream
     );
 
@@ -147,10 +148,11 @@ export class CallSession {
       return;
     }
 
-    const connection = new Connection(
+    const connection = new P2PConnection(
       peer,
       this.stream,
       this.signalDispatcher,
+      this.end,
       this.onParticipantAddedStream
     );
 
@@ -158,7 +160,11 @@ export class CallSession {
   };
 
   private onDisconnect = (signal: DisconnectPeerCallSignal): void => {
-    // .
+    const connection = this.connections.get(signal.peer.id);
+
+    if (connection) {
+      connection.close();
+    }
   };
 
   end() {
@@ -172,11 +178,18 @@ export class CallSession {
   }
 }
 
-class Connection {
+interface Connection {
+  createOffer(): Promise<void>;
+  answerOffer(description: RTCSessionDescriptionInit): Promise<void>;
+  addCandidate(candidate: RTCIceCandidateInit): Promise<void>;
+  close(): void;
+}
+
+class P2PConnection implements Connection {
   private static readonly rtcConfiguration: RTCConfiguration = {
     iceServers: [
       {
-        urls: 'turn:100.27.37.88:3478',
+        urls: 'turn:34.231.248.98:3478',
         username: 'chatkitty',
         credential: '5WEDIcZHUxhlUlsdQcqj',
       },
@@ -194,6 +207,7 @@ class Connection {
     private readonly peer: User,
     private readonly stream: MediaStream,
     private readonly signalDispatcher: CallSignalDispatcher,
+    private readonly endSession: () => void,
     private readonly onParticipantAddedStream?: (
       user: User,
       stream: MediaStream
@@ -204,7 +218,9 @@ class Connection {
       offerToReceiveVideo: true,
     };
 
-    this.rtcPeerConnection = new RTCPeerConnection(Connection.rtcConfiguration);
+    this.rtcPeerConnection = new RTCPeerConnection(
+      P2PConnection.rtcConfiguration
+    );
 
     this.rtcPeerConnection.onicecandidate = (event) => {
       if (event.candidate) {
