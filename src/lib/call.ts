@@ -10,6 +10,7 @@ type CallProperties = {
   type: string;
   creator: User;
   state: string;
+  p2p: boolean;
   properties: unknown;
   createdTime: string;
   endTime?: string;
