@@ -2,7 +2,7 @@ import { CurrentUser } from './current-user';
 import { ChatKittyError } from './error';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
-export declare class Session {
+export declare class UserSession {
   user: CurrentUser;
 }
 
@@ -14,7 +14,7 @@ export declare class StartSessionRequest {
 }
 
 export class StartedSessionResult extends ChatKittySucceededResult {
-  constructor(public session: Session) {
+  constructor(public session: UserSession) {
     super();
   }
 }

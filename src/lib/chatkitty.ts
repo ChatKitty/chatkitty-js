@@ -112,7 +112,7 @@ import {
   StartSessionInProgressError,
   StartSessionRequest,
   StartSessionResult,
-} from './session';
+} from './user-session';
 import StompX from './stompx';
 import {
   BlockUserRequest,
