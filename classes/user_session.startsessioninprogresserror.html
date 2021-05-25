@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StartedSessionResult | ChatKitty JS SDK</title>
+	<title>StartSessionInProgressError | ChatKitty JS SDK</title>
 	<meta name="description" content="Documentation for ChatKitty JS SDK">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../modules.html">ChatKitty JS SDK</a>
 				</li>
 				<li>
-					<a href="../modules/session.html">session</a>
+					<a href="../modules/user_session.html">user-session</a>
 				</li>
 				<li>
-					<a href="session.startedsessionresult.html">StartedSessionResult</a>
+					<a href="user_session.startsessioninprogresserror.html">StartSessionInProgressError</a>
 				</li>
 			</ul>
-			<h1>Class StartedSessionResult</h1>
+			<h1>Class StartSessionInProgressError</h1>
 		</div>
 	</div>
 </header>
@@ -73,10 +73,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="result.chatkittysucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittySucceededResult</a>
+						<a href="error.chatkittyerror.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyError</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">StartedSessionResult</span>
+								<span class="target">StartSessionInProgressError</span>
 							</li>
 						</ul>
 					</li>
@@ -89,16 +89,14 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="session.startedsessionresult.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="user_session.startsessioninprogresserror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="session.startedsessionresult.html#cancelled" class="tsd-kind-icon">cancelled</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="session.startedsessionresult.html#failed" class="tsd-kind-icon">failed</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="session.startedsessionresult.html#session" class="tsd-kind-icon">session</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="session.startedsessionresult.html#succeeded" class="tsd-kind-icon">succeeded</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="user_session.startsessioninprogresserror.html#error" class="tsd-kind-icon">error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="user_session.startsessioninprogresserror.html#message" class="tsd-kind-icon">message</a></li>
 							</ul>
 						</section>
 					</div>
@@ -110,67 +108,37 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Started<wbr>Session<wbr>Result<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="session.session-1.html" class="tsd-signature-type" data-tsd-kind="Class">Session</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="session.startedsessionresult.html" class="tsd-signature-type" data-tsd-kind="Class">StartedSessionResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Start<wbr>Session<wbr>InProgress<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="user_session.startsessioninprogresserror.html" class="tsd-signature-type" data-tsd-kind="Class">StartSessionInProgressError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="result.chatkittysucceededresult.html">ChatKittySucceededResult</a>.<a href="result.chatkittysucceededresult.html#constructor">constructor</a></p>
+								<p>Overrides <a href="error.chatkittyerror.html">ChatKittyError</a>.<a href="error.chatkittyerror.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/session.ts#L16">session.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0832b85/src/lib/user-session.ts#L28">user-session.ts:28</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>session: <a href="session.session-1.html" class="tsd-signature-type" data-tsd-kind="Class">Session</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="session.startedsessionresult.html" class="tsd-signature-type" data-tsd-kind="Class">StartedSessionResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="user_session.startsessioninprogresserror.html" class="tsd-signature-type" data-tsd-kind="Class">StartSessionInProgressError</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="cancelled" class="tsd-anchor"></a>
-					<h3>cancelled</h3>
-					<div class="tsd-signature tsd-kind-icon">cancelled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<a name="error" class="tsd-anchor"></a>
+					<h3>error</h3>
+					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="result.chatkittysucceededresult.html">ChatKittySucceededResult</a>.<a href="result.chatkittysucceededresult.html#cancelled">cancelled</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/result.ts#L11">result.ts:11</a></li>
-						</ul>
+						<p>Inherited from <a href="error.chatkittyerror.html">ChatKittyError</a>.<a href="error.chatkittyerror.html#error">error</a></p>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="failed" class="tsd-anchor"></a>
-					<h3>failed</h3>
-					<div class="tsd-signature tsd-kind-icon">failed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<a name="message" class="tsd-anchor"></a>
+					<h3>message</h3>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="result.chatkittysucceededresult.html">ChatKittySucceededResult</a>.<a href="result.chatkittysucceededresult.html#failed">failed</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/result.ts#L12">result.ts:12</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="session" class="tsd-anchor"></a>
-					<h3>session</h3>
-					<div class="tsd-signature tsd-kind-icon">session<span class="tsd-signature-symbol">:</span> <a href="session.session-1.html" class="tsd-signature-type" data-tsd-kind="Class">Session</a></div>
-					<aside class="tsd-sources">
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="succeeded" class="tsd-anchor"></a>
-					<h3>succeeded</h3>
-					<div class="tsd-signature tsd-kind-icon">succeeded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="result.chatkittysucceededresult.html">ChatKittySucceededResult</a>.<a href="result.chatkittysucceededresult.html#succeeded">succeeded</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/0d0b34c/src/lib/result.ts#L10">result.ts:10</a></li>
-						</ul>
+						<p>Inherited from <a href="error.chatkittyerror.html">ChatKittyError</a>.<a href="error.chatkittyerror.html#message">message</a></p>
 					</aside>
 				</section>
 			</section>
@@ -223,9 +191,6 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/result.html">result</a>
 					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/session.html">session</a>
-					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/stompx.html">stompx</a>
 					</li>
@@ -235,51 +200,48 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/user_block_list_item.html">user-<wbr>block-<wbr>list-<wbr>item</a>
 					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/user_session.html">user-<wbr>session</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="session.noactivesessionerror.html" class="tsd-kind-icon">No<wbr>Active<wbr>Session<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="session.session-1.html" class="tsd-kind-icon">Session</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="session.startsessioninprogresserror.html" class="tsd-kind-icon">Start<wbr>Session<wbr>InProgress<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="session.startsessionrequest.html" class="tsd-kind-icon">Start<wbr>Session<wbr>Request</a>
+						<a href="user_session.noactivesessionerror.html" class="tsd-kind-icon">No<wbr>Active<wbr>Session<wbr>Error</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="session.startedsessionresult.html" class="tsd-kind-icon">Started<wbr>Session<wbr>Result</a>
+						<a href="user_session.startsessioninprogresserror.html" class="tsd-kind-icon">Start<wbr>Session<wbr>InProgress<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="session.startedsessionresult.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="user_session.startsessioninprogresserror.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="session.startedsessionresult.html#cancelled" class="tsd-kind-icon">cancelled</a>
+								<a href="user_session.startsessioninprogresserror.html#error" class="tsd-kind-icon">error</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="session.startedsessionresult.html#failed" class="tsd-kind-icon">failed</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="session.startedsessionresult.html#session" class="tsd-kind-icon">session</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="session.startedsessionresult.html#succeeded" class="tsd-kind-icon">succeeded</a>
+								<a href="user_session.startsessioninprogresserror.html#message" class="tsd-kind-icon">message</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="user_session.startsessionrequest.html" class="tsd-kind-icon">Start<wbr>Session<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="user_session.startedsessionresult.html" class="tsd-kind-icon">Started<wbr>Session<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="user_session.usersession.html" class="tsd-kind-icon">User<wbr>Session</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/session.html#startsessionresult" class="tsd-kind-icon">Start<wbr>Session<wbr>Result</a>
+						<a href="../modules/user_session.html#startsessionresult" class="tsd-kind-icon">Start<wbr>Session<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/session.html#startedsession" class="tsd-kind-icon">started<wbr>Session</a>
+						<a href="../modules/user_session.html#startedsession" class="tsd-kind-icon">started<wbr>Session</a>
 					</li>
 				</ul>
 			</nav>
@@ -294,7 +256,6 @@
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
@@ -314,7 +275,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 5/13/2021 at 4:10:42 AM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 5/25/2021 at 6:25:30 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
