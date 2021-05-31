@@ -106,13 +106,6 @@ import {
   GetCountResult,
   GetCountSucceedResult,
 } from './result';
-import {
-  NoActiveSessionError,
-  StartedSessionResult,
-  StartSessionInProgressError,
-  StartSessionRequest,
-  StartSessionResult,
-} from './user-session';
 import StompX from './stompx';
 import {
   BlockUserRequest,
@@ -134,6 +127,13 @@ import {
   GetUserBlockListSucceededResult,
   UserBlockListItem,
 } from './user-block-list-item';
+import {
+  NoActiveSessionError,
+  StartedSessionResult,
+  StartSessionInProgressError,
+  StartSessionRequest,
+  StartSessionResult,
+} from './user-session';
 
 export class ChatKitty {
   private static readonly _instances = new Map<string, ChatKitty>();
@@ -654,8 +654,6 @@ export class ChatKitty {
   public startChatSession(
     request: StartChatSessionRequest
   ): StartChatSessionResult {
-    let unsubscribe: () => void;
-
     const onReceivedMessage = request.onReceivedMessage;
     const onReceivedKeystrokes = request.onReceivedKeystrokes;
     const onParticipantEnteredChat = request.onParticipantEnteredChat;
@@ -783,6 +781,19 @@ export class ChatKitty {
       });
     }
 
+    let end = () => {
+      messageReadUnsubscribe?.();
+      channelUpdatedUnsubscribe?.();
+      messageUpdatedUnsubscribe?.();
+      participantPresenceChangedUnsubscribe?.();
+      participantLeftChatUnsubscribe?.();
+      participantEnteredChatUnsubscribe?.();
+      typingStoppedUnsubscribe?.();
+      typingStartedUnsubscribe?.();
+      receivedKeystrokesUnsubscribe?.();
+      receivedMessageUnsubscribe?.();
+    };
+
     const channelUnsubscribe = this.stompX.listenToTopic({
       topic: request.channel._topics.self,
       onSuccess: () => {
@@ -806,7 +817,7 @@ export class ChatKitty {
           topic: request.channel._topics.readReceipts,
         });
 
-        unsubscribe = () => {
+        end = () => {
           messageReadUnsubscribe?.();
           channelUpdatedUnsubscribe?.();
           messageUpdatedUnsubscribe?.();
@@ -833,11 +844,7 @@ export class ChatKitty {
 
     const session = {
       channel: request.channel,
-      end: () => {
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      },
+      end: () => end(),
     };
 
     this.chatSessions.set(request.channel.id, session);
