@@ -852,14 +852,6 @@ export class ChatKitty {
     return new StartedChatSessionResult(session);
   }
 
-  public endChatSession(session: ChatSession): Promise<void> {
-    return new Promise((resolve) => {
-      session.end();
-
-      resolve();
-    });
-  }
-
   public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
     const currentUser = this.currentUser;
 
