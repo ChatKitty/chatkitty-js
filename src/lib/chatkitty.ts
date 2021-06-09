@@ -62,7 +62,10 @@ import {
   UpdatedCurrentUserDisplayPictureResult,
   UpdatedCurrentUserResult,
 } from './current-user';
-import { ChatKittyUploadResult } from './file';
+import {
+  ChatKittyUploadResult,
+  isCreateChatKittyExternalFileProperties,
+} from './file';
 import {
   Keystrokes,
   SendKeystrokeResult,
@@ -891,7 +894,23 @@ export class ChatKitty {
       if (isSendChannelFileMessageRequest(request)) {
         const file = request.file;
 
-        if (file instanceof File) {
+        if (isCreateChatKittyExternalFileProperties(file)) {
+          this.stompX.performAction<FileUserMessage>({
+            destination: request.channel._actions.message,
+            body: {
+              type: 'FILE',
+              file: file,
+            },
+            onSuccess: (message) => {
+              resolve(
+                new SentFileMessageResult(this.messageMapper.map(message))
+              );
+            },
+            onError: (error) => {
+              resolve(new ChatKittyFailedResult(error));
+            },
+          });
+        } else {
           const properties: Map<string, unknown> = new Map();
 
           if (request.properties) {
@@ -927,22 +946,6 @@ export class ChatKitty {
                 request.progressListener?.onCompleted(
                   ChatKittyUploadResult.CANCELLED
                 ),
-            },
-          });
-        } else {
-          this.stompX.performAction<FileUserMessage>({
-            destination: request.channel._actions.message,
-            body: {
-              type: 'FILE',
-              file: file,
-            },
-            onSuccess: (message) => {
-              resolve(
-                new SentFileMessageResult(this.messageMapper.map(message))
-              );
-            },
-            onError: (error) => {
-              resolve(new ChatKittyFailedResult(error));
             },
           });
         }

@@ -28,3 +28,13 @@ export interface ChatKittyUploadProgressListener {
   onProgress: (progress: number) => void;
   onCompleted: (result: ChatKittyUploadResult) => void;
 }
+
+export function isCreateChatKittyExternalFileProperties(
+  result: CreateChatKittyFileProperties
+): result is CreateChatKittyExternalFileProperties {
+  return (
+    (result as CreateChatKittyExternalFileProperties).url !== undefined &&
+    result.name !== undefined &&
+    result.size !== undefined
+  );
+}
