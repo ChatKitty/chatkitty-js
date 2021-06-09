@@ -408,11 +408,11 @@ export class ChatKitty {
       let relay = currentUser._relays.channels;
 
       if (isGetChannelsRequest(request)) {
-        if (request.joinable) {
+        if (request.filter?.joined === false) {
           relay = currentUser._relays.joinableChannels;
         }
 
-        if (request.subscribable) {
+        if (request.filter?.joined === true) {
           parameters.subscribable = true;
         }
 
@@ -1421,7 +1421,7 @@ function isGetChannelsRequest(
 ): param is GetChannelsRequest {
   const request = param as GetChannelsRequest;
 
-  return request?.joinable !== undefined || request?.filter !== undefined;
+  return request?.filter !== undefined;
 }
 
 function isGetUsersRequest(
