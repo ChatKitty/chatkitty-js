@@ -400,6 +400,8 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
+      const parameters: { subscribable?: boolean; name?: string } = {};
+
       let relay = currentUser._relays.channels;
 
       if (isGetChannelsRequest(request)) {
@@ -407,12 +409,14 @@ export class ChatKitty {
           relay = currentUser._relays.joinableChannels;
         }
 
+        if (request.subscribable) {
+          parameters.subscribable = true;
+        }
+
         if (request.filter?.unread) {
           relay = currentUser._relays.unreadChannels;
         }
       }
-
-      const parameters: { name?: string } = {};
 
       const name = request?.filter?.name;
 

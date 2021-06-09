@@ -98,6 +98,7 @@ export function createdChannel(
 
 export declare class GetChannelsRequest {
   joinable?: boolean;
+  subscribable?: boolean;
   filter?: GetChannelsFilter;
 }
 
