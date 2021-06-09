@@ -870,6 +870,7 @@ export class ChatKitty {
           body: {
             type: 'TEXT',
             body: request.body,
+            properties: request.properties,
           },
           onSuccess: (message) => {
             resolve(new SentTextMessageResult(this.messageMapper.map(message)));
@@ -884,10 +885,17 @@ export class ChatKitty {
         const file = request.file;
 
         if (file instanceof File) {
+          const properties: Map<string, unknown> = new Map();
+
+          if (request.properties) {
+            properties.set('properties', request.properties);
+          }
+
           this.stompX.sendToStream<FileUserMessage>({
             stream: request.channel._streams.messages,
             grant: <string>this.writeFileGrant,
             blob: file,
+            properties: properties,
             onSuccess: (message) => {
               resolve(
                 new SentFileMessageResult(this.messageMapper.map(message))
