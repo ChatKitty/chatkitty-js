@@ -336,6 +336,9 @@ export class ChatKitty {
           onSuccess: (user) => {
             resolve(new UpdatedCurrentUserDisplayPictureResult(user));
           },
+          onError: (error) => {
+            resolve(new ChatKittyFailedResult(error));
+          },
           progressListener: {
             onStarted: () => request.progressListener?.onStarted?.(),
             onProgress: (progress) =>
@@ -904,6 +907,9 @@ export class ChatKitty {
               resolve(
                 new SentFileMessageResult(this.messageMapper.map(message))
               );
+            },
+            onError: (error) => {
+              resolve(new ChatKittyFailedResult(error));
             },
             progressListener: {
               onStarted: () => request.progressListener?.onStarted?.(),
