@@ -145,11 +145,13 @@ export type SendMessageRequest =
 export declare class SendChannelTextMessageRequest {
   channel: Channel;
   body: string;
+  properties?: unknown;
 }
 
 export declare class SendChannelFileMessageRequest {
   channel: Channel;
   file: CreateChatKittyFileProperties;
+  properties?: unknown;
   progressListener?: ChatKittyUploadProgressListener;
 }
 

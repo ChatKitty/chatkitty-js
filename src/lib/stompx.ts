@@ -350,7 +350,7 @@ export default class StompX {
     data.append('file', request.blob);
 
     request.properties?.forEach((value, key) => {
-      data.append(key, value);
+      data.append(key, JSON.stringify(value));
     });
 
     request.progressListener?.onStarted?.();
@@ -473,7 +473,7 @@ export declare class StompXSendToStreamRequest<R> {
   stream: string;
   grant: string;
   blob: Blob;
-  properties?: Map<string, string>;
+  properties?: Map<string, unknown>;
   onSuccess?: (resource: R) => void;
   onError?: (error: StompXError) => void;
   progressListener?: StompXUploadProgressListener;
