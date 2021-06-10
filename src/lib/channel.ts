@@ -55,6 +55,7 @@ export declare class ChannelActions {
   invite?: string;
   read: string;
   mute: string;
+  update: string;
   clearHistory: string;
   hide: string;
 }
@@ -306,4 +307,18 @@ export class ChannelNotInvitableError extends ChatKittyError {
       `The channel ${channel.name} does not accept invites.`
     );
   }
+}
+
+export type UpdateChannelResult = UpdatedChannelResult | ChatKittyFailedResult;
+
+export class UpdatedChannelResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export function updatedChannel(
+  result: UpdateChannelResult
+): result is UpdatedChannelResult {
+  return (result as UpdatedChannelResult).channel !== undefined;
 }

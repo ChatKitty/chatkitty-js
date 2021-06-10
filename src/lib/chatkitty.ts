@@ -44,6 +44,8 @@ import {
   UnmuteChannelRequest,
   UnmuteChannelResult,
   UnmutedChannelResult,
+  UpdateChannelResult,
+  UpdatedChannelResult,
 } from './channel';
 import {
   ChatSession,
@@ -372,6 +374,21 @@ export class ChatKitty {
           },
         });
       }
+    });
+  }
+
+  public updateChannel(channel: Channel): Promise<UpdateChannelResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: channel._actions.update,
+        body: channel,
+        onSuccess: (channel) => {
+          resolve(new UpdatedChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
     });
   }
 
