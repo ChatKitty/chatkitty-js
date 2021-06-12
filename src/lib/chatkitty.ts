@@ -1,4 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { environment } from '../environment/environment';
 
@@ -68,12 +69,7 @@ import {
   ChatKittyUploadResult,
   isCreateChatKittyExternalFileProperties,
 } from './file';
-import {
-  Keystrokes,
-  SendKeystrokeResult,
-  SendKeystrokesRequest,
-  SentKeystrokeResult,
-} from './keystrokes';
+import { Keystrokes, SendKeystrokesRequest } from './keystrokes';
 import {
   DeleteMessageForMeRequest,
   DeleteMessageForMeResult,
@@ -177,6 +173,8 @@ export class ChatKitty {
 
   private messageMapper: MessageMapper = new MessageMapper('');
 
+  private keyStrokesSubject = new Subject<SendKeystrokesRequest>();
+
   private isStartingSession = false;
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
@@ -185,6 +183,18 @@ export class ChatKitty {
       host: configuration.host || 'api.chatkitty.com',
       isDebug: !environment.production,
     });
+
+    this.keyStrokesSubject
+      .asObservable()
+      .pipe(debounceTime(150))
+      .subscribe((request) => {
+        this.stompX.performAction<never>({
+          destination: request.channel._actions.keystrokes,
+          body: {
+            keys: request.keys,
+          },
+        });
+      });
   }
 
   public startSession(
@@ -1052,9 +1062,7 @@ export class ChatKitty {
     });
   }
 
-  public sendKeystrokes(
-    request: SendKeystrokesRequest
-  ): Promise<SendKeystrokeResult> {
+  public sendKeystrokes(request: SendKeystrokesRequest) {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1065,17 +1073,7 @@ export class ChatKitty {
       throw new NoActiveChatSessionError(request.channel);
     }
 
-    return new Promise((resolve) => {
-      this.stompX.performAction<never>({
-        destination: request.channel._actions.keystrokes,
-        body: {
-          keys: request.keys,
-        },
-        onSent: () =>
-          resolve(new SentKeystrokeResult(request.channel, request.keys)),
-        onError: (error) => resolve(new ChatKittyFailedResult(error)),
-      });
-    });
+    this.keyStrokesSubject.next(request);
   }
 
   public onNotificationReceived(
