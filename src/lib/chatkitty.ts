@@ -1371,6 +1371,9 @@ export class ChatKitty {
     return new Promise((resolve) => {
       this.stompX.relayResource<{ exists: boolean }>({
         destination: request.user._relays.channelMember,
+        parameters: {
+          channelId: request.channel.id,
+        },
         onSuccess: (resource) => {
           resolve(new GetUserIsChannelMemberSucceededResult(resource.exists));
         },

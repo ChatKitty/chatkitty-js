@@ -1,5 +1,6 @@
 import { Channel } from './channel';
 import { ChatKittyError } from './error';
+import { ChatKittyModelReference } from './model';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
@@ -21,9 +22,11 @@ export declare class UserRelays {
   channelMember: string;
 }
 
-export declare class ChatKittyUserReference {
-  username: string;
-}
+export type ChatKittyUserReference =
+  | ChatKittyModelReference
+  | {
+      username: string;
+    };
 
 export declare class GetUsersRequest {
   filter?: GetUsersFilter;

@@ -1,6 +1,5 @@
 import { ChatKittyError } from './error';
 import { Message } from './message';
-import { ChatKittyModelReference } from './model';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { ChatKittyUserReference, User } from './user';
@@ -81,7 +80,7 @@ export type CreateChannelResult = CreatedChannelResult | ChatKittyFailedResult;
 export declare class CreateChannelRequest {
   type: string;
   name?: string;
-  members?: ChatKittyModelReference[] | ChatKittyUserReference[];
+  members?: ChatKittyUserReference[];
   properties?: unknown;
 }
 
