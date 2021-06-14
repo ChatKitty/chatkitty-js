@@ -201,7 +201,7 @@ export class ChatKitty {
     request: StartSessionRequest
   ): Promise<StartSessionResult> {
     if (this.isStartingSession) {
-      throw new StartSessionInProgressError();
+      console.error(new StartSessionInProgressError());
     }
 
     this.isStartingSession = true;
