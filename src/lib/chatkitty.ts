@@ -114,6 +114,9 @@ import {
   BlockUserSucceededResult,
   CannotHaveMembersError,
   GetChannelMembersRequest,
+  GetUserIsChannelMemberRequest,
+  GetUserIsChannelMemberResult,
+  GetUserIsChannelMemberSucceededResult,
   GetUserResult,
   GetUsersRequest,
   GetUsersResult,
@@ -1351,6 +1354,28 @@ export class ChatKitty {
         destination: ChatKitty.userRelay(param),
         onSuccess: (user) => {
           resolve(new GetUserResult(user));
+        },
+      });
+    });
+  }
+
+  public getUserIsChannelMember(
+    request: GetUserIsChannelMemberRequest
+  ): Promise<GetUserIsChannelMemberResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.relayResource<{ exists: boolean }>({
+        destination: request.user._relays.channelMember,
+        onSuccess: (resource) => {
+          resolve(new GetUserIsChannelMemberSucceededResult(resource.exists));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
         },
       });
     });

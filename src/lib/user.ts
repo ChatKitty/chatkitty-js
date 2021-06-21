@@ -12,7 +12,14 @@ export interface BaseUser {
   properties: unknown;
 }
 
-export type User = BaseUser;
+export type User = BaseUser & {
+  _relays: UserRelays;
+};
+
+export declare class UserRelays {
+  self: string;
+  channelMember: string;
+}
 
 export declare class ChatKittyUserReference {
   username: string;
@@ -41,6 +48,21 @@ export class GetUsersSucceededResult extends ChatKittySucceededResult {
 
 export class GetUserResult extends ChatKittySucceededResult {
   constructor(public user: User) {
+    super();
+  }
+}
+
+export declare class GetUserIsChannelMemberRequest {
+  user: User;
+  channel: Channel;
+}
+
+export type GetUserIsChannelMemberResult =
+  | GetUserIsChannelMemberSucceededResult
+  | ChatKittyFailedResult;
+
+export class GetUserIsChannelMemberSucceededResult extends ChatKittySucceededResult {
+  constructor(public isMember: boolean) {
     super();
   }
 }
