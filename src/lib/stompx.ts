@@ -219,22 +219,34 @@ export default class StompX {
   }
 
   public relayResource<R>(request: StompXRelayResourceRequest<R>) {
-    const subscriptionId = StompX.generateSubscriptionId();
+    let tries = 0;
 
-    if (request.onError) {
-      this.pendingRelayErrors.set(subscriptionId, request.onError);
-    }
+    const checkStompClientConnectedThenRelayResource = () => {
+      tries++;
 
-    this.rxStomp.stompClient.subscribe(
-      request.destination,
-      (message) => {
-        request.onSuccess(JSON.parse(message.body).resource);
-      },
-      {
-        ...request.parameters,
-        id: subscriptionId,
+      if (this.rxStomp.stompClient.connected || tries > 7) {
+        const subscriptionId = StompX.generateSubscriptionId();
+
+        if (request.onError) {
+          this.pendingRelayErrors.set(subscriptionId, request.onError);
+        }
+
+        this.rxStomp.stompClient.subscribe(
+          request.destination,
+          (message) => {
+            request.onSuccess(JSON.parse(message.body).resource);
+          },
+          {
+            ...request.parameters,
+            id: subscriptionId,
+          }
+        );
+      } else {
+        setTimeout(checkStompClientConnectedThenRelayResource, 150);
       }
-    );
+    };
+
+    checkStompClientConnectedThenRelayResource();
   }
 
   public listenToTopic(request: StompXListenToTopicRequest): () => void {
