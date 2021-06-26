@@ -21,6 +21,7 @@ export declare class CurrentUserRelays {
   joinableChannels: string;
   unreadChannelsCount: string;
   unreadChannels: string;
+  unreadMessagesCount: string;
   contactsCount: string;
   contacts: string;
   userBlockListItems: string;

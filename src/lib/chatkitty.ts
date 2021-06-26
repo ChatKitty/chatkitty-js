@@ -1003,11 +1003,23 @@ export class ChatKitty {
   }
 
   public getUnreadMessagesCount(
-    request: GetUnreadMessagesCountRequest
+    request?: GetUnreadMessagesCountRequest
   ): Promise<GetCountResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    let relay = currentUser._relays.unreadMessagesCount;
+
+    if (isGetUnreadMessagesCountRequest(request)) {
+      relay = request.channel._relays.messagesCount;
+    }
+
     return new Promise((resolve) => {
       this.stompX.relayResource<{ count: number }>({
-        destination: request.channel._relays.messagesCount,
+        destination: relay,
         parameters: {
           unread: true,
         },
@@ -1484,6 +1496,14 @@ function isGetChannelsUnreadRequest(
   const request = param as GetUnreadChannelsRequest;
 
   return request?.filter !== undefined;
+}
+
+function isGetUnreadMessagesCountRequest(
+  param: GetUnreadMessagesCountRequest | undefined
+): param is GetUnreadMessagesCountRequest {
+  const request = param as GetUnreadMessagesCountRequest;
+
+  return request?.channel !== undefined;
 }
 
 function isSendChannelTextMessageRequest(
