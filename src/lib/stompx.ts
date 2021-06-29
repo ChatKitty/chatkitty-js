@@ -2,6 +2,7 @@ import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
 import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { v4 } from 'uuid';
 
 import { version } from '../environment/version';
@@ -219,34 +220,24 @@ export default class StompX {
   }
 
   public relayResource<R>(request: StompXRelayResourceRequest<R>) {
-    let tries = 0;
+    const subscriptionId = StompX.generateSubscriptionId();
 
-    const checkStompClientConnectedThenRelayResource = () => {
-      tries++;
+    if (request.onError) {
+      this.pendingRelayErrors.set(subscriptionId, request.onError);
+    }
 
-      if (this.rxStomp.stompClient.connected || tries > 7) {
-        const subscriptionId = StompX.generateSubscriptionId();
-
-        if (request.onError) {
-          this.pendingRelayErrors.set(subscriptionId, request.onError);
+    this.rxStomp.connected$.pipe(take(1)).subscribe(() => {
+      this.rxStomp.stompClient.subscribe(
+        request.destination,
+        (message) => {
+          request.onSuccess(JSON.parse(message.body).resource);
+        },
+        {
+          ...request.parameters,
+          id: subscriptionId,
         }
-
-        this.rxStomp.stompClient.subscribe(
-          request.destination,
-          (message) => {
-            request.onSuccess(JSON.parse(message.body).resource);
-          },
-          {
-            ...request.parameters,
-            id: subscriptionId,
-          }
-        );
-      } else {
-        setTimeout(checkStompClientConnectedThenRelayResource, 150);
-      }
-    };
-
-    checkStompClientConnectedThenRelayResource();
+      );
+    });
   }
 
   public listenToTopic(request: StompXListenToTopicRequest): () => void {
