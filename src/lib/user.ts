@@ -34,6 +34,7 @@ export declare class GetUsersRequest {
 
 export declare class GetUsersFilter {
   name?: string;
+  displayName?: string;
   online?: boolean;
 }
 
