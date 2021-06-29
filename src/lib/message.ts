@@ -30,6 +30,7 @@ export interface BaseMessage {
 export type BaseTextMessage = BaseMessage & {
   body: string;
   links: [MessageLink];
+  mentions: [MessageMention];
 };
 
 export type BaseFileMessage = BaseMessage & {
@@ -66,6 +67,23 @@ export declare class MessageLinkPreview {
 export declare class MessageLinkPreviewImage {
   source: string;
 }
+
+export type MessageMention = ChannelMessageMention | UserMessageMention;
+
+export interface BaseMessageMention {
+  type: string;
+  tag: string;
+  startPosition: number;
+  endPosition: number;
+}
+
+export type ChannelMessageMention = BaseMessageMention & {
+  channel: Channel;
+};
+
+export type UserMessageMention = BaseMessageMention & {
+  user: User;
+};
 
 export declare class MessageRelays {
   self: string;
