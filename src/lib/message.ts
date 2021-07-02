@@ -25,6 +25,7 @@ export interface BaseMessage {
   properties: unknown;
   _relays: MessageRelays;
   _actions: MessageActions;
+  _streams: MessageStreams;
 }
 
 export type BaseTextMessage = BaseMessage & {
@@ -88,11 +89,18 @@ export type UserMessageMention = BaseMessageMention & {
 export declare class MessageRelays {
   self: string;
   readReceipts: string;
+  repliesCount: string;
+  replies: string;
 }
 
 export declare class MessageActions {
   read: string;
+  reply: string;
   deleteForMe: string;
+}
+
+export declare class MessageStreams {
+  replies: string;
 }
 
 export function isTextMessage(message: Message): message is TextMessage {
@@ -103,8 +111,21 @@ export function isFileMessage(message: Message): message is FileMessage {
   return (message as FileMessage).file !== undefined;
 }
 
-export declare class GetMessagesRequest {
+export type GetMessagesRequest =
+  | GetChannelMessagesRequest
+  | GetMessageRepliesRequest;
+
+export declare class GetChannelMessagesRequest {
   channel: Channel;
+  filter?: GetChannelMessagesFilter;
+}
+
+export declare class GetMessageRepliesRequest {
+  message: Message;
+}
+
+export declare class GetChannelMessagesFilter {
+  mainThread: boolean;
 }
 
 export declare class GetLastReadMessageRequest {
@@ -157,21 +178,33 @@ export class DeleteMessageForMeSucceededResult extends ChatKittySucceededResult 
 }
 
 export type SendMessageRequest =
-  | SendChannelTextMessageRequest
-  | SendChannelFileMessageRequest;
+  | SendTextMessageRequest
+  | SendFileMessageRequest;
 
-export declare class SendChannelTextMessageRequest {
+export type SendChannelMessageRequest = {
   channel: Channel;
+};
+
+export type SendMessageReplyRequest = {
+  message: Message;
+};
+
+export type SendTextMessageRequest = (
+  | SendChannelMessageRequest
+  | SendMessageReplyRequest
+) & {
   body: string;
   properties?: unknown;
-}
+};
 
-export declare class SendChannelFileMessageRequest {
-  channel: Channel;
+export type SendFileMessageRequest = (
+  | SendChannelMessageRequest
+  | SendMessageReplyRequest
+) & {
   file: CreateChatKittyFileProperties;
   properties?: unknown;
   progressListener?: ChatKittyUploadProgressListener;
-}
+};
 
 export type SendMessageResult = SentMessageResult | ChatKittyFailedResult;
 
@@ -209,4 +242,8 @@ export function sentFileMessage(
 
 export declare class GetUnreadMessagesCountRequest {
   channel: Channel;
+}
+
+export declare class GetMessageRepliesCountRequest {
+  message: Message;
 }

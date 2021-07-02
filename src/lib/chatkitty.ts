@@ -50,7 +50,6 @@ import {
 } from './channel';
 import {
   ChatSession,
-  NoActiveChatSessionError,
   StartChatSessionRequest,
   StartChatSessionResult,
   StartedChatSessionResult,
@@ -75,8 +74,11 @@ import {
   DeleteMessageForMeResult,
   DeleteMessageForMeSucceededResult,
   FileUserMessage,
+  GetChannelMessagesRequest,
   GetLastReadMessageRequest,
   GetLastReadMessageResult,
+  GetMessageRepliesCountRequest,
+  GetMessageRepliesRequest,
   GetMessagesRequest,
   GetMessagesResult,
   GetMessagesSucceededResult,
@@ -86,10 +88,12 @@ import {
   ReadMessageRequest,
   ReadMessageResult,
   ReadMessageSucceededResult,
-  SendChannelFileMessageRequest,
-  SendChannelTextMessageRequest,
+  SendChannelMessageRequest,
+  SendFileMessageRequest,
+  SendMessageReplyRequest,
   SendMessageRequest,
   SendMessageResult,
+  SendTextMessageRequest,
   SentFileMessageResult,
   SentTextMessageResult,
   TextUserMessage,
@@ -719,7 +723,7 @@ export class ChatKitty {
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
         topic: request.channel._topics.messages,
-        event: 'thread.message.created',
+        event: 'channel.message.created',
         onSuccess: (message) => {
           onReceivedMessage(this.messageMapper.map(message));
         },
@@ -899,14 +903,27 @@ export class ChatKitty {
       throw new NoActiveSessionError();
     }
 
-    if (!this.chatSessions.has(request.channel.id)) {
-      throw new NoActiveChatSessionError(request.channel);
-    }
-
     return new Promise((resolve) => {
+      let destination = '';
+      let stream = '';
+
+      const sendChannelMessageRequest = request as SendChannelMessageRequest;
+
+      if (sendChannelMessageRequest.channel !== undefined) {
+        destination = sendChannelMessageRequest.channel._actions.message;
+        stream = sendChannelMessageRequest.channel._streams.messages;
+      }
+
+      const sendMessageReplyRequest = request as SendMessageReplyRequest;
+
+      if (sendMessageReplyRequest.message !== undefined) {
+        destination = sendMessageReplyRequest.message._actions.reply;
+        stream = sendMessageReplyRequest.message._streams.replies;
+      }
+
       if (isSendChannelTextMessageRequest(request)) {
         this.stompX.performAction<TextUserMessage>({
-          destination: request.channel._actions.message,
+          destination: destination,
           body: {
             type: 'TEXT',
             body: request.body,
@@ -926,7 +943,7 @@ export class ChatKitty {
 
         if (isCreateChatKittyExternalFileProperties(file)) {
           this.stompX.performAction<FileUserMessage>({
-            destination: request.channel._actions.message,
+            destination: destination,
             body: {
               type: 'FILE',
               file: file,
@@ -948,7 +965,7 @@ export class ChatKitty {
           }
 
           this.stompX.sendToStream<FileUserMessage>({
-            stream: request.channel._streams.messages,
+            stream: stream,
             grant: <string>this.writeFileGrant,
             blob: file,
             properties: properties,
@@ -990,10 +1007,27 @@ export class ChatKitty {
       throw new NoActiveSessionError();
     }
 
+    let relay = '';
+
+    let parameters: Record<string, unknown> | undefined = undefined;
+
+    if (isGetChannelMessagesRequest(request)) {
+      relay = request.channel._relays.messages;
+
+      parameters = {
+        ...request.filter,
+      };
+    }
+
+    if (isGetMessageRepliesRequest(request)) {
+      relay = request.message._relays.replies;
+    }
+
     return new Promise((resolve) => {
       ChatKittyPaginator.createInstance<Message>({
         stompX: this.stompX,
-        relay: request.channel._relays.messages,
+        relay: relay,
+        parameters: parameters,
         contentName: 'messages',
         mapper: (message) => this.messageMapper.map(message),
       })
@@ -1063,6 +1097,22 @@ export class ChatKitty {
     });
   }
 
+  public getMessageRepliesCount(
+    request: GetMessageRepliesCountRequest
+  ): Promise<GetCountResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<{ count: number }>({
+        destination: request.message._relays.repliesCount,
+        onSuccess: (resource) => {
+          resolve(new GetCountSucceedResult(resource.count));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
   public deleteMessageForMe(
     request: DeleteMessageForMeRequest
   ): Promise<DeleteMessageForMeResult> {
@@ -1082,10 +1132,6 @@ export class ChatKitty {
 
     if (!currentUser) {
       throw new NoActiveSessionError();
-    }
-
-    if (!this.chatSessions.has(request.channel.id)) {
-      throw new NoActiveChatSessionError(request.channel);
     }
 
     this.keyStrokesSubject.next(request);
@@ -1508,14 +1554,26 @@ function isGetUnreadMessagesCountRequest(
 
 function isSendChannelTextMessageRequest(
   request: SendMessageRequest
-): request is SendChannelTextMessageRequest {
-  return (request as SendChannelTextMessageRequest).body !== undefined;
+): request is SendTextMessageRequest {
+  return (request as SendTextMessageRequest).body !== undefined;
 }
 
 function isSendChannelFileMessageRequest(
   request: SendMessageRequest
-): request is SendChannelFileMessageRequest {
-  return (request as SendChannelFileMessageRequest).file !== undefined;
+): request is SendFileMessageRequest {
+  return (request as SendFileMessageRequest).file !== undefined;
+}
+
+function isGetChannelMessagesRequest(
+  request: GetMessagesRequest
+): request is GetChannelMessagesRequest {
+  return (request as GetChannelMessagesRequest).channel !== undefined;
+}
+
+function isGetMessageRepliesRequest(
+  request: GetMessagesRequest
+): request is GetMessageRepliesRequest {
+  return (request as GetMessageRepliesRequest).message !== undefined;
 }
 
 export default ChatKitty;
