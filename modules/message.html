@@ -75,9 +75,12 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.deletemessageformerequest.html" class="tsd-kind-icon">Delete<wbr>Message<wbr>For<wbr>MeRequest</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.deletemessageformesucceededresult.html" class="tsd-kind-icon">Delete<wbr>Message<wbr>For<wbr>MeSucceeded<wbr>Result</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getchannelmessagesfilter.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Messages<wbr>Filter</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getchannelmessagesrequest.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Messages<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getlastreadmessagerequest.html" class="tsd-kind-icon">Get<wbr>Last<wbr>Read<wbr>Message<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getlastreadmessageresult.html" class="tsd-kind-icon">Get<wbr>Last<wbr>Read<wbr>Message<wbr>Result</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getmessagesrequest.html" class="tsd-kind-icon">Get<wbr>Messages<wbr>Request</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getmessagerepliescountrequest.html" class="tsd-kind-icon">Get<wbr>Message<wbr>Replies<wbr>Count<wbr>Request</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getmessagerepliesrequest.html" class="tsd-kind-icon">Get<wbr>Message<wbr>Replies<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getmessagessucceededresult.html" class="tsd-kind-icon">Get<wbr>Messages<wbr>Succeeded<wbr>Result</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.getunreadmessagescountrequest.html" class="tsd-kind-icon">Get<wbr>Unread<wbr>Messages<wbr>Count<wbr>Request</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/message.messageactions.html" class="tsd-kind-icon">Message<wbr>Actions</a></li>
@@ -110,6 +113,7 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#filemessage" class="tsd-kind-icon">File<wbr>Message</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#filesystemmessage" class="tsd-kind-icon">File<wbr>System<wbr>Message</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#fileusermessage" class="tsd-kind-icon">File<wbr>User<wbr>Message</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#getmessagesrequest" class="tsd-kind-icon">Get<wbr>Messages<wbr>Request</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#getmessagesresult" class="tsd-kind-icon">Get<wbr>Messages<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#message-1" class="tsd-kind-icon">Message</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="message.html#messagemention" class="tsd-kind-icon">Message<wbr>Mention</a></li>
@@ -149,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">Base<wbr>File<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="../interfaces/message.basemessage.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseMessage</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>file<span class="tsd-signature-symbol">: </span><a href="../classes/file.chatkittyfile.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFile</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L37">message.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L37">message.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,7 +163,7 @@
 					<div class="tsd-signature tsd-kind-icon">Base<wbr>Text<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="../interfaces/message.basemessage.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseMessage</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>body<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>links<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../classes/message.messagelink.html" class="tsd-signature-type" data-tsd-kind="Class">MessageLink</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>mentions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="message.html#messagemention" class="tsd-signature-type" data-tsd-kind="Type alias">MessageMention</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L31">message.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L31">message.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -169,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">Base<wbr>User<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="../interfaces/message.basemessage.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseMessage</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>user<span class="tsd-signature-symbol">: </span><a href="user.html#user-1" class="tsd-signature-type" data-tsd-kind="Type alias">User</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L41">message.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L41">message.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -179,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">Channel<wbr>Message<wbr>Mention<span class="tsd-signature-symbol">:</span> <a href="../interfaces/message.basemessagemention.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseMessageMention</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L81">message.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L81">message.ts:81</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -189,7 +193,7 @@
 					<div class="tsd-signature tsd-kind-icon">Delete<wbr>Message<wbr>For<wbr>MeResult<span class="tsd-signature-symbol">:</span> <a href="../classes/message.deletemessageformesucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">DeleteMessageForMeSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L155">message.ts:155</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L170">message.ts:170</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -199,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">File<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#filesystemmessage" class="tsd-signature-type" data-tsd-kind="Type alias">FileSystemMessage</a><span class="tsd-signature-symbol"> | </span><a href="message.html#fileusermessage" class="tsd-signature-type" data-tsd-kind="Type alias">FileUserMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L19">message.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L19">message.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">File<wbr>System<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#basefilemessage" class="tsd-signature-type" data-tsd-kind="Type alias">BaseFileMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L47">message.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L47">message.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -219,7 +223,17 @@
 					<div class="tsd-signature tsd-kind-icon">File<wbr>User<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#basefilemessage" class="tsd-signature-type" data-tsd-kind="Type alias">BaseFileMessage</a><span class="tsd-signature-symbol"> &amp; </span><a href="message.html#baseusermessage" class="tsd-signature-type" data-tsd-kind="Type alias">BaseUserMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L51">message.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L51">message.ts:51</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="getmessagesrequest" class="tsd-anchor"></a>
+					<h3>Get<wbr>Messages<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">Get<wbr>Messages<wbr>Request<span class="tsd-signature-symbol">:</span> <a href="../classes/message.getchannelmessagesrequest.html" class="tsd-signature-type" data-tsd-kind="Class">GetChannelMessagesRequest</a><span class="tsd-signature-symbol"> | </span><a href="../classes/message.getmessagerepliesrequest.html" class="tsd-signature-type" data-tsd-kind="Class">GetMessageRepliesRequest</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L114">message.ts:114</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -229,7 +243,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Messages<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/message.getmessagessucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">GetMessagesSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L121">message.ts:121</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L136">message.ts:136</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -239,7 +253,7 @@
 					<div class="tsd-signature tsd-kind-icon">Message<span class="tsd-signature-symbol">:</span> <a href="message.html#systemmessage" class="tsd-signature-type" data-tsd-kind="Type alias">SystemMessage</a><span class="tsd-signature-symbol"> | </span><a href="message.html#usermessage" class="tsd-signature-type" data-tsd-kind="Type alias">UserMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L11">message.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L11">message.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -249,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">Message<wbr>Mention<span class="tsd-signature-symbol">:</span> <a href="message.html#channelmessagemention" class="tsd-signature-type" data-tsd-kind="Type alias">ChannelMessageMention</a><span class="tsd-signature-symbol"> | </span><a href="message.html#usermessagemention" class="tsd-signature-type" data-tsd-kind="Type alias">UserMessageMention</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L72">message.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L72">message.ts:72</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -259,7 +273,7 @@
 					<div class="tsd-signature tsd-kind-icon">Read<wbr>Message<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/message.readmessagesucceededresult.html" class="tsd-signature-type" data-tsd-kind="Class">ReadMessageSucceededResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L141">message.ts:141</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L156">message.ts:156</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -269,7 +283,7 @@
 					<div class="tsd-signature tsd-kind-icon">Send<wbr>Channel<wbr>Message<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>channel<span class="tsd-signature-symbol">: </span><a href="channel.html#channel-1" class="tsd-signature-type" data-tsd-kind="Type alias">Channel</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L169">message.ts:169</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L184">message.ts:184</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -287,7 +301,7 @@
 					<div class="tsd-signature tsd-kind-icon">Send<wbr>File<wbr>Message<wbr>Request<span class="tsd-signature-symbol">:</span> <a href="message.html#sendchannelmessagerequest" class="tsd-signature-type" data-tsd-kind="Type alias">SendChannelMessageRequest</a><span class="tsd-signature-symbol"> | </span><a href="message.html#sendmessagereplyrequest" class="tsd-signature-type" data-tsd-kind="Type alias">SendMessageReplyRequest</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>file<span class="tsd-signature-symbol">: </span><a href="file.html#createchatkittyfileproperties" class="tsd-signature-type" data-tsd-kind="Type alias">CreateChatKittyFileProperties</a><span class="tsd-signature-symbol">; </span>progressListener<span class="tsd-signature-symbol">?: </span><a href="../interfaces/file.chatkittyuploadprogresslistener.html" class="tsd-signature-type" data-tsd-kind="Interface">ChatKittyUploadProgressListener</a><span class="tsd-signature-symbol">; </span>properties<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L185">message.ts:185</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L200">message.ts:200</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -297,7 +311,7 @@
 					<div class="tsd-signature tsd-kind-icon">Send<wbr>Message<wbr>Reply<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>message<span class="tsd-signature-symbol">: </span><a href="message.html#message-1" class="tsd-signature-type" data-tsd-kind="Type alias">Message</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L173">message.ts:173</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L188">message.ts:188</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -315,7 +329,7 @@
 					<div class="tsd-signature tsd-kind-icon">Send<wbr>Message<wbr>Request<span class="tsd-signature-symbol">:</span> <a href="message.html#sendtextmessagerequest" class="tsd-signature-type" data-tsd-kind="Type alias">SendTextMessageRequest</a><span class="tsd-signature-symbol"> | </span><a href="message.html#sendfilemessagerequest" class="tsd-signature-type" data-tsd-kind="Type alias">SendFileMessageRequest</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L165">message.ts:165</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L180">message.ts:180</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -325,7 +339,7 @@
 					<div class="tsd-signature tsd-kind-icon">Send<wbr>Message<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="message.html#sentmessageresult" class="tsd-signature-type" data-tsd-kind="Type alias">SentMessageResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/result.chatkittyfailedresult.html" class="tsd-signature-type" data-tsd-kind="Class">ChatKittyFailedResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L194">message.ts:194</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L209">message.ts:209</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -335,7 +349,7 @@
 					<div class="tsd-signature tsd-kind-icon">Send<wbr>Text<wbr>Message<wbr>Request<span class="tsd-signature-symbol">:</span> <a href="message.html#sendchannelmessagerequest" class="tsd-signature-type" data-tsd-kind="Type alias">SendChannelMessageRequest</a><span class="tsd-signature-symbol"> | </span><a href="message.html#sendmessagereplyrequest" class="tsd-signature-type" data-tsd-kind="Type alias">SendMessageReplyRequest</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>body<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>properties<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L177">message.ts:177</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L192">message.ts:192</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -345,7 +359,7 @@
 					<div class="tsd-signature tsd-kind-icon">Sent<wbr>Message<wbr>Result<span class="tsd-signature-symbol">:</span> <a href="../classes/message.senttextmessageresult.html" class="tsd-signature-type" data-tsd-kind="Class">SentTextMessageResult</a><span class="tsd-signature-symbol"> | </span><a href="../classes/message.sentfilemessageresult.html" class="tsd-signature-type" data-tsd-kind="Class">SentFileMessageResult</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L196">message.ts:196</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L211">message.ts:211</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -355,7 +369,7 @@
 					<div class="tsd-signature tsd-kind-icon">System<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#textsystemmessage" class="tsd-signature-type" data-tsd-kind="Type alias">TextSystemMessage</a><span class="tsd-signature-symbol"> | </span><a href="message.html#filesystemmessage" class="tsd-signature-type" data-tsd-kind="Type alias">FileSystemMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L13">message.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L13">message.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -365,7 +379,7 @@
 					<div class="tsd-signature tsd-kind-icon">Text<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#textsystemmessage" class="tsd-signature-type" data-tsd-kind="Type alias">TextSystemMessage</a><span class="tsd-signature-symbol"> | </span><a href="message.html#textusermessage" class="tsd-signature-type" data-tsd-kind="Type alias">TextUserMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L17">message.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L17">message.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -375,7 +389,7 @@
 					<div class="tsd-signature tsd-kind-icon">Text<wbr>System<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#basetextmessage" class="tsd-signature-type" data-tsd-kind="Type alias">BaseTextMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L45">message.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L45">message.ts:45</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -385,7 +399,7 @@
 					<div class="tsd-signature tsd-kind-icon">Text<wbr>User<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#basetextmessage" class="tsd-signature-type" data-tsd-kind="Type alias">BaseTextMessage</a><span class="tsd-signature-symbol"> &amp; </span><a href="message.html#baseusermessage" class="tsd-signature-type" data-tsd-kind="Type alias">BaseUserMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L49">message.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L49">message.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -395,7 +409,7 @@
 					<div class="tsd-signature tsd-kind-icon">User<wbr>Message<span class="tsd-signature-symbol">:</span> <a href="message.html#textusermessage" class="tsd-signature-type" data-tsd-kind="Type alias">TextUserMessage</a><span class="tsd-signature-symbol"> | </span><a href="message.html#fileusermessage" class="tsd-signature-type" data-tsd-kind="Type alias">FileUserMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L15">message.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L15">message.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -405,7 +419,7 @@
 					<div class="tsd-signature tsd-kind-icon">User<wbr>Message<wbr>Mention<span class="tsd-signature-symbol">:</span> <a href="../interfaces/message.basemessagemention.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseMessageMention</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>user<span class="tsd-signature-symbol">: </span><a href="user.html#user-1" class="tsd-signature-type" data-tsd-kind="Type alias">User</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L85">message.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L85">message.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -422,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L108">message.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L110">message.ts:110</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -445,7 +459,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L104">message.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L106">message.ts:106</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -468,7 +482,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L219">message.ts:219</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L234">message.ts:234</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -491,7 +505,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/e18b344/src/lib/message.ts#L210">message.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/10e45d8/src/lib/message.ts#L225">message.ts:225</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -577,13 +591,22 @@
 						<a href="../classes/message.deletemessageformesucceededresult.html" class="tsd-kind-icon">Delete<wbr>Message<wbr>For<wbr>MeSucceeded<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/message.getchannelmessagesfilter.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Messages<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/message.getchannelmessagesrequest.html" class="tsd-kind-icon">Get<wbr>Channel<wbr>Messages<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/message.getlastreadmessagerequest.html" class="tsd-kind-icon">Get<wbr>Last<wbr>Read<wbr>Message<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/message.getlastreadmessageresult.html" class="tsd-kind-icon">Get<wbr>Last<wbr>Read<wbr>Message<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/message.getmessagesrequest.html" class="tsd-kind-icon">Get<wbr>Messages<wbr>Request</a>
+						<a href="../classes/message.getmessagerepliescountrequest.html" class="tsd-kind-icon">Get<wbr>Message<wbr>Replies<wbr>Count<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/message.getmessagerepliesrequest.html" class="tsd-kind-icon">Get<wbr>Message<wbr>Replies<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/message.getmessagessucceededresult.html" class="tsd-kind-icon">Get<wbr>Messages<wbr>Succeeded<wbr>Result</a>
@@ -650,6 +673,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="message.html#fileusermessage" class="tsd-kind-icon">File<wbr>User<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="message.html#getmessagesrequest" class="tsd-kind-icon">Get<wbr>Messages<wbr>Request</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="message.html#getmessagesresult" class="tsd-kind-icon">Get<wbr>Messages<wbr>Result</a>
@@ -742,7 +768,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 7/2/2021 at 10:32:52 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 7/3/2021 at 7:26:14 AM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
