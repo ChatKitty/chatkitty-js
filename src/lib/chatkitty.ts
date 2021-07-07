@@ -534,7 +534,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       this.stompX.performAction<Channel>({
         destination: destination,
-        body: request,
+        body: {},
         onSuccess: (channel) => {
           resolve(new LeftChannelResult(channel));
         },
