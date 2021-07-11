@@ -308,6 +308,10 @@ export class ChannelNotInvitableError extends ChatKittyError {
   }
 }
 
+export declare class UpdateChannelRequest {
+  channel: Channel;
+}
+
 export type UpdateChannelResult = UpdatedChannelResult | ChatKittyFailedResult;
 
 export class UpdatedChannelResult extends ChatKittySucceededResult {

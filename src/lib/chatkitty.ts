@@ -45,6 +45,7 @@ import {
   UnmuteChannelRequest,
   UnmuteChannelResult,
   UnmutedChannelResult,
+  UpdateChannelRequest,
   UpdateChannelResult,
   UpdatedChannelResult,
 } from './channel';
@@ -394,11 +395,13 @@ export class ChatKitty {
     });
   }
 
-  public updateChannel(channel: Channel): Promise<UpdateChannelResult> {
+  public updateChannel(
+    request: UpdateChannelRequest
+  ): Promise<UpdateChannelResult> {
     return new Promise((resolve) => {
       this.stompX.performAction<Channel>({
-        destination: channel._actions.update,
-        body: channel,
+        destination: request.channel._actions.update,
+        body: request.channel,
         onSuccess: (channel) => {
           resolve(new UpdatedChannelResult(channel));
         },
