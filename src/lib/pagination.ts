@@ -80,6 +80,7 @@ export class ChatKittyPaginator<I> {
       if (relay) {
         this.stompX.relayResource<StompXPage>({
           destination: relay,
+          parameters: this.parameters,
           onSuccess: (resource) => resolve(resource),
           onError: (error) => reject(error),
         });
