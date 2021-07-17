@@ -1,5 +1,4 @@
 import { Channel } from './channel';
-import { ChatKittyError } from './error';
 import { ChatKittyModelReference } from './model';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
@@ -36,10 +35,6 @@ export declare class GetUsersFilter {
   name?: string;
   displayName?: string;
   online?: boolean;
-}
-
-export declare class GetChannelMembersRequest {
-  channel: Channel;
 }
 
 export type GetUsersResult = GetUsersSucceededResult | ChatKittyFailedResult;
@@ -80,14 +75,5 @@ export type BlockUserResult = BlockUserSucceededResult | ChatKittyFailedResult;
 export class BlockUserSucceededResult extends ChatKittySucceededResult {
   constructor(public user: User) {
     super();
-  }
-}
-
-export class CannotHaveMembersError extends ChatKittyError {
-  constructor(public channel: Channel) {
-    super(
-      'CannotHaveMembersError',
-      `Channel ${channel.name} is not a group channel and cannot have members.`
-    );
   }
 }

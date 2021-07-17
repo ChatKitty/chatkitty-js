@@ -34,7 +34,7 @@ export declare class ChannelRelays {
   lastReceivedMessage: string;
   lastReadMessage: string;
   unread: string;
-  members?: string;
+  members: string;
 }
 
 export declare class ChannelTopics {
@@ -51,6 +51,7 @@ export declare class ChannelActions {
   keystrokes: string;
   join?: string;
   leave?: string;
+  addModerator?: string;
   invite?: string;
   read: string;
   mute: string;
@@ -173,6 +174,39 @@ export function joinedChannel(
   result: JoinChannelResult
 ): result is JoinedChannelResult {
   return (result as JoinedChannelResult).channel !== undefined;
+}
+
+export declare class GetChannelMembersRequest {
+  channel: Channel;
+  filter?: GetChannelMembersFilter;
+}
+
+export declare class GetChannelMembersFilter {
+  displayName?: string;
+}
+
+export declare class AddChannelModeratorRequest {
+  channel: Channel;
+  user: ChatKittyUserReference;
+}
+
+export type AddChannelModeratorResult =
+  | AddedChannelModeratorResult
+  | ChatKittyFailedResult;
+
+export class AddedChannelModeratorResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export class CannotAddModeratorToChannelError extends ChatKittyError {
+  constructor(public channel: Channel) {
+    super(
+      'CannotAddModeratorToChannel',
+      `The channel ${channel.name} is not a group channel and cannot have moderators.`
+    );
+  }
 }
 
 export declare class MuteChannelRequest {

@@ -4,6 +4,10 @@ import { debounceTime } from 'rxjs/operators';
 import { environment } from '../environment/environment';
 
 import {
+  AddChannelModeratorRequest,
+  AddChannelModeratorResult,
+  AddedChannelModeratorResult,
+  CannotAddModeratorToChannelError,
   Channel,
   ChannelNotInvitableError,
   ChannelNotPubliclyJoinableError,
@@ -14,6 +18,7 @@ import {
   CreateChannelResult,
   CreatedChannelResult,
   DirectChannel,
+  GetChannelMembersRequest,
   GetChannelResult,
   GetChannelsRequest,
   GetChannelsResult,
@@ -117,8 +122,6 @@ import {
   BlockUserRequest,
   BlockUserResult,
   BlockUserSucceededResult,
-  CannotHaveMembersError,
-  GetChannelMembersRequest,
   GetUserIsChannelMemberRequest,
   GetUserIsChannelMemberResult,
   GetUserIsChannelMemberSucceededResult,
@@ -540,6 +543,29 @@ export class ChatKitty {
         body: {},
         onSuccess: (channel) => {
           resolve(new LeftChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  public addChannelModerator(
+    request: AddChannelModeratorRequest
+  ): Promise<AddChannelModeratorResult> {
+    const destination = request.channel._actions.addModerator;
+
+    if (!destination) {
+      throw new CannotAddModeratorToChannelError(request.channel);
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<Channel>({
+        destination: destination,
+        body: request.user,
+        onSuccess: (channel) => {
+          resolve(new AddedChannelModeratorResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1223,17 +1249,14 @@ export class ChatKitty {
       throw new NoActiveSessionError();
     }
 
-    const relay = request.channel._relays.members;
-
-    if (!relay) {
-      throw new CannotHaveMembersError(request.channel);
-    }
-
     return new Promise((resolve) => {
       ChatKittyPaginator.createInstance<User>({
         stompX: this.stompX,
-        relay: relay,
+        relay: request.channel._relays.members,
         contentName: 'users',
+        parameters: {
+          ...request.filter,
+        },
       })
         .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
