@@ -35,6 +35,7 @@ export declare class CurrentUserTopics {
   contacts: string;
   participants: string;
   users: string;
+  reactions: string;
 }
 
 export declare class CurrentUserActions {

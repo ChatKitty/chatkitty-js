@@ -1,8 +1,8 @@
 import { Channel } from './channel';
-import { ChatKittyError } from './error';
 import { Keystrokes } from './keystrokes';
 import { Message } from './message';
 import { ChatKittyUnsubscribe } from './observer';
+import { Reaction } from './reaction';
 import { ReadReceipt } from './read-receipt';
 import { ChatKittySucceededResult } from './result';
 import { User } from './user';
@@ -26,6 +26,7 @@ export declare class StartChatSessionRequest {
   onMessageUpdated?: (message: Message) => void;
   onChannelUpdated?: (channel: Channel) => void;
   onMessageRead?: (message: Message, receipt: ReadReceipt) => void;
+  onMessageReaction?: (message: Message, reaction: Reaction) => void;
 }
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {

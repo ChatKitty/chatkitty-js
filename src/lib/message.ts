@@ -5,6 +5,7 @@ import {
   CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyPaginator } from './pagination';
+import { Reaction } from './reaction';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
@@ -91,12 +92,15 @@ export declare class MessageRelays {
   readReceipts: string;
   repliesCount: string;
   replies: string;
+  reactions: string;
 }
 
 export declare class MessageActions {
   read: string;
   reply: string;
   deleteForMe: string;
+  react: string;
+  removeReaction: string;
 }
 
 export declare class MessageStreams {

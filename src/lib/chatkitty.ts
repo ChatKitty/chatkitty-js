@@ -107,6 +107,18 @@ import {
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
+  GetReactionsRequest,
+  GetReactionsResult,
+  GetReactionsSucceededResult,
+  ReactedToMessageResult,
+  Reaction,
+  ReactToMessageRequest,
+  ReactToMessageResult,
+  RemovedReactionResult,
+  RemoveReactionRequest,
+  RemoveReactionResult,
+} from './reaction';
+import {
   GetReadReceiptsRequest,
   GetReadReceiptsResult,
   GetReadReceiptsSucceededResult,
@@ -230,6 +242,7 @@ export class ChatKitty {
           this.stompX.listenToTopic({ topic: user._topics.contacts });
           this.stompX.listenToTopic({ topic: user._topics.participants });
           this.stompX.listenToTopic({ topic: user._topics.users });
+          this.stompX.listenToTopic({ topic: user._topics.reactions });
 
           this.stompX.relayResource<{ grant: string }>({
             destination: user._relays.writeFileAccessGrant,
@@ -737,6 +750,7 @@ export class ChatKitty {
     const onMessageUpdated = request.onMessageUpdated;
     const onChannelUpdated = request.onChannelUpdated;
     const onMessageRead = request.onMessageRead;
+    const onMessageReaction = request.onMessageReaction;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -748,6 +762,7 @@ export class ChatKitty {
     let messageUpdatedUnsubscribe: () => void;
     let channelUpdatedUnsubscribe: () => void;
     let messageReadUnsubscribe: () => void;
+    let messageReactionUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -854,7 +869,23 @@ export class ChatKitty {
       });
     }
 
+    if (onMessageReaction) {
+      messageReactionUnsubscribe = this.stompX.listenForEvent<Reaction>({
+        topic: request.channel._topics.reactions,
+        event: 'message.reaction.created',
+        onSuccess: (reaction) => {
+          this.stompX.relayResource<Message>({
+            destination: reaction._relays.message,
+            onSuccess: (message) => {
+              onMessageReaction(message, reaction);
+            },
+          });
+        },
+      });
+    }
+
     let end = () => {
+      messageReactionUnsubscribe?.();
       messageReadUnsubscribe?.();
       channelUpdatedUnsubscribe?.();
       messageUpdatedUnsubscribe?.();
@@ -890,7 +921,12 @@ export class ChatKitty {
           topic: request.channel._topics.readReceipts,
         });
 
+        const reactionsUnsubscribe = this.stompX.listenToTopic({
+          topic: request.channel._topics.reactions,
+        });
+
         end = () => {
+          messageReactionUnsubscribe?.();
           messageReadUnsubscribe?.();
           channelUpdatedUnsubscribe?.();
           messageUpdatedUnsubscribe?.();
@@ -902,6 +938,7 @@ export class ChatKitty {
           receivedKeystrokesUnsubscribe?.();
           receivedMessageUnsubscribe?.();
 
+          reactionsUnsubscribe?.();
           readReceiptsUnsubscribe?.();
           participantsUnsubscribe?.();
           typingUnsubscribe?.();
@@ -1138,6 +1175,48 @@ export class ChatKitty {
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
         },
+      });
+    });
+  }
+
+  public reactToMessage(
+    request: ReactToMessageRequest
+  ): Promise<ReactToMessageResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<Reaction>({
+        destination: request.message._actions.react,
+        body: { emoji: request.emoji },
+        onSuccess: (reaction) => resolve(new ReactedToMessageResult(reaction)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
+  public getReactions(
+    request: GetReactionsRequest
+  ): Promise<GetReactionsResult> {
+    return new Promise((resolve) => {
+      ChatKittyPaginator.createInstance<Reaction>({
+        stompX: this.stompX,
+        relay: request.message._relays.reactions,
+        contentName: 'reactions',
+      })
+        .then((paginator) =>
+          resolve(new GetReactionsSucceededResult(paginator))
+        )
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
+    });
+  }
+
+  public removeReaction(
+    request: RemoveReactionRequest
+  ): Promise<RemoveReactionResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<Reaction>({
+        destination: request.message._actions.removeReaction,
+        body: {},
+        onSuccess: (reaction) => resolve(new RemovedReactionResult(reaction)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
   }

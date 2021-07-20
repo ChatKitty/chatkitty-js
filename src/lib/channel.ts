@@ -1,6 +1,7 @@
 import { ChatKittyError } from './error';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
+import { Reaction } from './reaction';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { ChatKittyUserReference, User } from './user';
 
@@ -44,6 +45,7 @@ export declare class ChannelTopics {
   typing: string;
   participants: string;
   readReceipts: string;
+  reactions: string;
 }
 
 export declare class ChannelActions {
