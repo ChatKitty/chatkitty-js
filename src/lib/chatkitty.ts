@@ -993,6 +993,7 @@ export class ChatKitty {
           body: {
             type: 'TEXT',
             body: request.body,
+            groupTag: request.groupTag,
             properties: request.properties,
           },
           onSuccess: (message) => {
@@ -1013,6 +1014,8 @@ export class ChatKitty {
             body: {
               type: 'FILE',
               file: file,
+              groupTag: request.groupTag,
+              properties: request.properties,
             },
             onSuccess: (message) => {
               resolve(
@@ -1025,6 +1028,10 @@ export class ChatKitty {
           });
         } else {
           const properties: Map<string, unknown> = new Map();
+
+          if (request.groupTag) {
+            properties.set('groupTag', request.groupTag);
+          }
 
           if (request.properties) {
             properties.set('properties', request.properties);

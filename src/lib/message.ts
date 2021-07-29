@@ -5,7 +5,6 @@ import {
   CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyPaginator } from './pagination';
-import { Reaction } from './reaction';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
@@ -23,6 +22,7 @@ export interface BaseMessage {
   id: number;
   type: string;
   createdTime: string;
+  groupTap?: string;
   properties: unknown;
   _relays: MessageRelays;
   _actions: MessageActions;
@@ -198,6 +198,7 @@ export type SendTextMessageRequest = (
   | SendMessageReplyRequest
 ) & {
   body: string;
+  groupTag?: string;
   properties?: unknown;
 };
 
@@ -206,6 +207,7 @@ export type SendFileMessageRequest = (
   | SendMessageReplyRequest
 ) & {
   file: CreateChatKittyFileProperties;
+  groupTag?: string;
   properties?: unknown;
   progressListener?: ChatKittyUploadProgressListener;
 };
