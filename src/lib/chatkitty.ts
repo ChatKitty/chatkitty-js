@@ -1040,7 +1040,7 @@ export class ChatKitty {
           this.stompX.sendToStream<FileUserMessage>({
             stream: stream,
             grant: <string>this.writeFileGrant,
-            blob: file,
+            blob: file as Blob,
             properties: properties,
             onSuccess: (message) => {
               resolve(
