@@ -1,9 +1,11 @@
+import { Emoji } from './emoji';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
 export declare class Reaction {
+  emoji: Emoji;
   user: User;
   createdTime: string;
   _relays: ReactionRelays;
@@ -11,6 +13,15 @@ export declare class Reaction {
 
 export declare class ReactionRelays {
   message: string;
+}
+
+export declare class ReactionSummary {
+  emojis: ReactionSummaryEmoji[];
+}
+
+export declare class ReactionSummaryEmoji {
+  emoji: Emoji;
+  count: number;
 }
 
 export declare class ReactToMessageRequest {

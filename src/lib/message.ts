@@ -5,6 +5,7 @@ import {
   CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyPaginator } from './pagination';
+import { ReactionSummary } from './reaction';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
@@ -23,6 +24,7 @@ export interface BaseMessage {
   type: string;
   createdTime: string;
   groupTap?: string;
+  reactionsSummary?: ReactionSummary;
   properties: unknown;
   _relays: MessageRelays;
   _actions: MessageActions;
@@ -32,7 +34,7 @@ export interface BaseMessage {
 export type BaseTextMessage = BaseMessage & {
   body: string;
   links: [MessageLink];
-  mentions: [MessageMention];
+  mentions?: [MessageMention];
 };
 
 export type BaseFileMessage = BaseMessage & {
