@@ -1221,7 +1221,9 @@ export class ChatKitty {
     return new Promise((resolve) => {
       this.stompX.performAction<Reaction>({
         destination: request.message._actions.removeReaction,
-        body: {},
+        body: {
+          emoji: request.emoji
+        },
         onSuccess: (reaction) => resolve(new RemovedReactionResult(reaction)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });

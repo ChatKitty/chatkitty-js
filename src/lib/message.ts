@@ -23,7 +23,7 @@ export interface BaseMessage {
   id: number;
   type: string;
   createdTime: string;
-  groupTap?: string;
+ groupTag?: string;
   reactionsSummary?: ReactionSummary;
   properties: unknown;
   _relays: MessageRelays;

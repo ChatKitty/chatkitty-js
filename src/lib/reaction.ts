@@ -21,6 +21,7 @@ export declare class ReactionSummary {
 
 export declare class ReactionSummaryEmoji {
   emoji: Emoji;
+  users: User[];
   count: number;
 }
 
@@ -55,6 +56,7 @@ export class GetReactionsSucceededResult extends ChatKittySucceededResult {
 
 export declare class RemoveReactionRequest {
   message: Message;
+  emoji: string;
 }
 
 export type RemoveReactionResult =
