@@ -25,7 +25,7 @@ export interface BaseMessage {
   createdTime: string;
   groupTag?: string;
   reactionsSummary?: ReactionSummary;
-  repliesCount: number;
+  repliesCount?: number;
   properties: unknown;
   _relays: MessageRelays;
   _actions: MessageActions;
