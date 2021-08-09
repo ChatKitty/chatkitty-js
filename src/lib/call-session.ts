@@ -83,6 +83,7 @@ export class CallSession {
   ) {
     this.signalsSubscription = signalSubject.subscribe({
       next: (signal) => {
+        console.log(signal);
         if (isCreateOfferCallSignal(signal)) {
           this.onCreateOffer(signal).then();
         }
@@ -332,6 +333,7 @@ class CallSignalDispatcher {
   constructor(private stompX: StompX, private call: Call) {}
 
   dispatch = (request: CreateCallSignalRequest): void => {
+    console.log(request);
     this.stompX.sendAction<never>({
       destination: this.call._actions.signal,
       body: request,

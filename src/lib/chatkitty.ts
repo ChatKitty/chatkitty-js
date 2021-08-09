@@ -238,7 +238,7 @@ export class ChatKitty {
       .asObservable()
       .pipe(debounceTime(150))
       .subscribe((request) => {
-        this.stompX.performAction<never>({
+        this.stompX.sendAction<never>({
           destination: request.channel._actions.keystrokes,
           body: {
             keys: request.keys,
@@ -465,7 +465,7 @@ export class ChatKitty {
     request: UpdateChannelRequest
   ): Promise<UpdateChannelResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: request.channel._actions.update,
         body: request.channel,
         onSuccess: (channel) => {
@@ -624,7 +624,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: destination,
         body: request.user,
         onSuccess: (channel) => {
@@ -1077,7 +1077,7 @@ export class ChatKitty {
         const file = request.file;
 
         if (isCreateChatKittyExternalFileProperties(file)) {
-          this.stompX.performAction<FileUserMessage>({
+          this.stompX.sendAction<FileUserMessage>({
             destination: destination,
             body: {
               type: 'FILE',
@@ -1296,7 +1296,7 @@ export class ChatKitty {
     request: ReactToMessageRequest
   ): Promise<ReactToMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Reaction>({
+      this.stompX.sendAction<Reaction>({
         destination: request.message._actions.react,
         body: { emoji: request.emoji },
         onSuccess: (reaction) => resolve(new ReactedToMessageResult(reaction)),
@@ -1325,7 +1325,7 @@ export class ChatKitty {
     request: RemoveReactionRequest
   ): Promise<RemoveReactionResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Reaction>({
+      this.stompX.sendAction<Reaction>({
         destination: request.message._actions.removeReaction,
         body: {
           emoji: request.emoji,

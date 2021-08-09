@@ -47,7 +47,7 @@ export function isPresenterCall(call: Call): call is PresenterCall {
 
 export declare class StartCallRequest {
   channel: Channel;
-  type: string;
+  type?: string;
   properties?: unknown;
 }
 
