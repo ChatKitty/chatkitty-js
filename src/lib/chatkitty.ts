@@ -750,7 +750,8 @@ export class ChatKitty {
     const onMessageUpdated = request.onMessageUpdated;
     const onChannelUpdated = request.onChannelUpdated;
     const onMessageRead = request.onMessageRead;
-    const onMessageReaction = request.onMessageReaction;
+    const onMessageReactionAdded = request.onMessageReactionAdded;
+    const onMessageReactionRemoved = request.onMessageReactionRemoved;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -762,7 +763,8 @@ export class ChatKitty {
     let messageUpdatedUnsubscribe: () => void;
     let channelUpdatedUnsubscribe: () => void;
     let messageReadUnsubscribe: () => void;
-    let messageReactionUnsubscribe: () => void;
+    let messageReactionAddedUnsubscribe: () => void;
+    let messageReactionRemovedUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -869,15 +871,30 @@ export class ChatKitty {
       });
     }
 
-    if (onMessageReaction) {
-      messageReactionUnsubscribe = this.stompX.listenForEvent<Reaction>({
+    if (onMessageReactionAdded) {
+      messageReactionAddedUnsubscribe = this.stompX.listenForEvent<Reaction>({
         topic: request.channel._topics.reactions,
         event: 'message.reaction.created',
         onSuccess: (reaction) => {
           this.stompX.relayResource<Message>({
             destination: reaction._relays.message,
             onSuccess: (message) => {
-              onMessageReaction(message, reaction);
+              onMessageReactionAdded(message, reaction);
+            },
+          });
+        },
+      });
+    }
+
+    if (onMessageReactionRemoved) {
+      messageReactionRemovedUnsubscribe = this.stompX.listenForEvent<Reaction>({
+        topic: request.channel._topics.reactions,
+        event: 'message.reaction.removed',
+        onSuccess: (reaction) => {
+          this.stompX.relayResource<Message>({
+            destination: reaction._relays.message,
+            onSuccess: (message) => {
+              onMessageReactionRemoved(message, reaction);
             },
           });
         },
@@ -885,7 +902,8 @@ export class ChatKitty {
     }
 
     let end = () => {
-      messageReactionUnsubscribe?.();
+      messageReactionRemovedUnsubscribe?.();
+      messageReactionAddedUnsubscribe?.();
       messageReadUnsubscribe?.();
       channelUpdatedUnsubscribe?.();
       messageUpdatedUnsubscribe?.();
@@ -925,18 +943,10 @@ export class ChatKitty {
           topic: request.channel._topics.reactions,
         });
 
+        const superEnd = end;
+
         end = () => {
-          messageReactionUnsubscribe?.();
-          messageReadUnsubscribe?.();
-          channelUpdatedUnsubscribe?.();
-          messageUpdatedUnsubscribe?.();
-          participantPresenceChangedUnsubscribe?.();
-          participantLeftChatUnsubscribe?.();
-          participantEnteredChatUnsubscribe?.();
-          typingStoppedUnsubscribe?.();
-          typingStartedUnsubscribe?.();
-          receivedKeystrokesUnsubscribe?.();
-          receivedMessageUnsubscribe?.();
+          superEnd();
 
           reactionsUnsubscribe?.();
           readReceiptsUnsubscribe?.();

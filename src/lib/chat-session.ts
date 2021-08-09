@@ -26,7 +26,8 @@ export declare class StartChatSessionRequest {
   onMessageUpdated?: (message: Message) => void;
   onChannelUpdated?: (channel: Channel) => void;
   onMessageRead?: (message: Message, receipt: ReadReceipt) => void;
-  onMessageReaction?: (message: Message, reaction: Reaction) => void;
+  onMessageReactionAdded?: (message: Message, reaction: Reaction) => void;
+  onMessageReactionRemoved?: (message: Message, reaction: Reaction) => void;
 }
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {

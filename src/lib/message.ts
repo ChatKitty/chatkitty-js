@@ -2,7 +2,7 @@ import { Channel } from './channel';
 import {
   ChatKittyFile,
   ChatKittyUploadProgressListener,
-  CreateChatKittyFileProperties,
+  CreateChatKittyFileProperties
 } from './file';
 import { ChatKittyPaginator } from './pagination';
 import { ReactionSummary } from './reaction';
@@ -23,8 +23,9 @@ export interface BaseMessage {
   id: number;
   type: string;
   createdTime: string;
- groupTag?: string;
+  groupTag?: string;
   reactionsSummary?: ReactionSummary;
+  repliesCount: number;
   properties: unknown;
   _relays: MessageRelays;
   _actions: MessageActions;
@@ -198,7 +199,7 @@ export type SendMessageReplyRequest = {
 export type SendTextMessageRequest = (
   | SendChannelMessageRequest
   | SendMessageReplyRequest
-) & {
+  ) & {
   body: string;
   groupTag?: string;
   properties?: unknown;
@@ -207,7 +208,7 @@ export type SendTextMessageRequest = (
 export type SendFileMessageRequest = (
   | SendChannelMessageRequest
   | SendMessageReplyRequest
-) & {
+  ) & {
   file: CreateChatKittyFileProperties;
   groupTag?: string;
   properties?: unknown;
