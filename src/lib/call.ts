@@ -29,11 +29,13 @@ declare class CallRelays {
 
 declare class CallTopics {
   self: string;
+  participants: string;
   signals: string;
 }
 
 declare class CallActions {
   ready: string;
+  reject: string;
   signal: string;
 }
 
@@ -80,4 +82,22 @@ export class GetCallsSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<Call>) {
     super();
   }
+}
+
+export declare class RejectCallRequest {
+  call: Call;
+}
+
+export type RejectCallResult = RejectedCallResult | ChatKittyFailedResult;
+
+export class RejectedCallResult extends ChatKittySucceededResult {
+  constructor(public call: Call) {
+    super();
+  }
+}
+
+export function rejectedCall(
+  result: RejectCallRequest
+): result is RejectedCallResult {
+  return (result as RejectedCallResult).call !== undefined;
 }
