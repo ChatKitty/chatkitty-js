@@ -1,3 +1,10 @@
+import {
+  MediaStream,
+  RTCIceCandidateType,
+  RTCPeerConnection,
+  RTCPeerConnectionConfiguration,
+  RTCSessionDescriptionType,
+} from 'react-native-webrtc';
 import { Subject, Subscription } from 'rxjs';
 
 import { Call } from './call';
@@ -181,21 +188,21 @@ export class CallSession {
 
 interface Connection {
   createOffer(): Promise<void>;
-  answerOffer(description: RTCSessionDescriptionInit): Promise<void>;
-  addCandidate(candidate: RTCIceCandidateInit): Promise<void>;
+  answerOffer(description: RTCSessionDescriptionType): Promise<void>;
+  addCandidate(candidate: RTCIceCandidateType): Promise<void>;
   close(): void;
 }
 
 class P2PConnection implements Connection {
-  private static readonly rtcConfiguration: RTCConfiguration = {
+  private static readonly rtcConfiguration: RTCPeerConnectionConfiguration = {
     iceServers: [
       {
-        urls: 'turn:34.231.248.98:3478',
+        urls: ['turn:34.231.248.98:3478'],
         username: 'chatkitty',
         credential: '5WEDIcZHUxhlUlsdQcqj',
       },
       {
-        urls: 'stun:stun2.1.google.com:19302',
+        urls: ['stun:stun2.1.google.com:19302'],
       },
     ],
   };
@@ -233,8 +240,8 @@ class P2PConnection implements Connection {
       }
     };
 
-    this.rtcPeerConnection.ontrack = (event) => {
-      onParticipantAddedStream?.(peer, event.streams[0]);
+    this.rtcPeerConnection.onaddstream = (event) => {
+      onParticipantAddedStream?.(peer, event.stream);
     };
 
     this.rtcPeerConnection.onconnectionstatechange = () => {
@@ -250,7 +257,7 @@ class P2PConnection implements Connection {
     };
 
     this.rtcPeerConnection.oniceconnectionstatechange = () => {
-      switch (this.rtcPeerConnection.iceConnectionState) {
+      switch (this.rtcPeerConnection.connectionState) {
         case 'disconnected':
         case 'failed':
         case 'closed':
@@ -259,9 +266,7 @@ class P2PConnection implements Connection {
       }
     };
 
-    stream
-      .getTracks()
-      .map((track) => this.rtcPeerConnection.addTrack(track, stream));
+    this.rtcPeerConnection.addStream(stream);
   }
 
   createOffer = async () => {
@@ -278,7 +283,7 @@ class P2PConnection implements Connection {
     });
   };
 
-  answerOffer = async (description: RTCSessionDescriptionInit) => {
+  answerOffer = async (description: RTCSessionDescriptionType) => {
     await this.rtcPeerConnection.setRemoteDescription(description);
 
     if (description.type === 'offer') {
@@ -296,7 +301,7 @@ class P2PConnection implements Connection {
     }
   };
 
-  addCandidate = async (candidate: RTCIceCandidateInit): Promise<void> => {
+  addCandidate = async (candidate: RTCIceCandidateType): Promise<void> => {
     await this.rtcPeerConnection.addIceCandidate(candidate);
   };
 

@@ -2,6 +2,9 @@ import 'text-encoding';
 
 import ChatKitty from './lib/chatkitty';
 
+export * from './lib/call';
+export * from './lib/call-session';
+export * from './lib/call-signal';
 export * from './lib/channel';
 export * from './lib/chat-session';
 export * from './lib/current-user';
