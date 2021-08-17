@@ -1805,15 +1805,25 @@ export class ChatKitty {
     );
 
     let end = () => {
-      participantLeftCallUnsubscribe();
-      participantEnteredCallUnsubscribe();
-      participantRejectedCallUnsubscribe();
-      participantAcceptedCallUnsubscribe();
+      participantLeftCallUnsubscribe?.();
+      participantEnteredCallUnsubscribe?.();
+      participantRejectedCallUnsubscribe?.();
+      participantAcceptedCallUnsubscribe?.();
 
       receivedCallSignalUnsubscribe();
 
       signalsSubscription.unsubscribe();
     };
+
+    const endedCallUnsubscribe = this.stompX.listenForEvent<Call>({
+      topic: request.call._topics.self,
+      event: 'call.self.ended',
+      onSuccess: (call) => {
+        end();
+
+        request.onCallEnded?.(call);
+      },
+    });
 
     const connections: Map<number, Connection> = new Map();
 
@@ -1915,6 +1925,7 @@ export class ChatKitty {
 
           participantsUnsubscribe();
           signalsUnsubscribe();
+          endedCallUnsubscribe();
 
           callUnsubscribe();
         };
@@ -2258,7 +2269,6 @@ class CallSignalDispatcher {
   constructor(private stompX: StompX, private call: Call) {}
 
   dispatch = (request: CreateCallSignalRequest): void => {
-    console.log(request);
     this.stompX.sendAction<never>({
       destination: this.call._actions.signal,
       body: request,

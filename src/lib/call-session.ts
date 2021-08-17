@@ -19,6 +19,7 @@ export declare class StartCallSessionRequest {
   onParticipantEnteredCall?: (user: User) => void;
   onParticipantAddedStream?: (user: User, stream: MediaStream) => void;
   onParticipantLeftCall?: (user: User) => void;
+  onCallEnded?: (call: Call) => void;
 }
 
 export type StartCallSessionResult =
