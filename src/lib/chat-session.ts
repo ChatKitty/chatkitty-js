@@ -16,7 +16,7 @@ export type StartChatSessionResult = StartedChatSessionResult;
 
 export declare class StartChatSessionRequest {
   channel: Channel;
-  onReceivedMessage?: (message: Message) => void;
+  onReceivedMessage?: (message: Message, parent?: Message) => void;
   onReceivedKeystrokes?: (keystrokes: Keystrokes) => void;
   onTypingStarted?: (user: User) => void;
   onTypingStopped?: (user: User) => void;

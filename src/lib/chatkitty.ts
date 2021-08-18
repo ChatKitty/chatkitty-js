@@ -83,6 +83,9 @@ import {
   GetChannelMessagesRequest,
   GetLastReadMessageRequest,
   GetLastReadMessageResult,
+  GetMessageParentRequest,
+  GetMessageParentResult,
+  GetMessageParentSucceededResult,
   GetMessageRepliesCountRequest,
   GetMessageRepliesRequest,
   GetMessagesRequest,
@@ -90,7 +93,7 @@ import {
   GetMessagesSucceededResult,
   GetUnreadMessagesCountRequest,
   isFileMessage,
-  Message,
+  Message, MessageNotAReplyError,
   ReadMessageRequest,
   ReadMessageResult,
   ReadMessageSucceededResult,
@@ -234,7 +237,7 @@ export class ChatKitty {
         apiKey: this.configuration.apiKey,
         username: request.username,
         authParams: request.authParams,
-        onSuccess: (user) => {
+        onSuccess: (user, writeFileGrant, readFileGrant) => {
           this.stompX.listenToTopic({ topic: user._topics.self });
           this.stompX.listenToTopic({ topic: user._topics.channels });
           this.stompX.listenToTopic({ topic: user._topics.messages });
@@ -244,19 +247,9 @@ export class ChatKitty {
           this.stompX.listenToTopic({ topic: user._topics.users });
           this.stompX.listenToTopic({ topic: user._topics.reactions });
 
-          this.stompX.relayResource<{ grant: string }>({
-            destination: user._relays.writeFileAccessGrant,
-            onSuccess: (grant) => {
-              this.writeFileGrant = grant.grant;
-            },
-          });
+          this.writeFileGrant = writeFileGrant;
 
-          this.stompX.relayResource<{ grant: string }>({
-            destination: user._relays.readFileAccessGrant,
-            onSuccess: (grant) => {
-              this.messageMapper = new MessageMapper(grant.grant);
-            },
-          });
+          this.messageMapper = new MessageMapper(readFileGrant);
 
           this.isStartingSession = false;
 
@@ -266,8 +259,6 @@ export class ChatKitty {
           this.currentUser = user;
 
           this.currentUserNextSubject.next(user);
-
-          resolve(new StartedSessionResult({ user: user }));
         },
         onError: (error) => {
           this.isStartingSession = false;
@@ -771,7 +762,19 @@ export class ChatKitty {
         topic: request.channel._topics.messages,
         event: 'channel.message.created',
         onSuccess: (message) => {
-          onReceivedMessage(this.messageMapper.map(message));
+          const destination = message._relays.parent;
+
+          if (destination) {
+            this.stompX.relayResource<Message>({
+              destination,
+              onSuccess: (parent) => {
+                console.log('Parent: ', parent);
+                onReceivedMessage(this.messageMapper.map(message), this.messageMapper.map(parent));
+              },
+            });
+          } else {
+            onReceivedMessage(this.messageMapper.map(message));
+          }
         },
       });
     }
@@ -1188,6 +1191,28 @@ export class ChatKitty {
         destination: request.message._relays.repliesCount,
         onSuccess: (resource) => {
           resolve(new GetCountSucceedResult(resource.count));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  public getMessageParent(
+    request: GetMessageParentRequest
+  ): Promise<GetMessageParentResult> {
+    return new Promise((resolve) => {
+      const destination = request.message._relays.parent;
+
+      if (!destination) {
+        throw new MessageNotAReplyError(request.message);
+      }
+
+      this.stompX.relayResource<Message>({
+        destination,
+        onSuccess: (resource) => {
+          resolve(new GetMessageParentSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));

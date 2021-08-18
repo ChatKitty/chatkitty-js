@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { v4 } from 'uuid';
 
 import { version } from '../environment/version';
+import {StartedSessionResult} from "./user-session";
 
 let TransportFallback: { default: { new (arg: string): unknown } };
 
@@ -140,9 +141,9 @@ export default class StompX {
       this.relayResource<U>({
         destination: '/application/v1/users/me.relay',
         onSuccess: (user) => {
-          request.onConnected(user);
-
-          if (!this.connected) {
+          if (this.connected) {
+            request.onConnected(user);
+          } else {
             this.rxStomp
               .watch('/user/queue/v1/errors', {
                 id: StompX.generateSubscriptionId(),
@@ -182,7 +183,20 @@ export default class StompX {
                 }
               });
 
-            request.onSuccess(user);
+            this.relayResource<{ grant: string }>({
+              destination: '/application/v1/users/me.write_file_access_grant.relay',
+              onSuccess: (write) => {
+                this.relayResource<{ grant: string }>({
+                  destination: '/application/v1/users/me.read_file_access_grant.relay',
+                  onSuccess: (read) => {
+                    request.onSuccess(user, write.grant, read.grant);
+
+                    request.onConnected(user);
+                  },
+                });
+              },
+            });
+
 
             this.connected = true;
           }
@@ -411,7 +425,7 @@ export declare class StompXConnectRequest<U> {
   apiKey: string;
   username: string;
   authParams?: unknown;
-  onSuccess: (user: U) => void;
+  onSuccess: (user: U, writeFileGrant: string, readFileGrant: string) => void;
   onConnected: (user: U) => void;
   onError: (error: StompXError) => void;
 }

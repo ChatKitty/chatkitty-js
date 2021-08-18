@@ -1,4 +1,5 @@
 import { Channel } from './channel';
+import {ChatKittyError} from "./error";
 import {
   ChatKittyFile,
   ChatKittyUploadProgressListener,
@@ -92,6 +93,7 @@ export type UserMessageMention = BaseMessageMention & {
 
 export declare class MessageRelays {
   self: string;
+  parent?: string;
   readReceipts: string;
   repliesCount: string;
   replies: string;
@@ -255,4 +257,27 @@ export declare class GetUnreadMessagesCountRequest {
 
 export declare class GetMessageRepliesCountRequest {
   message: Message;
+}
+
+export declare class GetMessageParentRequest {
+  message: Message;
+}
+
+export type GetMessageParentResult =
+  | GetMessageParentSucceededResult
+  | ChatKittyFailedResult;
+
+export class GetMessageParentSucceededResult extends ChatKittySucceededResult {
+  constructor(public message: Message) {
+    super();
+  }
+}
+
+export class MessageNotAReplyError extends ChatKittyError {
+  constructor(public messageModel: Message) {
+    super(
+      'MessageNotAReplyError',
+      `Message ${messageModel.id} is not a reply.`
+    );
+  }
 }
