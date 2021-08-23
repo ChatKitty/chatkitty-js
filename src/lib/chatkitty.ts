@@ -83,6 +83,9 @@ import {
   GetChannelMessagesRequest,
   GetLastReadMessageRequest,
   GetLastReadMessageResult,
+  GetMessageChannelRequest,
+  GetMessageChannelResult,
+  GetMessageChannelSucceededResult,
   GetMessageParentRequest,
   GetMessageParentResult,
   GetMessageParentSucceededResult,
@@ -93,7 +96,8 @@ import {
   GetMessagesSucceededResult,
   GetUnreadMessagesCountRequest,
   isFileMessage,
-  Message, MessageNotAReplyError,
+  Message,
+  MessageNotAReplyError,
   ReadMessageRequest,
   ReadMessageResult,
   ReadMessageSucceededResult,
@@ -768,8 +772,10 @@ export class ChatKitty {
             this.stompX.relayResource<Message>({
               destination,
               onSuccess: (parent) => {
-                console.log('Parent: ', parent);
-                onReceivedMessage(this.messageMapper.map(message), this.messageMapper.map(parent));
+                onReceivedMessage(
+                  this.messageMapper.map(message),
+                  this.messageMapper.map(parent)
+                );
               },
             });
           } else {
@@ -1199,6 +1205,22 @@ export class ChatKitty {
     });
   }
 
+  public getMessageChannel(
+    request: GetMessageChannelRequest
+  ): Promise<GetMessageChannelResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<Channel>({
+        destination: request.message._relays.channel,
+        onSuccess: (resource) => {
+          resolve(new GetMessageChannelSucceededResult(resource));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
   public getMessageParent(
     request: GetMessageParentRequest
   ): Promise<GetMessageParentResult> {
@@ -1257,7 +1279,7 @@ export class ChatKitty {
       this.stompX.performAction<Reaction>({
         destination: request.message._actions.removeReaction,
         body: {
-          emoji: request.emoji
+          emoji: request.emoji,
         },
         onSuccess: (reaction) => resolve(new RemovedReactionResult(reaction)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),

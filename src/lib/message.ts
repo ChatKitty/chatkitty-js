@@ -1,9 +1,9 @@
 import { Channel } from './channel';
-import {ChatKittyError} from "./error";
+import { ChatKittyError } from './error';
 import {
   ChatKittyFile,
   ChatKittyUploadProgressListener,
-  CreateChatKittyFileProperties
+  CreateChatKittyFileProperties,
 } from './file';
 import { ChatKittyPaginator } from './pagination';
 import { ReactionSummary } from './reaction';
@@ -93,6 +93,7 @@ export type UserMessageMention = BaseMessageMention & {
 
 export declare class MessageRelays {
   self: string;
+  channel: string;
   parent?: string;
   readReceipts: string;
   repliesCount: string;
@@ -201,7 +202,7 @@ export type SendMessageReplyRequest = {
 export type SendTextMessageRequest = (
   | SendChannelMessageRequest
   | SendMessageReplyRequest
-  ) & {
+) & {
   body: string;
   groupTag?: string;
   properties?: unknown;
@@ -210,7 +211,7 @@ export type SendTextMessageRequest = (
 export type SendFileMessageRequest = (
   | SendChannelMessageRequest
   | SendMessageReplyRequest
-  ) & {
+) & {
   file: CreateChatKittyFileProperties;
   groupTag?: string;
   properties?: unknown;
@@ -257,6 +258,20 @@ export declare class GetUnreadMessagesCountRequest {
 
 export declare class GetMessageRepliesCountRequest {
   message: Message;
+}
+
+export declare class GetMessageChannelRequest {
+  message: Message;
+}
+
+export type GetMessageChannelResult =
+  | GetMessageChannelSucceededResult
+  | ChatKittyFailedResult;
+
+export class GetMessageChannelSucceededResult extends ChatKittySucceededResult {
+  constructor(public channel: Channel) {
+    super();
+  }
 }
 
 export declare class GetMessageParentRequest {
