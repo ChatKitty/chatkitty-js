@@ -1,4 +1,4 @@
-import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
+import { RxStomp, RxStompConfig, RxStompState } from '@stomp/rx-stomp';
 import { StompHeaders, Versions } from '@stomp/stompjs';
 import Axios, { AxiosInstance } from 'axios';
 import { Subscription } from 'rxjs';
@@ -6,7 +6,6 @@ import { take } from 'rxjs/operators';
 import { v4 } from 'uuid';
 
 import { version } from '../environment/version';
-import {StartedSessionResult} from "./user-session";
 
 let TransportFallback: { default: { new (arg: string): unknown } };
 
@@ -184,10 +183,12 @@ export default class StompX {
               });
 
             this.relayResource<{ grant: string }>({
-              destination: '/application/v1/users/me.write_file_access_grant.relay',
+              destination:
+                '/application/v1/users/me.write_file_access_grant.relay',
               onSuccess: (write) => {
                 this.relayResource<{ grant: string }>({
-                  destination: '/application/v1/users/me.read_file_access_grant.relay',
+                  destination:
+                    '/application/v1/users/me.read_file_access_grant.relay',
                   onSuccess: (read) => {
                     request.onSuccess(user, write.grant, read.grant);
 
@@ -197,11 +198,20 @@ export default class StompX {
               },
             });
 
-
             this.connected = true;
           }
         },
       });
+    });
+
+    this.rxStomp.connectionState$.subscribe((state) => {
+      if (state == RxStompState.CLOSED) {
+        request.onConnectionLost();
+      }
+
+      if (state == RxStompState.OPEN) {
+        request.onConnectionResumed();
+      }
     });
 
     this.rxStomp.stompErrors$.subscribe((frame) => {
@@ -427,6 +437,8 @@ export declare class StompXConnectRequest<U> {
   authParams?: unknown;
   onSuccess: (user: U, writeFileGrant: string, readFileGrant: string) => void;
   onConnected: (user: U) => void;
+  onConnectionLost: () => void;
+  onConnectionResumed: () => void;
   onError: (error: StompXError) => void;
 }
 

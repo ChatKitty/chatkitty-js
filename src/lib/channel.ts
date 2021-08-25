@@ -1,7 +1,6 @@
 import { ChatKittyError } from './error';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import { Reaction } from './reaction';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { ChatKittyUserReference, User } from './user';
 

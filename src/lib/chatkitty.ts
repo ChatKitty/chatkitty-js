@@ -197,6 +197,9 @@ export class ChatKitty {
     null
   );
 
+  private readonly lostConnectionSubject = new Subject<void>();
+  private readonly resumedConnectionSubject = new Subject<void>();
+
   private currentUser?: CurrentUser;
   private writeFileGrant?: string;
   private chatSessions: Map<number, ChatSession> = new Map();
@@ -264,6 +267,8 @@ export class ChatKitty {
 
           this.currentUserNextSubject.next(user);
         },
+        onConnectionLost: () => this.lostConnectionSubject.next(),
+        onConnectionResumed: () => this.resumedConnectionSubject.next(),
         onError: (error) => {
           this.isStartingSession = false;
 
@@ -319,6 +324,38 @@ export class ChatKitty {
         onNextOrObserver(user);
       } else {
         onNextOrObserver.onNext(user);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }
+
+  public onCurrentUserOnline(
+    onNextOrObserver: ChatkittyObserver<CurrentUser> | (() => void)
+  ): ChatKittyUnsubscribe {
+    const subscription = this.resumedConnectionSubject.subscribe(() => {
+      if (typeof onNextOrObserver === 'function') {
+        onNextOrObserver();
+      } else {
+        if (this.currentUser) {
+          onNextOrObserver.onNext(this.currentUser);
+        }
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }
+
+  public onCurrentUserOffline(
+    onNextOrObserver: ChatkittyObserver<CurrentUser> | (() => void)
+  ): ChatKittyUnsubscribe {
+    const subscription = this.lostConnectionSubject.subscribe(() => {
+      if (typeof onNextOrObserver === 'function') {
+        onNextOrObserver();
+      } else {
+        if (this.currentUser) {
+          onNextOrObserver.onNext(this.currentUser);
+        }
       }
     });
 
