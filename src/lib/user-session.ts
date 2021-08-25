@@ -19,12 +19,6 @@ export class StartedSessionResult extends ChatKittySucceededResult {
   }
 }
 
-export function startedSession(
-  result: StartSessionResult
-): result is StartedSessionResult {
-  return (result as StartedSessionResult).session !== undefined;
-}
-
 export class StartSessionInProgressError extends ChatKittyError {
   constructor() {
     super(

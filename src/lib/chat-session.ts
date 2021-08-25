@@ -35,9 +35,3 @@ export class StartedChatSessionResult extends ChatKittySucceededResult {
     super();
   }
 }
-
-export function startedChatSession(
-  result: StartChatSessionResult
-): result is StartedChatSessionResult {
-  return (result as StartedChatSessionResult).session !== undefined;
-}

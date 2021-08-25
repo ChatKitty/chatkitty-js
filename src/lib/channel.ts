@@ -92,12 +92,6 @@ export class CreatedChannelResult extends ChatKittySucceededResult {
   }
 }
 
-export function createdChannel(
-  result: CreateChannelResult
-): result is CreatedChannelResult {
-  return (result as CreatedChannelResult).channel !== undefined;
-}
-
 export declare class GetChannelsRequest {
   filter?: GetChannelsFilter;
 }
@@ -171,12 +165,6 @@ export class ChannelNotPubliclyJoinableError extends ChatKittyError {
   }
 }
 
-export function joinedChannel(
-  result: JoinChannelResult
-): result is JoinedChannelResult {
-  return (result as JoinedChannelResult).channel !== undefined;
-}
-
 export declare class GetChannelMembersRequest {
   channel: Channel;
   filter?: GetChannelMembersFilter;
@@ -222,12 +210,6 @@ export class MutedChannelResult extends ChatKittySucceededResult {
   }
 }
 
-export function mutedChannel(
-  result: MuteChannelResult
-): result is MutedChannelResult {
-  return (result as MutedChannelResult).channel !== undefined;
-}
-
 export declare class UnmuteChannelRequest {
   channel: Channel;
 }
@@ -238,12 +220,6 @@ export class UnmutedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
     super();
   }
-}
-
-export function unmutedChannel(
-  result: UnmuteChannelResult
-): result is UnmutedChannelResult {
-  return (result as UnmutedChannelResult).channel !== undefined;
 }
 
 export declare class LeaveChannelRequest {
@@ -265,12 +241,6 @@ export class NotAChannelMemberError extends ChatKittyError {
       `You are not a member of channel ${channel.name}.`
     );
   }
-}
-
-export function leftChannel(
-  result: LeaveChannelResult
-): result is LeftChannelResult {
-  return (result as LeftChannelResult).channel !== undefined;
 }
 
 export declare class ReadChannelRequest {
@@ -328,12 +298,6 @@ export class InvitedUserResult extends ChatKittySucceededResult {
   }
 }
 
-export function invitedUser(
-  result: InviteUserResult
-): result is InvitedUserResult {
-  return (result as InvitedUserResult).user !== undefined;
-}
-
 export class ChannelNotInvitableError extends ChatKittyError {
   constructor(public channel: Channel) {
     super(
@@ -353,10 +317,4 @@ export class UpdatedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
     super();
   }
-}
-
-export function updatedChannel(
-  result: UpdateChannelResult
-): result is UpdatedChannelResult {
-  return (result as UpdatedChannelResult).channel !== undefined;
 }

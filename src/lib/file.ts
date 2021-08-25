@@ -9,7 +9,7 @@ export declare class ChatKittyFile {
 export type CreateChatKittyFileProperties =
   | CreateChatKittyExternalFileProperties
   | File
-  | {name: string, type: string, uri: string, size: number};
+  | { name: string; type: string; uri: string; size: number };
 
 export declare class CreateChatKittyExternalFileProperties {
   url: string;
@@ -28,14 +28,4 @@ export interface ChatKittyUploadProgressListener {
   onStarted: () => void;
   onProgress: (progress: number) => void;
   onCompleted: (result: ChatKittyUploadResult) => void;
-}
-
-export function isCreateChatKittyExternalFileProperties(
-  result: CreateChatKittyFileProperties
-): result is CreateChatKittyExternalFileProperties {
-  return (
-    (result as CreateChatKittyExternalFileProperties).url !== undefined &&
-    result.name !== undefined &&
-    result.size !== undefined
-  );
 }
