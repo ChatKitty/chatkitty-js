@@ -68,12 +68,6 @@ export class UpdatedCurrentUserResult extends ChatKittySucceededResult {
   }
 }
 
-export function updatedCurrentUser(
-  result: UpdateCurrentUserResult
-): result is UpdatedCurrentUserResult {
-  return (result as UpdatedCurrentUserResult).user !== undefined;
-}
-
 export declare class UpdateCurrentUserDisplayPictureRequest {
   file: CreateChatKittyFileProperties;
   progressListener?: ChatKittyUploadProgressListener;
@@ -87,10 +81,4 @@ export class UpdatedCurrentUserDisplayPictureResult extends ChatKittySucceededRe
   constructor(public user: CurrentUser) {
     super();
   }
-}
-
-export function updatedCurrentUserDisplayPicture(
-  result: UpdateCurrentUserDisplayPictureResult
-): result is UpdatedCurrentUserDisplayPictureResult {
-  return (result as UpdatedCurrentUserDisplayPictureResult).user !== undefined;
 }

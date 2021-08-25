@@ -1,3 +1,4 @@
+import { UpdateChannelResult, UpdatedChannelResult } from './channel';
 import { ChatKittyError } from './error';
 
 export interface ChatKittyResult {
@@ -32,4 +33,22 @@ export class GetCountSucceedResult extends ChatKittySucceededResult {
   constructor(public count: number) {
     super();
   }
+}
+
+export function succeeded<R extends ChatKittySucceededResult>(
+  result: ChatKittyResult
+): result is R {
+  return result.succeeded;
+}
+
+export function failed<R extends ChatKittyFailedResult>(
+  result: ChatKittyResult
+): result is R {
+  return result.failed;
+}
+
+export function cancelled<R extends ChatKittyCancelledResult>(
+  result: ChatKittyResult
+): result is R {
+  return result.cancelled;
 }

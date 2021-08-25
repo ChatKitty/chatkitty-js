@@ -72,7 +72,8 @@ import {
 } from './current-user';
 import {
   ChatKittyUploadResult,
-  isCreateChatKittyExternalFileProperties,
+  CreateChatKittyExternalFileProperties,
+  CreateChatKittyFileProperties,
 } from './file';
 import { Keystrokes, SendKeystrokesRequest } from './keystrokes';
 import {
@@ -1782,6 +1783,16 @@ function isGetMessageRepliesRequest(
   request: GetMessagesRequest
 ): request is GetMessageRepliesRequest {
   return (request as GetMessageRepliesRequest).message !== undefined;
+}
+
+function isCreateChatKittyExternalFileProperties(
+  result: CreateChatKittyFileProperties
+): result is CreateChatKittyExternalFileProperties {
+  return (
+    (result as CreateChatKittyExternalFileProperties).url !== undefined &&
+    result.name !== undefined &&
+    result.size !== undefined
+  );
 }
 
 export default ChatKitty;
