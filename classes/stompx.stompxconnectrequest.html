@@ -101,6 +101,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#apikey" class="tsd-kind-icon">api<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#authparams" class="tsd-kind-icon">auth<wbr>Params</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#onconnected" class="tsd-kind-icon">on<wbr>Connected</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#onconnectionlost" class="tsd-kind-icon">on<wbr>Connection<wbr>Lost</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#onconnectionresumed" class="tsd-kind-icon">on<wbr>Connection<wbr>Resumed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#onsuccess" class="tsd-kind-icon">on<wbr>Success</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stompx.stompxconnectrequest.html#username" class="tsd-kind-icon">username</a></li>
@@ -140,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">api<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f40f6fb/src/lib/stompx.ts#L425">stompx.ts:425</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L433">stompx.ts:433</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -150,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">auth<wbr>Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f40f6fb/src/lib/stompx.ts#L427">stompx.ts:427</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L435">stompx.ts:435</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -160,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Connected<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f40f6fb/src/lib/stompx.ts#L429">stompx.ts:429</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L437">stompx.ts:437</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -186,12 +188,62 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onconnectionlost" class="tsd-anchor"></a>
+					<h3>on<wbr>Connection<wbr>Lost</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Connection<wbr>Lost<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L438">stompx.ts:438</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onconnectionresumed" class="tsd-anchor"></a>
+					<h3>on<wbr>Connection<wbr>Resumed</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Connection<wbr>Resumed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L439">stompx.ts:439</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="onerror" class="tsd-anchor"></a>
 					<h3>on<wbr>Error</h3>
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><a href="stompx.stompxerror.html" class="tsd-signature-type" data-tsd-kind="Class">StompXError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f40f6fb/src/lib/stompx.ts#L430">stompx.ts:430</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L440">stompx.ts:440</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -222,7 +274,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Success<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">U</span>, writeFileGrant<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, readFileGrant<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f40f6fb/src/lib/stompx.ts#L428">stompx.ts:428</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L436">stompx.ts:436</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -259,7 +311,7 @@
 					<div class="tsd-signature tsd-kind-icon">username<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/f40f6fb/src/lib/stompx.ts#L426">stompx.ts:426</a></li>
+							<li>Defined in <a href="https://github.com/ChatKitty/chatkitty-js/blob/88b8b6e/src/lib/stompx.ts#L434">stompx.ts:434</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -356,6 +408,12 @@
 								<a href="stompx.stompxconnectrequest.html#onconnected" class="tsd-kind-icon">on<wbr>Connected</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="stompx.stompxconnectrequest.html#onconnectionlost" class="tsd-kind-icon">on<wbr>Connection<wbr>Lost</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="stompx.stompxconnectrequest.html#onconnectionresumed" class="tsd-kind-icon">on<wbr>Connection<wbr>Resumed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="stompx.stompxconnectrequest.html#onerror" class="tsd-kind-icon">on<wbr>Error</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -423,13 +481,14 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
@@ -442,7 +501,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 8/23/2021 at 7:54:02 PM</p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 8/26/2021 at 7:04:18 PM</p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
