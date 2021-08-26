@@ -9,7 +9,13 @@ export interface BaseUser {
   displayName: string;
   displayPictureUrl: string;
   isGuest: string;
+  presence: UserPresence;
   properties: unknown;
+}
+
+export declare class UserPresence {
+  status: string;
+  online: boolean;
 }
 
 export type User = BaseUser & {
