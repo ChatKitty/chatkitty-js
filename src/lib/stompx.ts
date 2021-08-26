@@ -215,7 +215,7 @@ export default class StompX {
     });
 
     this.rxStomp.stompErrors$.subscribe((frame) => {
-      let error;
+      let error: StompXError;
 
       try {
         error = JSON.parse(frame.body);
@@ -227,10 +227,8 @@ export default class StompX {
         };
       }
 
-      request.onError(error);
-
       if (error.error == 'AccessDeniedError') {
-        this.rxStomp.deactivate();
+        this.rxStomp.deactivate().then(() => request.onError(error));
       }
     });
 
