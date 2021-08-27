@@ -121,6 +121,14 @@ export function isFileMessage(message: Message): message is FileMessage {
   return (message as FileMessage).file !== undefined;
 }
 
+export function isUserMessage(message: Message): message is UserMessage {
+  return (message as UserMessage).user !== undefined;
+}
+
+export function isSystemMessage(message: Message): message is SystemMessage {
+  return (message as UserMessage).user === undefined;
+}
+
 export type GetMessagesRequest =
   | GetChannelMessagesRequest
   | GetMessageRepliesRequest;
