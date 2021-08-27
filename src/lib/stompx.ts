@@ -218,7 +218,9 @@ export default class StompX {
       }
 
       if (error.error == 'AccessDeniedError') {
-        this.rxStomp.deactivate().then(() => request.onError(error));
+        const onResult = () => request.onError(error);
+
+        this.disconnect({ onSuccess: onResult, onError: onResult });
       }
     });
 
