@@ -244,13 +244,13 @@ export default class StompX {
   }
 
   public relayResource<R>(request: StompXRelayResourceRequest<R>) {
-    const subscriptionId = StompX.generateSubscriptionId();
+    this.guardConnected(() => {
+      const subscriptionId = StompX.generateSubscriptionId();
 
-    if (request.onError) {
-      this.pendingRelayErrors.set(subscriptionId, request.onError);
-    }
+      if (request.onError) {
+        this.pendingRelayErrors.set(subscriptionId, request.onError);
+      }
 
-    this.rxStomp.connected$.pipe(take(1)).subscribe(() => {
       this.rxStomp.stompClient.subscribe(
         request.destination,
         (message) => {
@@ -265,57 +265,65 @@ export default class StompX {
   }
 
   public listenToTopic(request: StompXListenToTopicRequest): () => void {
-    const subscriptionReceipt = StompX.generateReceipt();
-
-    const onSuccess = request.onSuccess;
-
-    if (onSuccess) {
-      this.rxStomp.watchForReceipt(subscriptionReceipt, () => {
-        onSuccess();
-      });
-    }
-
-    const subscription = this.rxStomp
-      .watch(request.topic, {
-        id: StompX.generateSubscriptionId(),
-        receipt: subscriptionReceipt,
-        ack: 'client-individual',
-      })
-      .subscribe((message) => {
-        const event: StompXEvent<unknown> = JSON.parse(message.body);
-
-        const receipt = message.headers['receipt-id'];
-
-        if (receipt) {
-          const action = this.pendingActions.get(receipt);
-
-          if (action) {
-            action(event.resource);
-
-            this.pendingActions.delete(receipt);
-          }
-        }
-
-        const handlers = this.eventHandlers.get(request.topic);
-
-        if (handlers) {
-          handlers.forEach((handler) => {
-            if (handler.event === event.type) {
-              handler.onSuccess(event.resource);
-            }
-          });
-        }
-
-        message.ack();
-      });
-
-    this.topics.set(request.topic, subscription);
-
-    return () => {
-      subscription.unsubscribe();
-
-      this.topics.delete(request.topic);
+    let unsubscribe = () => {
+      // Do nothing
     };
+
+    this.guardConnected(() => {
+      const subscriptionReceipt = StompX.generateReceipt();
+
+      const onSuccess = request.onSuccess;
+
+      if (onSuccess) {
+        this.rxStomp.watchForReceipt(subscriptionReceipt, () => {
+          onSuccess();
+        });
+      }
+
+      const subscription = this.rxStomp
+        .watch(request.topic, {
+          id: StompX.generateSubscriptionId(),
+          receipt: subscriptionReceipt,
+          ack: 'client-individual',
+        })
+        .subscribe((message) => {
+          const event: StompXEvent<unknown> = JSON.parse(message.body);
+
+          const receipt = message.headers['receipt-id'];
+
+          if (receipt) {
+            const action = this.pendingActions.get(receipt);
+
+            if (action) {
+              action(event.resource);
+
+              this.pendingActions.delete(receipt);
+            }
+          }
+
+          const handlers = this.eventHandlers.get(request.topic);
+
+          if (handlers) {
+            handlers.forEach((handler) => {
+              if (handler.event === event.type) {
+                handler.onSuccess(event.resource);
+              }
+            });
+          }
+
+          message.ack();
+        });
+
+      this.topics.set(request.topic, subscription);
+
+      unsubscribe = () => {
+        subscription.unsubscribe();
+
+        this.topics.delete(request.topic);
+      };
+    });
+
+    return () => unsubscribe();
   }
 
   public listenForEvent<R>(
@@ -344,30 +352,32 @@ export default class StompX {
   }
 
   public performAction<R>(request: StompXPerformActionRequest<R>) {
-    const receipt = StompX.generateReceipt();
+    this.guardConnected(() => {
+      const receipt = StompX.generateReceipt();
 
-    if (request.onSent) {
-      this.rxStomp.watchForReceipt(receipt, request.onSent);
-    }
+      if (request.onSent) {
+        this.rxStomp.watchForReceipt(receipt, request.onSent);
+      }
 
-    if (request.onSuccess) {
-      this.pendingActions.set(
-        receipt,
-        request.onSuccess as (resource: unknown) => void
-      );
-    }
+      if (request.onSuccess) {
+        this.pendingActions.set(
+          receipt,
+          request.onSuccess as (resource: unknown) => void
+        );
+      }
 
-    if (request.onError) {
-      this.pendingActionErrors.set(receipt, request.onError);
-    }
+      if (request.onError) {
+        this.pendingActionErrors.set(receipt, request.onError);
+      }
 
-    this.rxStomp.publish({
-      destination: request.destination,
-      headers: {
-        'content-type': 'application/json;charset=UTF-8',
-        receipt: receipt,
-      },
-      body: JSON.stringify(request.body),
+      this.rxStomp.publish({
+        destination: request.destination,
+        headers: {
+          'content-type': 'application/json;charset=UTF-8',
+          receipt: receipt,
+        },
+        body: JSON.stringify(request.body),
+      });
     });
   }
 
@@ -414,6 +424,12 @@ export default class StompX {
         request.onSuccess();
       })
       .catch((e) => request.onError(e));
+  }
+
+  private guardConnected(action: () => void) {
+    this.rxStomp.connected$.pipe(take(1)).subscribe(() => {
+      action();
+    });
   }
 
   private static generateSubscriptionId(): string {
