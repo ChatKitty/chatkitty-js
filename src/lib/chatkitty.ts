@@ -1399,6 +1399,30 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
+  public onChannelLeft(
+    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<Channel>({
+      topic: currentUser._topics.channels,
+      event: 'me.channel.left',
+      onSuccess: (channel) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(channel);
+        } else {
+          onNextOrObserver.onNext(channel);
+        }
+      },
+    });
+
+    return () => unsubscribe;
+  }
+
   public onChannelUpdated(
     onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
