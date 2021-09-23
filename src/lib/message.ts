@@ -23,6 +23,7 @@ export type FileMessage = FileSystemMessage | FileUserMessage;
 export interface BaseMessage {
   id: number;
   type: string;
+  channelId: number;
   createdTime: string;
   groupTag?: string;
   reactionsSummary?: ReactionSummary;
@@ -35,8 +36,8 @@ export interface BaseMessage {
 
 export type BaseTextMessage = BaseMessage & {
   body: string;
-  links: [MessageLink];
-  mentions?: [MessageMention];
+  links: MessageLink[];
+  mentions?: MessageMention[];
 };
 
 export type BaseFileMessage = BaseMessage & {
