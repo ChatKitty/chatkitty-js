@@ -8,7 +8,7 @@ export interface BaseUser {
   name: string;
   displayName: string;
   displayPictureUrl: string;
-  isGuest: string;
+  isGuest: boolean;
   presence: UserPresence;
   properties: unknown;
 }
