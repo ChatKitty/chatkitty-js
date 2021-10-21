@@ -1,5 +1,3 @@
-import { MediaStream } from 'react-native-webrtc';
-
 import { Call } from './call';
 import { ChatKittyUnsubscribe } from './observer';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';

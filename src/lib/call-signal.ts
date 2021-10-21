@@ -1,8 +1,3 @@
-import {
-  RTCIceCandidateType,
-  RTCSessionDescriptionType,
-} from 'react-native-webrtc';
-
 import { ChatKittyModelReference } from './model';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
@@ -31,11 +26,11 @@ export type CreateOfferCallSignal = SystemCallSignal;
 export type AnswerOfferCallSignal = SystemCallSignal;
 
 export type AddCandidateCallSignal = {
-  payload: RTCIceCandidateType;
+  payload: RTCIceCandidateInit;
 } & ClientCallSignal;
 
 export type SendDescriptionCallSignal = {
-  payload: RTCSessionDescriptionType;
+  payload: RTCSessionDescriptionInit;
 } & ClientCallSignal;
 
 export type DisconnectPeerCallSignal = SystemCallSignal;
@@ -73,7 +68,7 @@ export function isDisconnectPeerCallSignal(
 export declare class CreateCallSignalRequest {
   type: string;
   peer: ChatKittyModelReference;
-  payload: RTCIceCandidateType | RTCSessionDescriptionType;
+  payload: RTCIceCandidateInit | RTCSessionDescriptionInit;
 }
 
 export type CreateCallSignalResult =

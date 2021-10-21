@@ -1,10 +1,3 @@
-import {
-  MediaStream,
-  RTCIceCandidateType,
-  RTCPeerConnection,
-  RTCPeerConnectionConfiguration,
-  RTCSessionDescriptionType,
-} from 'react-native-webrtc';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -2143,13 +2136,13 @@ function isCreateChatKittyExternalFileProperties(
 
 interface Connection {
   createOffer(): Promise<void>;
-  answerOffer(description: RTCSessionDescriptionType): Promise<void>;
-  addCandidate(candidate: RTCIceCandidateType): Promise<void>;
+  answerOffer(description: RTCSessionDescriptionInit): Promise<void>;
+  addCandidate(candidate: RTCIceCandidateInit): Promise<void>;
   close(): void;
 }
 
 class P2PConnection implements Connection {
-  private static readonly rtcConfiguration: RTCPeerConnectionConfiguration = {
+  private static readonly rtcConfiguration: RTCConfiguration = {
     iceServers: [
       {
         urls: ['turn:34.231.248.98:3478'],
@@ -2195,12 +2188,12 @@ class P2PConnection implements Connection {
       }
     };
 
-    this.rtcPeerConnection.onaddstream = (event) => {
-      onParticipantAddedStream?.(peer, event.stream);
+    this.rtcPeerConnection.ontrack = (event) => {
+      onParticipantAddedStream?.(peer, event.streams[0]);
     };
 
     this.rtcPeerConnection.onconnectionstatechange = () => {
-      switch (this.rtcPeerConnection.connectionState) {
+      switch (this.rtcPeerConnection.iceConnectionState) {
         case 'connected':
           break;
         case 'disconnected':
@@ -2221,7 +2214,9 @@ class P2PConnection implements Connection {
       }
     };
 
-    this.rtcPeerConnection.addStream(stream);
+    stream
+      .getTracks()
+      .map((track) => this.rtcPeerConnection.addTrack(track, stream));
   }
 
   createOffer = async () => {
@@ -2238,7 +2233,7 @@ class P2PConnection implements Connection {
     });
   };
 
-  answerOffer = async (description: RTCSessionDescriptionType) => {
+  answerOffer = async (description: RTCSessionDescriptionInit) => {
     await this.rtcPeerConnection.setRemoteDescription(description);
 
     if (description.type === 'offer') {
@@ -2256,7 +2251,7 @@ class P2PConnection implements Connection {
     }
   };
 
-  addCandidate = async (candidate: RTCIceCandidateType): Promise<void> => {
+  addCandidate = async (candidate: RTCIceCandidateInit): Promise<void> => {
     await this.rtcPeerConnection.addIceCandidate(candidate);
   };
 
