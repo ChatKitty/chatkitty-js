@@ -149,7 +149,7 @@ import {
   SentTextMessageResult,
   TextUserMessage,
 } from './message';
-import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
+import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
   GetReactionsRequest,
@@ -355,7 +355,7 @@ export class ChatKitty {
 
   public onCurrentUserChanged(
     onNextOrObserver:
-      | ChatkittyObserver<CurrentUser | null>
+      | ChatKittyObserver<CurrentUser | null>
       | ((user: CurrentUser | null) => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.currentUserNextSubject.subscribe((user) => {
@@ -370,7 +370,7 @@ export class ChatKitty {
   }
 
   public onCurrentUserOnline(
-    onNextOrObserver: ChatkittyObserver<CurrentUser> | (() => void)
+    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.resumedConnectionSubject.subscribe(() => {
       if (typeof onNextOrObserver === 'function') {
@@ -386,7 +386,7 @@ export class ChatKitty {
   }
 
   public onCurrentUserOffline(
-    onNextOrObserver: ChatkittyObserver<CurrentUser> | (() => void)
+    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.lostConnectionSubject.subscribe(() => {
       if (typeof onNextOrObserver === 'function') {
@@ -1383,7 +1383,7 @@ export class ChatKitty {
 
   public onNotificationReceived(
     onNextOrObserver:
-      | ChatkittyObserver<Notification>
+      | ChatKittyObserver<Notification>
       | ((notification: Notification) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
@@ -1408,7 +1408,7 @@ export class ChatKitty {
   }
 
   public onChannelJoined(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
 
@@ -1432,7 +1432,7 @@ export class ChatKitty {
   }
 
   public onChannelLeft(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1456,7 +1456,7 @@ export class ChatKitty {
   }
 
   public onChannelUpdated(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
 
@@ -1480,7 +1480,7 @@ export class ChatKitty {
   }
 
   public onCallInvite(
-    onNextOrObserver: ChatkittyObserver<Call> | ((call: Call) => void)
+    onNextOrObserver: ChatKittyObserver<Call> | ((call: Call) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
 
@@ -1603,7 +1603,7 @@ export class ChatKitty {
   }
 
   public onUserPresenceChanged(
-    onNextOrObserver: ChatkittyObserver<User> | ((user: User) => void)
+    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
 
@@ -1648,7 +1648,7 @@ export class ChatKitty {
   }
 
   public onParticipantStartedTyping(
-    onNextOrObserver: ChatkittyObserver<User> | ((participant: User) => void)
+    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
 
@@ -1672,7 +1672,7 @@ export class ChatKitty {
   }
 
   public onParticipantStoppedTyping(
-    onNextOrObserver: ChatkittyObserver<User> | ((participant: User) => void)
+    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
   ): ChatKittyUnsubscribe {
     const user = this.currentUser;
 
