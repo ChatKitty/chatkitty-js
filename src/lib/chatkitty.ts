@@ -110,6 +110,9 @@ import {
   DeleteMessageForMeRequest,
   DeleteMessageForMeResult,
   DeleteMessageForMeSucceededResult,
+  EditedMessageSucceededResult,
+  EditMessageRequest,
+  EditMessageResult,
   FileUserMessage,
   GetChannelMessagesRequest,
   GetLastReadMessageRequest,
@@ -1248,6 +1251,20 @@ export class ChatKitty {
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
         },
+      });
+    });
+  }
+
+  public editMessage(request: EditMessageRequest): Promise<EditMessageResult> {
+    return new Promise((resolve) => {
+      this.stompX.sendAction<never>({
+        destination: request.message._actions.edit,
+        body: {
+          body: request.body,
+        },
+        onSent: () =>
+          resolve(new EditedMessageSucceededResult(request.message)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
   }
