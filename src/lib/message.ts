@@ -107,6 +107,7 @@ export declare class MessageActions {
   reply: string;
   deleteForMe: string;
   react: string;
+  edit: string;
   removeReaction: string;
 }
 
@@ -177,6 +178,21 @@ export type ReadMessageResult =
   | ChatKittyFailedResult;
 
 export class ReadMessageSucceededResult extends ChatKittySucceededResult {
+  constructor(public message: Message) {
+    super();
+  }
+}
+
+export declare class EditMessageRequest {
+  message: Message;
+  body: string;
+}
+
+export type EditMessageResult =
+  | EditedMessageSucceededResult
+  | ChatKittyFailedResult;
+
+export class EditedMessageSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }
