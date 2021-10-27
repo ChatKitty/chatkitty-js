@@ -1257,13 +1257,13 @@ export class ChatKitty {
 
   public editMessage(request: EditMessageRequest): Promise<EditMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.sendAction<never>({
+      this.stompX.sendAction<Message>({
         destination: request.message._actions.edit,
         body: {
           body: request.body,
         },
-        onSent: () =>
-          resolve(new EditedMessageSucceededResult(request.message)),
+        onSuccess: (message) =>
+          resolve(new EditedMessageSucceededResult(message)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
