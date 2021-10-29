@@ -51,7 +51,9 @@ export class GetUsersSucceededResult extends ChatKittySucceededResult {
   }
 }
 
-export class GetUserResult extends ChatKittySucceededResult {
+export type GetUserResult = GetUserSucceededResult | ChatKittyFailedResult;
+
+export class GetUserSucceededResult extends ChatKittySucceededResult {
   constructor(public user: User) {
     super();
   }
