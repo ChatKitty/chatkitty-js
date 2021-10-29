@@ -152,6 +152,7 @@ import {
   GetUsersRequest,
   GetUsersResult,
   GetUsersSucceededResult,
+  GetUserSucceededResult,
   User,
 } from './user';
 import {
@@ -1661,7 +1662,7 @@ export class ChatKitty {
       this.stompX.relayResource<User>({
         destination: ChatKitty.userRelay(param),
         onSuccess: (user) => {
-          resolve(new GetUserResult(user));
+          resolve(new GetUserSucceededResult(user));
         },
       });
     });
