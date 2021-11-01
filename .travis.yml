@@ -9,11 +9,16 @@ script:
   - typedoc --name "ChatKitty JS SDK" --out docs src/lib --excludePrivate --plugin typedoc-plugin-extras --favicon .docs/favicon.ico
   - cp -a .docs/. docs
 deploy:
-  provider: pages
-  local_dir: docs
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  target_branch: gh-pages
-  on:
-    branch: master
+  - provider: npm
+    email: $NPM_EMAIL
+    api_key: $NPM_TOKEN
+    on:
+      tags: true
+  - provider: pages
+    local_dir: docs
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    target_branch: gh-pages
+    on:
+      tags: true
