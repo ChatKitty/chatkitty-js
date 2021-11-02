@@ -65,7 +65,7 @@ export default class StompX {
     Set<StompXEventHandler<unknown>>
   > = new Map();
 
-  private connected = false;
+  private initialized = false;
 
   constructor(configuration: StompXConfiguration) {
     this.host = configuration.host;
@@ -140,7 +140,7 @@ export default class StompX {
       this.relayResource<U>({
         destination: '/application/v1/users/me.relay',
         onSuccess: (user) => {
-          if (this.connected) {
+          if (this.initialized) {
             request.onConnected(user);
           } else {
             this.rxStomp
@@ -193,12 +193,12 @@ export default class StompX {
                     request.onSuccess(user, write.grant, read.grant);
 
                     request.onConnected(user);
+
+                    this.initialized = true;
                   },
                 });
               },
             });
-
-            this.connected = true;
           }
         },
       });
@@ -416,18 +416,9 @@ export default class StompX {
   }
 
   public disconnect(request: StompXDisconnectRequest) {
-    this.rxStomp
-      .deactivate()
-      .then(() => {
-        this.connected = false;
+    this.initialized = false;
 
-        request.onSuccess();
-      })
-      .catch((e) => {
-        this.connected = false;
-
-        request.onError(e);
-      });
+    this.rxStomp.deactivate().then(request.onSuccess).catch(request.onError);
   }
 
   private guardConnected(action: () => void) {

@@ -1233,7 +1233,7 @@ export class ChatKitty {
 
   public editMessage(request: EditMessageRequest): Promise<EditMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.sendAction<Message>({
+      this.stompX.performAction<Message>({
         destination: request.message._actions.edit,
         body: {
           body: request.body,
