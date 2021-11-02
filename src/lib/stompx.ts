@@ -82,7 +82,7 @@ export default class StompX {
       stompVersions: new Versions(['1.2']),
       connectionTimeout: 120000,
       heartbeatIncoming: 10000,
-      heartbeatOutgoing: 300000,
+      heartbeatOutgoing: 60000,
 
       debug: (message) => {
         if (configuration.isDebug) {
