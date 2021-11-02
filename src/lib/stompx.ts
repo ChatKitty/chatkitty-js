@@ -423,7 +423,11 @@ export default class StompX {
 
         request.onSuccess();
       })
-      .catch((e) => request.onError(e));
+      .catch((e) => {
+        this.connected = false;
+
+        request.onError(e);
+      });
   }
 
   private guardConnected(action: () => void) {
