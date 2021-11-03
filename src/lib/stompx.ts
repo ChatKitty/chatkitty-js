@@ -65,7 +65,7 @@ export default class StompX {
     Set<StompXEventHandler<unknown>>
   > = new Map();
 
-  private initialized = false;
+  public initialized = false;
 
   constructor(configuration: StompXConfiguration) {
     this.host = configuration.host;

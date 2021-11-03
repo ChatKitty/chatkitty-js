@@ -165,6 +165,7 @@ import {
 } from './user-block-list-item';
 import {
   NoActiveSessionError,
+  SessionActiveError,
   StartedSessionResult,
   StartSessionInProgressError,
   StartSessionRequest,
@@ -239,7 +240,11 @@ export class ChatKitty {
     request: StartSessionRequest
   ): Promise<StartSessionResult> {
     if (this.isStartingSession) {
-      console.error(new StartSessionInProgressError());
+      throw new StartSessionInProgressError();
+    }
+
+    if (this.stompX.initialized) {
+      throw new SessionActiveError();
     }
 
     this.isStartingSession = true;
