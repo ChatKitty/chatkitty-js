@@ -80,6 +80,9 @@ import {
   DeleteMessageForMeRequest,
   DeleteMessageForMeResult,
   DeleteMessageForMeSucceededResult,
+  DeleteMessageRequest,
+  DeleteMessageResult,
+  DeleteMessageSucceededResult,
   EditedMessageSucceededResult,
   EditMessageRequest,
   EditMessageResult,
@@ -1362,6 +1365,20 @@ export class ChatKitty {
     });
   }
 
+  public deleteMessage(
+    request: DeleteMessageRequest
+  ): Promise<DeleteMessageResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<Message>({
+        destination: request.message._actions.delete,
+        body: {},
+        onSuccess: (resource) =>
+          resolve(new DeleteMessageSucceededResult(resource)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
   public sendKeystrokes(request: SendKeystrokesRequest) {
     const currentUser = this.currentUser;
 
@@ -1410,6 +1427,54 @@ export class ChatKitty {
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
       event: 'me.channel.joined',
+      onSuccess: (channel) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(channel);
+        } else {
+          onNextOrObserver.onNext(channel);
+        }
+      },
+    });
+
+    return () => unsubscribe;
+  }
+
+  public onChannelHidden(
+    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<Channel>({
+      topic: currentUser._topics.channels,
+      event: 'me.channel.hidden',
+      onSuccess: (channel) => {
+        if (typeof onNextOrObserver === 'function') {
+          onNextOrObserver(channel);
+        } else {
+          onNextOrObserver.onNext(channel);
+        }
+      },
+    });
+
+    return () => unsubscribe;
+  }
+
+  public onChannelUnhidden(
+    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    const unsubscribe = this.stompX.listenForEvent<Channel>({
+      topic: currentUser._topics.channels,
+      event: 'me.channel.unhidden',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);
