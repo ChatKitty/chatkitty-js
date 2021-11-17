@@ -5,6 +5,7 @@ import { ChatKittyUnsubscribe } from './observer';
 import { Reaction } from './reaction';
 import { ReadReceipt } from './read-receipt';
 import { ChatKittySucceededResult } from './result';
+import { Thread } from './thread';
 import { User } from './user';
 
 export declare class ChatSession {
@@ -16,6 +17,7 @@ export type StartChatSessionResult = StartedChatSessionResult;
 
 export declare class StartChatSessionRequest {
   channel: Channel;
+  thread?: Thread;
   onReceivedMessage?: (message: Message, parent?: Message) => void;
   onReceivedKeystrokes?: (keystrokes: Keystrokes) => void;
   onTypingStarted?: (user: User) => void;

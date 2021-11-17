@@ -35,6 +35,7 @@ export declare class ChannelRelays {
   lastReadMessage: string;
   unread: string;
   members: string;
+  threads: string;
 }
 
 export declare class ChannelTopics {
@@ -59,6 +60,7 @@ export declare class ChannelActions {
   update: string;
   clearHistory: string;
   hide: string;
+  createThread: string;
 }
 
 export declare class ChannelStreams {
