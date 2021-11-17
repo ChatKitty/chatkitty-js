@@ -118,6 +118,7 @@ import {
   SentTextMessageResult,
   TextUserMessage,
 } from './message';
+import {Notification} from "./notification";
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
