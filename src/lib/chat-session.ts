@@ -10,14 +10,16 @@ import { User } from './user';
 
 export declare class ChatSession {
   channel: Channel;
+  thread: Thread | null;
   end: ChatKittyUnsubscribe;
+
+  public setThread(thread: Thread): void
 }
 
 export type StartChatSessionResult = StartedChatSessionResult;
 
 export declare class StartChatSessionRequest {
   channel: Channel;
-  thread?: Thread;
   onReceivedMessage?: (message: Message, parent?: Message) => void;
   onReceivedKeystrokes?: (keystrokes: Keystrokes) => void;
   onTypingStarted?: (user: User) => void;
@@ -30,6 +32,10 @@ export declare class StartChatSessionRequest {
   onMessageRead?: (message: Message, receipt: ReadReceipt) => void;
   onMessageReactionAdded?: (message: Message, reaction: Reaction) => void;
   onMessageReactionRemoved?: (message: Message, reaction: Reaction) => void;
+  onThreadReceivedMessage?: (thread: Thread, message: Message) => void;
+  onThreadReceivedKeystrokes?: (thread: Thread, keystrokes: Keystrokes) => void;
+  onThreadTypingStarted?: (thread: Thread, user: User) => void;
+  onThreadTypingStopped?: (thread: Thread, user: User) => void;
 }
 
 export class StartedChatSessionResult extends ChatKittySucceededResult {

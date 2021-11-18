@@ -830,6 +830,10 @@ export class ChatKitty {
     const onMessageRead = request.onMessageRead;
     const onMessageReactionAdded = request.onMessageReactionAdded;
     const onMessageReactionRemoved = request.onMessageReactionRemoved;
+    const onThreadReceivedMessage = request.onThreadReceivedMessage;
+    const onThreadReceivedKeystrokes = request.onThreadReceivedKeystrokes;
+    const onThreadTypingStarted = request.onThreadTypingStarted;
+    const onThreadTypingStopped = request.onThreadTypingStopped;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -843,10 +847,14 @@ export class ChatKitty {
     let messageReadUnsubscribe: () => void;
     let messageReactionAddedUnsubscribe: () => void;
     let messageReactionRemovedUnsubscribe: () => void;
+    let threadReceivedMessageUnsubscribe: () => void;
+    let threadReceivedKeystrokesUnsubscribe: () => void;
+    let threadTypingStartedUnsubscribe: () => void;
+    let threadTypingStoppedUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
-        topic: request.thread?._topics?.messages || request.channel._topics.messages,
+        topic: request.channel._topics.messages,
         event: 'channel.message.created',
         onSuccess: (message) => {
           const destination = message._relays.parent;
@@ -870,7 +878,7 @@ export class ChatKitty {
 
     if (onReceivedKeystrokes) {
       receivedKeystrokesUnsubscribe = this.stompX.listenForEvent<Keystrokes>({
-        topic: request.thread?._topics?.keystrokes || request.channel._topics.keystrokes,
+        topic: request.channel._topics.keystrokes,
         event: 'thread.keystrokes.created',
         onSuccess: (keystrokes) => {
           onReceivedKeystrokes(keystrokes);
@@ -880,7 +888,7 @@ export class ChatKitty {
 
     if (onTypingStarted) {
       typingStartedUnsubscribe = this.stompX.listenForEvent<User>({
-        topic: request.thread?._topics?.typing || request.channel._topics.typing,
+        topic: request.channel._topics.typing,
         event: 'thread.typing.started',
         onSuccess: (user) => {
           onTypingStarted(user);
@@ -890,7 +898,7 @@ export class ChatKitty {
 
     if (onTypingStopped) {
       typingStoppedUnsubscribe = this.stompX.listenForEvent<User>({
-        topic: request.thread?._topics?.typing || request.channel._topics.typing,
+        topic: request.channel._topics.typing,
         event: 'thread.typing.stopped',
         onSuccess: (user) => {
           onTypingStopped(user);
@@ -1006,6 +1014,10 @@ export class ChatKitty {
       typingStartedUnsubscribe?.();
       receivedKeystrokesUnsubscribe?.();
       receivedMessageUnsubscribe?.();
+      threadReceivedMessageUnsubscribe?.();
+      threadReceivedKeystrokesUnsubscribe?.();
+      threadTypingStartedUnsubscribe?.();
+      threadTypingStoppedUnsubscribe?.();
     };
 
     const channelUnsubscribe = this.stompX.listenToTopic({
@@ -1054,9 +1066,60 @@ export class ChatKitty {
       },
     });
 
+    let activeThread: Thread | null = null
+
     const session = {
       channel: request.channel,
+      thread: activeThread,
       end: () => end(),
+      setThread: (thread: Thread) => {
+        threadReceivedMessageUnsubscribe?.();
+        threadReceivedKeystrokesUnsubscribe?.();
+        threadTypingStartedUnsubscribe?.();
+        threadTypingStoppedUnsubscribe?.();
+
+        if (onThreadReceivedMessage) {
+          threadReceivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
+            topic: thread._topics.messages,
+            event: 'thread.message.created',
+            onSuccess: (message) => {
+              onThreadReceivedMessage(thread, this.messageMapper.map(message));
+            },
+          });
+        }
+
+        if (onThreadReceivedKeystrokes) {
+          threadReceivedKeystrokesUnsubscribe = this.stompX.listenForEvent<Keystrokes>({
+            topic: thread._topics.keystrokes,
+            event: 'thread.keystrokes.created',
+            onSuccess: (keystrokes) => {
+              onThreadReceivedKeystrokes(thread, keystrokes);
+            },
+          });
+        }
+
+        if (onThreadTypingStarted) {
+          threadTypingStartedUnsubscribe = this.stompX.listenForEvent<User>({
+            topic: thread._topics.typing,
+            event: 'thread.typing.started',
+            onSuccess: (user) => {
+              onThreadTypingStarted(thread, user);
+            },
+          });
+        }
+
+        if (onThreadTypingStopped) {
+          threadTypingStoppedUnsubscribe = this.stompX.listenForEvent<User>({
+            topic: thread._topics.typing,
+            event: 'thread.typing.stopped',
+            onSuccess: (user) => {
+              onThreadTypingStopped(thread, user);
+            },
+          });
+        }
+
+        activeThread = thread;
+      },
     };
 
     this.chatSessions.set(request.channel.id, session);

@@ -6,6 +6,7 @@ import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 export declare class Thread {
   id: string;
   type: string;
+  name?: string;
   properties: unknown;
   createdTime: string;
   _relays: ThreadRelays;
