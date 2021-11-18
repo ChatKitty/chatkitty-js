@@ -75,7 +75,11 @@ import {
   CreateChatKittyExternalFileProperties,
   CreateChatKittyFileProperties,
 } from './file';
-import { Keystrokes, SendKeystrokesRequest } from './keystrokes';
+import {
+  Keystrokes,
+  SendChannelKeystrokesRequest,
+  SendKeystrokesRequest, SendThreadKeystrokesRequest
+} from './keystrokes';
 import {
   DeleteMessageForMeRequest,
   DeleteMessageForMeResult,
@@ -113,10 +117,10 @@ import {
   SendMessageReplyRequest,
   SendMessageRequest,
   SendMessageResult,
-  SendTextMessageRequest,
+  SendTextMessageRequest, SendThreadMessageRequest,
   SentFileMessageResult,
   SentTextMessageResult,
-  TextUserMessage,
+  TextUserMessage
 } from './message';
 import {Notification} from "./notification";
 import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
@@ -145,6 +149,20 @@ import {
   GetCountSucceedResult,
 } from './result';
 import StompX from './stompx';
+import {
+  CreatedThreadResult,
+  CreateThreadRequest,
+  CreateThreadResult,
+  GetThreadChannelRequest,
+  GetThreadChannelResult, GetThreadChannelSucceededResult,
+  GetThreadMessageRequest,
+  GetThreadMessageResult, GetThreadMessageSucceededResult,
+  GetThreadsRequest,
+  GetThreadsResult, GetThreadsSucceededResult,
+  ReadThreadRequest,
+  ReadThreadResult,
+  ReadThreadSucceededResult, Thread
+} from './thread';
 import {
   BlockUserRequest,
   BlockUserResult,
@@ -231,8 +249,21 @@ export class ChatKitty {
       .asObservable()
       .pipe(debounceTime(150))
       .subscribe((request) => {
+        let destination = ''
+
+        const channel = (request as SendChannelKeystrokesRequest).channel;
+        const thread = (request as SendThreadKeystrokesRequest).thread;
+
+        if (channel) {
+          destination = channel._actions.keystrokes
+        }
+
+        if (thread) {
+          destination = thread._actions.keystrokes
+        }
+
         this.stompX.performAction<never>({
-          destination: request.channel._actions.keystrokes,
+          destination,
           body: {
             keys: request.keys,
           },
@@ -267,6 +298,7 @@ export class ChatKitty {
           this.stompX.listenToTopic({ topic: user._topics.participants });
           this.stompX.listenToTopic({ topic: user._topics.users });
           this.stompX.listenToTopic({ topic: user._topics.reactions });
+          this.stompX.listenToTopic({ topic: user._topics.threads });
 
           this.writeFileGrant = writeFileGrant;
 
@@ -798,6 +830,10 @@ export class ChatKitty {
     const onMessageRead = request.onMessageRead;
     const onMessageReactionAdded = request.onMessageReactionAdded;
     const onMessageReactionRemoved = request.onMessageReactionRemoved;
+    const onThreadReceivedMessage = request.onThreadReceivedMessage;
+    const onThreadReceivedKeystrokes = request.onThreadReceivedKeystrokes;
+    const onThreadTypingStarted = request.onThreadTypingStarted;
+    const onThreadTypingStopped = request.onThreadTypingStopped;
 
     let receivedMessageUnsubscribe: () => void;
     let receivedKeystrokesUnsubscribe: () => void;
@@ -811,6 +847,10 @@ export class ChatKitty {
     let messageReadUnsubscribe: () => void;
     let messageReactionAddedUnsubscribe: () => void;
     let messageReactionRemovedUnsubscribe: () => void;
+    let threadReceivedMessageUnsubscribe: () => void;
+    let threadReceivedKeystrokesUnsubscribe: () => void;
+    let threadTypingStartedUnsubscribe: () => void;
+    let threadTypingStoppedUnsubscribe: () => void;
 
     if (onReceivedMessage) {
       receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
@@ -974,6 +1014,10 @@ export class ChatKitty {
       typingStartedUnsubscribe?.();
       receivedKeystrokesUnsubscribe?.();
       receivedMessageUnsubscribe?.();
+      threadReceivedMessageUnsubscribe?.();
+      threadReceivedKeystrokesUnsubscribe?.();
+      threadTypingStartedUnsubscribe?.();
+      threadTypingStoppedUnsubscribe?.();
     };
 
     const channelUnsubscribe = this.stompX.listenToTopic({
@@ -1022,9 +1066,60 @@ export class ChatKitty {
       },
     });
 
+    let activeThread: Thread | null = null
+
     const session = {
       channel: request.channel,
+      thread: activeThread,
       end: () => end(),
+      setThread: (thread: Thread) => {
+        threadReceivedMessageUnsubscribe?.();
+        threadReceivedKeystrokesUnsubscribe?.();
+        threadTypingStartedUnsubscribe?.();
+        threadTypingStoppedUnsubscribe?.();
+
+        if (onThreadReceivedMessage) {
+          threadReceivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
+            topic: thread._topics.messages,
+            event: 'thread.message.created',
+            onSuccess: (message) => {
+              onThreadReceivedMessage(thread, this.messageMapper.map(message));
+            },
+          });
+        }
+
+        if (onThreadReceivedKeystrokes) {
+          threadReceivedKeystrokesUnsubscribe = this.stompX.listenForEvent<Keystrokes>({
+            topic: thread._topics.keystrokes,
+            event: 'thread.keystrokes.created',
+            onSuccess: (keystrokes) => {
+              onThreadReceivedKeystrokes(thread, keystrokes);
+            },
+          });
+        }
+
+        if (onThreadTypingStarted) {
+          threadTypingStartedUnsubscribe = this.stompX.listenForEvent<User>({
+            topic: thread._topics.typing,
+            event: 'thread.typing.started',
+            onSuccess: (user) => {
+              onThreadTypingStarted(thread, user);
+            },
+          });
+        }
+
+        if (onThreadTypingStopped) {
+          threadTypingStoppedUnsubscribe = this.stompX.listenForEvent<User>({
+            topic: thread._topics.typing,
+            event: 'thread.typing.stopped',
+            onSuccess: (user) => {
+              onThreadTypingStopped(thread, user);
+            },
+          });
+        }
+
+        activeThread = thread;
+      },
     };
 
     this.chatSessions.set(request.channel.id, session);
@@ -1055,6 +1150,13 @@ export class ChatKitty {
       if (sendMessageReplyRequest.message !== undefined) {
         destination = sendMessageReplyRequest.message._actions.reply;
         stream = sendMessageReplyRequest.message._streams.replies;
+      }
+
+      const sendThreadMessageRequest = request as SendThreadMessageRequest;
+
+      if (sendThreadMessageRequest.thread !== undefined) {
+        destination = sendThreadMessageRequest.thread._actions.message;
+        stream = sendThreadMessageRequest.thread._streams.messages;
       }
 
       if (isSendChannelTextMessageRequest(request)) {
@@ -1304,6 +1406,87 @@ export class ChatKitty {
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
         },
+      });
+    });
+  }
+
+  public createThread(request: CreateThreadRequest): Promise<CreateThreadResult> {
+    return new Promise((resolve) => {
+      this.stompX.performAction<Thread>({
+        destination: request.channel._actions.createThread,
+        body: { name: request.name, properties: request.properties },
+        onSuccess: (thread) => resolve(new CreatedThreadResult(thread)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
+  public getThreads(request: GetThreadsRequest): Promise<GetThreadsResult> {
+    const parameters: { includeMainThread?: false; standalone?: true } = {};
+
+    if (request.filter?.includeMainThread === false) {
+      parameters.includeMainThread = false;
+    }
+
+    if (request.filter?.standalone === true) {
+      parameters.standalone = true;
+    }
+
+    return new Promise((resolve) => {
+      ChatKittyPaginator.createInstance<Thread>({
+        stompX: this.stompX,
+        relay: request.channel._relays.threads,
+        contentName: 'threads',
+        parameters,
+      })
+        .then((paginator) =>
+          resolve(new GetThreadsSucceededResult(paginator))
+        )
+        .catch((error) => resolve(new ChatKittyFailedResult(error)));
+    });
+  }
+
+  public getThreadChannel(request: GetThreadChannelRequest): Promise<GetThreadChannelResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<Channel>({
+        destination: request.thread._relays.channel,
+        onSuccess: (resource) => {
+          resolve(new GetThreadChannelSucceededResult(resource));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  public getThreadMessage(request: GetThreadMessageRequest): Promise<GetThreadMessageResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<Message>({
+        destination: request.thread._relays.message,
+        onSuccess: (resource) => {
+          resolve(new GetThreadMessageSucceededResult(resource));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  public readThread(request: ReadThreadRequest): Promise<ReadThreadResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.performAction<never>({
+        destination: request.thread._actions.read,
+        body: {},
+        onSent: () => resolve(new ReadThreadSucceededResult(request.thread)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
   }

@@ -8,6 +8,7 @@ import {
 import { ChatKittyPaginator } from './pagination';
 import { ReactionSummary } from './reaction';
 import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import { Thread } from './thread';
 import { User } from './user';
 
 export type Message = SystemMessage | UserMessage;
@@ -239,9 +240,14 @@ export type SendMessageReplyRequest = {
   message: Message;
 };
 
+export type SendThreadMessageRequest = {
+  thread: Thread;
+};
+
 export type SendTextMessageRequest = (
   | SendChannelMessageRequest
   | SendMessageReplyRequest
+  | SendThreadMessageRequest
 ) & {
   body: string;
   groupTag?: string;
@@ -251,6 +257,7 @@ export type SendTextMessageRequest = (
 export type SendFileMessageRequest = (
   | SendChannelMessageRequest
   | SendMessageReplyRequest
+  | SendThreadMessageRequest
 ) & {
   file: CreateChatKittyFileProperties;
   groupTag?: string;

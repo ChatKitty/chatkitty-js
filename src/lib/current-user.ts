@@ -36,6 +36,7 @@ export declare class CurrentUserTopics {
   participants: string;
   users: string;
   reactions: string;
+  threads: string;
 }
 
 export declare class CurrentUserActions {
