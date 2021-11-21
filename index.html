@@ -1,400 +1,212 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ChatKitty JS SDK</title>
-	<meta name="description" content="Documentation for ChatKitty JS SDK">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-	<link rel="icon" href="favicon.ico" />
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">ChatKitty JS SDK</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>ChatKitty JS SDK</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#chatkitty-js" id="chatkitty-js" style="color: inherit; text-decoration: none;">
-					<h1>chatkitty-js</h1>
-				</a>
-				<p align="center">
-					<img src="https://www.chatkitty.com/images/banner-logo-dark.png" alt="ChatKitty: Cloud Chat Platform" width="315">
-					<br/>
-				</p>
-				<p align="center">ChatKitty helps you build real-time chat without any back-end.</p>
-				<p align="center"><img src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-4/screenshot-simple-typing-indicator.png" width=344 alt="Realtime Chat Demo"></p>
-				<p align="center"><em>The example above was created with ChatKitty. Check it out at <a href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em></p>
-				<p><a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>  </p>
-				<p><a href="https://travis-ci.com/ChatKitty/chatkitty-js"><img src="https://travis-ci.com/ChatKitty/chatkitty-js.svg?branch=master" alt="Build Status"></a></p>
-				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
-					<h2>Features</h2>
-				</a>
-				<ul>
-					<li><p><strong>Private chat</strong> - Provide secure and encrypted direct messaging to your users.</p>
-					</li>
-					<li><p><strong>Group chat</strong> - Your users can request to join or be invited to group chats.</p>
-					</li>
-					<li><p><strong>Message threads</strong> - Keep conversations organized with message threads.</p>
-					</li>
-					<li><p><strong>Push notifications</strong> - Make sure your users always see their messages.</p>
-					</li>
-					<li><p><strong>File attachments</strong> - Attach images, videos, or any other type of files.</p>
-					</li>
-					<li><p><strong>Typing indicators</strong> - Let your users know when others are typing.</p>
-					</li>
-					<li><p><strong>Reactions</strong> - Users can react to messages with emojis and GIFs.</p>
-					</li>
-					<li><p><strong>Presence indicators</strong> - Let your users know who&#39;s online.</p>
-					</li>
-					<li><p><strong>Delivery and read receipts</strong> - See when messages get delivered and read.</p>
-					</li>
-					<li><p><strong>Link preview generation</strong> - Messages with links get rich media previews.</p>
-					</li>
-				</ul>
-				<p>ChatKitty is the first complete chat platform; bringing together everything that&#39;s
-					required to build real-time chat into Web and mobile apps. Getting started with ChatKitty
-				is easy and you get:</p>
-				<a href="#reliability" id="reliability" style="color: inherit; text-decoration: none;">
-					<h4>Reliability</h4>
-				</a>
-				<p>Your user chat sessions remain stable even in the presence of proxies, load balancers and personal
-					firewalls. ChatKitty provides auto reconnection support and offline notifications so your users stay
-				in the loop.</p>
-				<a href="#low-latency" id="low-latency" style="color: inherit; text-decoration: none;">
-					<h4>Low Latency</h4>
-				</a>
-				<p>With response times below 100ms, ChatKitty makes sure your users have a smooth and immersive chat
-				experience.</p>
-				<a href="#cross-platform-support" id="cross-platform-support" style="color: inherit; text-decoration: none;">
-					<h4>Cross-platform support</h4>
-				</a>
-				<p>You can use ChatKitty across every major browser and device platform. ChatKitty also works great
-				with multi-platform frameworks like React-Native and Ionic.</p>
-				<a href="#simple-and-convenient-api" id="simple-and-convenient-api" style="color: inherit; text-decoration: none;">
-					<h4>Simple and convenient API</h4>
-				</a>
-				<p>Sample code:</p>
-				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">kitty</span><span style="color: #000000"> = </span><span style="color: #001080">ChatKitty</span><span style="color: #000000">.</span><span style="color: #795E26">getInstance</span><span style="color: #000000">(</span><span style="color: #0070C1">CHATKITTY_API_KEY</span><span style="color: #000000">);</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ChatKitty JS SDK</title><meta name="description" content="Documentation for ChatKitty JS SDK"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script>	<link rel="icon" href="favicon.ico" />
+</head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">ChatKitty JS SDK</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>ChatKitty JS SDK</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#chatkitty-js" id="chatkitty-js" style="color: inherit; text-decoration: none;">
+  <h1>chatkitty-js</h1>
+</a>
+<p align="center">
+  <img src="https://www.chatkitty.com/images/banner-logo-dark.png" alt="ChatKitty: Cloud Chat Platform" width="315">
+  <br/>
+</p>
 
-<span style="color: #795E26">useEffect</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #008000">// start real-time chat session</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">result</span><span style="color: #000000"> = </span><span style="color: #001080">kitty</span><span style="color: #000000">.</span><span style="color: #795E26">startChatSession</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">channel:</span><span style="color: #000000"> </span><span style="color: #001080">channel</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #795E26">onReceivedMessage</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">message</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">      </span><span style="color: #795E26">showMessage</span><span style="color: #000000">(</span><span style="color: #001080">message</span><span style="color: #000000">); </span><span style="color: #008000">// update your UI as new chat events occur</span>
-<span style="color: #000000">    },</span>
-<span style="color: #000000">  });</span>
+<p align="center">ChatKitty helps you build real-time chat without any back-end.</p>
 
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">session</span><span style="color: #000000">.</span><span style="color: #001080">end</span><span style="color: #000000">;</span>
-<span style="color: #000000">}, []);</span>
+<p align="center"><img src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-4/screenshot-simple-typing-indicator.png" width=344 alt="Realtime Chat Demo"></p>
+
+<p align="center"><em>The example above was created with ChatKitty. Check it out at <a href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em></p>
+
+<p><a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>  </p>
+<p><a href="https://travis-ci.com/ChatKitty/chatkitty-js"><img src="https://travis-ci.com/ChatKitty/chatkitty-js.svg?branch=master" alt="Build Status"></a></p>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h2>Features</h2>
+</a>
+<ul>
+<li><p><strong>Private chat</strong> - Provide secure and encrypted direct messaging to your users.</p>
+</li>
+<li><p><strong>Group chat</strong> - Your users can request to join or be invited to group chats.</p>
+</li>
+<li><p><strong>Message threads</strong> - Keep conversations organized with message threads.</p>
+</li>
+<li><p><strong>Push notifications</strong> - Make sure your users always see their messages.</p>
+</li>
+<li><p><strong>File attachments</strong> - Attach images, videos, or any other type of files.</p>
+</li>
+<li><p><strong>Typing indicators</strong> - Let your users know when others are typing.</p>
+</li>
+<li><p><strong>Reactions</strong> - Users can react to messages with emojis and GIFs.</p>
+</li>
+<li><p><strong>Presence indicators</strong> - Let your users know who&#39;s online.</p>
+</li>
+<li><p><strong>Delivery and read receipts</strong> - See when messages get delivered and read.</p>
+</li>
+<li><p><strong>Link preview generation</strong> - Messages with links get rich media previews.</p>
+</li>
+</ul>
+<p>ChatKitty is the first complete chat platform; bringing together everything that&#39;s 
+required to build real-time chat into Web and mobile apps. Getting started with ChatKitty 
+is easy and you get:</p>
+
+<a href="#reliability" id="reliability" style="color: inherit; text-decoration: none;">
+  <h4>Reliability</h4>
+</a>
+<p>Your user chat sessions remain stable even in the presence of proxies, load balancers and personal 
+firewalls. ChatKitty provides auto reconnection support and offline notifications so your users stay 
+in the loop.</p>
+
+<a href="#low-latency" id="low-latency" style="color: inherit; text-decoration: none;">
+  <h4>Low Latency</h4>
+</a>
+<p>With response times below 100ms, ChatKitty makes sure your users have a smooth and immersive chat 
+experience.</p>
+
+<a href="#cross-platform-support" id="cross-platform-support" style="color: inherit; text-decoration: none;">
+  <h4>Cross-platform support</h4>
+</a>
+<p>You can use ChatKitty across every major browser and device platform. ChatKitty also works great 
+with multi-platform frameworks like React-Native and Ionic.</p>
+
+<a href="#simple-and-convenient-api" id="simple-and-convenient-api" style="color: inherit; text-decoration: none;">
+  <h4>Simple and convenient API</h4>
+</a>
+<p>Sample code:</p>
+<pre><code class="language-js"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">kitty</span><span class="hl-1"> = </span><span class="hl-3">ChatKitty</span><span class="hl-1">.</span><span class="hl-4">getInstance</span><span class="hl-1">(</span><span class="hl-2">CHATKITTY_API_KEY</span><span class="hl-1">);</span><br/><br/><span class="hl-4">useEffect</span><span class="hl-1">(() </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">// start real-time chat session</span><br/><span class="hl-1">  </span><span class="hl-0">let</span><span class="hl-1"> </span><span class="hl-3">result</span><span class="hl-1"> = </span><span class="hl-3">kitty</span><span class="hl-1">.</span><span class="hl-4">startChatSession</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-3">channel:</span><span class="hl-1"> </span><span class="hl-3">channel</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">onReceivedMessage</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">message</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">      </span><span class="hl-4">showMessage</span><span class="hl-1">(</span><span class="hl-3">message</span><span class="hl-1">); </span><span class="hl-5">// update your UI as new chat events occur</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">  });</span><br/><br/><span class="hl-1">  </span><span class="hl-6">return</span><span class="hl-1"> </span><span class="hl-3">result</span><span class="hl-1">.</span><span class="hl-3">session</span><span class="hl-1">.</span><span class="hl-3">end</span><span class="hl-1">;</span><br/><span class="hl-1">}, []);</span>
 </code></pre>
-				<p>We&#39;ve spent a lot of time thinking of the right abstractions and implementing our API to be straightforward
-				and easy to use - making you more productive.</p>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<a href="#install-with-npm" id="install-with-npm" style="color: inherit; text-decoration: none;">
-					<h3>Install with NPM</h3>
-				</a>
-				<pre><code class="language-bash"><span style="color: #000000">npm install chatkitty</span>
+<p>We&#39;ve spent a lot of time thinking of the right abstractions and implementing our API to be straightforward 
+and easy to use - making you more productive.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+
+<a href="#install-with-npm" id="install-with-npm" style="color: inherit; text-decoration: none;">
+  <h3>Install with NPM</h3>
+</a>
+<pre><code class="language-bash"><span class="hl-1">npm install chatkitty</span>
 </code></pre>
-				<a href="#install-with-yarn" id="install-with-yarn" style="color: inherit; text-decoration: none;">
-					<h3>Install with Yarn</h3>
-				</a>
-				<pre><code class="language-bash"><span style="color: #000000">yarn add chatkitty</span>
+
+<a href="#install-with-yarn" id="install-with-yarn" style="color: inherit; text-decoration: none;">
+  <h3>Install with Yarn</h3>
+</a>
+<pre><code class="language-bash"><span class="hl-1">yarn add chatkitty</span>
 </code></pre>
-				<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
-					<h2>How to use</h2>
-				</a>
-				<a href="#getting-an-api-key" id="getting-an-api-key" style="color: inherit; text-decoration: none;">
-					<h3>Getting an API key</h3>
-				</a>
-				<p>You&#39;ll need <a href="https://dashboard.chatkitty.com/authorization/register">a free ChatKitty account</a> before you can
-					begin building chat with ChatKitty. After creating your account, create a ChatKitty application using the dashboard
-				and copy its API key from your application&#39;s setting page.</p>
-				<a href="#initialize-the-sdk-with-your-api-key" id="initialize-the-sdk-with-your-api-key" style="color: inherit; text-decoration: none;">
-					<h3>Initialize the SDK with your API key</h3>
-				</a>
-				<p>With your API key you can initialize a new instance of the <a href="https://chatkitty.github.io/chatkitty-js/classes/_lib_chatkitty_.chatkitty.html">ChatKitty JS client</a>:</p>
-				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">kitty</span><span style="color: #000000"> = </span><span style="color: #001080">ChatKitty</span><span style="color: #000000">.</span><span style="color: #795E26">getInstance</span><span style="color: #000000">(</span><span style="color: #0070C1">CHATKITTY_API_KEY</span><span style="color: #000000">);</span>
+
+<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
+  <h2>How to use</h2>
+</a>
+
+<a href="#getting-an-api-key" id="getting-an-api-key" style="color: inherit; text-decoration: none;">
+  <h3>Getting an API key</h3>
+</a>
+<p>You&#39;ll need <a href="https://dashboard.chatkitty.com/authorization/register">a free ChatKitty account</a> before you can 
+begin building chat with ChatKitty. After creating your account, create a ChatKitty application using the dashboard 
+and copy its API key from your application&#39;s setting page.</p>
+
+<a href="#initialize-the-sdk-with-your-api-key" id="initialize-the-sdk-with-your-api-key" style="color: inherit; text-decoration: none;">
+  <h3>Initialize the SDK with your API key</h3>
+</a>
+<p>With your API key you can initialize a new instance of the <a href="https://chatkitty.github.io/chatkitty-js/classes/_lib_chatkitty_.chatkitty.html">ChatKitty JS client</a>:</p>
+<pre><code class="language-js"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">kitty</span><span class="hl-1"> = </span><span class="hl-3">ChatKitty</span><span class="hl-1">.</span><span class="hl-4">getInstance</span><span class="hl-1">(</span><span class="hl-2">CHATKITTY_API_KEY</span><span class="hl-1">);</span>
 </code></pre>
-				<a href="#starting-a-user-session" id="starting-a-user-session" style="color: inherit; text-decoration: none;">
-					<h3>Starting a user session</h3>
-				</a>
-				<p>To make calls to ChatKitty as a user, a user session must be started.</p>
-				<p>You can start a user session using the unique username of a user and optional authentication
-				parameters to secure the user session.</p>
-				<pre><code class="language-js"><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">kitty</span><span style="color: #000000">.</span><span style="color: #795E26">startSession</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #001080">email</span><span style="color: #000000">,</span>
-<span style="color: #000000">});</span>
+
+<a href="#starting-a-user-session" id="starting-a-user-session" style="color: inherit; text-decoration: none;">
+  <h3>Starting a user session</h3>
+</a>
+<p>To make calls to ChatKitty as a user, a user session must be started.</p>
+<p>You can start a user session using the unique username of a user and optional authentication 
+parameters to secure the user session.</p>
+<pre><code class="language-js"><span class="hl-6">await</span><span class="hl-1"> </span><span class="hl-3">kitty</span><span class="hl-1">.</span><span class="hl-4">startSession</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-3">username:</span><span class="hl-1"> </span><span class="hl-3">email</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
 </code></pre>
-				<a href="#starting-a-chat-session" id="starting-a-chat-session" style="color: inherit; text-decoration: none;">
-					<h3>Starting a chat session</h3>
-				</a>
-				<p>Before a user can begin sending and receiving real-time messages and use in-app chat features like
-				typing indicators, delivery and read receipts, emoji and like reactions, etc, you&#39;ll need to start a chat session.</p>
-				<pre><code class="language-js"><span style="color: #001080">kitty</span><span style="color: #000000">.</span><span style="color: #795E26">startChatSession</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">channel:</span><span style="color: #000000"> </span><span style="color: #001080">channel</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onReceivedMessage</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">message</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle received messages</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onReceivedKeystrokes</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">keystrokes</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle received typing keystrokes</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onTypingStarted</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle user starts typing</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onTypingStopped</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle user stops typing</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onParticipantEnteredChat</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle user who just entered the chat</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onParticipantLeftChat</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle user who just left the chat</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #795E26">onParticipantPresenceChanged</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// handle user who became online, offline, do not distrub, invisible</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">});</span>
+
+<a href="#starting-a-chat-session" id="starting-a-chat-session" style="color: inherit; text-decoration: none;">
+  <h3>Starting a chat session</h3>
+</a>
+<p>Before a user can begin sending and receiving real-time messages and use in-app chat features like 
+typing indicators, delivery and read receipts, emoji and like reactions, etc, you&#39;ll need to start a chat session.</p>
+<pre><code class="language-js"><span class="hl-3">kitty</span><span class="hl-1">.</span><span class="hl-4">startChatSession</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-3">channel:</span><span class="hl-1"> </span><span class="hl-3">channel</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">onReceivedMessage</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">message</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle received messages</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">onReceivedKeystrokes</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">keystrokes</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle received typing keystrokes</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">onTypingStarted</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">user</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle user starts typing</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">onTypingStopped</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">user</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle user stops typing</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">onParticipantEnteredChat</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">user</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle user who just entered the chat</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">onParticipantLeftChat</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">user</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle user who just left the chat</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">onParticipantPresenceChanged</span><span class="hl-3">:</span><span class="hl-1"> (</span><span class="hl-3">user</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">// handle user who became online, offline, do not distrub, invisible</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">});</span>
 </code></pre>
-				<p>All handler methods are optional, so you only needed to register handlers for chat events your application cares about.</p>
-				<a href="#chat-session-event-handler-methods" id="chat-session-event-handler-methods" style="color: inherit; text-decoration: none;">
-					<h4>Chat session event handler methods</h4>
-				</a>
-				<table>
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Parameter Type</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td><code>onReceivedMessage</code></td>
-							<td><code>Message</code></td>
-							<td>Called when a message is sent to this channel.</td>
-						</tr>
-						<tr>
-							<td><code>onReceivedKeystrokes</code></td>
-							<td><code>Keystrokes</code></td>
-							<td>Called when typing keystrokes are made by users actively chatting in this channel.</td>
-						</tr>
-						<tr>
-							<td><code>onTypingStarted</code></td>
-							<td><code>User</code></td>
-							<td>Called when a user starts typing in this channel.</td>
-						</tr>
-						<tr>
-							<td><code>onTypingStopped</code></td>
-							<td><code>User</code></td>
-							<td>Called when a user stops typing in this channel.</td>
-						</tr>
-						<tr>
-							<td><code>onParticipantEnteredChat</code></td>
-							<td><code>User</code></td>
-							<td>Called when another user starts an active chat session in this channel.</td>
-						</tr>
-						<tr>
-							<td><code>onParticipantLeftChat</code></td>
-							<td><code>User</code></td>
-							<td>Called when another user ends their active chat session in this channel.</td>
-						</tr>
-						<tr>
-							<td><code>onParticipantPresenceChanged</code></td>
-							<td><code>User</code></td>
-							<td>Called when a member of this channel changes their presence status or goes online or offline.</td>
-						</tr>
-				</tbody></table>
-				<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
-					<h2>API Documentation</h2>
-				</a>
-				<p>Please see the documentation for this SDK at the <a href="https://docs.chatkitty.com/javascript/">ChatKitty Website</a>.</p>
-				<p>The source code of the website can be found <a href="https://github.com/ChatKitty/chatkitty-api-docs">here</a>. Contributions are welcomed!</p>
-				<p>A complete SDK reference document is hosted at <a href="https://chatkitty.github.io/chatkitty-js/">https://chatkitty.github.io/chatkitty-js/</a></p>
-				<a href="#questions-need-help-found-a-bug" id="questions-need-help-found-a-bug" style="color: inherit; text-decoration: none;">
-					<h2>Questions? Need Help? Found a bug?</h2>
-				</a>
-				<p>If you&#39;ve got questions about setup, usage, special feature implementation in your chat app, or just want to chat with a
-				ChatKitty dev, please feel free to <a href="https://github.com/ChatKitty/chatkitty-js/discussions">start a thread in our Discussions tab</a>!</p>
-				<p>Found a bug with ChatKitty? Go ahead and <a href="https://github.com/ChatKitty/chatkitty-js/issues">submit an issue</a>.
-				And, of course, feel free to submit pull requests with bug fixes or changes.</p>
-				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
-					<h2>Contributing</h2>
-				</a>
-				<p>We welcome code changes that improve this library or fix a problem, please make sure to follow all best practices
-				and add tests if applicable before submitting a Pull Request. We are very happy to merge your code.</p>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h2>License</h2>
-				</a>
-				<p>Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
-				<a href="#acknowledgements" id="acknowledgements" style="color: inherit; text-decoration: none;">
-					<h2>Acknowledgements</h2>
-				</a>
-				<ul>
-					<li><a href="https://github.com/axios/axios">axios</a></li>
-					<li><a href="https://github.com/ReactiveX/RxJS">RxJS</a></li>
-					<li><a href="https://github.com/stomp-js/rx-stomp">RxStomp</a></li>
-					<li><a href="https://github.com/inexorabletash/text-encoding">text-encoding</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/call.html">call</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/call_session.html">call-<wbr>session</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/call_signal.html">call-<wbr>signal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/channel.html">channel</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/chat_session.html">chat-<wbr>session</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/chatkitty.html">chatkitty</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/current_user.html">current-<wbr>user</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/emoji.html">emoji</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/error.html">error</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/file.html">file</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/keystrokes.html">keystrokes</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/message.html">message</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/model.html">model</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/notification.html">notification</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/observer.html">observer</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/pagination.html">pagination</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/reaction.html">reaction</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/read_receipt.html">read-<wbr>receipt</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/result.html">result</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/stompx.html">stompx</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/user.html">user</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/user_block_list_item.html">user-<wbr>block-<wbr>list-<wbr>item</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/user_session.html">user-<wbr>session</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>, the 11/1/2021 at 4:38:20 PM</p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<p>All handler methods are optional, so you only needed to register handlers for chat events your application cares about.</p>
+
+<a href="#chat-session-event-handler-methods" id="chat-session-event-handler-methods" style="color: inherit; text-decoration: none;">
+  <h4>Chat session event handler methods</h4>
+</a>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Parameter Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>onReceivedMessage</code></td>
+<td><code>Message</code></td>
+<td>Called when a message is sent to this channel.</td>
+</tr>
+<tr>
+<td><code>onReceivedKeystrokes</code></td>
+<td><code>Keystrokes</code></td>
+<td>Called when typing keystrokes are made by users actively chatting in this channel.</td>
+</tr>
+<tr>
+<td><code>onTypingStarted</code></td>
+<td><code>User</code></td>
+<td>Called when a user starts typing in this channel.</td>
+</tr>
+<tr>
+<td><code>onTypingStopped</code></td>
+<td><code>User</code></td>
+<td>Called when a user stops typing in this channel.</td>
+</tr>
+<tr>
+<td><code>onParticipantEnteredChat</code></td>
+<td><code>User</code></td>
+<td>Called when another user starts an active chat session in this channel.</td>
+</tr>
+<tr>
+<td><code>onParticipantLeftChat</code></td>
+<td><code>User</code></td>
+<td>Called when another user ends their active chat session in this channel.</td>
+</tr>
+<tr>
+<td><code>onParticipantPresenceChanged</code></td>
+<td><code>User</code></td>
+<td>Called when a member of this channel changes their presence status or goes online or offline.</td>
+</tr>
+</tbody></table>
+
+<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+  <h2>API Documentation</h2>
+</a>
+<p>Please see the documentation for this SDK at the <a href="https://docs.chatkitty.com/javascript/">ChatKitty Website</a>.</p>
+<p>The source code of the website can be found <a href="https://github.com/ChatKitty/chatkitty-api-docs">here</a>. Contributions are welcomed!</p>
+<p>A complete SDK reference document is hosted at <a href="https://chatkitty.github.io/chatkitty-js/">https://chatkitty.github.io/chatkitty-js/</a></p>
+
+<a href="#questions-need-help-found-a-bug" id="questions-need-help-found-a-bug" style="color: inherit; text-decoration: none;">
+  <h2>Questions? Need Help? Found a bug?</h2>
+</a>
+<p>If you&#39;ve got questions about setup, usage, special feature implementation in your chat app, or just want to chat with a 
+ChatKitty dev, please feel free to <a href="https://github.com/ChatKitty/chatkitty-js/discussions">start a thread in our Discussions tab</a>!</p>
+<p>Found a bug with ChatKitty? Go ahead and <a href="https://github.com/ChatKitty/chatkitty-js/issues">submit an issue</a>. 
+And, of course, feel free to submit pull requests with bug fixes or changes.</p>
+
+<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+  <h2>Contributing</h2>
+</a>
+<p>We welcome code changes that improve this library or fix a problem, please make sure to follow all best practices 
+and add tests if applicable before submitting a Pull Request. We are very happy to merge your code.</p>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
+
+<a href="#acknowledgements" id="acknowledgements" style="color: inherit; text-decoration: none;">
+  <h2>Acknowledgements</h2>
+</a>
+<ul>
+<li><a href="https://github.com/axios/axios">axios</a></li>
+<li><a href="https://github.com/ReactiveX/RxJS">RxJS</a></li>
+<li><a href="https://github.com/stomp-js/rx-stomp">RxStomp</a></li>
+<li><a href="https://github.com/inexorabletash/text-encoding">text-encoding</a></li>
+</ul>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-reference"><a href="modules.html#default" class="tsd-kind-icon">default</a></li><li class="tsd-kind-class"><a href="classes/ChatKitty.html" class="tsd-kind-icon">Chat<wbr/>Kitty</a></li><li class="tsd-kind-class"><a href="classes/ChatKittyConfiguration.html" class="tsd-kind-icon">Chat<wbr/>Kitty<wbr/>Configuration</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
