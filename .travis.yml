@@ -3,13 +3,8 @@ node_js: 12
 cache: npm
 
 script:
+  - VERSION="$(jq -r .version package.json)";
   - npm run build
-  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-    TAG="latest";
-    fi
-  - if [[ -n $TRAVIS_TAG && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-    TAG="$(git describe --tags)";
-    fi
   - typedoc --name "ChatKitty JS SDK" --out docs src/lib --excludePrivate --plugin typedoc-plugin-extras --favicon .docs/favicon.ico
   - cp -a .docs/. docs
 deploy:
@@ -23,6 +18,17 @@ deploy:
     access_key_id: "$AWS_ACCESS_KEY_ID"
     secret_access_key: "$AWS_SECRET_ACCESS_KEY"
     bucket: "chatkitty"
+    local_dir: "dist"
+    upload-dir: "dist/chatkitty-js/$VERSION"
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: s3
+    access_key_id: "$AWS_ACCESS_KEY_ID"
+    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
+    bucket: "chatkitty"
+    local_dir: "dist"
+    upload-dir: "dist/chatkitty-js/latest"
     skip_cleanup: true
     on:
       tags: true
