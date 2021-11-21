@@ -1,24 +1,36 @@
-sudo: false
 language: node_js
-node_js:
-  - '12'
-cache:
-  directories:
-    - '$HOME/.npm'
+node_js: 12
+cache: npm
+
 script:
+  - npm run build
+  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+    TAG="latest";
+    fi
+  - if [[ -n $TRAVIS_TAG && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+    TAG="$(git describe --tags)";
+    fi
   - typedoc --name "ChatKitty JS SDK" --out docs src/lib --excludePrivate --plugin typedoc-plugin-extras --favicon .docs/favicon.ico
   - cp -a .docs/. docs
 deploy:
   - provider: npm
     email: $NPM_EMAIL
     api_key: $NPM_TOKEN
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: s3
+    access_key_id: "$AWS_ACCESS_KEY_ID"
+    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
+    bucket: "chatkitty"
+    skip_cleanup: true
     on:
       tags: true
   - provider: pages
     local_dir: docs
-    skip_cleanup: true
     github_token: $GITHUB_TOKEN
     keep_history: true
     target_branch: gh-pages
+    skip_cleanup: true
     on:
       tags: true
