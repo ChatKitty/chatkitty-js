@@ -1,4 +1,3 @@
-import nodePolyfills from '@reputation.link/rollup-plugin-polyfill-node';
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
@@ -16,7 +15,6 @@ const plugins = [
     "process.env.NODE_ENV": JSON.stringify("production"),
     __buildDate__: () => JSON.stringify(new Date()),
   }),
-  nodePolyfills(),
   peerDepsExternal(),
   resolve({ preferBuiltins: true }),
   commonjs(),
