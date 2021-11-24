@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "1.52.5",
+  "version": "1.52.8",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "run-p build:*",
-    "build:main": "genversion --es6 src/environment/version.ts && rollup -c",
+    "build:main": "genversion --es6 src/environment/version.ts && tsc -p tsconfig.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
