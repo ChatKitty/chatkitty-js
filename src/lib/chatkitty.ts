@@ -2,6 +2,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { environment } from '../environment/environment';
+import StompX from '../stompx';
 
 import {
   AddChannelModeratorRequest,
@@ -148,7 +149,6 @@ import {
   GetCountResult,
   GetCountSucceedResult,
 } from './result';
-import StompX from './stompx';
 import {
   CreatedThreadResult,
   CreateThreadRequest,
@@ -518,6 +518,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       this.stompX.performAction<Channel>({
         destination: currentUser._actions.createChannel,
+        event: 'me.channel.created',
         body: request,
         onSuccess: (channel) => {
           resolve(new CreatedChannelResult(channel));

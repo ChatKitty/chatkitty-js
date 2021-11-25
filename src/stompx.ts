@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { v4 } from 'uuid';
 
-import { version } from '../environment/version';
+import { version } from './environment/version';
 
 let TransportFallback: { default: { new (arg: string): unknown } };
 
@@ -47,7 +47,10 @@ export default class StompX {
 
   private readonly pendingActions: Map<
     string,
-    (resource: unknown) => void
+    {
+      type?: string;
+      action: (resource: unknown) => void
+    }
   > = new Map();
 
   private readonly pendingRelayErrors: Map<
@@ -116,13 +119,13 @@ export default class StompX {
     if (typeof WebSocket === 'function') {
       this.rxStompConfig.brokerURL = `${
         this.wsScheme
-      }://${host}/stompx/websocket?api_key=${encodeURIComponent(
+      }://${host}/rtm/websocket?api_key=${encodeURIComponent(
         request.apiKey
       )}`;
     } else {
       this.rxStompConfig.webSocketFactory = () => {
         return new TransportFallback.default(
-          `${this.httpScheme}://${host}/stompx?api_key=${encodeURIComponent(
+          `${this.httpScheme}://${host}/rtm?api_key=${encodeURIComponent(
             request.apiKey
           )}`
         );
@@ -294,8 +297,8 @@ export default class StompX {
           if (receipt) {
             const action = this.pendingActions.get(receipt);
 
-            if (action) {
-              action(event.resource);
+            if (action && (!action.type || action.type === event.type)) {
+              action.action(event.resource);
 
               this.pendingActions.delete(receipt);
             }
@@ -362,7 +365,10 @@ export default class StompX {
       if (request.onSuccess) {
         this.pendingActions.set(
           receipt,
-          request.onSuccess as (resource: unknown) => void
+          {
+            type: request.event,
+            action: request.onSuccess as (resource: unknown) => void
+          }
         );
       }
 
@@ -497,6 +503,7 @@ export declare class StompXRelayParameters {
 export declare class StompXPerformActionRequest<R> {
   destination: string;
   body: unknown;
+  event?: string;
   onSent?: () => void;
   onSuccess?: (resource: R) => void;
   onError?: (error: StompXError) => void;

@@ -14,24 +14,6 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-  - provider: s3
-    access_key_id: "$AWS_ACCESS_KEY_ID"
-    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
-    bucket: "chatkitty"
-    local_dir: "dist"
-    upload-dir: "dist/chatkitty-js/$VERSION"
-    skip_cleanup: true
-    on:
-      tags: true
-  - provider: s3
-    access_key_id: "$AWS_ACCESS_KEY_ID"
-    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
-    bucket: "chatkitty"
-    local_dir: "dist"
-    upload-dir: "dist/chatkitty-js/latest"
-    skip_cleanup: true
-    on:
-      tags: true
   - provider: pages
     local_dir: docs
     github_token: $GITHUB_TOKEN

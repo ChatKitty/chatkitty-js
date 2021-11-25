@@ -1,4 +1,3 @@
-import { UpdateChannelResult, UpdatedChannelResult } from './channel';
 import { ChatKittyError } from './error';
 
 export interface ChatKittyResult {
