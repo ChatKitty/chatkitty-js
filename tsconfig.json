@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "outDir": "dist",
+    "outDir": "dist/cjs",
     "lib": ["dom", "dom.iterable", "esnext"],
     "moduleResolution": "node",
-    "module": "esnext",
+    "module": "commonjs",
     "declaration": true,
     "inlineSourceMap": true,
     "allowJs": true,

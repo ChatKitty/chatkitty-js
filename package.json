@@ -1,8 +1,9 @@
 {
   "name": "chatkitty",
-  "version": "1.52.9",
+  "version": "1.52.10",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/ChatKitty/chatkitty-js",
   "license": "MIT",
@@ -16,7 +17,9 @@
   ],
   "scripts": {
     "build": "run-p build:*",
-    "build:main": "genversion --es6 src/environment/version.ts && tsc -p tsconfig.json",
+    "build:version": "genversion --es6 src/environment/version.ts",
+    "build:main": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
@@ -86,7 +89,8 @@
     "typescript": "^4.4.4"
   },
   "files": [
-    "dist",
+    "dist/cjs",
+    "dist/esm",
     "!**/*.spec.*",
     "!**/*.json",
     "CHANGELOG.md",
