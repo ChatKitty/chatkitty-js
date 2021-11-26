@@ -1,10 +1,10 @@
 {
   "name": "chatkitty",
-  "version": "1.52.11",
+  "version": "1.52.12",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/cjs/index.d.ts",
   "repository": "https://github.com/ChatKitty/chatkitty-js",
   "license": "MIT",
   "keywords": [
@@ -89,8 +89,7 @@
     "typescript": "^4.4.4"
   },
   "files": [
-    "dist/cjs",
-    "dist/esm",
+    "dist",
     "!**/*.spec.*",
     "!**/*.json",
     "CHANGELOG.md",
