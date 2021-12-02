@@ -1,6 +1,10 @@
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 import { User } from './user';
 
 export declare class ReadReceipt {
@@ -18,6 +22,7 @@ export declare class GetReadReceiptsRequest {
 }
 
 export type GetReadReceiptsResult =
+  | ChatKittyResult<GetReadReceiptsSucceededResult>
   | GetReadReceiptsSucceededResult
   | ChatKittyFailedResult;
 

@@ -1,5 +1,6 @@
-import { ChatKittyError } from './error';
 import StompX, { StompXError, StompXPage } from '../stompx';
+
+import { ChatKittyError } from './error';
 
 export class ChatKittyPaginator<I> {
   static async createInstance<I>(

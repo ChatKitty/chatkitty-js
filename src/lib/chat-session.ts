@@ -4,7 +4,7 @@ import { Message } from './message';
 import { ChatKittyUnsubscribe } from './observer';
 import { Reaction } from './reaction';
 import { ReadReceipt } from './read-receipt';
-import { ChatKittySucceededResult } from './result';
+import {ChatKittyResult, ChatKittySucceededResult} from './result';
 import { Thread } from './thread';
 import { User } from './user';
 
@@ -16,7 +16,9 @@ export declare class ChatSession {
   public setThread(thread: Thread): void
 }
 
-export type StartChatSessionResult = StartedChatSessionResult;
+export type StartChatSessionResult =
+  | ChatKittyResult<StartedChatSessionResult>
+  | StartedChatSessionResult;
 
 export declare class StartChatSessionRequest {
   channel: Channel;

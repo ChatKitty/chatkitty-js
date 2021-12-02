@@ -2,7 +2,11 @@ import {
   ChatKittyUploadProgressListener,
   CreateChatKittyFileProperties,
 } from './file';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 import { BaseUser } from './user';
 
 export type CurrentUser = BaseUser & {
@@ -50,6 +54,7 @@ export declare class CurrentUserStreams {
 }
 
 export type GetCurrentUserResult =
+  | ChatKittyResult<GetCurrentUserSuccessfulResult>
   | GetCurrentUserSuccessfulResult
   | ChatKittyFailedResult;
 
@@ -60,6 +65,7 @@ export class GetCurrentUserSuccessfulResult extends ChatKittySucceededResult {
 }
 
 export type UpdateCurrentUserResult =
+  | ChatKittyResult<UpdatedCurrentUserResult>
   | UpdatedCurrentUserResult
   | ChatKittyFailedResult;
 
@@ -75,7 +81,8 @@ export declare class UpdateCurrentUserDisplayPictureRequest {
 }
 
 export type UpdateCurrentUserDisplayPictureResult =
-  | UpdatedCurrentUserResult
+  | ChatKittyResult<UpdatedCurrentUserDisplayPictureResult>
+  | UpdatedCurrentUserDisplayPictureResult
   | ChatKittyFailedResult;
 
 export class UpdatedCurrentUserDisplayPictureResult extends ChatKittySucceededResult {

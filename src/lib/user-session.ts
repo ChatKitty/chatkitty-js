@@ -1,12 +1,19 @@
 import { CurrentUser } from './current-user';
 import { ChatKittyError } from './error';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 
 export declare class UserSession {
   user: CurrentUser;
 }
 
-export type StartSessionResult = StartedSessionResult | ChatKittyFailedResult;
+export type StartSessionResult =
+  | ChatKittyResult<StartedSessionResult>
+  | StartedSessionResult
+  | ChatKittyFailedResult;
 
 export declare class StartSessionRequest {
   username: string;

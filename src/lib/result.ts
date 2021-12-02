@@ -1,24 +1,25 @@
 import { ChatKittyError } from './error';
 
-export interface ChatKittyResult {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface ChatKittyResult<S extends ChatKittySucceededResult> {
   succeeded: boolean;
   cancelled: boolean;
   failed: boolean;
 }
 
-export abstract class ChatKittySucceededResult implements ChatKittyResult {
+export abstract class ChatKittySucceededResult {
   succeeded = true;
   cancelled = false;
   failed = false;
 }
 
-export abstract class ChatKittyCancelledResult implements ChatKittyResult {
+export abstract class ChatKittyCancelledResult {
   succeeded = false;
   cancelled = true;
   failed = false;
 }
 
-export class ChatKittyFailedResult implements ChatKittyResult {
+export class ChatKittyFailedResult {
   succeeded = false;
   cancelled = false;
   failed = true;
@@ -26,7 +27,10 @@ export class ChatKittyFailedResult implements ChatKittyResult {
   constructor(public error: ChatKittyError) {}
 }
 
-export type GetCountResult = GetCountSucceedResult | ChatKittyFailedResult;
+export type GetCountResult =
+  | ChatKittyResult<GetCountSucceedResult>
+  | GetCountSucceedResult
+  | ChatKittyFailedResult;
 
 export class GetCountSucceedResult extends ChatKittySucceededResult {
   constructor(public count: number) {
@@ -35,19 +39,19 @@ export class GetCountSucceedResult extends ChatKittySucceededResult {
 }
 
 export function succeeded<R extends ChatKittySucceededResult>(
-  result: ChatKittyResult
+  result: ChatKittyResult<R>
 ): result is R {
   return result.succeeded;
 }
 
 export function failed<R extends ChatKittyFailedResult>(
-  result: ChatKittyResult
+  result: ChatKittyResult<never>
 ): result is R {
   return result.failed;
 }
 
 export function cancelled<R extends ChatKittyCancelledResult>(
-  result: ChatKittyResult
+  result: ChatKittyResult<never>
 ): result is R {
   return result.cancelled;
 }

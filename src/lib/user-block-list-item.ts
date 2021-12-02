@@ -1,5 +1,9 @@
 import { ChatKittyPaginator } from './pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 import { User } from './user';
 
 export declare class UserBlockListItem {
@@ -13,6 +17,7 @@ export declare class UserBlockListItemActions {
 }
 
 export type GetUserBlockListResult =
+  | ChatKittyResult<GetUserBlockListSucceededResult>
   | GetUserBlockListSucceededResult
   | ChatKittyFailedResult;
 
@@ -27,6 +32,7 @@ export declare class DeleteUserBlockListItemRequest {
 }
 
 export type DeleteUserBlockListItemResult =
+  | ChatKittyResult<DeleteUserBlockListItemSucceededResult>
   | DeleteUserBlockListItemSucceededResult
   | ChatKittyFailedResult;
 

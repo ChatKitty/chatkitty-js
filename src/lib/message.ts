@@ -7,7 +7,11 @@ import {
 } from './file';
 import { ChatKittyPaginator } from './pagination';
 import { ReactionSummary } from './reaction';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 import { Thread } from './thread';
 import { User } from './user';
 
@@ -156,6 +160,7 @@ export declare class GetLastReadMessageRequest {
 }
 
 export type GetMessagesResult =
+  | ChatKittyResult<GetMessagesSucceededResult>
   | GetMessagesSucceededResult
   | ChatKittyFailedResult;
 
@@ -176,6 +181,7 @@ export declare class ReadMessageRequest {
 }
 
 export type ReadMessageResult =
+  | ChatKittyResult<ReadMessageSucceededResult>
   | ReadMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -191,6 +197,7 @@ export declare class EditMessageRequest {
 }
 
 export type EditMessageResult =
+  | ChatKittyResult<EditedMessageSucceededResult>
   | EditedMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -205,6 +212,7 @@ export declare class DeleteMessageForMeRequest {
 }
 
 export type DeleteMessageForMeResult =
+  | ChatKittyResult<DeleteMessageForMeSucceededResult>
   | DeleteMessageForMeSucceededResult
   | ChatKittyFailedResult;
 
@@ -219,6 +227,7 @@ export declare class DeleteMessageRequest {
 }
 
 export type DeleteMessageResult =
+  | ChatKittyResult<DeleteMessageSucceededResult>
   | DeleteMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -265,9 +274,15 @@ export type SendFileMessageRequest = (
   progressListener?: ChatKittyUploadProgressListener;
 };
 
-export type SendMessageResult = SentMessageResult | ChatKittyFailedResult;
+export type SendMessageResult =
+  | ChatKittyResult<SentMessageResult>
+  | SentMessageResult
+  | ChatKittyFailedResult;
 
-export type SentMessageResult = SentTextMessageResult | SentFileMessageResult;
+export type SentMessageResult =
+  | ChatKittyResult<SentTextMessageResult>
+  | SentTextMessageResult
+  | SentFileMessageResult;
 
 export class SentTextMessageResult extends ChatKittySucceededResult {
   constructor(public message: TextUserMessage) {
@@ -284,19 +299,17 @@ export class SentFileMessageResult extends ChatKittySucceededResult {
 export function sentTextMessage(
   result: SentMessageResult
 ): result is SentTextMessageResult {
-  return (
-    (result as SentTextMessageResult).message !== undefined &&
-    result.message.type === 'TEXT'
-  );
+  const message = (result as SentTextMessageResult).message;
+
+  return message !== undefined && message.type === 'TEXT';
 }
 
 export function sentFileMessage(
   result: SentMessageResult
 ): result is SentFileMessageResult {
-  return (
-    (result as SentFileMessageResult).message !== undefined &&
-    result.message.type === 'FILE'
-  );
+  const message = (result as SentFileMessageResult).message;
+
+  return message !== undefined && message.type === 'FILE';
 }
 
 export declare class GetUnreadMessagesCountRequest {
@@ -312,6 +325,7 @@ export declare class GetMessageChannelRequest {
 }
 
 export type GetMessageChannelResult =
+  | ChatKittyResult<GetMessageChannelSucceededResult>
   | GetMessageChannelSucceededResult
   | ChatKittyFailedResult;
 
@@ -326,6 +340,7 @@ export declare class GetMessageParentRequest {
 }
 
 export type GetMessageParentResult =
+  | ChatKittyResult<GetMessageParentSucceededResult>
   | GetMessageParentSucceededResult
   | ChatKittyFailedResult;
 

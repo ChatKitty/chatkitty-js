@@ -1,7 +1,11 @@
 import { Emoji } from './emoji';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 import { User } from './user';
 
 export declare class Reaction {
@@ -31,6 +35,7 @@ export declare class ReactToMessageRequest {
 }
 
 export type ReactToMessageResult =
+  | ChatKittyResult<ReactedToMessageResult>
   | ReactedToMessageResult
   | ChatKittyFailedResult;
 
@@ -45,6 +50,7 @@ export declare class GetReactionsRequest {
 }
 
 export type GetReactionsResult =
+  | ChatKittyResult<GetReactionsSucceededResult>
   | GetReactionsSucceededResult
   | ChatKittyFailedResult;
 
@@ -60,6 +66,7 @@ export declare class RemoveReactionRequest {
 }
 
 export type RemoveReactionResult =
+  | ChatKittyResult<RemovedReactionResult>
   | RemovedReactionResult
   | ChatKittyFailedResult;
 

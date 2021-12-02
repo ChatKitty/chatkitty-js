@@ -1,7 +1,11 @@
 import { Channel } from './channel';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 
 export declare class Thread {
   id: string;
@@ -44,6 +48,7 @@ export declare class CreateThreadRequest {
 }
 
 export type CreateThreadResult =
+  | ChatKittyResult<CreatedThreadResult>
   | CreatedThreadResult
   | ChatKittyFailedResult;
 
@@ -67,6 +72,7 @@ export declare class GetChannelThreadsFilter {
 }
 
 export type GetThreadsResult =
+  | ChatKittyResult<GetThreadsSucceededResult>
   | GetThreadsSucceededResult
   | ChatKittyFailedResult;
 
@@ -81,6 +87,7 @@ export declare class GetThreadChannelRequest {
 }
 
 export type GetThreadChannelResult =
+  | ChatKittyResult<GetThreadChannelSucceededResult>
   | GetThreadChannelSucceededResult
   | ChatKittyFailedResult;
 
@@ -95,6 +102,7 @@ export declare class GetThreadMessageRequest {
 }
 
 export type GetThreadMessageResult =
+  | ChatKittyResult<GetThreadMessageSucceededResult>
   | GetThreadMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -109,6 +117,7 @@ export declare class ReadThreadRequest {
 }
 
 export type ReadThreadResult =
+  | ChatKittyResult<ReadThreadSucceededResult>
   | ReadThreadSucceededResult
   | ChatKittyFailedResult;
 

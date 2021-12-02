@@ -1,7 +1,11 @@
 import { Channel } from './channel';
 import { ChatKittyModelReference } from './model';
 import { ChatKittyPaginator } from './pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import {
+  ChatKittyFailedResult,
+  ChatKittyResult,
+  ChatKittySucceededResult
+} from './result';
 
 export interface BaseUser {
   id: number;
@@ -43,7 +47,10 @@ export declare class GetUsersFilter {
   online?: boolean;
 }
 
-export type GetUsersResult = GetUsersSucceededResult | ChatKittyFailedResult;
+export type GetUsersResult =
+  | ChatKittyResult<GetUsersSucceededResult>
+  | GetUsersSucceededResult
+  | ChatKittyFailedResult;
 
 export class GetUsersSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<User>) {
@@ -51,7 +58,10 @@ export class GetUsersSucceededResult extends ChatKittySucceededResult {
   }
 }
 
-export type GetUserResult = GetUserSucceededResult | ChatKittyFailedResult;
+export type GetUserResult =
+  | ChatKittyResult<GetUserSucceededResult>
+  | GetUserSucceededResult
+  | ChatKittyFailedResult;
 
 export class GetUserSucceededResult extends ChatKittySucceededResult {
   constructor(public user: User) {
@@ -65,6 +75,7 @@ export declare class GetUserIsChannelMemberRequest {
 }
 
 export type GetUserIsChannelMemberResult =
+  | ChatKittyResult<GetUserIsChannelMemberSucceededResult>
   | GetUserIsChannelMemberSucceededResult
   | ChatKittyFailedResult;
 
@@ -78,7 +89,10 @@ export declare class BlockUserRequest {
   user: User;
 }
 
-export type BlockUserResult = BlockUserSucceededResult | ChatKittyFailedResult;
+export type BlockUserResult =
+  | ChatKittyResult<BlockUserSucceededResult>
+  | BlockUserSucceededResult
+  | ChatKittyFailedResult;
 
 export class BlockUserSucceededResult extends ChatKittySucceededResult {
   constructor(public user: User) {
