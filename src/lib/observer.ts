@@ -1,6 +1,6 @@
 import { ChatKittyError } from './error';
 
-export interface ChatkittyObserver<T> {
+export interface ChatKittyObserver<T> {
   onNext: (value: T) => void;
   onError: (value: ChatKittyError) => void;
   onComplete: () => void;

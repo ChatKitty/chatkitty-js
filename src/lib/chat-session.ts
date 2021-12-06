@@ -1,4 +1,5 @@
 import { Channel } from './channel';
+import {Event} from "./event";
 import { Keystrokes } from './keystrokes';
 import { Message } from './message';
 import { ChatKittyUnsubscribe } from './observer';
@@ -29,6 +30,7 @@ export declare class StartChatSessionRequest {
   onParticipantEnteredChat?: (user: User) => void;
   onParticipantLeftChat?: (user: User) => void;
   onParticipantPresenceChanged?: (user: User) => void;
+  onEventTriggered?: (event: Event) => void;
   onMessageUpdated?: (message: Message) => void;
   onChannelUpdated?: (channel: Channel) => void;
   onMessageRead?: (message: Message, receipt: ReadReceipt) => void;

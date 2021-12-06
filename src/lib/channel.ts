@@ -40,6 +40,7 @@ export declare class ChannelRelays {
   unread: string;
   members: string;
   threads: string;
+  calls: string;
 }
 
 export declare class ChannelTopics {
@@ -50,6 +51,7 @@ export declare class ChannelTopics {
   participants: string;
   readReceipts: string;
   reactions: string;
+  events: string;
 }
 
 export declare class ChannelActions {
@@ -61,6 +63,8 @@ export declare class ChannelActions {
   invite?: string;
   read: string;
   mute: string;
+  call: string;
+  triggerEvent: string;
   update: string;
   clearHistory: string;
   hide: string;

@@ -48,7 +48,7 @@ export default class StompX {
   private readonly pendingActions: Map<
     string,
     {
-      type?: string;
+      types?: string[];
       action: (resource: unknown) => void
     }
   > = new Map();
@@ -297,7 +297,7 @@ export default class StompX {
           if (receipt) {
             const action = this.pendingActions.get(receipt);
 
-            if (action && (!action.type || action.type === event.type)) {
+            if (action && (!action.types || action.types.find(type => type === event.type))) {
               action.action(event.resource);
 
               this.pendingActions.delete(receipt);
@@ -354,7 +354,7 @@ export default class StompX {
     };
   }
 
-  public performAction<R>(request: StompXPerformActionRequest<R>) {
+  public sendAction<R>(request: StompXSendActionRequest<R>) {
     this.guardConnected(() => {
       const receipt = StompX.generateReceipt();
 
@@ -366,7 +366,7 @@ export default class StompX {
         this.pendingActions.set(
           receipt,
           {
-            type: request.event,
+            types: request.events,
             action: request.onSuccess as (resource: unknown) => void
           }
         );
@@ -500,10 +500,10 @@ export declare class StompXRelayParameters {
   [key: string]: unknown;
 }
 
-export declare class StompXPerformActionRequest<R> {
+export declare class StompXSendActionRequest<R> {
   destination: string;
   body: unknown;
-  event?: string;
+  events?: string[];
   onSent?: () => void;
   onSuccess?: (resource: R) => void;
   onError?: (error: StompXError) => void;

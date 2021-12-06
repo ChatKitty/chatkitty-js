@@ -72,6 +72,12 @@ import {
   UpdatedCurrentUserResult,
 } from './current-user';
 import {
+  Event,
+  TriggeredEventResult,
+  TriggerEventRequest,
+  TriggerEventResult
+} from "./event";
+import {
   ChatKittyUploadResult,
   CreateChatKittyExternalFileProperties,
   CreateChatKittyFileProperties,
@@ -124,7 +130,7 @@ import {
   TextUserMessage
 } from './message';
 import {Notification} from "./notification";
-import { ChatkittyObserver, ChatKittyUnsubscribe } from './observer';
+import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
   GetReactionsRequest,
@@ -195,7 +201,7 @@ import {
 } from './user-session';
 
 export class ChatKitty {
-  private static readonly _instances = new Map<string, ChatKitty>();
+  protected static readonly _instances = new Map<string, ChatKitty>();
 
   public static getInstance(apiKey: string): ChatKitty {
     let instance = ChatKitty._instances.get(apiKey);
@@ -219,9 +225,9 @@ export class ChatKitty {
     return '/application/v1/users/' + id + '.relay';
   }
 
-  private readonly stompX: StompX;
+  protected readonly stompX: StompX;
 
-  private readonly currentUserNextSubject = new BehaviorSubject<CurrentUser | null>(
+  protected readonly currentUserSubject = new BehaviorSubject<CurrentUser | null>(
     null
   );
 
@@ -237,6 +243,79 @@ export class ChatKitty {
   private keyStrokesSubject = new Subject<SendKeystrokesRequest>();
 
   private isStartingSession = false;
+
+  public Calls: Calls = new (class ChatKittyCalls {
+    localStream: MediaStream | null = null;
+
+    isMuted = false;
+
+    constructor(private readonly kitty: ChatKitty) {
+    }
+
+    initialize(configuration: {
+      media: { audio: boolean; video: boolean };
+    }) {
+      // TODO
+    }
+
+    leaveCall() {
+      // TODO
+    }
+
+    switchCamera() {
+      // TODO
+    }
+
+    toggleMute() {
+      // TODO
+    }
+
+    onParticipantAcceptedCall(
+      onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+    ): ChatKittyUnsubscribe {
+      // TODO
+
+      return () => {
+        // TODO
+      };
+    }
+
+    onParticipantRejectedCall(
+      onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+    ): ChatKittyUnsubscribe {
+      // TODO
+
+      return () => {
+        // TODO
+      };
+    }
+
+    onParticipantActive(
+      onNextOrObserver:
+        | ChatKittyObserver<{ user: User; stream: MediaStream }>
+        | ((user: User, stream: MediaStream) => void)
+    ): ChatKittyUnsubscribe {
+      // TODO
+
+      return () => {
+        // TODO
+      };
+    }
+
+    onParticipantLeftCall(
+      onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+    ): ChatKittyUnsubscribe {
+      // TODO
+
+      return () => {
+        // TODO
+      };
+    }
+
+    close() {
+      // TODO
+    }
+  })(this)
 
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.stompX = new StompX({
@@ -262,7 +341,7 @@ export class ChatKitty {
           destination = thread._actions.keystrokes
         }
 
-        this.stompX.performAction<never>({
+        this.stompX.sendAction<never>({
           destination,
           body: {
             keys: request.keys,
@@ -299,6 +378,7 @@ export class ChatKitty {
           this.stompX.listenToTopic({ topic: user._topics.users });
           this.stompX.listenToTopic({ topic: user._topics.reactions });
           this.stompX.listenToTopic({ topic: user._topics.threads });
+          this.stompX.listenToTopic({ topic: user._topics.calls });
 
           this.writeFileGrant = writeFileGrant;
 
@@ -311,7 +391,7 @@ export class ChatKitty {
         onConnected: (user) => {
           this.currentUser = user;
 
-          this.currentUserNextSubject.next(user);
+          this.currentUserSubject.next(user);
         },
         onConnectionLost: () => this.lostConnectionSubject.next(),
         onConnectionResumed: () => this.resumedConnectionSubject.next(),
@@ -329,7 +409,7 @@ export class ChatKitty {
       this.stompX.disconnect({
         onSuccess: () => {
           this.currentUser = undefined;
-          this.currentUserNextSubject.next(null);
+          this.currentUserSubject.next(null);
 
           resolve();
         },
@@ -362,10 +442,10 @@ export class ChatKitty {
 
   public onCurrentUserChanged(
     onNextOrObserver:
-      | ChatkittyObserver<CurrentUser | null>
+      | ChatKittyObserver<CurrentUser | null>
       | ((user: CurrentUser | null) => void)
   ): ChatKittyUnsubscribe {
-    const subscription = this.currentUserNextSubject.subscribe((user) => {
+    const subscription = this.currentUserSubject.subscribe((user) => {
       if (typeof onNextOrObserver === 'function') {
         onNextOrObserver(user);
       } else {
@@ -377,7 +457,7 @@ export class ChatKitty {
   }
 
   public onCurrentUserOnline(
-    onNextOrObserver: ChatkittyObserver<CurrentUser> | (() => void)
+    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.resumedConnectionSubject.subscribe(() => {
       if (typeof onNextOrObserver === 'function') {
@@ -393,7 +473,7 @@ export class ChatKitty {
   }
 
   public onCurrentUserOffline(
-    onNextOrObserver: ChatkittyObserver<CurrentUser> | (() => void)
+    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.lostConnectionSubject.subscribe(() => {
       if (typeof onNextOrObserver === 'function') {
@@ -418,11 +498,11 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<CurrentUser>({
+      this.stompX.sendAction<CurrentUser>({
         destination: currentUser._actions.update,
         body: update(currentUser),
         onSuccess: (user) => {
-          this.currentUserNextSubject.next(user);
+          this.currentUserSubject.next(user);
 
           resolve(new UpdatedCurrentUserResult(user));
         },
@@ -475,7 +555,7 @@ export class ChatKitty {
           },
         });
       } else {
-        this.stompX.performAction<CurrentUser>({
+        this.stompX.sendAction<CurrentUser>({
           destination: currentUser._actions.updateDisplayPicture,
           body: file,
           onSuccess: (user) => {
@@ -493,7 +573,7 @@ export class ChatKitty {
     request: UpdateChannelRequest
   ): Promise<UpdateChannelResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: request.channel._actions.update,
         body: request.channel,
         onSuccess: (channel) => {
@@ -516,9 +596,9 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: currentUser._actions.createChannel,
-        event: 'me.channel.created',
+        events: ['me.channel.created', 'me.channel.upserted', 'member.channel.upserted'],
         body: request,
         onSuccess: (channel) => {
           resolve(new CreatedChannelResult(channel));
@@ -601,7 +681,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: destination,
         body: request,
         onSuccess: (channel) => {
@@ -630,7 +710,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: destination,
         body: {},
         onSuccess: (channel) => {
@@ -653,7 +733,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: destination,
         body: request.user,
         onSuccess: (channel) => {
@@ -727,7 +807,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<never>({
+      this.stompX.sendAction<never>({
         destination: request.channel._actions.read,
         body: {},
         onSent: () => resolve(new ReadChannelSucceededResult(request.channel)),
@@ -744,7 +824,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: request.channel._actions.mute,
         body: {
           state: 'ON',
@@ -769,7 +849,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<Channel>({
+      this.stompX.sendAction<Channel>({
         destination: request.channel._actions.mute,
         body: {
           state: 'OFF',
@@ -794,7 +874,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<never>({
+      this.stompX.sendAction<never>({
         destination: request.channel._actions.clearHistory,
         body: {},
         onSuccess: (channel) =>
@@ -806,7 +886,7 @@ export class ChatKitty {
 
   public hideChannel(request: HideChannelRequest): Promise<HideChannelResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<DirectChannel>({
+      this.stompX.sendAction<DirectChannel>({
         destination: request.channel._actions.hide,
         body: {},
         onSuccess: (resource) =>
@@ -826,6 +906,7 @@ export class ChatKitty {
     const onTypingStarted = request.onTypingStarted;
     const onTypingStopped = request.onTypingStopped;
     const onParticipantPresenceChanged = request.onParticipantPresenceChanged;
+    const onEventTriggered = request.onEventTriggered;
     const onMessageUpdated = request.onMessageUpdated;
     const onChannelUpdated = request.onChannelUpdated;
     const onMessageRead = request.onMessageRead;
@@ -843,6 +924,7 @@ export class ChatKitty {
     let typingStartedUnsubscribe: () => void;
     let typingStoppedUnsubscribe: () => void;
     let participantPresenceChangedUnsubscribe: () => void;
+    let eventTriggeredUnsubscribe: () => void;
     let messageUpdatedUnsubscribe: () => void;
     let channelUpdatedUnsubscribe: () => void;
     let messageReadUnsubscribe: () => void;
@@ -947,6 +1029,16 @@ export class ChatKitty {
       });
     }
 
+    if (onEventTriggered) {
+      eventTriggeredUnsubscribe = this.stompX.listenForEvent<Event>({
+        topic: request.channel._topics.events,
+        event: 'channel.event.triggered',
+        onSuccess: (event) => {
+          onEventTriggered(event);
+        },
+      });
+    }
+
     if (onChannelUpdated) {
       channelUpdatedUnsubscribe = this.stompX.listenForEvent<Channel>({
         topic: request.channel._topics.self,
@@ -1008,6 +1100,7 @@ export class ChatKitty {
       messageReadUnsubscribe?.();
       channelUpdatedUnsubscribe?.();
       messageUpdatedUnsubscribe?.();
+      eventTriggeredUnsubscribe?.();
       participantPresenceChangedUnsubscribe?.();
       participantLeftChatUnsubscribe?.();
       participantEnteredChatUnsubscribe?.();
@@ -1048,11 +1141,16 @@ export class ChatKitty {
           topic: request.channel._topics.reactions,
         });
 
+        const eventsUnsubscribe = this.stompX.listenToTopic({
+          topic: request.channel._topics.events,
+        });
+
         const superEnd = end;
 
         end = () => {
           superEnd();
 
+          eventsUnsubscribe?.();
           reactionsUnsubscribe?.();
           readReceiptsUnsubscribe?.();
           participantsUnsubscribe?.();
@@ -1161,7 +1259,7 @@ export class ChatKitty {
       }
 
       if (isSendChannelTextMessageRequest(request)) {
-        this.stompX.performAction<TextUserMessage>({
+        this.stompX.sendAction<TextUserMessage>({
           destination: destination,
           body: {
             type: 'TEXT',
@@ -1182,7 +1280,7 @@ export class ChatKitty {
         const file = request.file;
 
         if (isCreateChatKittyExternalFileProperties(file)) {
-          this.stompX.performAction<FileUserMessage>({
+          this.stompX.sendAction<FileUserMessage>({
             destination: destination,
             body: {
               type: 'FILE',
@@ -1313,9 +1411,35 @@ export class ChatKitty {
     });
   }
 
+  public triggerEvent(
+    request: TriggerEventRequest
+  ): Promise<TriggerEventResult> {
+    const currentUser = this.currentUser;
+
+    if (!currentUser) {
+      throw new NoActiveSessionError();
+    }
+
+    return new Promise((resolve) => {
+      this.stompX.sendAction<never>({
+        destination: request.channel._actions.triggerEvent,
+        body: {
+          type: request.type,
+          properties: request.properties
+        },
+        onSent: () => {
+          resolve(new TriggeredEventResult(request.channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
   public readMessage(request: ReadMessageRequest): Promise<ReadMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<never>({
+      this.stompX.sendAction<never>({
         destination: request.message._actions.read,
         body: {},
         onSent: () => resolve(new ReadMessageSucceededResult(request.message)),
@@ -1345,7 +1469,7 @@ export class ChatKitty {
 
   public editMessage(request: EditMessageRequest): Promise<EditMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Message>({
+      this.stompX.sendAction<Message>({
         destination: request.message._actions.edit,
         body: {
           body: request.body,
@@ -1413,7 +1537,7 @@ export class ChatKitty {
 
   public createThread(request: CreateThreadRequest): Promise<CreateThreadResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Thread>({
+      this.stompX.sendAction<Thread>({
         destination: request.channel._actions.createThread,
         body: { name: request.name, properties: request.properties },
         onSuccess: (thread) => resolve(new CreatedThreadResult(thread)),
@@ -1483,7 +1607,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<never>({
+      this.stompX.sendAction<never>({
         destination: request.thread._actions.read,
         body: {},
         onSent: () => resolve(new ReadThreadSucceededResult(request.thread)),
@@ -1496,7 +1620,7 @@ export class ChatKitty {
     request: ReactToMessageRequest
   ): Promise<ReactToMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Reaction>({
+      this.stompX.sendAction<Reaction>({
         destination: request.message._actions.react,
         body: { emoji: request.emoji },
         onSuccess: (reaction) => resolve(new ReactedToMessageResult(reaction)),
@@ -1525,7 +1649,7 @@ export class ChatKitty {
     request: RemoveReactionRequest
   ): Promise<RemoveReactionResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Reaction>({
+      this.stompX.sendAction<Reaction>({
         destination: request.message._actions.removeReaction,
         body: {
           emoji: request.emoji,
@@ -1540,7 +1664,7 @@ export class ChatKitty {
     request: DeleteMessageForMeRequest
   ): Promise<DeleteMessageForMeResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Message>({
+      this.stompX.sendAction<Message>({
         destination: request.message._actions.deleteForMe,
         body: {},
         onSuccess: (resource) =>
@@ -1554,7 +1678,7 @@ export class ChatKitty {
     request: DeleteMessageRequest
   ): Promise<DeleteMessageResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<Message>({
+      this.stompX.sendAction<Message>({
         destination: request.message._actions.delete,
         body: {},
         onSuccess: (resource) =>
@@ -1576,7 +1700,7 @@ export class ChatKitty {
 
   public onNotificationReceived(
     onNextOrObserver:
-      | ChatkittyObserver<Notification>
+      | ChatKittyObserver<Notification>
       | ((notification: Notification) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1601,7 +1725,7 @@ export class ChatKitty {
   }
 
   public onChannelJoined(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1625,7 +1749,7 @@ export class ChatKitty {
   }
 
   public onChannelHidden(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1649,7 +1773,7 @@ export class ChatKitty {
   }
 
   public onChannelUnhidden(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1673,7 +1797,7 @@ export class ChatKitty {
   }
 
   public onChannelLeft(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1697,7 +1821,7 @@ export class ChatKitty {
   }
 
   public onChannelUpdated(
-    onNextOrObserver: ChatkittyObserver<Channel> | ((channel: Channel) => void)
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1820,7 +1944,7 @@ export class ChatKitty {
   }
 
   public onUserPresenceChanged(
-    onNextOrObserver: ChatkittyObserver<User> | ((user: User) => void)
+    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1851,7 +1975,7 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      this.stompX.performAction<User>({
+      this.stompX.sendAction<User>({
         destination: destination,
         body: {
           user: request.user,
@@ -1865,7 +1989,7 @@ export class ChatKitty {
   }
 
   public onParticipantStartedTyping(
-    onNextOrObserver: ChatkittyObserver<User> | ((participant: User) => void)
+    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1889,7 +2013,7 @@ export class ChatKitty {
   }
 
   public onParticipantStoppedTyping(
-    onNextOrObserver: ChatkittyObserver<User> | ((participant: User) => void)
+    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
 
@@ -1950,7 +2074,7 @@ export class ChatKitty {
 
   public blockUser(request: BlockUserRequest): Promise<BlockUserResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<User>({
+      this.stompX.sendAction<User>({
         destination: `/application/v1/users/${request.user.id}.block`,
         body: {},
         onSuccess: (resource) => {
@@ -1985,7 +2109,7 @@ export class ChatKitty {
     request: DeleteUserBlockListItemRequest
   ): Promise<DeleteUserBlockListItemResult> {
     return new Promise((resolve) => {
-      this.stompX.performAction<User>({
+      this.stompX.sendAction<User>({
         destination: request.item._actions.delete,
         body: {},
         onSuccess: (resource) =>
@@ -2090,6 +2214,41 @@ function isCreateChatKittyExternalFileProperties(
     result.name !== undefined &&
     result.size !== undefined
   );
+}
+
+interface Calls {
+  localStream: MediaStream | null;
+
+  isMuted: boolean;
+
+  initialize(configuration: {
+    media: { audio: boolean; video: boolean };
+  }): void;
+
+  leaveCall(): void;
+
+  switchCamera(): void;
+  toggleMute(): void;
+
+  onParticipantAcceptedCall(
+    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+  ): ChatKittyUnsubscribe;
+
+  onParticipantRejectedCall(
+    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+  ): ChatKittyUnsubscribe;
+
+  onParticipantActive(
+    onNextOrObserver:
+      | ChatKittyObserver<{ user: User; stream: MediaStream }>
+      | ((user: User, stream: MediaStream) => void)
+  ): ChatKittyUnsubscribe;
+
+  onParticipantLeftCall(
+    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+  ): ChatKittyUnsubscribe;
+
+  close(): void;
 }
 
 export default ChatKitty;
