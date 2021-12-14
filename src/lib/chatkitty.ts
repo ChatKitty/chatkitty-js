@@ -234,7 +234,6 @@ export class ChatKitty {
   private readonly lostConnectionSubject = new Subject<void>();
   private readonly resumedConnectionSubject = new Subject<void>();
 
-  private currentUser?: CurrentUser;
   private writeFileGrant?: string;
   private chatSessions: Map<number, ChatSession> = new Map();
 
@@ -243,6 +242,8 @@ export class ChatKitty {
   private keyStrokesSubject = new Subject<SendKeystrokesRequest>();
 
   private isStartingSession = false;
+
+  currentUser?: CurrentUser;
 
   public Calls: Calls = new (class ChatKittyCalls {
     localStream: MediaStream | null = null;
