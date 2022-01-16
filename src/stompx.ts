@@ -1,13 +1,13 @@
-import { RxStomp, RxStompConfig, RxStompState } from '@stomp/rx-stomp';
-import { StompHeaders, Versions } from '@stomp/stompjs';
-import Axios, { AxiosInstance } from 'axios';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { v4 } from 'uuid';
+import {RxStomp, RxStompConfig, RxStompState} from '@stomp/rx-stomp';
+import {StompHeaders, Versions} from '@stomp/stompjs';
+import Axios, {AxiosInstance} from 'axios';
+import {Subscription} from 'rxjs';
+import {take} from 'rxjs/operators';
+import {v4} from 'uuid';
 
-import { version } from './environment/version';
+import {version} from './environment/version';
 
-let TransportFallback: { default: { new (arg: string): unknown } };
+let TransportFallback: { default: { new(arg: string): unknown } };
 
 import('sockjs-client')
   .then((sockjs) => {
@@ -16,7 +16,7 @@ import('sockjs-client')
   .catch((error) => {
     ErrorMessageTransportFallback.errorMessage = error.message;
 
-    TransportFallback = { default: ErrorMessageTransportFallback };
+    TransportFallback = {default: ErrorMessageTransportFallback};
   });
 
 class ErrorMessageTransportFallback {
@@ -25,7 +25,7 @@ class ErrorMessageTransportFallback {
   constructor() {
     throw new Error(
       'Encountered error when attempting to use transport fallback: ' +
-        ErrorMessageTransportFallback.errorMessage
+      ErrorMessageTransportFallback.errorMessage
     );
   }
 }
@@ -45,28 +45,20 @@ export default class StompX {
 
   private readonly topics: Map<string, Subscription> = new Map();
 
-  private readonly pendingActions: Map<
-    string,
+  private readonly pendingActions: Map<string,
     {
       types?: string[];
       action: (resource: unknown) => void
-    }
-  > = new Map();
+    }> = new Map();
 
-  private readonly pendingRelayErrors: Map<
-    string,
-    (error: StompXError) => void
-  > = new Map();
+  private readonly pendingRelayErrors: Map<string,
+    (error: StompXError) => void> = new Map();
 
-  private readonly pendingActionErrors: Map<
-    string,
-    (error: StompXError) => void
-  > = new Map();
+  private readonly pendingActionErrors: Map<string,
+    (error: StompXError) => void> = new Map();
 
-  private readonly eventHandlers: Map<
-    string,
-    Set<StompXEventHandler<unknown>>
-  > = new Map();
+  private readonly eventHandlers: Map<string,
+    Set<StompXEventHandler<unknown>>> = new Map();
 
   public initialized = false;
 
@@ -107,13 +99,13 @@ export default class StompX {
   public connect<U>(request: StompXConnectRequest<U>) {
     const host = this.host;
 
-    const headers: StompHeaders = {
+    const connectHeaders: StompHeaders = {
       'StompX-User': request.username,
       'StompX-User-Agent': `ChatKitty-JS/${version}`,
     };
 
     if (request.authParams) {
-      headers['StompX-Auth-Params'] = JSON.stringify(request.authParams);
+      connectHeaders['StompX-Auth-Params'] = JSON.stringify(request.authParams);
     }
 
     if (typeof WebSocket === 'function') {
@@ -134,10 +126,18 @@ export default class StompX {
 
     this.rxStomp.configure({
       ...this.rxStompConfig,
-      connectHeaders: headers,
+      connectHeaders,
     });
 
-    this.rxStomp.activate();
+    this.rxStomp.serverHeaders$.subscribe(headers => {
+      this.rxStomp.configure({
+        ...this.rxStompConfig,
+        connectHeaders: {
+          ...connectHeaders,
+          'StompX-Auth-Session-ID': headers['session'],
+        },
+      });
+    })
 
     this.rxStomp.connected$.subscribe(() => {
       this.relayResource<U>({
@@ -233,7 +233,7 @@ export default class StompX {
       if (error.error == 'AccessDeniedError') {
         const onResult = () => request.onError(error);
 
-        this.disconnect({ onSuccess: onResult, onError: onResult });
+        this.disconnect({onSuccess: onResult, onError: onResult});
       }
     });
 
@@ -244,6 +244,8 @@ export default class StompX {
         timestamp: new Date().toISOString(),
       });
     });
+
+    this.rxStomp.activate();
   }
 
   public relayResource<R>(request: StompXRelayResourceRequest<R>) {
@@ -402,7 +404,7 @@ export default class StompX {
       method: 'post',
       url: request.stream,
       data: data,
-      headers: { 'Content-Type': 'multipart/form-data', Grant: request.grant },
+      headers: {'Content-Type': 'multipart/form-data', Grant: request.grant},
       onUploadProgress: (progressEvent) => {
         request.progressListener?.onProgress?.(
           progressEvent.loaded / progressEvent.total
