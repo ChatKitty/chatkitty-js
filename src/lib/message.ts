@@ -31,7 +31,7 @@ export interface BaseMessage {
   channelId: number;
   createdTime: string;
   groupTag?: string;
-  reactionsSummary?: ReactionSummary;
+  reactions?: ReactionSummary[];
   repliesCount?: number;
   properties: unknown;
   _relays: MessageRelays;

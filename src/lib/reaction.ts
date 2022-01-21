@@ -20,10 +20,6 @@ export declare class ReactionRelays {
 }
 
 export declare class ReactionSummary {
-  emojis: ReactionSummaryEmoji[];
-}
-
-export declare class ReactionSummaryEmoji {
   emoji: Emoji;
   users: User[];
   count: number;
