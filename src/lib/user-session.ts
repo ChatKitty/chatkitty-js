@@ -26,15 +26,6 @@ export class StartedSessionResult extends ChatKittySucceededResult {
   }
 }
 
-export class StartSessionInProgressError extends ChatKittyError {
-  constructor() {
-    super(
-      'StartSessionInProgressError',
-      'A start session request is already in progress.'
-    );
-  }
-}
-
 export class SessionActiveError extends ChatKittyError {
   constructor() {
     super(
