@@ -586,7 +586,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       this.stompX.sendAction<Channel>({
         destination: currentUser._actions.createChannel,
-        events: ['me.channel.created', 'me.channel.upserted', 'member.channel.upserted'],
+        events: ['user.channel.created', 'user.channel.upserted', 'member.channel.upserted'],
         body: request,
         onSuccess: (channel) => {
           resolve(new CreatedChannelResult(channel));
@@ -1699,7 +1699,7 @@ export class ChatKitty {
 
     const unsubscribe = this.stompX.listenForEvent<Notification>({
       topic: currentUser._topics.notifications,
-      event: 'me.notification.created',
+      event: 'user.notification.created',
       onSuccess: (notification) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(notification);
@@ -1723,7 +1723,7 @@ export class ChatKitty {
 
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
-      event: 'me.channel.joined',
+      event: 'user.channel.joined',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);
@@ -1747,7 +1747,7 @@ export class ChatKitty {
 
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
-      event: 'me.channel.hidden',
+      event: 'user.channel.hidden',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);
@@ -1771,7 +1771,7 @@ export class ChatKitty {
 
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
-      event: 'me.channel.unhidden',
+      event: 'user.channel.unhidden',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);
@@ -1795,7 +1795,7 @@ export class ChatKitty {
 
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
-      event: 'me.channel.left',
+      event: 'user.channel.left',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);
@@ -1819,7 +1819,7 @@ export class ChatKitty {
 
     const unsubscribe = this.stompX.listenForEvent<Channel>({
       topic: currentUser._topics.channels,
-      event: 'me.channel.updated',
+      event: 'user.channel.updated',
       onSuccess: (channel) => {
         if (typeof onNextOrObserver === 'function') {
           onNextOrObserver(channel);

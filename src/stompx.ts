@@ -141,7 +141,7 @@ export default class StompX {
 
     this.rxStomp.connected$.subscribe(() => {
       this.relayResource<U>({
-        destination: '/application/v1/users/me.relay',
+        destination: '/application/v1/user.relay',
         onSuccess: (user) => {
           if (this.initialized) {
             request.onConnected(user);
@@ -187,11 +187,11 @@ export default class StompX {
 
             this.relayResource<{ grant: string }>({
               destination:
-                '/application/v1/users/me.write_file_access_grant.relay',
+                '/application/v1/user.write_file_access_grant.relay',
               onSuccess: (write) => {
                 this.relayResource<{ grant: string }>({
                   destination:
-                    '/application/v1/users/me.read_file_access_grant.relay',
+                    '/application/v1/user.read_file_access_grant.relay',
                   onSuccess: (read) => {
                     request.onSuccess(user, write.grant, read.grant);
 
