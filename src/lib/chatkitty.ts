@@ -18,6 +18,9 @@ import {
   CreateChannelRequest,
   CreateChannelResult,
   CreatedChannelResult,
+  DeleteChannelRequest,
+  DeleteChannelResult,
+  DeletedChannelResult,
   DirectChannel,
   GetChannelMembersRequest,
   GetChannelResult,
@@ -566,6 +569,23 @@ export class ChatKitty {
         body: request.channel,
         onSuccess: (channel) => {
           resolve(new UpdatedChannelResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  public deleteChannel(
+    request: DeleteChannelRequest
+  ): Promise<DeleteChannelResult> {
+    return new Promise((resolve) => {
+      this.stompX.sendAction<void>({
+        destination: request.channel._actions.delete,
+        body: {},
+        onSuccess: () => {
+          resolve(new DeletedChannelResult());
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));

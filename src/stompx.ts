@@ -237,7 +237,9 @@ export default class StompX {
       }
     });
 
-    this.rxStomp.webSocketErrors$.subscribe(() => {
+    this.rxStomp.webSocketErrors$.subscribe((error) => {
+      console.error(error);
+
       request.onError({
         error: 'ChatKittyConnectionError',
         message: 'Could not connect to ChatKitty',

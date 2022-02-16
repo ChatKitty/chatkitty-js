@@ -66,6 +66,7 @@ export declare class ChannelActions {
   call: string;
   triggerEvent: string;
   update: string;
+  delete: string;
   clearHistory: string;
   hide: string;
   createThread: string;
@@ -353,6 +354,21 @@ export type UpdateChannelResult =
 
 export class UpdatedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export declare class DeleteChannelRequest {
+  channel: Channel;
+}
+
+export type DeleteChannelResult =
+  | ChatKittyResult<DeletedChannelResult>
+  | DeletedChannelResult
+  | ChatKittyFailedResult;
+
+export class DeletedChannelResult extends ChatKittySucceededResult {
+  constructor() {
     super();
   }
 }
