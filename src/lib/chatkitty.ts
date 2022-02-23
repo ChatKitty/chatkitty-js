@@ -203,7 +203,7 @@ import {
 } from './user-session';
 
 export class ChatKitty {
-  protected static readonly _instances = new Map<string, ChatKitty>();
+  private static readonly _instances = new Map<string, ChatKitty>();
 
   public static getInstance(apiKey: string): ChatKitty {
     let instance = ChatKitty._instances.get(apiKey);
@@ -227,9 +227,9 @@ export class ChatKitty {
     return '/application/v1/users/' + id + '.relay';
   }
 
-  protected readonly stompX: StompX;
+  private readonly stompX: StompX;
 
-  protected readonly currentUserSubject = new BehaviorSubject<CurrentUser | null>(
+  private readonly currentUserSubject = new BehaviorSubject<CurrentUser | null>(
     null
   );
 

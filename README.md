@@ -11,9 +11,7 @@
 
 <p align="center"><em>The example above was created with ChatKitty. Check it out at <a href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em></p>
 
-<a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>  
-
-[![Build Status](https://travis-ci.com/ChatKitty/chatkitty-js.svg?branch=master)](https://travis-ci.com/ChatKitty/chatkitty-js)
+<a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>
 
 Features
 ------------
@@ -95,7 +93,7 @@ begin building chat with ChatKitty. After creating your account, create a ChatKi
 and copy its API key from your application's setting page.
 
 ### Initialize the SDK with your API key
-With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.github.io/chatkitty-js/classes/_lib_chatkitty_.chatkitty.html):
+With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.github.io/chatkitty-js/classes/default.html):
 ```js
 const kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
 ```
