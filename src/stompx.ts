@@ -117,7 +117,7 @@ export default class StompX {
     } else {
       this.rxStompConfig.webSocketFactory = () => {
         return new TransportFallback.default(
-          `${this.httpScheme}://${host}/rtm?api_key=${encodeURIComponent(
+          `${this.httpScheme}://${host}/rtm?api-key=${encodeURIComponent(
             request.apiKey
           )}`
         );
