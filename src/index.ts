@@ -1,7 +1,5 @@
 import 'text-encoding';
 
-import ChatKitty from './lib/chatkitty';
-
 export * from './lib/channel';
 export * from './lib/chat-session';
 export * from './lib/current-user';
@@ -21,5 +19,6 @@ export * from './lib/thread';
 export * from './lib/user';
 export * from './lib/user-block-list-item';
 export * from './lib/user-session';
+export { ChatKitty, Calls } from './lib/chatkitty';
 
-export default ChatKitty;
+export { ChatKittyImpl as default } from './lib/chatkitty';

@@ -1,7 +1,7 @@
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
-import { environment } from '../environment/environment';
+import {environment} from '../environment/environment';
 import StompX from '../stompx';
 
 import {
@@ -88,7 +88,8 @@ import {
 import {
   Keystrokes,
   SendChannelKeystrokesRequest,
-  SendKeystrokesRequest, SendThreadKeystrokesRequest
+  SendKeystrokesRequest,
+  SendThreadKeystrokesRequest
 } from './keystrokes';
 import {
   DeleteMessageForMeRequest,
@@ -127,14 +128,15 @@ import {
   SendMessageReplyRequest,
   SendMessageRequest,
   SendMessageResult,
-  SendTextMessageRequest, SendThreadMessageRequest,
+  SendTextMessageRequest,
+  SendThreadMessageRequest,
   SentFileMessageResult,
   SentTextMessageResult,
   TextUserMessage
 } from './message';
 import {Notification} from "./notification";
-import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
-import { ChatKittyPaginator } from './pagination';
+import {ChatKittyObserver, ChatKittyUnsubscribe} from './observer';
+import {ChatKittyPaginator} from './pagination';
 import {
   GetReactionsRequest,
   GetReactionsResult,
@@ -163,14 +165,18 @@ import {
   CreateThreadRequest,
   CreateThreadResult,
   GetThreadChannelRequest,
-  GetThreadChannelResult, GetThreadChannelSucceededResult,
+  GetThreadChannelResult,
+  GetThreadChannelSucceededResult,
   GetThreadMessageRequest,
-  GetThreadMessageResult, GetThreadMessageSucceededResult,
+  GetThreadMessageResult,
+  GetThreadMessageSucceededResult,
   GetThreadsRequest,
-  GetThreadsResult, GetThreadsSucceededResult,
+  GetThreadsResult,
+  GetThreadsSucceededResult,
   ReadThreadRequest,
   ReadThreadResult,
-  ReadThreadSucceededResult, Thread
+  ReadThreadSucceededResult,
+  Thread
 } from './thread';
 import {
   BlockUserRequest,
@@ -202,19 +208,19 @@ import {
   StartSessionResult,
 } from './user-session';
 
-export class ChatKitty {
-  private static readonly _instances = new Map<string, ChatKitty>();
+export class ChatKittyImpl implements ChatKitty {
+  private static readonly _instances = new Map<string, ChatKittyImpl>();
 
   public static getInstance(apiKey: string): ChatKitty {
-    let instance = ChatKitty._instances.get(apiKey);
+    let instance = ChatKittyImpl._instances.get(apiKey);
 
     if (instance !== undefined) {
       return instance;
     }
 
-    instance = new ChatKitty({ apiKey: apiKey });
+    instance = new ChatKittyImpl({ apiKey: apiKey });
 
-    ChatKitty._instances.set(apiKey, instance);
+    ChatKittyImpl._instances.set(apiKey, instance);
 
     return instance;
   }
@@ -245,7 +251,7 @@ export class ChatKitty {
 
   currentUser?: CurrentUser;
 
-  public Calls: Calls = new (class ChatKittyCalls {
+  Calls: Calls = new (class ChatKittyCalls {
     localStream: MediaStream | null = null;
 
     isMuted = false;
@@ -351,7 +357,7 @@ export class ChatKitty {
       });
   }
 
-  public startSession(
+  startSession(
     request: StartSessionRequest
   ): Promise<StartSessionResult> {
     if (this.stompX.initialized) {
@@ -395,7 +401,7 @@ export class ChatKitty {
     });
   }
 
-  public endSession(): Promise<void> {
+  endSession(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.stompX.disconnect({
         onSuccess: () => {
@@ -411,7 +417,7 @@ export class ChatKitty {
     });
   }
 
-  public getCurrentUser(): Promise<GetCurrentUserResult> {
+  getCurrentUser(): Promise<GetCurrentUserResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -431,7 +437,7 @@ export class ChatKitty {
     });
   }
 
-  public onCurrentUserChanged(
+  onCurrentUserChanged(
     onNextOrObserver:
       | ChatKittyObserver<CurrentUser | null>
       | ((user: CurrentUser | null) => void)
@@ -447,7 +453,7 @@ export class ChatKitty {
     return () => subscription.unsubscribe();
   }
 
-  public onCurrentUserOnline(
+  onCurrentUserOnline(
     onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.resumedConnectionSubject.subscribe(() => {
@@ -463,7 +469,7 @@ export class ChatKitty {
     return () => subscription.unsubscribe();
   }
 
-  public onCurrentUserOffline(
+  onCurrentUserOffline(
     onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
   ): ChatKittyUnsubscribe {
     const subscription = this.lostConnectionSubject.subscribe(() => {
@@ -479,7 +485,7 @@ export class ChatKitty {
     return () => subscription.unsubscribe();
   }
 
-  public updateCurrentUser(
+  updateCurrentUser(
     update: (user: CurrentUser) => CurrentUser
   ): Promise<UpdateCurrentUserResult> {
     const currentUser = this.currentUser;
@@ -504,7 +510,7 @@ export class ChatKitty {
     });
   }
 
-  public updateCurrentUserDisplayPicture(
+  updateCurrentUserDisplayPicture(
     request: UpdateCurrentUserDisplayPictureRequest
   ): Promise<UpdateCurrentUserDisplayPictureResult> {
     const currentUser = this.currentUser;
@@ -560,7 +566,7 @@ export class ChatKitty {
     });
   }
 
-  public updateChannel(
+  updateChannel(
     request: UpdateChannelRequest
   ): Promise<UpdateChannelResult> {
     return new Promise((resolve) => {
@@ -577,7 +583,7 @@ export class ChatKitty {
     });
   }
 
-  public deleteChannel(
+  deleteChannel(
     request: DeleteChannelRequest
   ): Promise<DeleteChannelResult> {
     return new Promise((resolve) => {
@@ -594,7 +600,7 @@ export class ChatKitty {
     });
   }
 
-  public createChannel(
+  createChannel(
     request: CreateChannelRequest
   ): Promise<CreateChannelResult> {
     const currentUser = this.currentUser;
@@ -618,7 +624,7 @@ export class ChatKitty {
     });
   }
 
-  public getChannels(request?: GetChannelsRequest): Promise<GetChannelsResult> {
+  getChannels(request?: GetChannelsRequest): Promise<GetChannelsResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -661,10 +667,10 @@ export class ChatKitty {
     });
   }
 
-  public getChannel(id: number): Promise<GetChannelResult> {
+  getChannel(id: number): Promise<GetChannelResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
-        destination: ChatKitty.channelRelay(id),
+        destination: ChatKittyImpl.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelSucceededResult(channel));
         },
@@ -675,7 +681,7 @@ export class ChatKitty {
     });
   }
 
-  public joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
+  joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -702,7 +708,7 @@ export class ChatKitty {
     });
   }
 
-  public leaveChannel(
+  leaveChannel(
     request: LeaveChannelRequest
   ): Promise<LeaveChannelResult> {
     const currentUser = this.currentUser;
@@ -731,7 +737,7 @@ export class ChatKitty {
     });
   }
 
-  public addChannelModerator(
+  addChannelModerator(
     request: AddChannelModeratorRequest
   ): Promise<AddChannelModeratorResult> {
     const destination = request.channel._actions.addModerator;
@@ -754,7 +760,7 @@ export class ChatKitty {
     });
   }
 
-  public getUnreadChannelsCount(
+  getUnreadChannelsCount(
     request?: GetUnreadChannelsRequest
   ): Promise<GetCountResult> {
     const currentUser = this.currentUser;
@@ -785,7 +791,7 @@ export class ChatKitty {
     });
   }
 
-  public getChannelUnread(
+  getChannelUnread(
     request: GetChannelUnreadRequest
   ): Promise<GetChannelUnreadResult> {
     const currentUser = this.currentUser;
@@ -807,7 +813,7 @@ export class ChatKitty {
     });
   }
 
-  public readChannel(request: ReadChannelRequest): Promise<ReadChannelResult> {
+  readChannel(request: ReadChannelRequest): Promise<ReadChannelResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -824,7 +830,7 @@ export class ChatKitty {
     });
   }
 
-  public muteChannel(request: MuteChannelRequest): Promise<MuteChannelResult> {
+  muteChannel(request: MuteChannelRequest): Promise<MuteChannelResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -847,7 +853,7 @@ export class ChatKitty {
     });
   }
 
-  public unmuteChannel(
+  unmuteChannel(
     request: UnmuteChannelRequest
   ): Promise<UnmuteChannelResult> {
     const currentUser = this.currentUser;
@@ -872,7 +878,7 @@ export class ChatKitty {
     });
   }
 
-  public clearChannelHistory(
+  clearChannelHistory(
     request: ClearChannelHistoryRequest
   ): Promise<ClearChannelHistoryResult> {
     const currentUser = this.currentUser;
@@ -892,7 +898,7 @@ export class ChatKitty {
     });
   }
 
-  public hideChannel(request: HideChannelRequest): Promise<HideChannelResult> {
+  hideChannel(request: HideChannelRequest): Promise<HideChannelResult> {
     return new Promise((resolve) => {
       this.stompX.sendAction<DirectChannel>({
         destination: request.channel._actions.hide,
@@ -904,7 +910,7 @@ export class ChatKitty {
     });
   }
 
-  public startChatSession(
+  startChatSession(
     request: StartChatSessionRequest
   ): StartChatSessionResult {
     const onReceivedMessage = request.onReceivedMessage;
@@ -1234,7 +1240,7 @@ export class ChatKitty {
     return new StartedChatSessionResult(session);
   }
 
-  public sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
+  sendMessage(request: SendMessageRequest): Promise<SendMessageResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1352,7 +1358,7 @@ export class ChatKitty {
     });
   }
 
-  public getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
+  getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1388,7 +1394,7 @@ export class ChatKitty {
     });
   }
 
-  public getUnreadMessagesCount(
+  getUnreadMessagesCount(
     request?: GetUnreadMessagesCountRequest
   ): Promise<GetCountResult> {
     const currentUser = this.currentUser;
@@ -1419,7 +1425,7 @@ export class ChatKitty {
     });
   }
 
-  public triggerEvent(
+  triggerEvent(
     request: TriggerEventRequest
   ): Promise<TriggerEventResult> {
     const currentUser = this.currentUser;
@@ -1445,7 +1451,7 @@ export class ChatKitty {
     });
   }
 
-  public readMessage(request: ReadMessageRequest): Promise<ReadMessageResult> {
+  readMessage(request: ReadMessageRequest): Promise<ReadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.sendAction<never>({
         destination: request.message._actions.read,
@@ -1456,7 +1462,7 @@ export class ChatKitty {
     });
   }
 
-  public getLastReadMessage(
+  getLastReadMessage(
     request: GetLastReadMessageRequest
   ): Promise<GetLastReadMessageResult> {
     return new Promise((resolve) => {
@@ -1475,7 +1481,7 @@ export class ChatKitty {
     });
   }
 
-  public editMessage(request: EditMessageRequest): Promise<EditMessageResult> {
+  editMessage(request: EditMessageRequest): Promise<EditMessageResult> {
     return new Promise((resolve) => {
       this.stompX.sendAction<Message>({
         destination: request.message._actions.edit,
@@ -1489,7 +1495,7 @@ export class ChatKitty {
     });
   }
 
-  public getMessageRepliesCount(
+  getMessageRepliesCount(
     request: GetMessageRepliesCountRequest
   ): Promise<GetCountResult> {
     return new Promise((resolve) => {
@@ -1505,7 +1511,7 @@ export class ChatKitty {
     });
   }
 
-  public getMessageChannel(
+  getMessageChannel(
     request: GetMessageChannelRequest
   ): Promise<GetMessageChannelResult> {
     return new Promise((resolve) => {
@@ -1521,7 +1527,7 @@ export class ChatKitty {
     });
   }
 
-  public getMessageParent(
+  getMessageParent(
     request: GetMessageParentRequest
   ): Promise<GetMessageParentResult> {
     return new Promise((resolve) => {
@@ -1543,7 +1549,7 @@ export class ChatKitty {
     });
   }
 
-  public createThread(request: CreateThreadRequest): Promise<CreateThreadResult> {
+  createThread(request: CreateThreadRequest): Promise<CreateThreadResult> {
     return new Promise((resolve) => {
       this.stompX.sendAction<Thread>({
         destination: request.channel._actions.createThread,
@@ -1554,7 +1560,7 @@ export class ChatKitty {
     });
   }
 
-  public getThreads(request: GetThreadsRequest): Promise<GetThreadsResult> {
+  getThreads(request: GetThreadsRequest): Promise<GetThreadsResult> {
     const parameters: { includeMainThread?: false; standalone?: true } = {};
 
     if (request.filter?.includeMainThread === false) {
@@ -1579,7 +1585,7 @@ export class ChatKitty {
     });
   }
 
-  public getThreadChannel(request: GetThreadChannelRequest): Promise<GetThreadChannelResult> {
+  getThreadChannel(request: GetThreadChannelRequest): Promise<GetThreadChannelResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
         destination: request.thread._relays.channel,
@@ -1593,7 +1599,7 @@ export class ChatKitty {
     });
   }
 
-  public getThreadMessage(request: GetThreadMessageRequest): Promise<GetThreadMessageResult> {
+  getThreadMessage(request: GetThreadMessageRequest): Promise<GetThreadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Message>({
         destination: request.thread._relays.message,
@@ -1607,7 +1613,7 @@ export class ChatKitty {
     });
   }
 
-  public readThread(request: ReadThreadRequest): Promise<ReadThreadResult> {
+  readThread(request: ReadThreadRequest): Promise<ReadThreadResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1624,7 +1630,7 @@ export class ChatKitty {
     });
   }
 
-  public reactToMessage(
+  reactToMessage(
     request: ReactToMessageRequest
   ): Promise<ReactToMessageResult> {
     return new Promise((resolve) => {
@@ -1637,7 +1643,7 @@ export class ChatKitty {
     });
   }
 
-  public getReactions(
+  getReactions(
     request: GetReactionsRequest
   ): Promise<GetReactionsResult> {
     return new Promise((resolve) => {
@@ -1653,7 +1659,7 @@ export class ChatKitty {
     });
   }
 
-  public removeReaction(
+  removeReaction(
     request: RemoveReactionRequest
   ): Promise<RemoveReactionResult> {
     return new Promise((resolve) => {
@@ -1668,7 +1674,7 @@ export class ChatKitty {
     });
   }
 
-  public deleteMessageForMe(
+  deleteMessageForMe(
     request: DeleteMessageForMeRequest
   ): Promise<DeleteMessageForMeResult> {
     return new Promise((resolve) => {
@@ -1682,7 +1688,7 @@ export class ChatKitty {
     });
   }
 
-  public deleteMessage(
+  deleteMessage(
     request: DeleteMessageRequest
   ): Promise<DeleteMessageResult> {
     return new Promise((resolve) => {
@@ -1696,7 +1702,7 @@ export class ChatKitty {
     });
   }
 
-  public sendKeystrokes(request: SendKeystrokesRequest) {
+  sendKeystrokes(request: SendKeystrokesRequest) {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1706,7 +1712,7 @@ export class ChatKitty {
     this.keyStrokesSubject.next(request);
   }
 
-  public onNotificationReceived(
+  onNotificationReceived(
     onNextOrObserver:
       | ChatKittyObserver<Notification>
       | ((notification: Notification) => void)
@@ -1732,7 +1738,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onChannelJoined(
+  onChannelJoined(
     onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1756,7 +1762,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onChannelHidden(
+  onChannelHidden(
     onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1780,7 +1786,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onChannelUnhidden(
+  onChannelUnhidden(
     onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1804,7 +1810,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onChannelLeft(
+  onChannelLeft(
     onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1828,7 +1834,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onChannelUpdated(
+  onChannelUpdated(
     onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1852,7 +1858,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public getChannelMembers(
+  getChannelMembers(
     request: GetChannelMembersRequest
   ): Promise<GetUsersResult> {
     const currentUser = this.currentUser;
@@ -1875,7 +1881,7 @@ export class ChatKitty {
     });
   }
 
-  public getReadReceipts(
+  getReadReceipts(
     request: GetReadReceiptsRequest
   ): Promise<GetReadReceiptsResult> {
     const currentUser = this.currentUser;
@@ -1897,7 +1903,7 @@ export class ChatKitty {
     });
   }
 
-  public getUsers(request?: GetUsersRequest): Promise<GetUsersResult> {
+  getUsers(request?: GetUsersRequest): Promise<GetUsersResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1924,7 +1930,7 @@ export class ChatKitty {
     });
   }
 
-  public getUsersCount(request?: GetUsersRequest): Promise<GetCountResult> {
+  getUsersCount(request?: GetUsersRequest): Promise<GetCountResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1951,7 +1957,7 @@ export class ChatKitty {
     });
   }
 
-  public onUserPresenceChanged(
+  onUserPresenceChanged(
     onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -1975,7 +1981,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public inviteUser(request: InviteUserRequest): Promise<InviteUserResult> {
+  inviteUser(request: InviteUserRequest): Promise<InviteUserResult> {
     const destination = request.channel._actions.invite;
 
     if (!destination) {
@@ -1996,7 +2002,7 @@ export class ChatKitty {
     });
   }
 
-  public onParticipantStartedTyping(
+  onParticipantStartedTyping(
     onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -2020,7 +2026,7 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public onParticipantStoppedTyping(
+  onParticipantStoppedTyping(
     onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
   ): ChatKittyUnsubscribe {
     const currentUser = this.currentUser;
@@ -2044,10 +2050,10 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  public getUser(param: number): Promise<GetUserResult> {
+  getUser(param: number): Promise<GetUserResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<User>({
-        destination: ChatKitty.userRelay(param),
+        destination: ChatKittyImpl.userRelay(param),
         onSuccess: (user) => {
           resolve(new GetUserSucceededResult(user));
         },
@@ -2055,7 +2061,7 @@ export class ChatKitty {
     });
   }
 
-  public getUserIsChannelMember(
+  getUserIsChannelMember(
     request: GetUserIsChannelMemberRequest
   ): Promise<GetUserIsChannelMemberResult> {
     const currentUser = this.currentUser;
@@ -2080,7 +2086,7 @@ export class ChatKitty {
     });
   }
 
-  public blockUser(request: BlockUserRequest): Promise<BlockUserResult> {
+  blockUser(request: BlockUserRequest): Promise<BlockUserResult> {
     return new Promise((resolve) => {
       this.stompX.sendAction<User>({
         destination: `/application/v1/users/${request.user.id}.block`,
@@ -2093,7 +2099,7 @@ export class ChatKitty {
     });
   }
 
-  public getUserBlockList(): Promise<GetUserBlockListResult> {
+  getUserBlockList(): Promise<GetUserBlockListResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -2113,7 +2119,7 @@ export class ChatKitty {
     });
   }
 
-  public deleteUserBlockListItem(
+  deleteUserBlockListItem(
     request: DeleteUserBlockListItemRequest
   ): Promise<DeleteUserBlockListItemResult> {
     return new Promise((resolve) => {
@@ -2224,7 +2230,224 @@ function isCreateChatKittyExternalFileProperties(
   );
 }
 
-interface Calls {
+export interface ChatKitty {
+  currentUser?: CurrentUser;
+  Calls: Calls;
+
+  startSession(
+    request: StartSessionRequest
+  ): Promise<StartSessionResult>;
+
+  endSession(): Promise<void>;
+
+  getCurrentUser(): Promise<GetCurrentUserResult>;
+
+  onCurrentUserChanged(
+    onNextOrObserver:
+      | ChatKittyObserver<CurrentUser | null>
+      | ((user: CurrentUser | null) => void)
+  ): ChatKittyUnsubscribe;
+
+  onCurrentUserOnline(
+    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
+  ): ChatKittyUnsubscribe;
+
+  onCurrentUserOffline(
+    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
+  ): ChatKittyUnsubscribe;
+
+  updateCurrentUser(
+    update: (user: CurrentUser) => CurrentUser
+  ): Promise<UpdateCurrentUserResult>;
+
+  updateCurrentUserDisplayPicture(
+    request: UpdateCurrentUserDisplayPictureRequest
+  ): Promise<UpdateCurrentUserDisplayPictureResult>;
+
+  updateChannel(
+    request: UpdateChannelRequest
+  ): Promise<UpdateChannelResult>;
+
+  deleteChannel(
+    request: DeleteChannelRequest
+  ): Promise<DeleteChannelResult>;
+
+  createChannel(
+    request: CreateChannelRequest
+  ): Promise<CreateChannelResult>;
+
+  getChannels(request?: GetChannelsRequest): Promise<GetChannelsResult>;
+
+  getChannel(id: number): Promise<GetChannelResult>;
+
+  joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult>;
+
+  leaveChannel(
+    request: LeaveChannelRequest
+  ): Promise<LeaveChannelResult>;
+
+  addChannelModerator(
+    request: AddChannelModeratorRequest
+  ): Promise<AddChannelModeratorResult>;
+
+  getUnreadChannelsCount(
+    request?: GetUnreadChannelsRequest
+  ): Promise<GetCountResult>;
+
+  getChannelUnread(
+    request: GetChannelUnreadRequest
+  ): Promise<GetChannelUnreadResult>;
+
+  readChannel(request: ReadChannelRequest): Promise<ReadChannelResult>;
+
+  muteChannel(request: MuteChannelRequest): Promise<MuteChannelResult>;
+
+  unmuteChannel(
+    request: UnmuteChannelRequest
+  ): Promise<UnmuteChannelResult>;
+
+  clearChannelHistory(
+    request: ClearChannelHistoryRequest
+  ): Promise<ClearChannelHistoryResult>;
+
+  hideChannel(request: HideChannelRequest): Promise<HideChannelResult>;
+
+  startChatSession(
+    request: StartChatSessionRequest
+  ): StartChatSessionResult;
+
+  sendMessage(request: SendMessageRequest): Promise<SendMessageResult>;
+
+  getMessages(request: GetMessagesRequest): Promise<GetMessagesResult>;
+
+  getUnreadMessagesCount(
+    request?: GetUnreadMessagesCountRequest
+  ): Promise<GetCountResult>;
+
+  triggerEvent(
+    request: TriggerEventRequest
+  ): Promise<TriggerEventResult>;
+
+  readMessage(request: ReadMessageRequest): Promise<ReadMessageResult>;
+
+  getLastReadMessage(
+    request: GetLastReadMessageRequest
+  ): Promise<GetLastReadMessageResult>;
+
+  editMessage(request: EditMessageRequest): Promise<EditMessageResult>;
+
+  getMessageRepliesCount(
+    request: GetMessageRepliesCountRequest
+  ): Promise<GetCountResult>;
+
+  getMessageChannel(
+    request: GetMessageChannelRequest
+  ): Promise<GetMessageChannelResult>;
+
+  getMessageParent(
+    request: GetMessageParentRequest
+  ): Promise<GetMessageParentResult>;
+
+  createThread(request: CreateThreadRequest): Promise<CreateThreadResult>;
+
+  getThreads(request: GetThreadsRequest): Promise<GetThreadsResult>;
+
+  getThreadChannel(request: GetThreadChannelRequest): Promise<GetThreadChannelResult>;
+
+  getThreadMessage(request: GetThreadMessageRequest): Promise<GetThreadMessageResult>;
+
+  readThread(request: ReadThreadRequest): Promise<ReadThreadResult>;
+
+  reactToMessage(
+    request: ReactToMessageRequest
+  ): Promise<ReactToMessageResult>;
+
+  getReactions(
+    request: GetReactionsRequest
+  ): Promise<GetReactionsResult>;
+
+  removeReaction(
+    request: RemoveReactionRequest
+  ): Promise<RemoveReactionResult>;
+
+  deleteMessageForMe(
+    request: DeleteMessageForMeRequest
+  ): Promise<DeleteMessageForMeResult>;
+
+  deleteMessage(
+    request: DeleteMessageRequest
+  ): Promise<DeleteMessageResult>;
+
+  sendKeystrokes(request: SendKeystrokesRequest): void;
+
+  onNotificationReceived(
+    onNextOrObserver:
+      | ChatKittyObserver<Notification>
+      | ((notification: Notification) => void)
+  ): ChatKittyUnsubscribe;
+
+  onChannelJoined(
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe;
+
+  onChannelHidden(
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe;
+
+  onChannelUnhidden(
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe;
+
+  onChannelLeft(
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe;
+
+  onChannelUpdated(
+    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
+  ): ChatKittyUnsubscribe;
+
+  getChannelMembers(
+    request: GetChannelMembersRequest
+  ): Promise<GetUsersResult>;
+
+  getReadReceipts(
+    request: GetReadReceiptsRequest
+  ): Promise<GetReadReceiptsResult>;
+
+  getUsers(request?: GetUsersRequest): Promise<GetUsersResult>;
+
+  getUsersCount(request?: GetUsersRequest): Promise<GetCountResult>;
+
+  onUserPresenceChanged(
+    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
+  ): ChatKittyUnsubscribe;
+
+  inviteUser(request: InviteUserRequest): Promise<InviteUserResult>;
+
+  onParticipantStartedTyping(
+    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
+  ): ChatKittyUnsubscribe;
+
+  onParticipantStoppedTyping(
+    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
+  ): ChatKittyUnsubscribe;
+
+  getUser(param: number): Promise<GetUserResult>;
+
+  getUserIsChannelMember(
+    request: GetUserIsChannelMemberRequest
+  ): Promise<GetUserIsChannelMemberResult>;
+
+  blockUser(request: BlockUserRequest): Promise<BlockUserResult>;
+
+  getUserBlockList(): Promise<GetUserBlockListResult>;
+
+  deleteUserBlockListItem(
+    request: DeleteUserBlockListItemRequest
+  ): Promise<DeleteUserBlockListItemResult>;
+}
+
+export interface Calls {
   localStream: MediaStream | null;
 
   isMuted: boolean;
@@ -2259,4 +2482,4 @@ interface Calls {
   close(): void;
 }
 
-export default ChatKitty;
+export default ChatKittyImpl;
