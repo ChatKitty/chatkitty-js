@@ -39,6 +39,7 @@
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
     "doc": "run-s doc:html && open-cli build/docs/index.html",
     "doc:html": "typedoc --name \"ChatKitty JS SDK\" --out docs src/index.ts --excludePrivate --plugin typedoc-plugin-extras --favicon .docs/favicon.ico",
+    "doc:md": "typedoc --name \"ChatKitty JS SDK\" --out docs src/index.ts --excludePrivate --plugin typedoc-plugin-markdown",
     "version": "standard-version",
     "reset-hard": "git clean -dfx && git reset --hard && npm i",
     "prepare-release": "run-s reset-hard src/tests cov:check doc:html version doc:publish"
@@ -86,6 +87,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "typedoc": "^0.22.12",
     "typedoc-plugin-extras": "^2.2.3",
+    "typedoc-plugin-markdown": "^3.11.14",
     "typescript": "^4.4.4"
   },
   "files": [

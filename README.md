@@ -1,17 +1,29 @@
 # chatkitty-js
 
 <p align="center">
-  <img src="https://www.chatkitty.com/images/banner-logo-dark.png" alt="ChatKitty: Cloud Chat Platform" width="315">
+  <img src="https://www.chatkitty.com/images/banner-logo-dark.png"
+       alt="ChatKitty: Cloud Chat Platform" width="315"/>
   <br/>
 </p>
 
-<p align="center">ChatKitty helps you build real-time chat without any back-end.</p>
+<p align="center">
+  ChatKitty helps you build real-time chat without any back-end.
+</p>
 
-<p align="center"><img src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-4/screenshot-simple-typing-indicator.png" width=344 alt="Realtime Chat Demo"></p>
+<p align="center">
+  <img
+      src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-4/screenshot-simple-typing-indicator.png"
+      width="344" alt="Realtime Chat Demo"/>
+</p>
 
-<p align="center"><em>The example above was created with ChatKitty. Check it out at <a href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em></p>
+<p align="center">
+  <em>The example above was created with ChatKitty. Check it out at <a
+      href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em>
+</p>
 
-<a href="https://www.npmjs.com/package/chatkitty"><img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"></a>
+<a href="https://www.npmjs.com/package/chatkitty">
+  <img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"/>
+</a>
 
 Features
 ------------
