@@ -234,6 +234,8 @@ export default class StompX {
         const onResult = () => request.onError(error);
 
         this.disconnect({onSuccess: onResult, onError: onResult});
+      } else {
+        request.onError(error);
       }
     });
 
