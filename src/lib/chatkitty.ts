@@ -522,11 +522,11 @@ export class ChatKittyImpl implements ChatKitty {
     return new Promise((resolve) => {
       const file = request.file;
 
-      if (file instanceof File) {
+      if ((file as {uri: string}).uri) {
         this.stompX.sendToStream<CurrentUser>({
           stream: currentUser._streams.displayPicture,
           grant: <string>this.writeFileGrant,
-          blob: file,
+          file: file as File,
           onSuccess: (user) => {
             resolve(new UpdatedCurrentUserDisplayPictureResult(user));
           },
@@ -1325,7 +1325,7 @@ export class ChatKittyImpl implements ChatKitty {
           this.stompX.sendToStream<FileUserMessage>({
             stream: stream,
             grant: <string>this.writeFileGrant,
-            blob: file as Blob,
+            file: file as File,
             properties: properties,
             onSuccess: (message) => {
               resolve(

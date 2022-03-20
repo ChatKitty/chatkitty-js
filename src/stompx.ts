@@ -396,7 +396,13 @@ export default class StompX {
   public sendToStream<R>(request: StompXSendToStreamRequest<R>) {
     const data = new FormData();
 
-    data.append('file', request.blob);
+    let file = request.file;
+
+    if (!(file instanceof File)) {
+      file = StompX.dataUriToFile(file.uri, file.name);
+    }
+
+    data.append('file', file);
 
     request.properties?.forEach((value, key) => {
       data.append(key, JSON.stringify(value));
@@ -439,6 +445,20 @@ export default class StompX {
     this.rxStomp.connected$.pipe(take(1)).subscribe(() => {
       action();
     });
+  }
+
+  private static dataUriToFile(url: string, name: string): File {
+    const arr = url.split(','), mime = arr[0].match(/:(.*?);/)?.[1], bstr = atob(arr[1]);
+
+    let n = bstr.length;
+
+    const u8arr = new Uint8Array(n)
+
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], name, {type:mime});
   }
 
   private static generateSubscriptionId(): string {
@@ -527,7 +547,7 @@ export declare class StompXRelayResourceRequest<R> {
 export declare class StompXSendToStreamRequest<R> {
   stream: string;
   grant: string;
-  blob: Blob;
+  file: File | {uri: string, name: string};
   properties?: Map<string, unknown>;
   onSuccess?: (resource: R) => void;
   onError?: (error: StompXError) => void;
