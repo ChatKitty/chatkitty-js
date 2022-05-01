@@ -105,13 +105,13 @@ export default class StompX {
     };
 
     if (request.authParams) {
-      connectHeaders['StompX-Auth-Params'] = JSON.stringify(request.authParams);
+      connectHeaders['StompX-Auth-Params'] = btoa(JSON.stringify(request.authParams));
     }
 
     if (typeof WebSocket === 'function') {
       this.rxStompConfig.brokerURL = `${
         this.wsScheme
-      }://${host}/rtm/websocket?api_key=${encodeURIComponent(
+      }://${host}/rtm/websocket?api-key=${encodeURIComponent(
         request.apiKey
       )}`;
     } else {

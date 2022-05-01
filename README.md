@@ -1,7 +1,7 @@
 # chatkitty-js
 
 <p align="center">
-  <img src="https://www.chatkitty.com/images/banner-logo-dark.png"
+  <img src="https://www.chatkitty.com/img/banner-logo-dark.png"
        alt="ChatKitty: Cloud Chat Platform" width="315"/>
   <br/>
 </p>
@@ -12,7 +12,7 @@
 
 <p align="center">
   <img
-      src="https://www.chatkitty.com/images/blog/posts/building-a-chat-app-with-react-native-and-gifted-chat-part-4/screenshot-simple-typing-indicator.png"
+      src="https://chatkitty.com/img/screenshots/chatkitty-demo-app.png"
       width="344" alt="Realtime Chat Demo"/>
 </p>
 
