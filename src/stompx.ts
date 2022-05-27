@@ -1,6 +1,7 @@
 import {RxStomp, RxStompConfig, RxStompState} from '@stomp/rx-stomp';
 import {StompHeaders, Versions} from '@stomp/stompjs';
 import Axios, {AxiosInstance} from 'axios';
+import { encode } from 'base-64';
 import {Subscription} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {v4} from 'uuid';
@@ -105,7 +106,7 @@ export default class StompX {
     };
 
     if (request.authParams) {
-      connectHeaders['StompX-Auth-Params'] = btoa(JSON.stringify(request.authParams));
+      connectHeaders['StompX-Auth-Params'] = encode(JSON.stringify(request.authParams));
     }
 
     if (typeof WebSocket === 'function') {

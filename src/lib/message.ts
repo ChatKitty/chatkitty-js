@@ -97,7 +97,7 @@ export type UserMessageMention = BaseMessageMention & {
   user: User;
 };
 
-export declare class MessageRelays {
+declare class MessageRelays {
   self: string;
   channel: string;
   parent?: string;
@@ -107,7 +107,7 @@ export declare class MessageRelays {
   reactions: string;
 }
 
-export declare class MessageActions {
+declare class MessageActions {
   read: string;
   reply: string;
   deleteForMe: string;
@@ -117,7 +117,7 @@ export declare class MessageActions {
   removeReaction: string;
 }
 
-export declare class MessageStreams {
+declare class MessageStreams {
   replies: string;
 }
 
