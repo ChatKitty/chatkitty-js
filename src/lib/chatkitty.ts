@@ -1036,7 +1036,7 @@ export class ChatKittyImpl implements ChatKitty {
     if (onMessageUpdated) {
       messageUpdatedUnsubscribe = this.stompX.listenForEvent<Message>({
         topic: request.channel._topics.messages,
-        event: 'thread.message.updated',
+        event: 'channel.message.updated',
         onSuccess: (message) => {
           onMessageUpdated(message);
         },
