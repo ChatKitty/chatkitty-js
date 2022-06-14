@@ -251,79 +251,6 @@ export class ChatKittyImpl implements ChatKitty {
 
   currentUser?: CurrentUser;
 
-  Calls: Calls = new (class ChatKittyCalls {
-    localStream: MediaStream | null = null;
-
-    isMuted = false;
-
-    constructor(private readonly kitty: ChatKitty) {
-    }
-
-    initialize(configuration: {
-      media: { audio: boolean; video: boolean };
-    }) {
-      // TODO
-    }
-
-    leaveCall() {
-      // TODO
-    }
-
-    switchCamera() {
-      // TODO
-    }
-
-    toggleMute() {
-      // TODO
-    }
-
-    onParticipantAcceptedCall(
-      onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-    ): ChatKittyUnsubscribe {
-      // TODO
-
-      return () => {
-        // TODO
-      };
-    }
-
-    onParticipantRejectedCall(
-      onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-    ): ChatKittyUnsubscribe {
-      // TODO
-
-      return () => {
-        // TODO
-      };
-    }
-
-    onParticipantActive(
-      onNextOrObserver:
-        | ChatKittyObserver<{ user: User; stream: MediaStream }>
-        | ((user: User, stream: MediaStream) => void)
-    ): ChatKittyUnsubscribe {
-      // TODO
-
-      return () => {
-        // TODO
-      };
-    }
-
-    onParticipantLeftCall(
-      onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-    ): ChatKittyUnsubscribe {
-      // TODO
-
-      return () => {
-        // TODO
-      };
-    }
-
-    close() {
-      // TODO
-    }
-  })(this)
-
   public constructor(private readonly configuration: ChatKittyConfiguration) {
     this.stompX = new StompX({
       isSecure: configuration.isSecure === undefined || configuration.isSecure,
@@ -2232,7 +2159,6 @@ function isCreateChatKittyExternalFileProperties(
 
 export interface ChatKitty {
   currentUser?: CurrentUser;
-  Calls: Calls;
 
   startSession(
     request: StartSessionRequest
