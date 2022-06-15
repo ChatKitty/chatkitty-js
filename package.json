@@ -43,7 +43,7 @@
     "version": "standard-version",
     "reset-hard": "git clean -dfx && git reset --hard && npm i",
     "prepare-release": "run-s reset-hard src/tests cov:check doc:html version doc:publish",
-    "prepare": "husky install"
+    "prepare": "husky install && run-p build:*"
   },
   "engines": {
     "node": ">=10"
