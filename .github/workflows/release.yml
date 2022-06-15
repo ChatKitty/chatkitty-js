@@ -1,9 +1,8 @@
 name: Release package
 
 on:
-  release:
-    types:
-      - created
+  push:
+    branches: [main, beta]
 
 env:
   AWS_REGION: us-east-1
