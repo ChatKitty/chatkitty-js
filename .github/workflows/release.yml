@@ -33,7 +33,7 @@ jobs:
       - name: Build and Generate docs 📚
         run: |
           npm ci
-          npm build
+          npm run build
           npm run doc:html
 
       - name: Deploy 🚀
