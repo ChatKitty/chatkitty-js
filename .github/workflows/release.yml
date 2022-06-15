@@ -36,9 +36,14 @@ jobs:
           npm ci
           npm run doc:html
 
+      - name: Install semantic-release extra plugins 🧱
+        run: |
+          npm install --save-dev @semantic-release/changelog @semantic-release/git
+
       - name: Deploy 🚀
         run: |
-          npm publish
+          npx semantic-release
           aws s3 cp --recursive --acl public-read docs s3://chatkitty-docs/chatkitty-js/docs/src
         env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
