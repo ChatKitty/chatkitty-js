@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isUserMentionedChannelNotification = exports.isUserMentionedNotification = exports.isUserRepliedToMessageNotification = exports.isUserSentMessageNotification = exports.isSystemSentMessageNotification = void 0;
+function isSystemSentMessageNotification(notification) {
+    return notification.data.type === 'SYSTEM:SENT:MESSAGE';
+}
+exports.isSystemSentMessageNotification = isSystemSentMessageNotification;
+function isUserSentMessageNotification(notification) {
+    return notification.data.type === 'USER:SENT:MESSAGE';
+}
+exports.isUserSentMessageNotification = isUserSentMessageNotification;
+function isUserRepliedToMessageNotification(notification) {
+    return notification.data.type === 'USER:REPLIED_TO:MESSAGE';
+}
+exports.isUserRepliedToMessageNotification = isUserRepliedToMessageNotification;
+function isUserMentionedNotification(notification) {
+    return notification.data.type === 'USER:MENTIONED:USER';
+}
+exports.isUserMentionedNotification = isUserMentionedNotification;
+function isUserMentionedChannelNotification(notification) {
+    return notification.data.type === 'USER:MENTIONED:CHANNEL';
+}
+exports.isUserMentionedChannelNotification = isUserMentionedChannelNotification;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibm90aWZpY2F0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2xpYi9ub3RpZmljYXRpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBb0VBLFNBQWdCLCtCQUErQixDQUM3QyxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLHFCQUFxQixDQUFDO0FBQzFELENBQUM7QUFKRCwwRUFJQztBQUVELFNBQWdCLDZCQUE2QixDQUMzQyxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLG1CQUFtQixDQUFDO0FBQ3hELENBQUM7QUFKRCxzRUFJQztBQUVELFNBQWdCLGtDQUFrQyxDQUNoRCxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLHlCQUF5QixDQUFDO0FBQzlELENBQUM7QUFKRCxnRkFJQztBQUVELFNBQWdCLDJCQUEyQixDQUN6QyxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLHFCQUFxQixDQUFDO0FBQzFELENBQUM7QUFKRCxrRUFJQztBQUVELFNBQWdCLGtDQUFrQyxDQUNoRCxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLHdCQUF3QixDQUFDO0FBQzdELENBQUM7QUFKRCxnRkFJQyJ9
