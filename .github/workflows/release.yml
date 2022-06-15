@@ -35,10 +35,6 @@ jobs:
           npm ci
           npm run doc:html
 
-      - name: Install semantic-release extra plugins 🧱
-        run: |
-          npm install --save-dev @semantic-release/changelog @semantic-release/git
-
       - name: Deploy 🚀
         run: |
           npx semantic-release
