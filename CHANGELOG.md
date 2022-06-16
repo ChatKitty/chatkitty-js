@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.58.2](https://github.com/ChatKitty/chatkitty-js/compare/v1.57.0...v1.58.2) (2022-06-16)
+
+
+### Bug Fixes
+
+* fix generated version ([6292244](https://github.com/ChatKitty/chatkitty-js/commit/629224419d42a058bffa43ac87cf6025e4e11fd3))
+
+## [1.58.1](https://github.com/ChatKitty/chatkitty-js/compare/v1.58.0...v1.58.1) (2022-06-16)
+
+
+### Bug Fixes
+
+* fix generated version ([6292244](https://github.com/ChatKitty/chatkitty-js/commit/629224419d42a058bffa43ac87cf6025e4e11fd3))
+
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 ## [1.58.0](https://github.com/ChatKitty/chatkitty-js/compare/v1.9.0...v1.58.0) (2022-06-16)
 
 
