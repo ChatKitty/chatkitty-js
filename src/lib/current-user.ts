@@ -55,7 +55,6 @@ export declare class CurrentUserStreams {
 }
 
 export type GetCurrentUserResult =
-  | ChatKittyResult<GetCurrentUserSuccessfulResult>
   | GetCurrentUserSuccessfulResult
   | ChatKittyFailedResult;
 
@@ -66,7 +65,6 @@ export class GetCurrentUserSuccessfulResult extends ChatKittySucceededResult {
 }
 
 export type UpdateCurrentUserResult =
-  | ChatKittyResult<UpdatedCurrentUserResult>
   | UpdatedCurrentUserResult
   | ChatKittyFailedResult;
 
@@ -82,7 +80,6 @@ export declare class UpdateCurrentUserDisplayPictureRequest {
 }
 
 export type UpdateCurrentUserDisplayPictureResult =
-  | ChatKittyResult<UpdatedCurrentUserDisplayPictureResult>
   | UpdatedCurrentUserDisplayPictureResult
   | ChatKittyFailedResult;
 

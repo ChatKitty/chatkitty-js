@@ -48,7 +48,6 @@ export declare class GetUsersFilter {
 }
 
 export type GetUsersResult =
-  | ChatKittyResult<GetUsersSucceededResult>
   | GetUsersSucceededResult
   | ChatKittyFailedResult;
 
@@ -59,7 +58,6 @@ export class GetUsersSucceededResult extends ChatKittySucceededResult {
 }
 
 export type GetUserResult =
-  | ChatKittyResult<GetUserSucceededResult>
   | GetUserSucceededResult
   | ChatKittyFailedResult;
 
@@ -75,7 +73,6 @@ export declare class GetUserIsChannelMemberRequest {
 }
 
 export type GetUserIsChannelMemberResult =
-  | ChatKittyResult<GetUserIsChannelMemberSucceededResult>
   | GetUserIsChannelMemberSucceededResult
   | ChatKittyFailedResult;
 
@@ -90,7 +87,6 @@ export declare class BlockUserRequest {
 }
 
 export type BlockUserResult =
-  | ChatKittyResult<BlockUserSucceededResult>
   | BlockUserSucceededResult
   | ChatKittyFailedResult;
 

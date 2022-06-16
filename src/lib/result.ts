@@ -8,27 +8,26 @@ export interface ChatKittyResult<S extends ChatKittySucceededResult> {
 }
 
 export abstract class ChatKittySucceededResult {
-  succeeded = true;
-  cancelled = false;
-  failed = false;
+  succeeded: true = true;
+  cancelled: false = false;
+  failed: false = false;
 }
 
 export abstract class ChatKittyCancelledResult {
-  succeeded = false;
-  cancelled = true;
-  failed = false;
+  succeeded: false = false;
+  cancelled: true = true;
+  failed: false = false;
 }
 
 export class ChatKittyFailedResult {
-  succeeded = false;
-  cancelled = false;
-  failed = true;
+  succeeded: false = false;
+  cancelled: false = false;
+  failed: true = true;
 
   constructor(public error: ChatKittyError) {}
 }
 
 export type GetCountResult =
-  | ChatKittyResult<GetCountSucceedResult>
   | GetCountSucceedResult
   | ChatKittyFailedResult;
 

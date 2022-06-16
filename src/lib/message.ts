@@ -160,7 +160,6 @@ export declare class GetLastReadMessageRequest {
 }
 
 export type GetMessagesResult =
-  | ChatKittyResult<GetMessagesSucceededResult>
   | GetMessagesSucceededResult
   | ChatKittyFailedResult;
 
@@ -170,7 +169,11 @@ export class GetMessagesSucceededResult extends ChatKittySucceededResult {
   }
 }
 
-export class GetLastReadMessageResult extends ChatKittySucceededResult {
+export type GetLastReadMessageResult =
+  | GetLastReadMessageSucceededResult
+  | ChatKittyFailedResult;
+
+export class GetLastReadMessageSucceededResult extends ChatKittySucceededResult {
   constructor(public message?: Message) {
     super();
   }
@@ -181,7 +184,6 @@ export declare class ReadMessageRequest {
 }
 
 export type ReadMessageResult =
-  | ChatKittyResult<ReadMessageSucceededResult>
   | ReadMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -197,7 +199,6 @@ export declare class EditMessageRequest {
 }
 
 export type EditMessageResult =
-  | ChatKittyResult<EditedMessageSucceededResult>
   | EditedMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -212,7 +213,6 @@ export declare class DeleteMessageForMeRequest {
 }
 
 export type DeleteMessageForMeResult =
-  | ChatKittyResult<DeleteMessageForMeSucceededResult>
   | DeleteMessageForMeSucceededResult
   | ChatKittyFailedResult;
 
@@ -227,7 +227,6 @@ export declare class DeleteMessageRequest {
 }
 
 export type DeleteMessageResult =
-  | ChatKittyResult<DeleteMessageSucceededResult>
   | DeleteMessageSucceededResult
   | ChatKittyFailedResult;
 
@@ -275,12 +274,10 @@ export type SendFileMessageRequest = (
 };
 
 export type SendMessageResult =
-  | ChatKittyResult<SentMessageResult>
   | SentMessageResult
   | ChatKittyFailedResult;
 
 export type SentMessageResult =
-  | ChatKittyResult<SentTextMessageResult>
   | SentTextMessageResult
   | SentFileMessageResult;
 
@@ -325,7 +322,6 @@ export declare class GetMessageChannelRequest {
 }
 
 export type GetMessageChannelResult =
-  | ChatKittyResult<GetMessageChannelSucceededResult>
   | GetMessageChannelSucceededResult
   | ChatKittyFailedResult;
 
@@ -340,7 +336,6 @@ export declare class GetMessageParentRequest {
 }
 
 export type GetMessageParentResult =
-  | ChatKittyResult<GetMessageParentSucceededResult>
   | GetMessageParentSucceededResult
   | ChatKittyFailedResult;
 

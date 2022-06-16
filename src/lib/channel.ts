@@ -89,7 +89,6 @@ export function isPrivateChannel(channel: Channel): channel is PrivateChannel {
 }
 
 export type CreateChannelResult =
-  | ChatKittyResult<CreatedChannelResult>
   | CreatedChannelResult
   | ChatKittyFailedResult;
 
@@ -129,7 +128,6 @@ export declare class GetChannelUnreadRequest {
 }
 
 export type GetChannelsResult =
-  | ChatKittyResult<GetChannelsSucceededResult>
   | GetChannelsSucceededResult
   | ChatKittyFailedResult;
 
@@ -140,7 +138,6 @@ export class GetChannelsSucceededResult extends ChatKittySucceededResult {
 }
 
 export type GetChannelResult =
-  | ChatKittyResult<GetChannelSucceededResult>
   | GetChannelSucceededResult
   | ChatKittyFailedResult;
 
@@ -151,7 +148,6 @@ export class GetChannelSucceededResult extends ChatKittySucceededResult {
 }
 
 export type GetChannelUnreadResult =
-  | ChatKittyResult<GetChannelUnreadSucceededResult>
   | GetChannelUnreadSucceededResult
   | ChatKittyFailedResult;
 
@@ -166,7 +162,6 @@ export declare class JoinChannelRequest {
 }
 
 export type JoinChannelResult =
-  | ChatKittyResult<JoinedChannelResult>
   | JoinedChannelResult
   | ChatKittyFailedResult;
 
@@ -200,7 +195,6 @@ export declare class AddChannelModeratorRequest {
 }
 
 export type AddChannelModeratorResult =
-  | ChatKittyResult<AddedChannelModeratorResult>
   | AddedChannelModeratorResult
   | ChatKittyFailedResult;
 
@@ -224,7 +218,6 @@ export declare class MuteChannelRequest {
 }
 
 export type MuteChannelResult =
-  | ChatKittyResult<MutedChannelResult>
   | MutedChannelResult
   | ChatKittyFailedResult;
 
@@ -239,7 +232,6 @@ export declare class UnmuteChannelRequest {
 }
 
 export type UnmuteChannelResult =
-  | ChatKittyResult<UnmutedChannelResult>
   | UnmutedChannelResult
   | ChatKittyFailedResult;
 
@@ -254,7 +246,6 @@ export declare class LeaveChannelRequest {
 }
 
 export type LeaveChannelResult =
-  | ChatKittyResult<LeftChannelResult>
   | LeftChannelResult
   | ChatKittyFailedResult;
 
@@ -278,7 +269,6 @@ export declare class ReadChannelRequest {
 }
 
 export type ReadChannelResult =
-  | ChatKittyResult<ReadChannelSucceededResult>
   | ReadChannelSucceededResult
   | ChatKittyFailedResult;
 
@@ -293,7 +283,6 @@ export declare class ClearChannelHistoryRequest {
 }
 
 export type ClearChannelHistoryResult =
-  | ChatKittyResult<ClearChannelHistorySucceededResult>
   | ClearChannelHistorySucceededResult
   | ChatKittyFailedResult;
 
@@ -308,7 +297,6 @@ export declare class HideChannelRequest {
 }
 
 export type HideChannelResult =
-  | ChatKittyResult<HideChannelSucceededResult>
   | HideChannelSucceededResult
   | ChatKittyFailedResult;
 
@@ -324,7 +312,6 @@ export declare class InviteUserRequest {
 }
 
 export type InviteUserResult =
-  | ChatKittyResult<InvitedUserResult>
   | InvitedUserResult
   | ChatKittyFailedResult;
 
@@ -348,7 +335,6 @@ export declare class UpdateChannelRequest {
 }
 
 export type UpdateChannelResult =
-  | ChatKittyResult<UpdatedChannelResult>
   | UpdatedChannelResult
   | ChatKittyFailedResult;
 
@@ -363,7 +349,6 @@ export declare class DeleteChannelRequest {
 }
 
 export type DeleteChannelResult =
-  | ChatKittyResult<DeletedChannelResult>
   | DeletedChannelResult
   | ChatKittyFailedResult;
 

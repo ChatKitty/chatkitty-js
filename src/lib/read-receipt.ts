@@ -22,7 +22,6 @@ export declare class GetReadReceiptsRequest {
 }
 
 export type GetReadReceiptsResult =
-  | ChatKittyResult<GetReadReceiptsSucceededResult>
   | GetReadReceiptsSucceededResult
   | ChatKittyFailedResult;
 

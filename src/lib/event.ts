@@ -24,7 +24,6 @@ export declare class TriggerEventRequest {
 }
 
 export type TriggerEventResult =
-  | ChatKittyResult<TriggeredEventResult>
   | TriggeredEventResult
   | ChatKittyFailedResult;
 

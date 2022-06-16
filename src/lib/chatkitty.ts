@@ -103,8 +103,8 @@ import {
   EditMessageResult,
   FileUserMessage,
   GetChannelMessagesRequest,
-  GetLastReadMessageRequest,
-  GetLastReadMessageResult,
+  GetLastReadMessageRequest, GetLastReadMessageResult,
+  GetLastReadMessageSucceededResult,
   GetMessageChannelRequest,
   GetMessageChannelResult,
   GetMessageChannelSucceededResult,
@@ -1399,7 +1399,7 @@ export class ChatKittyImpl implements ChatKitty {
           username: request.username,
         },
         onSuccess: (resource) => {
-          resolve(new GetLastReadMessageResult(resource));
+          resolve(new GetLastReadMessageSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));

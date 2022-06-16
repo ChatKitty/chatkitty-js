@@ -18,7 +18,6 @@ export declare class ChatSession {
 }
 
 export type StartChatSessionResult =
-  | ChatKittyResult<StartedChatSessionResult>
   | StartedChatSessionResult;
 
 export declare class StartChatSessionRequest {

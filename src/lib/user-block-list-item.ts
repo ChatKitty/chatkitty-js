@@ -17,7 +17,6 @@ export declare class UserBlockListItemActions {
 }
 
 export type GetUserBlockListResult =
-  | ChatKittyResult<GetUserBlockListSucceededResult>
   | GetUserBlockListSucceededResult
   | ChatKittyFailedResult;
 
@@ -32,7 +31,6 @@ export declare class DeleteUserBlockListItemRequest {
 }
 
 export type DeleteUserBlockListItemResult =
-  | ChatKittyResult<DeleteUserBlockListItemSucceededResult>
   | DeleteUserBlockListItemSucceededResult
   | ChatKittyFailedResult;
 

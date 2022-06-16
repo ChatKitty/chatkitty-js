@@ -11,7 +11,6 @@ export declare class UserSession {
 }
 
 export type StartSessionResult =
-  | ChatKittyResult<StartedSessionResult>
   | StartedSessionResult
   | ChatKittyFailedResult;
 
