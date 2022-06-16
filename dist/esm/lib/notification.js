@@ -1,0 +1,16 @@
+export function isSystemSentMessageNotification(notification) {
+    return notification.data.type === 'SYSTEM:SENT:MESSAGE';
+}
+export function isUserSentMessageNotification(notification) {
+    return notification.data.type === 'USER:SENT:MESSAGE';
+}
+export function isUserRepliedToMessageNotification(notification) {
+    return notification.data.type === 'USER:REPLIED_TO:MESSAGE';
+}
+export function isUserMentionedNotification(notification) {
+    return notification.data.type === 'USER:MENTIONED:USER';
+}
+export function isUserMentionedChannelNotification(notification) {
+    return notification.data.type === 'USER:MENTIONED:CHANNEL';
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibm90aWZpY2F0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2xpYi9ub3RpZmljYXRpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBb0VBLE1BQU0sVUFBVSwrQkFBK0IsQ0FDN0MsWUFBMEI7SUFFMUIsT0FBTyxZQUFZLENBQUMsSUFBSSxDQUFDLElBQUksS0FBSyxxQkFBcUIsQ0FBQztBQUMxRCxDQUFDO0FBRUQsTUFBTSxVQUFVLDZCQUE2QixDQUMzQyxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLG1CQUFtQixDQUFDO0FBQ3hELENBQUM7QUFFRCxNQUFNLFVBQVUsa0NBQWtDLENBQ2hELFlBQTBCO0lBRTFCLE9BQU8sWUFBWSxDQUFDLElBQUksQ0FBQyxJQUFJLEtBQUsseUJBQXlCLENBQUM7QUFDOUQsQ0FBQztBQUVELE1BQU0sVUFBVSwyQkFBMkIsQ0FDekMsWUFBMEI7SUFFMUIsT0FBTyxZQUFZLENBQUMsSUFBSSxDQUFDLElBQUksS0FBSyxxQkFBcUIsQ0FBQztBQUMxRCxDQUFDO0FBRUQsTUFBTSxVQUFVLGtDQUFrQyxDQUNoRCxZQUEwQjtJQUUxQixPQUFPLFlBQVksQ0FBQyxJQUFJLENBQUMsSUFBSSxLQUFLLHdCQUF3QixDQUFDO0FBQzdELENBQUMifQ==
