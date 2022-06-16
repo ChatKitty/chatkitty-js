@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "0.0.0-semantic-release",
+  "version": "1.58.0",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
