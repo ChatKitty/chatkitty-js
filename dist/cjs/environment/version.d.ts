@@ -1,1 +1,1 @@
-export declare const version = "0.0.0-semantic-release";
+export declare const version = "1.58.0";
