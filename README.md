@@ -1,195 +1,94 @@
-# chatkitty-js
 
-<p align="center">
-  <img src="https://www.chatkitty.com/img/banner-logo-dark.png"
-       alt="ChatKitty: Cloud Chat Platform" width="315"/>
-  <br/>
-</p>
 
-<p align="center">
-  ChatKitty helps you build real-time chat without any back-end.
-</p>
+# Chatkitty
 
-<p align="center">
-  <img
-      src="https://chatkitty.com/img/screenshots/chatkitty-demo-app.png"
-      width="344" alt="Realtime Chat Demo"/>
-</p>
+This project was generated using [Nx](https://nx.dev).
 
-<p align="center">
-  <em>The example above was created with ChatKitty. Check it out at <a
-      href="https://demo.chatkitty.com/">demo.chatkitty.com</a>.</em>
-</p>
+<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
-<a href="https://www.npmjs.com/package/chatkitty">
-  <img src="https://nodei.co/npm/chatkitty.png" alt="NPM Package"/>
-</a>
+🔎 **Smart, Fast and Extensible Build System**
 
-Features
-------------
-* **Private chat** - Provide secure and encrypted direct messaging to your users.
+## Adding capabilities to your workspace
 
-* **Group chat** - Your users can request to join or be invited to group chats.
+Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
-* **Message threads** - Keep conversations organized with message threads.
+These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
 
-* **Push notifications** - Make sure your users always see their messages.
+Below are our core plugins:
 
-* **File attachments** - Attach images, videos, or any other type of files.
+- [React](https://reactjs.org)
+  - `npm install --save-dev @nrwl/react`
+- Web (no framework frontends)
+  - `npm install --save-dev @nrwl/web`
+- [Angular](https://angular.io)
+  - `npm install --save-dev @nrwl/angular`
+- [Nest](https://nestjs.com)
+  - `npm install --save-dev @nrwl/nest`
+- [Express](https://expressjs.com)
+  - `npm install --save-dev @nrwl/express`
+- [Node](https://nodejs.org)
+  - `npm install --save-dev @nrwl/node`
 
-* **Typing indicators** - Let your users know when others are typing.
+There are also many [community plugins](https://nx.dev/community) you could add.
 
-* **Reactions** - Users can react to messages with emojis and GIFs.
+## Generate an application
 
-* **Presence indicators** - Let your users know who's online.
+Run `nx g @nrwl/react:app my-app` to generate an application.
 
-* **Delivery and read receipts** - See when messages get delivered and read.
+> You can use any of the plugins above to generate applications as well.
 
-* **Link preview generation** - Messages with links get rich media previews.
+When using Nx, you can create multiple applications and libraries in the same workspace.
 
-ChatKitty is the first complete chat platform; bringing together everything that's 
-required to build real-time chat into Web and mobile apps. Getting started with ChatKitty 
-is easy and you get:
+## Generate a library
 
-#### Reliability
-Your user chat sessions remain stable even in the presence of proxies, load balancers and personal 
-firewalls. ChatKitty provides auto reconnection support and offline notifications so your users stay 
-in the loop.
+Run `nx g @nrwl/react:lib my-lib` to generate a library.
 
-#### Low Latency 
-With response times below 100ms, ChatKitty makes sure your users have a smooth and immersive chat 
-experience.
+> You can also use any of the plugins above to generate libraries as well.
 
-#### Cross-platform support
-You can use ChatKitty across every major browser and device platform. ChatKitty also works great 
-with multi-platform frameworks like React-Native and Ionic.
+Libraries are shareable across libraries and applications. They can be imported from `@chatkitty/mylib`.
 
-#### Simple and convenient API
+## Development server
 
-Sample code:
+Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
-```js
-const kitty = ChatKittyImpl.getInstance(CHATKITTY_API_KEY);
+## Code scaffolding
 
-useEffect(() => {
-    // start real-time chat session
-    let result = kitty.startChatSession({
-        channel: channel,
-        onReceivedMessage: (message) => {
-            showMessage(message); // update your UI as new chat events occur
-        },
-    });
+Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
 
-    return result.session.end;
-}, []);
-```
+## Build
 
-We've spent a lot of time thinking of the right abstractions and implementing our API to be straightforward 
-and easy to use - making you more productive.
+Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Installation
-### Install with NPM
-```bash
-npm install chatkitty
-```
+## Running unit tests
 
-### Install with Yarn
-```bash
-yarn add chatkitty
-```
+Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
 
-## How to use
-### Getting an API key 
-You'll need [a free ChatKitty account](https://dashboard.chatkitty.com/authorization/register) before you can 
-begin building chat with ChatKitty. After creating your account, create a ChatKitty application using the dashboard 
-and copy its API key from your application's setting page.
+Run `nx affected:test` to execute the unit tests affected by a change.
 
-### Initialize the SDK with your API key
-With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.github.io/chatkitty-js/classes/default.html):
+## Running end-to-end tests
 
-```js
-const kitty = ChatKittyImpl.getInstance(CHATKITTY_API_KEY);
-```
+Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
 
-### Starting a user session
-To make calls to ChatKitty as a user, a user session must be started.
+Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
 
-You can start a user session using the unique username of a user and optional authentication 
-parameters to secure the user session.
+## Understand your workspace
 
-```js
-await kitty.startSession({
-  username: email,
-});
-```
+Run `nx graph` to see a diagram of the dependencies of your projects.
 
-### Starting a chat session
-Before a user can begin sending and receiving real-time messages and use in-app chat features like 
-typing indicators, delivery and read receipts, emoji and like reactions, etc, you'll need to start a chat session.
+## Further help
 
-```js
-kitty.startChatSession({
-  channel: channel,
-  onReceivedMessage: (message) => {
-    // handle received messages
-  },
-  onReceivedKeystrokes: (keystrokes) => {
-    // handle received typing keystrokes
-  },
-  onTypingStarted: (user) => {
-    // handle user starts typing
-  },
-  onTypingStopped: (user) => {
-    // handle user stops typing
-  },
-  onParticipantEnteredChat: (user) => {
-    // handle user who just entered the chat
-  },
-  onParticipantLeftChat: (user) => {
-    // handle user who just left the chat
-  },
-  onParticipantPresenceChanged: (user) => {
-    // handle user who became online, offline, do not distrub, invisible
-  },
-});
-```
+Visit the [Nx Documentation](https://nx.dev) to learn more.
 
-All handler methods are optional, so you only needed to register handlers for chat events your application cares about.
 
-#### Chat session event handler methods
-Name | Parameter Type | Description
----- | -------------- | -----------
-`onReceivedMessage` | `Message` | Called when a message is sent to this channel.
-`onReceivedKeystrokes` | `Keystrokes` | Called when typing keystrokes are made by users actively chatting in this channel.
-`onTypingStarted` | `User` | Called when a user starts typing in this channel.
-`onTypingStopped` | `User` | Called when a user stops typing in this channel.
-`onParticipantEnteredChat` | `User` | Called when another user starts an active chat session in this channel.
-`onParticipantLeftChat` | `User` | Called when another user ends their active chat session in this channel.
-`onParticipantPresenceChanged` | `User` | Called when a member of this channel changes their presence status or goes online or offline.
 
-## API Documentation
-Please see the documentation for this SDK at the [ChatKitty Website](https://docs.chatkitty.com/javascript/).
+## ☁ Nx Cloud
 
-The source code of the website can be found [here](https://github.com/ChatKitty/chatkitty-api-docs). Contributions are welcomed!
+### Distributed Computation Caching & Distributed Task Execution
 
-A complete SDK reference document is hosted at https://chatkitty.github.io/chatkitty-js/
+<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
 
-## Questions? Need Help? Found a bug?
-If you've got questions about setup, usage, special feature implementation in your chat app, or just want to chat with a 
-ChatKitty dev, please feel free to [start a thread in our Discussions tab](https://github.com/ChatKitty/chatkitty-js/discussions)!
+Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
 
-Found a bug with ChatKitty? Go ahead and [submit an issue](https://github.com/ChatKitty/chatkitty-js/issues). 
-And, of course, feel free to submit pull requests with bug fixes or changes.
+Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
 
-## Contributing
-We welcome code changes that improve this library or fix a problem, please make sure to follow all best practices 
-and add tests if applicable before submitting a Pull Request. We are very happy to merge your code.
-
-## License
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Acknowledgements
-* [axios](https://github.com/axios/axios)
-* [RxJS](https://github.com/ReactiveX/RxJS)
-* [RxStomp](https://github.com/stomp-js/rx-stomp)
-* [text-encoding](https://github.com/inexorabletash/text-encoding)
+Visit [Nx Cloud](https://nx.app/) to learn more.
