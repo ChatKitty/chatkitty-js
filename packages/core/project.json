@@ -39,6 +39,14 @@
         "jestConfig": "packages/core/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx semantic-release-plus --extends ./packages/core/release.config.js",
+        "parallel": false
+      }
     }
   },
   "tags": []

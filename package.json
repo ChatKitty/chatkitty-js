@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {},
-  "private": true,
+  "private": false,
   "dependencies": {
     "tslib": "^2.3.0"
   },
@@ -24,6 +24,8 @@
     "jest": "27.5.1",
     "nx": "14.4.3",
     "prettier": "^2.6.2",
+    "semantic-release-npm-github-publish": "^1.5.1",
+    "semantic-release-plus": "^20.0.0",
     "ts-jest": "27.1.4",
     "ts-node": "~10.8.0",
     "typescript": "~4.7.2"
