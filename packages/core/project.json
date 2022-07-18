@@ -7,8 +7,7 @@
       "executor": "nx:run-commands",
       "outputs": [],
       "options": {
-        "command": "genversion --es6 ./packages/core/src/environment/version.ts",
-        "parallel": false
+        "command": "genversion --es6 ./packages/core/src/environment/version.ts"
       }
     },
     "build": {
@@ -19,7 +18,13 @@
         "main": "packages/core/src/index.ts",
         "tsConfig": "packages/core/tsconfig.lib.json",
         "assets": ["packages/core/*.md"]
-      }
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "prepare"
+        }
+      ]
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
