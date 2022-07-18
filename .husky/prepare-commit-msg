@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+[[ "$(uname -a)" = *"MINGW64"* ]] && exit 0
+[ -n "$CI" ] && exit 0
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+(exec < /dev/tty && node_modules/.bin/cz --hook) || true < /dev/null:
