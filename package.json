@@ -1,9 +1,17 @@
 {
   "name": "chatkitty",
   "version": "0.0.0",
+  "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "license": "MIT",
+  "keywords": [
+    "chat",
+    "messaging",
+    "conversation",
+    "react",
+    "chatkitty",
+    "chatkitty.com"
+  ],
   "scripts": {},
-  "private": false,
   "dependencies": {
     "tslib": "^2.3.0"
   },
@@ -21,6 +29,7 @@
     "@typescript-eslint/parser": "^5.29.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
+    "genversion": "^3.1.1",
     "jest": "27.5.1",
     "nx": "14.4.3",
     "prettier": "^2.6.2",

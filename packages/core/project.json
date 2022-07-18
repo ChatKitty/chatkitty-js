@@ -3,6 +3,14 @@
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "targets": {
+    "prepare": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "genversion --es6 ./packages/core/src/environment/version.ts",
+        "parallel": false
+      }
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
