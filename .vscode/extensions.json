@@ -1,8 +1,8 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
+    "nrwl.angular-console",
     "esbenp.prettier-vscode",
-    "eamodio.gitlens",
-    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "firsttris.vscode-jest-runner"
   ]
 }
