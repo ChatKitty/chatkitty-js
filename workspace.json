@@ -2,6 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "core": "packages/core"
+    "core": "packages/core",
+    "react-example": "packages/react-example",
+    "react-example-e2e": "packages/react-example-e2e"
   }
 }

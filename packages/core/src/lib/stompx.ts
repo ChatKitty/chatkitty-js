@@ -8,7 +8,7 @@ import { v4 } from 'uuid';
 
 import { version } from '../environment/version';
 
-let TransportFallback: { new (arg: string): unknown };
+let TransportFallback: { new (url: string): unknown };
 
 import('sockjs-client')
   .then((sockjs) => {
