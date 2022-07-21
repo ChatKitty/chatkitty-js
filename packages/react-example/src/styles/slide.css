@@ -1,0 +1,9 @@
+.slideIn{
+    animation: slideMe 0.7s ease-in
+}
+
+@keyframes slideMe{
+    0%{
+        transform: translateX(-500px);
+    }
+}

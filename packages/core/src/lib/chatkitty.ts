@@ -209,19 +209,19 @@ import {
   StartSessionResult,
 } from './user-session';
 
-export class ChatKittyImpl implements ChatKitty {
-  private static readonly _instances = new Map<string, ChatKittyImpl>();
+export class ChatKitty {
+  private static readonly _instances = new Map<string, ChatKitty>();
 
   public static getInstance(apiKey: string): ChatKitty {
-    let instance = ChatKittyImpl._instances.get(apiKey);
+    let instance = ChatKitty._instances.get(apiKey);
 
     if (instance !== undefined) {
       return instance;
     }
 
-    instance = new ChatKittyImpl({ apiKey: apiKey });
+    instance = new ChatKitty({ apiKey: apiKey });
 
-    ChatKittyImpl._instances.set(apiKey, instance);
+    ChatKitty._instances.set(apiKey, instance);
 
     return instance;
   }
@@ -594,7 +594,7 @@ export class ChatKittyImpl implements ChatKitty {
   getChannel(id: number): Promise<GetChannelResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
-        destination: ChatKittyImpl.channelRelay(id),
+        destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new GetChannelSucceededResult(channel));
         },
@@ -1972,7 +1972,7 @@ export class ChatKittyImpl implements ChatKitty {
   getUser(param: number): Promise<GetUserResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<User>({
-        destination: ChatKittyImpl.userRelay(param),
+        destination: ChatKitty.userRelay(param),
         onSuccess: (user) => {
           resolve(new GetUserSucceededResult(user));
         },
@@ -2149,200 +2149,6 @@ function isCreateChatKittyExternalFileProperties(
   );
 }
 
-export interface ChatKitty {
-  currentUser?: CurrentUser;
-
-  startSession(request: StartSessionRequest): Promise<StartSessionResult>;
-
-  endSession(): Promise<void>;
-
-  getCurrentUser(): Promise<GetCurrentUserResult>;
-
-  onCurrentUserChanged(
-    onNextOrObserver:
-      | ChatKittyObserver<CurrentUser | null>
-      | ((user: CurrentUser | null) => void)
-  ): ChatKittyUnsubscribe;
-
-  onCurrentUserOnline(
-    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
-  ): ChatKittyUnsubscribe;
-
-  onCurrentUserOffline(
-    onNextOrObserver: ChatKittyObserver<CurrentUser> | (() => void)
-  ): ChatKittyUnsubscribe;
-
-  updateCurrentUser(
-    update: (user: CurrentUser) => CurrentUser
-  ): Promise<UpdateCurrentUserResult>;
-
-  updateCurrentUserDisplayPicture(
-    request: UpdateCurrentUserDisplayPictureRequest
-  ): Promise<UpdateCurrentUserDisplayPictureResult>;
-
-  updateChannel(request: UpdateChannelRequest): Promise<UpdateChannelResult>;
-
-  deleteChannel(request: DeleteChannelRequest): Promise<DeleteChannelResult>;
-
-  createChannel(request: CreateChannelRequest): Promise<CreateChannelResult>;
-
-  getChannels(request?: GetChannelsRequest): Promise<GetChannelsResult>;
-
-  getChannel(id: number): Promise<GetChannelResult>;
-
-  joinChannel(request: JoinChannelRequest): Promise<JoinChannelResult>;
-
-  leaveChannel(request: LeaveChannelRequest): Promise<LeaveChannelResult>;
-
-  addChannelModerator(
-    request: AddChannelModeratorRequest
-  ): Promise<AddChannelModeratorResult>;
-
-  getUnreadChannelsCount(
-    request?: GetUnreadChannelsRequest
-  ): Promise<GetCountResult>;
-
-  getChannelUnread(
-    request: GetChannelUnreadRequest
-  ): Promise<GetChannelUnreadResult>;
-
-  readChannel(request: ReadChannelRequest): Promise<ReadChannelResult>;
-
-  muteChannel(request: MuteChannelRequest): Promise<MuteChannelResult>;
-
-  unmuteChannel(request: UnmuteChannelRequest): Promise<UnmuteChannelResult>;
-
-  clearChannelHistory(
-    request: ClearChannelHistoryRequest
-  ): Promise<ClearChannelHistoryResult>;
-
-  hideChannel(request: HideChannelRequest): Promise<HideChannelResult>;
-
-  startChatSession(request: StartChatSessionRequest): StartChatSessionResult;
-
-  sendMessage(request: SendMessageRequest): Promise<SendMessageResult>;
-
-  getMessages(request: GetMessagesRequest): Promise<GetMessagesResult>;
-
-  getUnreadMessagesCount(
-    request?: GetUnreadMessagesCountRequest
-  ): Promise<GetCountResult>;
-
-  triggerEvent(request: TriggerEventRequest): Promise<TriggerEventResult>;
-
-  readMessage(request: ReadMessageRequest): Promise<ReadMessageResult>;
-
-  getLastReadMessage(
-    request: GetLastReadMessageRequest
-  ): Promise<GetLastReadMessageResult>;
-
-  editMessage(request: EditMessageRequest): Promise<EditMessageResult>;
-
-  getMessageRepliesCount(
-    request: GetMessageRepliesCountRequest
-  ): Promise<GetCountResult>;
-
-  getMessageChannel(
-    request: GetMessageChannelRequest
-  ): Promise<GetMessageChannelResult>;
-
-  getMessageParent(
-    request: GetMessageParentRequest
-  ): Promise<GetMessageParentResult>;
-
-  createThread(request: CreateThreadRequest): Promise<CreateThreadResult>;
-
-  getThreads(request: GetThreadsRequest): Promise<GetThreadsResult>;
-
-  getThreadChannel(
-    request: GetThreadChannelRequest
-  ): Promise<GetThreadChannelResult>;
-
-  getThreadMessage(
-    request: GetThreadMessageRequest
-  ): Promise<GetThreadMessageResult>;
-
-  readThread(request: ReadThreadRequest): Promise<ReadThreadResult>;
-
-  reactToMessage(request: ReactToMessageRequest): Promise<ReactToMessageResult>;
-
-  getReactions(request: GetReactionsRequest): Promise<GetReactionsResult>;
-
-  removeReaction(request: RemoveReactionRequest): Promise<RemoveReactionResult>;
-
-  deleteMessageForMe(
-    request: DeleteMessageForMeRequest
-  ): Promise<DeleteMessageForMeResult>;
-
-  deleteMessage(request: DeleteMessageRequest): Promise<DeleteMessageResult>;
-
-  sendKeystrokes(request: SendKeystrokesRequest): void;
-
-  onNotificationReceived(
-    onNextOrObserver:
-      | ChatKittyObserver<Notification>
-      | ((notification: Notification) => void)
-  ): ChatKittyUnsubscribe;
-
-  onChannelJoined(
-    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
-  ): ChatKittyUnsubscribe;
-
-  onChannelHidden(
-    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
-  ): ChatKittyUnsubscribe;
-
-  onChannelUnhidden(
-    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
-  ): ChatKittyUnsubscribe;
-
-  onChannelLeft(
-    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
-  ): ChatKittyUnsubscribe;
-
-  onChannelUpdated(
-    onNextOrObserver: ChatKittyObserver<Channel> | ((channel: Channel) => void)
-  ): ChatKittyUnsubscribe;
-
-  getChannelMembers(request: GetChannelMembersRequest): Promise<GetUsersResult>;
-
-  getReadReceipts(
-    request: GetReadReceiptsRequest
-  ): Promise<GetReadReceiptsResult>;
-
-  getUsers(request?: GetUsersRequest): Promise<GetUsersResult>;
-
-  getUsersCount(request?: GetUsersRequest): Promise<GetCountResult>;
-
-  onUserPresenceChanged(
-    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-  ): ChatKittyUnsubscribe;
-
-  inviteUser(request: InviteUserRequest): Promise<InviteUserResult>;
-
-  onParticipantStartedTyping(
-    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
-  ): ChatKittyUnsubscribe;
-
-  onParticipantStoppedTyping(
-    onNextOrObserver: ChatKittyObserver<User> | ((participant: User) => void)
-  ): ChatKittyUnsubscribe;
-
-  getUser(param: number): Promise<GetUserResult>;
-
-  getUserIsChannelMember(
-    request: GetUserIsChannelMemberRequest
-  ): Promise<GetUserIsChannelMemberResult>;
-
-  blockUser(request: BlockUserRequest): Promise<BlockUserResult>;
-
-  getUserBlockList(): Promise<GetUserBlockListResult>;
-
-  deleteUserBlockListItem(
-    request: DeleteUserBlockListItemRequest
-  ): Promise<DeleteUserBlockListItemResult>;
-}
-
 export interface Calls {
   localStream: MediaStream | null;
 
@@ -2378,4 +2184,4 @@ export interface Calls {
   close(): void;
 }
 
-export default ChatKittyImpl;
+export default ChatKitty;

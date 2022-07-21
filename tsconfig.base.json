@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@chatkitty/core": ["packages/core/src/index.ts"]
+      "@chatkitty/core": ["packages/core/src/index.ts"],
+      "@chatkitty/react-ui": ["packages/react-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

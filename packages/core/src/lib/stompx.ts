@@ -12,7 +12,7 @@ let TransportFallback: { new (url: string): unknown };
 
 import('sockjs-client')
   .then((sockjs) => {
-    TransportFallback = sockjs;
+    TransportFallback = sockjs as unknown as { new (url: string): unknown };
   })
   .catch((error) => {
     ErrorMessageTransportFallback.errorMessage = error.message;

@@ -21,4 +21,4 @@ export * from './lib/user-block-list-item';
 export * from './lib/user-session';
 export { ChatKitty, Calls } from './lib/chatkitty';
 
-export { ChatKittyImpl as default } from './lib/chatkitty';
+export { ChatKitty as default } from './lib/chatkitty';

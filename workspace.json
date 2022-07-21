@@ -4,6 +4,7 @@
   "projects": {
     "core": "packages/core",
     "react-example": "packages/react-example",
-    "react-example-e2e": "packages/react-example-e2e"
+    "react-example-e2e": "packages/react-example-e2e",
+    "react-ui": "packages/react-ui"
   }
 }

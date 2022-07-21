@@ -69,7 +69,7 @@ with multi-platform frameworks like React-Native and Ionic.
 Sample code:
 
 ```js
-const kitty = ChatKittyImpl.getInstance(CHATKITTY_API_KEY);
+const kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
 
 useEffect(() => {
     // start real-time chat session
@@ -108,7 +108,7 @@ and copy its API key from your application's setting page.
 With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.github.io/chatkitty-js/classes/default.html):
 
 ```js
-const kitty = ChatKittyImpl.getInstance(CHATKITTY_API_KEY);
+const kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
 ```
 
 ### Starting a user session

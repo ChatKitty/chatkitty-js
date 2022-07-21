@@ -5,6 +5,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/chatkitty/chatkitty-js.git",
-    "directory": "packages/ts-library"
+    "directory": "packages/core"
   }
 }
