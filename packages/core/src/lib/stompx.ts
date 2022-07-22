@@ -10,9 +10,13 @@ import { version } from '../environment/version';
 
 let TransportFallback: { new (url: string): unknown };
 
-import('sockjs-client')
+(window as unknown as { global: unknown }).global = window;
+
+const transportFallbackPromise = import('sockjs-client')
   .then((sockjs) => {
-    TransportFallback = sockjs as unknown as { new (url: string): unknown };
+    TransportFallback = (
+      sockjs as unknown as { default: { new (url: string): unknown } }
+    ).default;
   })
   .catch((error) => {
     ErrorMessageTransportFallback.errorMessage = error.message;
@@ -257,7 +261,9 @@ export default class StompX {
       });
     });
 
-    this.rxStomp.activate();
+    transportFallbackPromise.then(() => {
+      this.rxStomp.activate();
+    });
   }
 
   public relayResource<R>(request: StompXRelayResourceRequest<R>) {
