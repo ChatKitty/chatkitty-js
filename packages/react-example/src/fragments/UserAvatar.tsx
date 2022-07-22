@@ -19,13 +19,16 @@ const UserAvatar: React.FC<UserAvatarProp> = ({
     >
       <img
         src={user.displayPictureUrl}
-        style={style ?
-          style : {
-            borderRadius: '50%',
-            width: '25px',
-            marginLeft: '10px',
-            marginTop: '5px',
-          }}
+        style={
+          style
+            ? style
+            : {
+                borderRadius: '50%',
+                width: '25px',
+                marginLeft: '10px',
+                marginTop: '5px',
+              }
+        }
       />
     </StyledBox>
   );

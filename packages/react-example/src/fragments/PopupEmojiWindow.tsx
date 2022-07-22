@@ -43,7 +43,7 @@ const PopupEmojiWindow: React.FC<popupProp> = ({ message }: popupProp) => {
   };
 
   return (
-    <StyledBox >
+    <StyledBox>
       <EmojiInput value="" onSelection={emojiClickListener} />
     </StyledBox>
   );

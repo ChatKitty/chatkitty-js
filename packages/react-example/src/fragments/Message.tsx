@@ -14,7 +14,6 @@ type MessageProps = {
 };
 
 const Message: React.FC<MessageProps> = ({ message }: MessageProps) => {
-
   return (
     <>
       {isTextMessage(message) && (
@@ -23,9 +22,7 @@ const Message: React.FC<MessageProps> = ({ message }: MessageProps) => {
           {message.links && <LinkPreview links={message.links} />}
         </>
       )}
-      {isFileMessage(message) &&
-          <FileMessage message={message} />
-      }
+      {isFileMessage(message) && <FileMessage message={message} />}
     </>
   );
 };

@@ -59,7 +59,6 @@ const MyChannels: React.FC = () => {
   }, [currentUser]);
 
   useEffect(() => {
-
     if (currentNotification) {
       setNotificationView(true);
 
@@ -114,9 +113,7 @@ const MyChannels: React.FC = () => {
       </ScrollView>
       {notificationView && currentNotification && (
         <div onClick={onClick}>
-          <DisplayNotification
-            notification={currentNotification}
-          />
+          <DisplayNotification notification={currentNotification} />
         </div>
       )}
     </>

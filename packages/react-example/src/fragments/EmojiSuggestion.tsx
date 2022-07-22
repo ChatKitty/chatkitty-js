@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import data from '@emoji-mart/data'
+import data from '@emoji-mart/data';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { init, SearchIndex } from 'emoji-mart'
+import { init, SearchIndex } from 'emoji-mart';
 import React, { useContext, useRef } from 'react';
 import { FlexColumn, ScrollView, StyledBox } from '@chatkitty/react-ui';
 import { Button, Label, LabelSizes, LabelVariants } from '@chatkitty/react-ui';
@@ -12,7 +12,7 @@ import { useHover } from '@chatkitty/react-ui';
 import { useMediaQuery } from '@chatkitty/react-ui';
 import { ThemeContext } from 'styled-components';
 
-init({ data })
+init({ data });
 
 type EmojiSuggestionProps = {
   value: string;
@@ -52,7 +52,7 @@ const EmojiSuggestion: React.FC<EmojiSuggestionProps> = ({
   const theme = useContext(ThemeContext);
   const isMedium = useMediaQuery(theme.mediaQueries.medium);
 
-  const replaceEmoji = (search: string, emoji: { native: string; }) => {
+  const replaceEmoji = (search: string, emoji: { native: string }) => {
     if ('native' in emoji) {
       const txt = value.replace(`:${search}`, emoji.native);
       onSelection(txt);

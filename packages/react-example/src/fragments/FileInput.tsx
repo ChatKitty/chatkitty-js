@@ -24,11 +24,11 @@ const FileInput: React.FC<FileInputProps> = () => {
   };
 
   const addFile = () => {
-    if(file){
+    if (file) {
       setCurrentFile(file);
       setFile(null);
     }
-  }
+  };
 
   return (
     <Dropdown

@@ -24,9 +24,7 @@ const LinkPreview: React.FC<LinkPreviewProp> = ({ links }: LinkPreviewProp) => {
             </div>
             {link.preview && (
               <div>
-                <StyledBox>
-                  {link.preview.description}
-                </StyledBox>
+                <StyledBox>{link.preview.description}</StyledBox>
                 <img
                   src={link.preview.image.source}
                   style={{ width: '400px', borderRadius: '5%' }}

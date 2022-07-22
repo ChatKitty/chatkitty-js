@@ -24,7 +24,7 @@ const EmojiInput: React.FC<EmojiInputProps> = ({
       bottom="0"
       title="Open emoji selector"
       render={(dismiss) => {
-        const addEmoji = (emoji: { colons: never; native: never; }) => {
+        const addEmoji = (emoji: { colons: never; native: never }) => {
           if ('native' in emoji) {
             if (onSelection.name === 'emojiClickListener') {
               onSelection(`${value}${emoji.colons}`);

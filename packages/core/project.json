@@ -7,7 +7,7 @@
       "executor": "nx:run-commands",
       "outputs": [],
       "options": {
-        "command": "genversion --es6 ./packages/core/src/environment/version.ts"
+        "command": "genversion --es6 --semi ./packages/core/src/environment/version.ts"
       }
     },
     "build": {

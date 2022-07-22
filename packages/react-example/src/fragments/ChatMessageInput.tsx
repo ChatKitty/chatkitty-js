@@ -90,9 +90,9 @@ const ChatMessageInput: React.FC = () => {
           )}
 
           <FlexRow marginLeft="1">
-              <EmojiInput value={text} onSelection={emojiInserted} />
-              <EmojiSuggestion value={text} onSelection={emojiInserted} />
-              <FileInput />
+            <EmojiInput value={text} onSelection={emojiInserted} />
+            <EmojiSuggestion value={text} onSelection={emojiInserted} />
+            <FileInput />
           </FlexRow>
 
           {touch && (

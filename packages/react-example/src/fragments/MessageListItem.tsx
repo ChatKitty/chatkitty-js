@@ -76,8 +76,6 @@ const MessageListItem: React.FC<MessageListItemProps> = ({
   }, []);
 
   useEffect(() => {
-
-
     if (isTextMessage(message) && message.mentions) {
       message.mentions.map((currentMention) => {
         const mention = currentMention as UserMessageMention;
@@ -86,7 +84,6 @@ const MessageListItem: React.FC<MessageListItemProps> = ({
         }
       });
     }
-
   }, []);
 
   const changeReplyMessage = () => {

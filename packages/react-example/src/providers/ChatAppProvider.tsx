@@ -161,10 +161,15 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const [messageDraft, setMessageDraft] = useState(initialValues.messageDraft);
   const [loading, setLoading] = useState(initialValues.loading);
   const [layout, setLayout] = useState(initialValues.layout);
-  const [replyMessage, setReplyMessage] = useState<Message | null>(initialValues.replyMessage);
+  const [replyMessage, setReplyMessage] = useState<Message | null>(
+    initialValues.replyMessage
+  );
   const [userFile, setUserFile] = useState<File | null>(initialValues.userFile);
 
-  const [currentNotification, setcurrentNotification] = useState<SystemSentMessageNotification | null>(initialValues.currentNotification);
+  const [currentNotification, setcurrentNotification] =
+    useState<SystemSentMessageNotification | null>(
+      initialValues.currentNotification
+    );
 
   const views: Set<View> = new Set();
 
@@ -196,23 +201,21 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     setLayout(getLayout());
   };
 
-
-
   const changeReply = (message: Message) => {
     setReplyMessage(message);
-  }
+  };
 
   const cancelReply = () => {
     setReplyMessage(initialValues.replyMessage);
-  }
+  };
 
   const setCurrentFile = (file: File) => {
     setUserFile(file);
-  }
+  };
 
   const clearFile = () => {
     setUserFile(initialValues.userFile);
-  }
+  };
 
   const showMenu = () => {
     showView('Menu');
@@ -269,12 +272,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
       setOnline(false);
     });
 
-    if(currentUser){
+    if (currentUser) {
       kitty.onNotificationReceived((notification) => {
         setcurrentNotification(notification);
-      })
+      });
     }
-
   }, [currentUser]);
 
   const login = async (username: string) => {
@@ -299,15 +301,16 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const getURLFile = async (fileURL: string) => {
-    try{
-      const blobPromise = await fetch(fileURL).then(fileblob => fileblob.blob());
-      return(blobPromise);
-    }
-    catch(error){
+    try {
+      const blobPromise = await fetch(fileURL).then((fileblob) =>
+        fileblob.blob()
+      );
+      return blobPromise;
+    } catch (error) {
       console.log(error);
     }
-    return(null);
-  }
+    return null;
+  };
 
   const joinedChannelsPaginator = async () => {
     const result = await kitty.getChannels({
@@ -361,8 +364,6 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const onLeftChannel = (handler: (channel: Channel) => void) => {
     return kitty.onChannelLeft(handler);
   };
-
-
 
   const channelDisplayName = (channel: Channel): string => {
     if (isDirectChannel(channel)) {
@@ -448,24 +449,21 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const getMessageParent = async (message: Message) => {
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const test: any = message ;
+    const test: any = message;
 
-    if(test.nestedLevel > 0){
+    if (test.nestedLevel > 0) {
       const result = await kitty.getMessageParent({
-        message
+        message,
       });
 
-      if(succeeded<GetMessageParentSucceededResult>(result)){
+      if (succeeded<GetMessageParentSucceededResult>(result)) {
         return result.message;
       }
     }
 
-
     return null;
-
-  }
+  };
 
   const memberListGetter = async (channel: Channel) => {
     const result = await kitty.getChannelMembers({ channel: channel });
@@ -476,7 +474,6 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
 
     return null;
   };
-
 
   const reactToMessage = async (emoji: string, message: Message) => {
     const result = await kitty.reactToMessage({ emoji, message });
@@ -520,7 +517,6 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     setMessageDraft(initialValues.messageDraft);
   };
 
-
   const sendFileMessage = async (file: File) => {
     if (!channel) {
       return;
@@ -529,9 +525,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
       channel,
       file,
     });
-
-  }
-
+  };
 
   const sendMessageDraft = async (draft: MessageDraft) => {
     if (!channel) {
@@ -539,41 +533,38 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     }
 
     if (isTextMessageDraft(draft)) {
-      if(userFile){
-        if(replyMessage){
+      if (userFile) {
+        if (replyMessage) {
           await kitty.sendMessage({
             body: draft.text,
             message: replyMessage,
             file: userFile,
           });
-        }else{
+        } else {
           await kitty.sendMessage({
             channel: channel,
             body: draft.text,
             file: userFile,
           });
         }
-      }
-      else{
-        if(replyMessage){
+      } else {
+        if (replyMessage) {
           await kitty.sendMessage({
             body: draft.text,
             message: replyMessage,
           });
-        }else{
+        } else {
           await kitty.sendMessage({
             channel: channel,
             body: draft.text,
           });
         }
-
       }
 
       clearFile();
       discardMessageDraft();
       setReplyMessage(initialValues.replyMessage);
     }
-
   };
 
   const logout = async () => {

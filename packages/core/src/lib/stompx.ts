@@ -10,13 +10,11 @@ import { version } from '../environment/version';
 
 let TransportFallback: { new (url: string): unknown };
 
-(window as unknown as { global: unknown }).global = window;
-
-const transportFallbackPromise = import('sockjs-client')
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const transportFallbackPromise = import('sockjs-client/dist/sockjs')
   .then((sockjs) => {
-    TransportFallback = (
-      sockjs as unknown as { default: { new (url: string): unknown } }
-    ).default;
+    TransportFallback = sockjs.default;
   })
   .catch((error) => {
     ErrorMessageTransportFallback.errorMessage = error.message;

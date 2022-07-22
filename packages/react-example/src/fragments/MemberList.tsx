@@ -54,9 +54,7 @@ const MemberList: React.FC = () => {
               Owner
             </Heading>
             <StyledBox>
-              <UserAvatar
-                user={channel?.creator}
-              />
+              <UserAvatar user={channel?.creator} />
               <Icon
                 icon={Icons.Presence}
                 title={
@@ -96,9 +94,7 @@ const MemberList: React.FC = () => {
           <StyledBox key={user.id}>
             {user.name !== channel?.creator?.name && (
               <div>
-                <UserAvatar
-                  user={user}
-                />
+                <UserAvatar user={user} />
                 <Icon
                   icon={Icons.Presence}
                   title={user.presence.online ? 'Connected' : 'Not connected'}

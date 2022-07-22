@@ -11,7 +11,6 @@ import {
 import XIcon from '../assets/images/x-icon.png';
 import { ChatAppContext } from '../providers/ChatAppProvider';
 
-
 import ChatHeader from './ChatHeader';
 import ChatMessageInput from './ChatMessageInput';
 import ChatMessages from './ChatMessages';
@@ -67,11 +66,11 @@ const Chat: React.FC = () => {
 
   const cancelReplyMessage = () => {
     cancelReply();
-  }
+  };
 
   const clearUserFile = () => {
     clearFile();
-  }
+  };
 
   return channel ? (
     <FlexColumn
@@ -83,13 +82,23 @@ const Chat: React.FC = () => {
     >
       <ChatHeader channel={channel} />
       <ChatMessages channel={channel} />
-      {messages.length !== 0 ? (<>
-        <TypingIndicator typingUsers={typingUsers} />
-        {replyMessage && isUserMessage(replyMessage) && <FlexRow alignItems="flex-start">
-          <p>Replying to <strong>{replyMessage.user.displayName}</strong> </p>
-          <img src={XIcon} style={{width:'15px', cursor:'pointer', marginLeft:'50px'}} onClick={cancelReplyMessage}/>
-        </FlexRow>}
-      </>) : (
+      {messages.length !== 0 ? (
+        <>
+          <TypingIndicator typingUsers={typingUsers} />
+          {replyMessage && isUserMessage(replyMessage) && (
+            <FlexRow alignItems="flex-start">
+              <p>
+                Replying to <strong>{replyMessage.user.displayName}</strong>{' '}
+              </p>
+              <img
+                src={XIcon}
+                style={{ width: '15px', cursor: 'pointer', marginLeft: '50px' }}
+                onClick={cancelReplyMessage}
+              />
+            </FlexRow>
+          )}
+        </>
+      ) : (
         <StyledBox
           style={{
             position: 'relative',
@@ -103,10 +112,16 @@ const Chat: React.FC = () => {
       )}
       <ChatMessageInput />
       <FlexRow marginLeft={'25px'} marginBottom={'10px'}>
-        {userFile && <>
-          <p>{userFile.name}</p>
-          <img src={XIcon} style={{width:'15px', cursor:'pointer', marginLeft:'50px'}} onClick={clearUserFile}/>
-        </>}
+        {userFile && (
+          <>
+            <p>{userFile.name}</p>
+            <img
+              src={XIcon}
+              style={{ width: '15px', cursor: 'pointer', marginLeft: '50px' }}
+              onClick={clearUserFile}
+            />
+          </>
+        )}
       </FlexRow>
     </FlexColumn>
   ) : (
