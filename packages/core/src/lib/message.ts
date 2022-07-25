@@ -7,10 +7,7 @@ import {
 } from './file';
 import { ChatKittyPaginator } from './pagination';
 import { ReactionSummary } from './reaction';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { Thread } from './thread';
 import { User } from './user';
 
@@ -202,20 +199,6 @@ export type EditMessageResult =
   | ChatKittyFailedResult;
 
 export class EditedMessageSucceededResult extends ChatKittySucceededResult {
-  constructor(public message: Message) {
-    super();
-  }
-}
-
-export declare class DeleteMessageForMeRequest {
-  message: Message;
-}
-
-export type DeleteMessageForMeResult =
-  | DeleteMessageForMeSucceededResult
-  | ChatKittyFailedResult;
-
-export class DeleteMessageForMeSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }

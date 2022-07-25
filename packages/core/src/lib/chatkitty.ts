@@ -55,7 +55,9 @@ import {
   UnmutedChannelResult,
   UpdateChannelRequest,
   UpdateChannelResult,
-  UpdatedChannelResult, CountUnreadChannelsRequest, CheckChannelUnreadSucceededResult,
+  UpdatedChannelResult,
+  CountUnreadChannelsRequest,
+  CheckChannelUnreadSucceededResult,
 } from './channel';
 import {
   ChatSession,
@@ -91,9 +93,6 @@ import {
   SendThreadKeystrokesRequest,
 } from './keystrokes';
 import {
-  DeleteMessageForMeRequest,
-  DeleteMessageForMeResult,
-  DeleteMessageForMeSucceededResult,
   DeleteMessageRequest,
   DeleteMessageResult,
   DeleteMessageSucceededResult,
@@ -189,7 +188,8 @@ import {
   ListUsersResult,
   ListUsersSucceededResult,
   ListUserSucceededResult,
-  User, CheckUserIsChannelMemberSucceededResult,
+  User,
+  CheckUserIsChannelMemberSucceededResult,
 } from './user';
 import {
   DeleteUserBlockedRecordRequest,
@@ -584,7 +584,9 @@ export class ChatKitty {
         contentName: 'channels',
         parameters: parameters,
       })
-        .then((paginator) => resolve(new ListChannelsSucceededResult(paginator)))
+        .then((paginator) =>
+          resolve(new ListChannelsSucceededResult(paginator))
+        )
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
@@ -1310,7 +1312,9 @@ export class ChatKitty {
         contentName: 'messages',
         mapper: (message) => this.messageMapper.map(message),
       })
-        .then((paginator) => resolve(new ListMessagesSucceededResult(paginator)))
+        .then((paginator) =>
+          resolve(new ListMessagesSucceededResult(paginator))
+        )
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
@@ -1588,20 +1592,6 @@ export class ChatKitty {
           emoji: request.emoji,
         },
         onSuccess: (reaction) => resolve(new RemovedReactionResult(reaction)),
-        onError: (error) => resolve(new ChatKittyFailedResult(error)),
-      });
-    });
-  }
-
-  deleteMessageForMe(
-    request: DeleteMessageForMeRequest
-  ): Promise<DeleteMessageForMeResult> {
-    return new Promise((resolve) => {
-      this.stompX.sendAction<Message>({
-        destination: request.message._actions.deleteForMe,
-        body: {},
-        onSuccess: (resource) =>
-          resolve(new DeleteMessageForMeSucceededResult(resource)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
