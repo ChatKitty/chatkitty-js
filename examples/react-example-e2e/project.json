@@ -1,12 +1,12 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/react-example-e2e/src",
+  "sourceRoot": "examples/react-example-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/react-example-e2e/cypress.json",
+        "cypressConfig": "examples/react-example-e2e/cypress.json",
         "devServerTarget": "react-example:serve:development"
       },
       "configurations": {
@@ -19,7 +19,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/react-example-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["examples/react-example-e2e/**/*.{js,ts}"]
       }
     }
   },

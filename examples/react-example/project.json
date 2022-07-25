@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/react-example/src",
+  "sourceRoot": "examples/react-example/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,17 +9,17 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/packages/react-example",
-        "index": "packages/react-example/src/index.html",
+        "outputPath": "dist/examples/react-example",
+        "index": "examples/react-example/src/index.html",
         "baseHref": "/",
-        "main": "packages/react-example/src/main.tsx",
-        "polyfills": "packages/react-example/src/polyfills.ts",
-        "tsConfig": "packages/react-example/tsconfig.app.json",
+        "main": "examples/react-example/src/main.tsx",
+        "polyfills": "examples/react-example/src/polyfills.ts",
+        "tsConfig": "examples/react-example/tsconfig.app.json",
         "assets": [
-          "packages/react-example/src/favicon.ico",
-          "packages/react-example/src/assets"
+          "examples/react-example/src/favicon.ico",
+          "examples/react-example/src/assets"
         ],
-        "styles": ["packages/react-example/src/styles.scss"],
+        "styles": ["examples/react-example/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -33,8 +33,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "packages/react-example/src/environments/environment.ts",
-              "with": "packages/react-example/src/environments/environment.prod.ts"
+              "replace": "examples/react-example/src/environments/environment.ts",
+              "with": "examples/react-example/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -67,14 +67,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/react-example/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["examples/react-example/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/react-example"],
+      "outputs": ["coverage/examples/react-example"],
       "options": {
-        "jestConfig": "packages/react-example/jest.config.ts",
+        "jestConfig": "examples/react-example/jest.config.ts",
         "passWithNoTests": true
       }
     }

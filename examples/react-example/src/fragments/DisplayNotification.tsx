@@ -9,7 +9,7 @@ import { FlexColumn, FlexRow, StyledBox } from '@chatkitty/react-ui';
 
 import UserAvatar from './UserAvatar';
 
-import './../styles/slide.css';
+import '../styles/slide.css';
 
 interface NotificationProp {
   notification: Notification;

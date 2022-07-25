@@ -1,0 +1,110 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "examples/react-native-expo-example/src",
+  "projectType": "application",
+  "targets": {
+    "start": {
+      "executor": "@nrwl/expo:start",
+      "options": {
+        "port": 8081
+      }
+    },
+    "web": {
+      "executor": "@nrwl/expo:start",
+      "options": {
+        "port": 8081,
+        "webpack": true
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "nx start react-native-expo-example"
+      }
+    },
+    "run-ios": {
+      "executor": "@nrwl/expo:run",
+      "options": {
+        "platform": "ios"
+      }
+    },
+    "run-android": {
+      "executor": "@nrwl/expo:run",
+      "options": {
+        "platform": "android"
+      }
+    },
+    "build": {
+      "executor": "@nrwl/expo:build",
+      "options": {}
+    },
+    "build-list": {
+      "executor": "@nrwl/expo:build-list",
+      "options": {}
+    },
+    "download": {
+      "executor": "@nrwl/expo:download",
+      "options": {
+        "output": "examples/react-native-expo-example/dist"
+      }
+    },
+    "build-ios": {
+      "executor": "@nrwl/expo:build-ios",
+      "options": {}
+    },
+    "build-android": {
+      "executor": "@nrwl/expo:build-android",
+      "options": {}
+    },
+    "build-web": {
+      "executor": "@nrwl/expo:build-web",
+      "options": {}
+    },
+    "build-status": {
+      "executor": "@nrwl/expo:build-web",
+      "options": {}
+    },
+    "sync-deps": {
+      "executor": "@nrwl/expo:sync-deps",
+      "options": {}
+    },
+    "ensure-symlink": {
+      "executor": "@nrwl/expo:ensure-symlink",
+      "options": {}
+    },
+    "publish": {
+      "executor": "@nrwl/expo:publish",
+      "options": {}
+    },
+    "publish-set": {
+      "executor": "@nrwl/expo:publish-set",
+      "options": {}
+    },
+    "rollback": {
+      "executor": "@nrwl/expo:rollback",
+      "options": {}
+    },
+    "eject": {
+      "executor": "@nrwl/expo:eject",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "examples/react-native-expo-example/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/examples/react-native-expo-example"],
+      "options": {
+        "jestConfig": "examples/react-native-expo-example/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

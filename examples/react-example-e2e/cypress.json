@@ -6,7 +6,7 @@
   "supportFile": "./src/support/index.ts",
   "pluginsFile": false,
   "video": true,
-  "videosFolder": "../../dist/cypress/packages/react-example-e2e/videos",
-  "screenshotsFolder": "../../dist/cypress/packages/react-example-e2e/screenshots",
+  "videosFolder": "../../dist/cypress/examples/react-example-e2e/videos",
+  "screenshotsFolder": "../../dist/cypress/examples/react-example-e2e/screenshots",
   "chromeWebSecurity": false
 }
