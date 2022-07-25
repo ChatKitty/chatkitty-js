@@ -17,7 +17,7 @@ export * from './lib/read-receipt';
 export * from './lib/result';
 export * from './lib/thread';
 export * from './lib/user';
-export * from './lib/user-block-list-item';
+export * from './lib/user-blocked-record';
 export * from './lib/user-session';
 export { ChatKitty } from './lib/chatkitty';
 

@@ -3,7 +3,6 @@ import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 
@@ -55,51 +54,51 @@ export class CreatedThreadResult extends ChatKittySucceededResult {
   }
 }
 
-export type GetThreadsRequest = GetChannelThreadsRequest;
+export type ListThreadsRequest = ListChannelThreadsRequest;
 
-export declare class GetChannelThreadsRequest {
+export declare class ListChannelThreadsRequest {
   channel: Channel;
-  filter?: GetChannelThreadsFilter;
+  filter?: ListChannelThreadsFilter;
 }
 
-export declare class GetChannelThreadsFilter {
+export declare class ListChannelThreadsFilter {
   includeMainThread?: boolean;
   standalone?: boolean;
 }
 
-export type GetThreadsResult =
-  | GetThreadsSucceededResult
+export type ListThreadsResult =
+  | ListThreadsSucceededResult
   | ChatKittyFailedResult;
 
-export class GetThreadsSucceededResult extends ChatKittySucceededResult {
+export class ListThreadsSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<Thread>) {
     super();
   }
 }
 
-export declare class GetThreadChannelRequest {
+export declare class RetrieveThreadChannelRequest {
   thread: Thread;
 }
 
-export type GetThreadChannelResult =
-  | GetThreadChannelSucceededResult
+export type RetrieveThreadChannelResult =
+  | RetrieveThreadChannelSucceededResult
   | ChatKittyFailedResult;
 
-export class GetThreadChannelSucceededResult extends ChatKittySucceededResult {
+export class RetrieveThreadChannelSucceededResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
     super();
   }
 }
 
-export declare class GetThreadMessageRequest {
+export declare class RetrieveThreadMessageRequest {
   thread: Thread;
 }
 
-export type GetThreadMessageResult =
-  | GetThreadMessageSucceededResult
+export type RetrieveThreadMessageResult =
+  | RetrieveThreadMessageSucceededResult
   | ChatKittyFailedResult;
 
-export class GetThreadMessageSucceededResult extends ChatKittySucceededResult {
+export class RetrieveThreadMessageSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }

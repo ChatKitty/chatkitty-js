@@ -5,7 +5,7 @@ import { Message } from './message';
 import { ChatKittyUnsubscribe } from './observer';
 import { Reaction } from './reaction';
 import { ReadReceipt } from './read-receipt';
-import { ChatKittyResult, ChatKittySucceededResult } from './result';
+import { ChatKittySucceededResult } from './result';
 import { Thread } from './thread';
 import { User } from './user';
 
@@ -21,8 +21,8 @@ export type StartChatSessionResult = StartedChatSessionResult;
 
 export declare class StartChatSessionRequest {
   channel: Channel;
-  onReceivedMessage?: (message: Message, parent?: Message) => void;
-  onReceivedKeystrokes?: (keystrokes: Keystrokes) => void;
+  onMessageReceived?: (message: Message, parent?: Message) => void;
+  onKeystrokesReceived?: (keystrokes: Keystrokes) => void;
   onTypingStarted?: (user: User) => void;
   onTypingStopped?: (user: User) => void;
   onParticipantEnteredChat?: (user: User) => void;
@@ -34,8 +34,8 @@ export declare class StartChatSessionRequest {
   onMessageRead?: (message: Message, receipt: ReadReceipt) => void;
   onMessageReactionAdded?: (message: Message, reaction: Reaction) => void;
   onMessageReactionRemoved?: (message: Message, reaction: Reaction) => void;
-  onThreadReceivedMessage?: (thread: Thread, message: Message) => void;
-  onThreadReceivedKeystrokes?: (thread: Thread, keystrokes: Keystrokes) => void;
+  onThreadMessageReceived?: (thread: Thread, message: Message) => void;
+  onThreadKeystrokesReceived?: (thread: Thread, keystrokes: Keystrokes) => void;
   onThreadTypingStarted?: (thread: Thread, user: User) => void;
   onThreadTypingStopped?: (thread: Thread, user: User) => void;
 }

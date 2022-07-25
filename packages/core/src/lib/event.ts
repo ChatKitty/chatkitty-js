@@ -1,7 +1,6 @@
 import { Channel } from './channel';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 import { User } from './user';

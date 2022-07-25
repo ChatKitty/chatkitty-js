@@ -2,7 +2,6 @@ import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 import { User } from './user';
@@ -17,15 +16,15 @@ export declare class ReadReceiptRelays {
   message: string;
 }
 
-export declare class GetReadReceiptsRequest {
+export declare class ListReadReceiptsRequest {
   message: Message;
 }
 
-export type GetReadReceiptsResult =
-  | GetReadReceiptsSucceededResult
+export type ListReadReceiptsResult =
+  | ListReadReceiptsSucceededResult
   | ChatKittyFailedResult;
 
-export class GetReadReceiptsSucceededResult extends ChatKittySucceededResult {
+export class ListReadReceiptsSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<ReadReceipt>) {
     super();
   }

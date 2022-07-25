@@ -3,7 +3,6 @@ import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 import { User } from './user';
@@ -40,15 +39,15 @@ export class ReactedToMessageResult extends ChatKittySucceededResult {
   }
 }
 
-export declare class GetReactionsRequest {
+export declare class ListReactionsRequest {
   message: Message;
 }
 
-export type GetReactionsResult =
-  | GetReactionsSucceededResult
+export type ListReactionsResult =
+  | ListReactionsSucceededResult
   | ChatKittyFailedResult;
 
-export class GetReactionsSucceededResult extends ChatKittySucceededResult {
+export class ListReactionsSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<Reaction>) {
     super();
   }

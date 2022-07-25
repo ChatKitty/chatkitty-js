@@ -3,7 +3,6 @@ import { ChatKittyModelReference } from './model';
 import { ChatKittyPaginator } from './pagination';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 
@@ -37,43 +36,41 @@ export type ChatKittyUserReference =
       username: string;
     };
 
-export declare class GetUsersRequest {
-  filter?: GetUsersFilter;
+export declare class ListUsersRequest {
+  filter?: ListUsersFilter;
 }
 
-export declare class GetUsersFilter {
+export declare class ListUsersFilter {
   name?: string;
   displayName?: string;
   online?: boolean;
 }
 
-export type GetUsersResult = GetUsersSucceededResult | ChatKittyFailedResult;
+export type ListUsersResult = ListUsersSucceededResult | ChatKittyFailedResult;
 
-export class GetUsersSucceededResult extends ChatKittySucceededResult {
+export class ListUsersSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<User>) {
     super();
   }
 }
 
-export type GetUserResult = GetUserSucceededResult | ChatKittyFailedResult;
+export type RetrieveUserResult = ListUserSucceededResult | ChatKittyFailedResult;
 
-export class GetUserSucceededResult extends ChatKittySucceededResult {
+export class ListUserSucceededResult extends ChatKittySucceededResult {
   constructor(public user: User) {
     super();
   }
 }
 
-export declare class GetUserIsChannelMemberRequest {
+export declare class CheckUserIsChannelMemberRequest {
   user: User;
   channel: Channel;
 }
 
-export type GetUserIsChannelMemberResult =
-  | GetUserIsChannelMemberSucceededResult
-  | ChatKittyFailedResult;
+export type CheckUserIsChannelMemberResult = CheckUserIsChannelMemberSucceededResult | ChatKittyFailedResult;
 
-export class GetUserIsChannelMemberSucceededResult extends ChatKittySucceededResult {
-  constructor(public isMember: boolean) {
+export class CheckUserIsChannelMemberSucceededResult extends ChatKittySucceededResult {
+  constructor(public isChannelMember: boolean) {
     super();
   }
 }

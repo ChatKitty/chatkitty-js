@@ -2,7 +2,6 @@ import { CurrentUser } from './current-user';
 import { ChatKittyError } from './error';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 

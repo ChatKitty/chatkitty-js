@@ -3,7 +3,6 @@ import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 import { ChatKittyUserReference, User } from './user';
@@ -15,7 +14,7 @@ export interface BaseChannel {
   type: string;
   name: string;
   creator?: User;
-  lastReceivedMessage?: Message;
+  lastMessageReceived?: Message;
   properties: unknown;
   _relays: ChannelRelays;
   _topics: ChannelTopics;
@@ -35,7 +34,7 @@ export declare class ChannelRelays {
   self: string;
   messages: string;
   messagesCount: string;
-  lastReceivedMessage: string;
+  lastMessageReceived: string;
   lastReadMessage: string;
   unread: string;
   members: string;
@@ -103,53 +102,53 @@ export class CreatedChannelResult extends ChatKittySucceededResult {
   }
 }
 
-export declare class GetChannelsRequest {
-  filter?: GetChannelsFilter;
+export declare class ListChannelsRequest {
+  filter?: ListChannelsFilter;
 }
 
-export declare class GetChannelsFilter {
+export declare class ListChannelsFilter {
   name?: string;
   joined?: boolean;
   unread?: boolean;
 }
 
-export declare class GetUnreadChannelsRequest {
-  filter: GetUnreadChannelsFilter;
+export declare class ListUnreadChannelsRequest {
+  filter: ListUnreadChannelsFilter;
 }
 
-export declare class GetUnreadChannelsFilter {
+export declare class ListUnreadChannelsFilter {
   type: string;
 }
 
-export declare class GetChannelUnreadRequest {
+export type CountUnreadChannelsRequest = ListUnreadChannelsRequest;
+
+export declare class RetrieveChannelUnreadRequest {
   channel: Channel;
 }
 
-export type GetChannelsResult =
-  | GetChannelsSucceededResult
+export type ListChannelsResult =
+  | ListChannelsSucceededResult
   | ChatKittyFailedResult;
 
-export class GetChannelsSucceededResult extends ChatKittySucceededResult {
+export class ListChannelsSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<Channel>) {
     super();
   }
 }
 
-export type GetChannelResult =
-  | GetChannelSucceededResult
+export type RetrieveChannelResult =
+  | RetrieveChannelSucceededResult
   | ChatKittyFailedResult;
 
-export class GetChannelSucceededResult extends ChatKittySucceededResult {
+export class RetrieveChannelSucceededResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
     super();
   }
 }
 
-export type GetChannelUnreadResult =
-  | GetChannelUnreadSucceededResult
-  | ChatKittyFailedResult;
+export type CheckChannelUnreadResult = CheckChannelUnreadSucceededResult | ChatKittyFailedResult;
 
-export class GetChannelUnreadSucceededResult extends ChatKittySucceededResult {
+export class CheckChannelUnreadSucceededResult extends ChatKittySucceededResult {
   constructor(public unread: boolean) {
     super();
   }
@@ -176,12 +175,12 @@ export class ChannelNotPubliclyJoinableError extends ChatKittyError {
   }
 }
 
-export declare class GetChannelMembersRequest {
+export declare class ListChannelMembersRequest {
   channel: Channel;
-  filter?: GetChannelMembersFilter;
+  filter?: ListChannelMembersFilter;
 }
 
-export declare class GetChannelMembersFilter {
+export declare class ListChannelMembersFilter {
   displayName?: string;
 }
 

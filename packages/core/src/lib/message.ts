@@ -9,7 +9,6 @@ import { ChatKittyPaginator } from './pagination';
 import { ReactionSummary } from './reaction';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 import { Thread } from './thread';
@@ -137,43 +136,43 @@ export function isSystemMessage(message: Message): message is SystemMessage {
   return (message as UserMessage).user === undefined;
 }
 
-export type GetMessagesRequest =
-  | GetChannelMessagesRequest
-  | GetMessageRepliesRequest;
+export type ListMessagesRequest =
+  | ListChannelMessagesRequest
+  | ListMessageRepliesRequest;
 
-export declare class GetChannelMessagesRequest {
+export declare class ListChannelMessagesRequest {
   channel: Channel;
-  filter?: GetChannelMessagesFilter;
+  filter?: ListChannelMessagesFilter;
 }
 
-export declare class GetMessageRepliesRequest {
+export declare class ListMessageRepliesRequest {
   message: Message;
 }
 
-export declare class GetChannelMessagesFilter {
+export declare class ListChannelMessagesFilter {
   mainThread: boolean;
 }
 
-export declare class GetLastReadMessageRequest {
+export declare class RetrieveLastReadMessageRequest {
   channel: Channel;
   username: string;
 }
 
-export type GetMessagesResult =
-  | GetMessagesSucceededResult
+export type ListMessagesResult =
+  | ListMessagesSucceededResult
   | ChatKittyFailedResult;
 
-export class GetMessagesSucceededResult extends ChatKittySucceededResult {
+export class ListMessagesSucceededResult extends ChatKittySucceededResult {
   constructor(public paginator: ChatKittyPaginator<Message>) {
     super();
   }
 }
 
-export type GetLastReadMessageResult =
-  | GetLastReadMessageSucceededResult
+export type RetrieveLastReadMessageResult =
+  | RetrieveLastReadMessageSucceededResult
   | ChatKittyFailedResult;
 
-export class GetLastReadMessageSucceededResult extends ChatKittySucceededResult {
+export class RetrieveLastReadMessageSucceededResult extends ChatKittySucceededResult {
   constructor(public message?: Message) {
     super();
   }
@@ -305,37 +304,37 @@ export function sentFileMessage(
   return message !== undefined && message.type === 'FILE';
 }
 
-export declare class GetUnreadMessagesCountRequest {
+export declare class CountUnreadMessagesRequest {
   channel: Channel;
 }
 
-export declare class GetMessageRepliesCountRequest {
+export declare class CountMessageRepliesRequest {
   message: Message;
 }
 
-export declare class GetMessageChannelRequest {
+export declare class RetrieveMessageChannelRequest {
   message: Message;
 }
 
-export type GetMessageChannelResult =
-  | GetMessageChannelSucceededResult
+export type RetrieveMessageChannelResult =
+  | RetrieveMessageChannelSucceededResult
   | ChatKittyFailedResult;
 
-export class GetMessageChannelSucceededResult extends ChatKittySucceededResult {
+export class RetrieveMessageChannelSucceededResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
     super();
   }
 }
 
-export declare class GetMessageParentRequest {
+export declare class RetrieveMessageParentRequest {
   message: Message;
 }
 
-export type GetMessageParentResult =
-  | GetMessageParentSucceededResult
+export type RetrieveMessageParentResult =
+  | RetrieveMessageParentSucceededResult
   | ChatKittyFailedResult;
 
-export class GetMessageParentSucceededResult extends ChatKittySucceededResult {
+export class RetrieveMessageParentSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }

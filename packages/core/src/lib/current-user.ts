@@ -4,7 +4,6 @@ import {
 } from './file';
 import {
   ChatKittyFailedResult,
-  ChatKittyResult,
   ChatKittySucceededResult,
 } from './result';
 import { BaseUser } from './user';
@@ -28,7 +27,7 @@ export declare class CurrentUserRelays {
   unreadMessagesCount: string;
   contactsCount: string;
   contacts: string;
-  userBlockListItems: string;
+  userBlockedRecords: string;
 }
 
 export declare class CurrentUserTopics {
@@ -54,11 +53,11 @@ export declare class CurrentUserStreams {
   displayPicture: string;
 }
 
-export type GetCurrentUserResult =
-  | GetCurrentUserSuccessfulResult
+export type RetrieveCurrentUserResult =
+  | RetrieveCurrentUserSuccessfulResult
   | ChatKittyFailedResult;
 
-export class GetCurrentUserSuccessfulResult extends ChatKittySucceededResult {
+export class RetrieveCurrentUserSuccessfulResult extends ChatKittySucceededResult {
   constructor(public user: CurrentUser) {
     super();
   }

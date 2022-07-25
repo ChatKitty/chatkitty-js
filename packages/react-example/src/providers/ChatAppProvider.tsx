@@ -4,18 +4,17 @@ import ChatKitty, {
   ChatKittyUnsubscribe,
   ChatSession,
   CurrentUser,
-  GetChannelsSucceededResult,
-  GetCountSucceedResult,
-  GetMessageParentSucceededResult,
-  GetMessagesSucceededResult,
-  GetUsersSucceededResult,
+  ListChannelsSucceededResult,
+  CountSucceededResult,
+  RetrieveMessageParentSucceededResult,
+  ListMessagesSucceededResult,
+  ListUsersSucceededResult,
   isDirectChannel,
   JoinedChannelResult,
   LeftChannelResult,
   Message,
   Reaction,
   StartedChatSessionResult,
-  succeeded,
   SystemSentMessageNotification,
   User,
 } from '@chatkitty/core';
@@ -66,7 +65,7 @@ interface ChatAppContext {
   removeReaction: (emoji: string, message: Message) => Promise<Reaction | null>;
   startChatSession: (
     channel: Channel,
-    onReceivedMessage: (message: Message) => void,
+    onMessageReceived: (message: Message) => void,
     onTypingStarted: (user: User) => void,
     onTypingStopped: (user: User) => void
   ) => ChatSession | null;
@@ -291,9 +290,9 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const users = async () => {
-    const result = await kitty.getUsers();
+    const result = await kitty.listUsers();
 
-    if (succeeded<GetUsersSucceededResult>(result)) {
+    if (result.succeeded) {
       return result.paginator;
     }
 
@@ -313,11 +312,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const joinedChannelsPaginator = async () => {
-    const result = await kitty.getChannels({
+    const result = await kitty.listChannels({
       filter: { joined: true },
     });
 
-    if (succeeded<GetChannelsSucceededResult>(result)) {
+    if (result.succeeded) {
       return result.paginator;
     }
 
@@ -325,11 +324,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const joinableChannelsPaginator = async () => {
-    const result = await kitty.getChannels({
+    const result = await kitty.listChannels({
       filter: { joined: false },
     });
 
-    if (succeeded<GetChannelsSucceededResult>(result)) {
+    if (result.succeeded) {
       return result.paginator;
     }
 
@@ -339,7 +338,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const joinChannel = async (channel: Channel) => {
     const result = await kitty.joinChannel({ channel });
 
-    if (succeeded<JoinedChannelResult>(result)) {
+    if (result.succeeded) {
       hideView('Join Channel');
 
       showChat(result.channel);
@@ -350,7 +349,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     const result = await kitty.leaveChannel({ channel: c });
 
     if (
-      succeeded<LeftChannelResult>(result) &&
+      result.succeeded &&
       result.channel.id === channel?.id
     ) {
       hideChat();
@@ -388,13 +387,13 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
 
   const startChatSession = (
     channel: Channel,
-    onReceivedMessage: (message: Message) => void,
+    onMessageReceived: (message: Message) => void,
     onTypingStarted: (user: User) => void,
     onTypingStopped: (user: User) => void
   ): ChatSession | null => {
     const result = kitty.startChatSession({
       channel,
-      onReceivedMessage,
+      onMessageReceived,
       onTypingStarted,
       onTypingStopped,
       onMessageReactionAdded: (message) => {
@@ -405,7 +404,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
       },
     });
 
-    if (succeeded<StartedChatSessionResult>(result)) {
+    if (result.succeeded) {
       return result.session;
     }
 
@@ -413,11 +412,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const channelUnreadMessagesCount = async (channel: Channel) => {
-    const result = await kitty.getUnreadMessagesCount({
+    const result = await kitty.countUnreadMessages({
       channel,
     });
 
-    if (succeeded<GetCountSucceedResult>(result)) {
+    if (result.succeeded) {
       return result.count;
     }
 
@@ -425,11 +424,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const messagesPaginator = async (channel: Channel) => {
-    const result = await kitty.getMessages({
+    const result = await kitty.listMessages({
       channel,
     });
 
-    if (succeeded<GetMessagesSucceededResult>(result)) {
+    if (result.succeeded) {
       return result.paginator;
     }
 
@@ -437,11 +436,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const replyMessagesPaginator = async (message: Message) => {
-    const result = await kitty.getMessages({
+    const result = await kitty.listMessages({
       message,
     });
 
-    if (succeeded<GetMessagesSucceededResult>(result)) {
+    if (result.succeeded) {
       return result.paginator;
     }
 
@@ -453,11 +452,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     const test: any = message;
 
     if (test.nestedLevel > 0) {
-      const result = await kitty.getMessageParent({
+      const result = await kitty.retrieveMessageParent({
         message,
       });
 
-      if (succeeded<GetMessageParentSucceededResult>(result)) {
+      if (result.succeeded) {
         return result.message;
       }
     }
@@ -466,9 +465,9 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const memberListGetter = async (channel: Channel) => {
-    const result = await kitty.getChannelMembers({ channel: channel });
+    const result = await kitty.listChannelMembers({ channel: channel });
 
-    if (succeeded<GetUsersSucceededResult>(result)) {
+    if (result.succeeded) {
       return result.paginator.items;
     }
 
@@ -478,7 +477,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const reactToMessage = async (emoji: string, message: Message) => {
     const result = await kitty.reactToMessage({ emoji, message });
 
-    if (succeeded(result)) {
+    if (result.succeeded) {
       return result.reaction;
     }
 
@@ -488,7 +487,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const removeReaction = async (emoji: string, message: Message) => {
     const result = await kitty.removeReaction({ emoji, message });
 
-    if (succeeded(result)) {
+    if (result.succeeded) {
       return result.reaction;
     }
 

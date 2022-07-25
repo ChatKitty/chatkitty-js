@@ -22,16 +22,15 @@ import {
   DeleteChannelResult,
   DeletedChannelResult,
   DirectChannel,
-  GetChannelMembersRequest,
-  GetChannelResult,
-  GetChannelsRequest,
-  GetChannelsResult,
-  GetChannelsSucceededResult,
-  GetChannelSucceededResult,
-  GetChannelUnreadRequest,
-  GetChannelUnreadResult,
-  GetChannelUnreadSucceededResult,
-  GetUnreadChannelsRequest,
+  ListChannelMembersRequest,
+  RetrieveChannelResult,
+  ListChannelsRequest,
+  ListChannelsResult,
+  ListChannelsSucceededResult,
+  RetrieveChannelSucceededResult,
+  RetrieveChannelUnreadRequest,
+  CheckChannelUnreadResult,
+  ListUnreadChannelsRequest,
   HideChannelRequest,
   HideChannelResult,
   HideChannelSucceededResult,
@@ -56,7 +55,7 @@ import {
   UnmutedChannelResult,
   UpdateChannelRequest,
   UpdateChannelResult,
-  UpdatedChannelResult,
+  UpdatedChannelResult, CountUnreadChannelsRequest, CheckChannelUnreadSucceededResult,
 } from './channel';
 import {
   ChatSession,
@@ -66,8 +65,8 @@ import {
 } from './chat-session';
 import {
   CurrentUser,
-  GetCurrentUserResult,
-  GetCurrentUserSuccessfulResult,
+  RetrieveCurrentUserResult,
+  RetrieveCurrentUserSuccessfulResult,
   UpdateCurrentUserDisplayPictureRequest,
   UpdateCurrentUserDisplayPictureResult,
   UpdateCurrentUserResult,
@@ -102,22 +101,22 @@ import {
   EditMessageRequest,
   EditMessageResult,
   FileUserMessage,
-  GetChannelMessagesRequest,
-  GetLastReadMessageRequest,
-  GetLastReadMessageResult,
-  GetLastReadMessageSucceededResult,
-  GetMessageChannelRequest,
-  GetMessageChannelResult,
-  GetMessageChannelSucceededResult,
-  GetMessageParentRequest,
-  GetMessageParentResult,
-  GetMessageParentSucceededResult,
-  GetMessageRepliesCountRequest,
-  GetMessageRepliesRequest,
-  GetMessagesRequest,
-  GetMessagesResult,
-  GetMessagesSucceededResult,
-  GetUnreadMessagesCountRequest,
+  ListChannelMessagesRequest,
+  RetrieveLastReadMessageRequest,
+  RetrieveLastReadMessageResult,
+  RetrieveLastReadMessageSucceededResult,
+  RetrieveMessageChannelRequest,
+  RetrieveMessageChannelResult,
+  RetrieveMessageChannelSucceededResult,
+  RetrieveMessageParentRequest,
+  RetrieveMessageParentResult,
+  RetrieveMessageParentSucceededResult,
+  CountMessageRepliesRequest,
+  ListMessageRepliesRequest,
+  ListMessagesRequest,
+  ListMessagesResult,
+  ListMessagesSucceededResult,
+  CountUnreadMessagesRequest,
   isFileMessage,
   Message,
   MessageNotAReplyError,
@@ -139,9 +138,9 @@ import { Notification } from './notification';
 import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
 import { ChatKittyPaginator } from './pagination';
 import {
-  GetReactionsRequest,
-  GetReactionsResult,
-  GetReactionsSucceededResult,
+  ListReactionsRequest,
+  ListReactionsResult,
+  ListReactionsSucceededResult,
   ReactedToMessageResult,
   Reaction,
   ReactToMessageRequest,
@@ -151,29 +150,29 @@ import {
   RemoveReactionResult,
 } from './reaction';
 import {
-  GetReadReceiptsRequest,
-  GetReadReceiptsResult,
-  GetReadReceiptsSucceededResult,
+  ListReadReceiptsRequest,
+  ListReadReceiptsResult,
+  ListReadReceiptsSucceededResult,
   ReadReceipt,
 } from './read-receipt';
 import {
   ChatKittyFailedResult,
-  GetCountResult,
-  GetCountSucceedResult,
+  CountResult,
+  CountSucceededResult,
 } from './result';
 import {
   CreatedThreadResult,
   CreateThreadRequest,
   CreateThreadResult,
-  GetThreadChannelRequest,
-  GetThreadChannelResult,
-  GetThreadChannelSucceededResult,
-  GetThreadMessageRequest,
-  GetThreadMessageResult,
-  GetThreadMessageSucceededResult,
-  GetThreadsRequest,
-  GetThreadsResult,
-  GetThreadsSucceededResult,
+  RetrieveThreadChannelRequest,
+  RetrieveThreadChannelResult,
+  RetrieveThreadChannelSucceededResult,
+  RetrieveThreadMessageRequest,
+  RetrieveThreadMessageResult,
+  RetrieveThreadMessageSucceededResult,
+  ListThreadsRequest,
+  ListThreadsResult,
+  ListThreadsSucceededResult,
   ReadThreadRequest,
   ReadThreadResult,
   ReadThreadSucceededResult,
@@ -183,24 +182,23 @@ import {
   BlockUserRequest,
   BlockUserResult,
   BlockUserSucceededResult,
-  GetUserIsChannelMemberRequest,
-  GetUserIsChannelMemberResult,
-  GetUserIsChannelMemberSucceededResult,
-  GetUserResult,
-  GetUsersRequest,
-  GetUsersResult,
-  GetUsersSucceededResult,
-  GetUserSucceededResult,
-  User,
+  CheckUserIsChannelMemberRequest,
+  CheckUserIsChannelMemberResult,
+  RetrieveUserResult,
+  ListUsersRequest,
+  ListUsersResult,
+  ListUsersSucceededResult,
+  ListUserSucceededResult,
+  User, CheckUserIsChannelMemberSucceededResult,
 } from './user';
 import {
-  DeleteUserBlockListItemRequest,
-  DeleteUserBlockListItemResult,
-  DeleteUserBlockListItemSucceededResult,
-  GetUserBlockListResult,
-  GetUserBlockListSucceededResult,
-  UserBlockListItem,
-} from './user-block-list-item';
+  DeleteUserBlockedRecordRequest,
+  DeleteUserBlockedRecordResult,
+  DeleteUserBlockedRecordSucceededResult,
+  ListUserBlockedRecordsResult,
+  ListUserBlockedRecordsSucceededResult,
+  UserBlockedRecord,
+} from './user-blocked-record';
 import {
   NoActiveSessionError,
   SessionActiveError,
@@ -343,7 +341,7 @@ export class ChatKitty {
     });
   }
 
-  getCurrentUser(): Promise<GetCurrentUserResult> {
+  retrieveCurrentUser(): Promise<RetrieveCurrentUserResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -354,7 +352,7 @@ export class ChatKitty {
       this.stompX.relayResource<CurrentUser>({
         destination: currentUser._relays.self,
         onSuccess: (user) => {
-          resolve(new GetCurrentUserSuccessfulResult(user));
+          resolve(new RetrieveCurrentUserSuccessfulResult(user));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -548,7 +546,7 @@ export class ChatKitty {
     });
   }
 
-  getChannels(request?: GetChannelsRequest): Promise<GetChannelsResult> {
+  listChannels(request?: ListChannelsRequest): Promise<ListChannelsResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -560,7 +558,7 @@ export class ChatKitty {
 
       let relay = currentUser._relays.channels;
 
-      if (isGetChannelsRequest(request)) {
+      if (isListChannelsRequest(request)) {
         if (request.filter?.joined === false) {
           relay = currentUser._relays.joinableChannels;
         }
@@ -586,17 +584,17 @@ export class ChatKitty {
         contentName: 'channels',
         parameters: parameters,
       })
-        .then((paginator) => resolve(new GetChannelsSucceededResult(paginator)))
+        .then((paginator) => resolve(new ListChannelsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  getChannel(id: number): Promise<GetChannelResult> {
+  retrieveChannel(id: number): Promise<RetrieveChannelResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
-          resolve(new GetChannelSucceededResult(channel));
+          resolve(new RetrieveChannelSucceededResult(channel));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -682,9 +680,9 @@ export class ChatKitty {
     });
   }
 
-  getUnreadChannelsCount(
-    request?: GetUnreadChannelsRequest
-  ): Promise<GetCountResult> {
+  countUnreadChannels(
+    request?: CountUnreadChannelsRequest
+  ): Promise<CountResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -695,7 +693,7 @@ export class ChatKitty {
       unread: true,
     };
 
-    if (isGetChannelsUnreadRequest(request)) {
+    if (isListChannelsUnreadRequest(request)) {
       parameters.type = request.filter?.type;
     }
 
@@ -704,7 +702,7 @@ export class ChatKitty {
         destination: currentUser._relays.channelsCount,
         parameters: parameters,
         onSuccess: (resource) => {
-          resolve(new GetCountSucceedResult(resource.count));
+          resolve(new CountSucceededResult(resource.count));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -713,9 +711,9 @@ export class ChatKitty {
     });
   }
 
-  getChannelUnread(
-    request: GetChannelUnreadRequest
-  ): Promise<GetChannelUnreadResult> {
+  checkChannelUnread(
+    request: RetrieveChannelUnreadRequest
+  ): Promise<CheckChannelUnreadResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -726,7 +724,7 @@ export class ChatKitty {
       this.stompX.relayResource<{ exists: boolean }>({
         destination: request.channel._relays.unread,
         onSuccess: (resource) => {
-          resolve(new GetChannelUnreadSucceededResult(resource.exists));
+          resolve(new CheckChannelUnreadSucceededResult(resource.exists));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -831,8 +829,8 @@ export class ChatKitty {
   }
 
   startChatSession(request: StartChatSessionRequest): StartChatSessionResult {
-    const onReceivedMessage = request.onReceivedMessage;
-    const onReceivedKeystrokes = request.onReceivedKeystrokes;
+    const onMessageReceived = request.onMessageReceived;
+    const onKeystrokesReceived = request.onKeystrokesReceived;
     const onParticipantEnteredChat = request.onParticipantEnteredChat;
     const onParticipantLeftChat = request.onParticipantLeftChat;
     const onTypingStarted = request.onTypingStarted;
@@ -844,13 +842,13 @@ export class ChatKitty {
     const onMessageRead = request.onMessageRead;
     const onMessageReactionAdded = request.onMessageReactionAdded;
     const onMessageReactionRemoved = request.onMessageReactionRemoved;
-    const onThreadReceivedMessage = request.onThreadReceivedMessage;
-    const onThreadReceivedKeystrokes = request.onThreadReceivedKeystrokes;
+    const onThreadMessageReceived = request.onThreadMessageReceived;
+    const onThreadKeystrokesReceived = request.onThreadKeystrokesReceived;
     const onThreadTypingStarted = request.onThreadTypingStarted;
     const onThreadTypingStopped = request.onThreadTypingStopped;
 
-    let receivedMessageUnsubscribe: () => void;
-    let receivedKeystrokesUnsubscribe: () => void;
+    let messageReceivedUnsubscribe: () => void;
+    let keystrokesReceivedUnsubscribe: () => void;
     let participantEnteredChatUnsubscribe: () => void;
     let participantLeftChatUnsubscribe: () => void;
     let typingStartedUnsubscribe: () => void;
@@ -862,13 +860,13 @@ export class ChatKitty {
     let messageReadUnsubscribe: () => void;
     let messageReactionAddedUnsubscribe: () => void;
     let messageReactionRemovedUnsubscribe: () => void;
-    let threadReceivedMessageUnsubscribe: () => void;
-    let threadReceivedKeystrokesUnsubscribe: () => void;
+    let threadMessageReceivedUnsubscribe: () => void;
+    let threadKeystrokesReceivedUnsubscribe: () => void;
     let threadTypingStartedUnsubscribe: () => void;
     let threadTypingStoppedUnsubscribe: () => void;
 
-    if (onReceivedMessage) {
-      receivedMessageUnsubscribe = this.stompX.listenForEvent<Message>({
+    if (onMessageReceived) {
+      messageReceivedUnsubscribe = this.stompX.listenForEvent<Message>({
         topic: request.channel._topics.messages,
         event: 'channel.message.created',
         onSuccess: (message) => {
@@ -878,25 +876,25 @@ export class ChatKitty {
             this.stompX.relayResource<Message>({
               destination,
               onSuccess: (parent) => {
-                onReceivedMessage(
+                onMessageReceived(
                   this.messageMapper.map(message),
                   this.messageMapper.map(parent)
                 );
               },
             });
           } else {
-            onReceivedMessage(this.messageMapper.map(message));
+            onMessageReceived(this.messageMapper.map(message));
           }
         },
       });
     }
 
-    if (onReceivedKeystrokes) {
-      receivedKeystrokesUnsubscribe = this.stompX.listenForEvent<Keystrokes>({
+    if (onKeystrokesReceived) {
+      keystrokesReceivedUnsubscribe = this.stompX.listenForEvent<Keystrokes>({
         topic: request.channel._topics.keystrokes,
         event: 'thread.keystrokes.created',
         onSuccess: (keystrokes) => {
-          onReceivedKeystrokes(keystrokes);
+          onKeystrokesReceived(keystrokes);
         },
       });
     }
@@ -1038,10 +1036,10 @@ export class ChatKitty {
       participantEnteredChatUnsubscribe?.();
       typingStoppedUnsubscribe?.();
       typingStartedUnsubscribe?.();
-      receivedKeystrokesUnsubscribe?.();
-      receivedMessageUnsubscribe?.();
-      threadReceivedMessageUnsubscribe?.();
-      threadReceivedKeystrokesUnsubscribe?.();
+      keystrokesReceivedUnsubscribe?.();
+      messageReceivedUnsubscribe?.();
+      threadMessageReceivedUnsubscribe?.();
+      threadKeystrokesReceivedUnsubscribe?.();
       threadTypingStartedUnsubscribe?.();
       threadTypingStoppedUnsubscribe?.();
     };
@@ -1104,18 +1102,18 @@ export class ChatKitty {
       thread: activeThread,
       end: () => end(),
       setThread: (thread: Thread) => {
-        threadReceivedMessageUnsubscribe?.();
-        threadReceivedKeystrokesUnsubscribe?.();
+        threadMessageReceivedUnsubscribe?.();
+        threadKeystrokesReceivedUnsubscribe?.();
         threadTypingStartedUnsubscribe?.();
         threadTypingStoppedUnsubscribe?.();
 
-        if (onThreadReceivedMessage) {
-          threadReceivedMessageUnsubscribe =
+        if (onThreadMessageReceived) {
+          threadMessageReceivedUnsubscribe =
             this.stompX.listenForEvent<Message>({
               topic: thread._topics.messages,
               event: 'thread.message.created',
               onSuccess: (message) => {
-                onThreadReceivedMessage(
+                onThreadMessageReceived(
                   thread,
                   this.messageMapper.map(message)
                 );
@@ -1123,13 +1121,13 @@ export class ChatKitty {
             });
         }
 
-        if (onThreadReceivedKeystrokes) {
-          threadReceivedKeystrokesUnsubscribe =
+        if (onThreadKeystrokesReceived) {
+          threadKeystrokesReceivedUnsubscribe =
             this.stompX.listenForEvent<Keystrokes>({
               topic: thread._topics.keystrokes,
               event: 'thread.keystrokes.created',
               onSuccess: (keystrokes) => {
-                onThreadReceivedKeystrokes(thread, keystrokes);
+                onThreadKeystrokesReceived(thread, keystrokes);
               },
             });
         }
@@ -1281,7 +1279,7 @@ export class ChatKitty {
     });
   }
 
-  getMessages(request: GetMessagesRequest): Promise<GetMessagesResult> {
+  listMessages(request: ListMessagesRequest): Promise<ListMessagesResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1292,7 +1290,7 @@ export class ChatKitty {
 
     let parameters: Record<string, unknown> | undefined = undefined;
 
-    if (isGetChannelMessagesRequest(request)) {
+    if (isListChannelMessagesRequest(request)) {
       relay = request.channel._relays.messages;
 
       parameters = {
@@ -1300,7 +1298,7 @@ export class ChatKitty {
       };
     }
 
-    if (isGetMessageRepliesRequest(request)) {
+    if (isListMessageRepliesRequest(request)) {
       relay = request.message._relays.replies;
     }
 
@@ -1312,14 +1310,14 @@ export class ChatKitty {
         contentName: 'messages',
         mapper: (message) => this.messageMapper.map(message),
       })
-        .then((paginator) => resolve(new GetMessagesSucceededResult(paginator)))
+        .then((paginator) => resolve(new ListMessagesSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  getUnreadMessagesCount(
-    request?: GetUnreadMessagesCountRequest
-  ): Promise<GetCountResult> {
+  countUnreadMessages(
+    request?: CountUnreadMessagesRequest
+  ): Promise<CountResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1328,7 +1326,7 @@ export class ChatKitty {
 
     let relay = currentUser._relays.unreadMessagesCount;
 
-    if (isGetUnreadMessagesCountRequest(request)) {
+    if (isCountUnreadMessagesRequest(request)) {
       relay = request.channel._relays.messagesCount;
     }
 
@@ -1339,7 +1337,7 @@ export class ChatKitty {
           unread: true,
         },
         onSuccess: (resource) => {
-          resolve(new GetCountSucceedResult(resource.count));
+          resolve(new CountSucceededResult(resource.count));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1383,9 +1381,9 @@ export class ChatKitty {
     });
   }
 
-  getLastReadMessage(
-    request: GetLastReadMessageRequest
-  ): Promise<GetLastReadMessageResult> {
+  retrieveLastReadMessage(
+    request: RetrieveLastReadMessageRequest
+  ): Promise<RetrieveLastReadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Message>({
         destination: request.channel._relays.lastReadMessage,
@@ -1393,7 +1391,7 @@ export class ChatKitty {
           username: request.username,
         },
         onSuccess: (resource) => {
-          resolve(new GetLastReadMessageSucceededResult(resource));
+          resolve(new RetrieveLastReadMessageSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1416,14 +1414,14 @@ export class ChatKitty {
     });
   }
 
-  getMessageRepliesCount(
-    request: GetMessageRepliesCountRequest
-  ): Promise<GetCountResult> {
+  countMessageReplies(
+    request: CountMessageRepliesRequest
+  ): Promise<CountResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<{ count: number }>({
         destination: request.message._relays.repliesCount,
         onSuccess: (resource) => {
-          resolve(new GetCountSucceedResult(resource.count));
+          resolve(new CountSucceededResult(resource.count));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1432,14 +1430,14 @@ export class ChatKitty {
     });
   }
 
-  getMessageChannel(
-    request: GetMessageChannelRequest
-  ): Promise<GetMessageChannelResult> {
+  retrieveMessageChannel(
+    request: RetrieveMessageChannelRequest
+  ): Promise<RetrieveMessageChannelResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
         destination: request.message._relays.channel,
         onSuccess: (resource) => {
-          resolve(new GetMessageChannelSucceededResult(resource));
+          resolve(new RetrieveMessageChannelSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1448,9 +1446,9 @@ export class ChatKitty {
     });
   }
 
-  getMessageParent(
-    request: GetMessageParentRequest
-  ): Promise<GetMessageParentResult> {
+  retrieveMessageParent(
+    request: RetrieveMessageParentRequest
+  ): Promise<RetrieveMessageParentResult> {
     return new Promise((resolve) => {
       const destination = request.message._relays.parent;
 
@@ -1461,7 +1459,7 @@ export class ChatKitty {
       this.stompX.relayResource<Message>({
         destination,
         onSuccess: (resource) => {
-          resolve(new GetMessageParentSucceededResult(resource));
+          resolve(new RetrieveMessageParentSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1481,7 +1479,7 @@ export class ChatKitty {
     });
   }
 
-  getThreads(request: GetThreadsRequest): Promise<GetThreadsResult> {
+  listThreads(request: ListThreadsRequest): Promise<ListThreadsResult> {
     const parameters: { includeMainThread?: false; standalone?: true } = {};
 
     if (request.filter?.includeMainThread === false) {
@@ -1499,19 +1497,19 @@ export class ChatKitty {
         contentName: 'threads',
         parameters,
       })
-        .then((paginator) => resolve(new GetThreadsSucceededResult(paginator)))
+        .then((paginator) => resolve(new ListThreadsSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  getThreadChannel(
-    request: GetThreadChannelRequest
-  ): Promise<GetThreadChannelResult> {
+  listThreadChannel(
+    request: RetrieveThreadChannelRequest
+  ): Promise<RetrieveThreadChannelResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Channel>({
         destination: request.thread._relays.channel,
         onSuccess: (resource) => {
-          resolve(new GetThreadChannelSucceededResult(resource));
+          resolve(new RetrieveThreadChannelSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1520,14 +1518,14 @@ export class ChatKitty {
     });
   }
 
-  getThreadMessage(
-    request: GetThreadMessageRequest
-  ): Promise<GetThreadMessageResult> {
+  listThreadMessage(
+    request: RetrieveThreadMessageRequest
+  ): Promise<RetrieveThreadMessageResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<Message>({
         destination: request.thread._relays.message,
         onSuccess: (resource) => {
-          resolve(new GetThreadMessageSucceededResult(resource));
+          resolve(new RetrieveThreadMessageSucceededResult(resource));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -1566,7 +1564,7 @@ export class ChatKitty {
     });
   }
 
-  getReactions(request: GetReactionsRequest): Promise<GetReactionsResult> {
+  listReactions(request: ListReactionsRequest): Promise<ListReactionsResult> {
     return new Promise((resolve) => {
       ChatKittyPaginator.createInstance<Reaction>({
         stompX: this.stompX,
@@ -1574,7 +1572,7 @@ export class ChatKitty {
         contentName: 'reactions',
       })
         .then((paginator) =>
-          resolve(new GetReactionsSucceededResult(paginator))
+          resolve(new ListReactionsSucceededResult(paginator))
         )
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
@@ -1777,9 +1775,9 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  getChannelMembers(
-    request: GetChannelMembersRequest
-  ): Promise<GetUsersResult> {
+  listChannelMembers(
+    request: ListChannelMembersRequest
+  ): Promise<ListUsersResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1795,14 +1793,14 @@ export class ChatKitty {
           ...request.filter,
         },
       })
-        .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
+        .then((paginator) => resolve(new ListUsersSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  getReadReceipts(
-    request: GetReadReceiptsRequest
-  ): Promise<GetReadReceiptsResult> {
+  listReadReceipts(
+    request: ListReadReceiptsRequest
+  ): Promise<ListReadReceiptsResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1816,13 +1814,13 @@ export class ChatKitty {
         contentName: 'receipts',
       })
         .then((paginator) =>
-          resolve(new GetReadReceiptsSucceededResult(paginator))
+          resolve(new ListReadReceiptsSucceededResult(paginator))
         )
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  getUsers(request?: GetUsersRequest): Promise<GetUsersResult> {
+  listUsers(request?: ListUsersRequest): Promise<ListUsersResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1832,7 +1830,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       let parameters: Record<string, unknown> | undefined = undefined;
 
-      if (isGetUsersRequest(request)) {
+      if (isListUsersRequest(request)) {
         parameters = {
           ...request.filter,
         };
@@ -1844,12 +1842,12 @@ export class ChatKitty {
         contentName: 'users',
         parameters: parameters,
       })
-        .then((paginator) => resolve(new GetUsersSucceededResult(paginator)))
+        .then((paginator) => resolve(new ListUsersSucceededResult(paginator)))
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  getUsersCount(request?: GetUsersRequest): Promise<GetCountResult> {
+  listUsersCount(request?: ListUsersRequest): Promise<CountResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1859,7 +1857,7 @@ export class ChatKitty {
     return new Promise((resolve) => {
       let parameters: Record<string, unknown> | undefined = undefined;
 
-      if (isGetUsersRequest(request)) {
+      if (isListUsersRequest(request)) {
         parameters = {
           ...request.filter,
         };
@@ -1869,7 +1867,7 @@ export class ChatKitty {
         destination: currentUser._relays.contactsCount,
         parameters: parameters,
         onSuccess: (resource) => {
-          resolve(new GetCountSucceedResult(resource.count));
+          resolve(new CountSucceededResult(resource.count));
         },
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
@@ -1969,20 +1967,20 @@ export class ChatKitty {
     return () => unsubscribe;
   }
 
-  getUser(param: number): Promise<GetUserResult> {
+  retrieveUser(param: number): Promise<RetrieveUserResult> {
     return new Promise((resolve) => {
       this.stompX.relayResource<User>({
         destination: ChatKitty.userRelay(param),
         onSuccess: (user) => {
-          resolve(new GetUserSucceededResult(user));
+          resolve(new ListUserSucceededResult(user));
         },
       });
     });
   }
 
-  getUserIsChannelMember(
-    request: GetUserIsChannelMemberRequest
-  ): Promise<GetUserIsChannelMemberResult> {
+  checkUserIsChannelMember(
+    request: CheckUserIsChannelMemberRequest
+  ): Promise<CheckUserIsChannelMemberResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -1996,7 +1994,7 @@ export class ChatKitty {
           channelId: request.channel.id,
         },
         onSuccess: (resource) => {
-          resolve(new GetUserIsChannelMemberSucceededResult(resource.exists));
+          resolve(new CheckUserIsChannelMemberSucceededResult(resource.exists));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
@@ -2018,7 +2016,7 @@ export class ChatKitty {
     });
   }
 
-  getUserBlockList(): Promise<GetUserBlockListResult> {
+  listUserBlockedRecords(): Promise<ListUserBlockedRecordsResult> {
     const currentUser = this.currentUser;
 
     if (!currentUser) {
@@ -2026,27 +2024,27 @@ export class ChatKitty {
     }
 
     return new Promise((resolve) => {
-      ChatKittyPaginator.createInstance<UserBlockListItem>({
+      ChatKittyPaginator.createInstance<UserBlockedRecord>({
         stompX: this.stompX,
-        relay: currentUser._relays.userBlockListItems,
+        relay: currentUser._relays.userBlockedRecords,
         contentName: 'items',
       })
         .then((paginator) =>
-          resolve(new GetUserBlockListSucceededResult(paginator))
+          resolve(new ListUserBlockedRecordsSucceededResult(paginator))
         )
         .catch((error) => resolve(new ChatKittyFailedResult(error)));
     });
   }
 
-  deleteUserBlockListItem(
-    request: DeleteUserBlockListItemRequest
-  ): Promise<DeleteUserBlockListItemResult> {
+  deleteUserBlockedRecord(
+    request: DeleteUserBlockedRecordRequest
+  ): Promise<DeleteUserBlockedRecordResult> {
     return new Promise((resolve) => {
       this.stompX.sendAction<User>({
         destination: request.item._actions.delete,
         body: {},
         onSuccess: (resource) =>
-          resolve(new DeleteUserBlockListItemSucceededResult(resource)),
+          resolve(new DeleteUserBlockedRecordSucceededResult(resource)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });
@@ -2083,34 +2081,34 @@ class MessageMapper {
   }
 }
 
-function isGetChannelsRequest(
-  param: GetChannelsRequest | undefined
-): param is GetChannelsRequest {
-  const request = param as GetChannelsRequest;
+function isListChannelsRequest(
+  param: ListChannelsRequest | undefined
+): param is ListChannelsRequest {
+  const request = param as ListChannelsRequest;
 
   return request?.filter !== undefined;
 }
 
-function isGetUsersRequest(
-  param: GetUsersRequest | undefined
-): param is GetUsersRequest {
-  const request = param as GetUsersRequest;
+function isListUsersRequest(
+  param: ListUsersRequest | undefined
+): param is ListUsersRequest {
+  const request = param as ListUsersRequest;
 
   return request?.filter !== undefined;
 }
 
-function isGetChannelsUnreadRequest(
-  param: GetUnreadChannelsRequest | undefined
-): param is GetUnreadChannelsRequest {
-  const request = param as GetUnreadChannelsRequest;
+function isListChannelsUnreadRequest(
+  param: ListUnreadChannelsRequest | undefined
+): param is ListUnreadChannelsRequest {
+  const request = param as ListUnreadChannelsRequest;
 
   return request?.filter !== undefined;
 }
 
-function isGetUnreadMessagesCountRequest(
-  param: GetUnreadMessagesCountRequest | undefined
-): param is GetUnreadMessagesCountRequest {
-  const request = param as GetUnreadMessagesCountRequest;
+function isCountUnreadMessagesRequest(
+  param: CountUnreadMessagesRequest | undefined
+): param is CountUnreadMessagesRequest {
+  const request = param as CountUnreadMessagesRequest;
 
   return request?.channel !== undefined;
 }
@@ -2127,16 +2125,16 @@ function isSendChannelFileMessageRequest(
   return (request as SendFileMessageRequest).file !== undefined;
 }
 
-function isGetChannelMessagesRequest(
-  request: GetMessagesRequest
-): request is GetChannelMessagesRequest {
-  return (request as GetChannelMessagesRequest).channel !== undefined;
+function isListChannelMessagesRequest(
+  request: ListMessagesRequest
+): request is ListChannelMessagesRequest {
+  return (request as ListChannelMessagesRequest).channel !== undefined;
 }
 
-function isGetMessageRepliesRequest(
-  request: GetMessagesRequest
-): request is GetMessageRepliesRequest {
-  return (request as GetMessageRepliesRequest).message !== undefined;
+function isListMessageRepliesRequest(
+  request: ListMessagesRequest
+): request is ListMessageRepliesRequest {
+  return (request as ListMessageRepliesRequest).message !== undefined;
 }
 
 function isCreateChatKittyExternalFileProperties(
@@ -2147,41 +2145,6 @@ function isCreateChatKittyExternalFileProperties(
     result.name !== undefined &&
     result.size !== undefined
   );
-}
-
-export interface Calls {
-  localStream: MediaStream | null;
-
-  isMuted: boolean;
-
-  initialize(configuration: {
-    media: { audio: boolean; video: boolean };
-  }): void;
-
-  leaveCall(): void;
-
-  switchCamera(): void;
-  toggleMute(): void;
-
-  onParticipantAcceptedCall(
-    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-  ): ChatKittyUnsubscribe;
-
-  onParticipantRejectedCall(
-    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-  ): ChatKittyUnsubscribe;
-
-  onParticipantActive(
-    onNextOrObserver:
-      | ChatKittyObserver<{ user: User; stream: MediaStream }>
-      | ((user: User, stream: MediaStream) => void)
-  ): ChatKittyUnsubscribe;
-
-  onParticipantLeftCall(
-    onNextOrObserver: ChatKittyObserver<User> | ((user: User) => void)
-  ): ChatKittyUnsubscribe;
-
-  close(): void;
 }
 
 export default ChatKitty;
