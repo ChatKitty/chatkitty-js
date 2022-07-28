@@ -348,10 +348,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const leaveChannel = async (c: Channel) => {
     const result = await kitty.leaveChannel({ channel: c });
 
-    if (
-      result.succeeded &&
-      result.channel.id === channel?.id
-    ) {
+    if (result.succeeded && result.channel.id === channel?.id) {
       hideChat();
     }
   };

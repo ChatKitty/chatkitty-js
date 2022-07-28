@@ -1,10 +1,7 @@
 import { Channel } from './channel';
 import { ChatKittyModelReference } from './model';
 import { ChatKittyPaginator } from './pagination';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
 export interface BaseUser {
   id: number;
@@ -55,7 +52,9 @@ export class ListUsersSucceededResult extends ChatKittySucceededResult {
   }
 }
 
-export type RetrieveUserResult = ListUserSucceededResult | ChatKittyFailedResult;
+export type RetrieveUserResult =
+  | ListUserSucceededResult
+  | ChatKittyFailedResult;
 
 export class ListUserSucceededResult extends ChatKittySucceededResult {
   constructor(public user: User) {
@@ -68,7 +67,9 @@ export declare class CheckUserIsChannelMemberRequest {
   channel: Channel;
 }
 
-export type CheckUserIsChannelMemberResult = CheckUserIsChannelMemberSucceededResult | ChatKittyFailedResult;
+export type CheckUserIsChannelMemberResult =
+  | CheckUserIsChannelMemberSucceededResult
+  | ChatKittyFailedResult;
 
 export class CheckUserIsChannelMemberSucceededResult extends ChatKittySucceededResult {
   constructor(public isChannelMember: boolean) {

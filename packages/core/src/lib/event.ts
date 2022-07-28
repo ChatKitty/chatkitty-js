@@ -1,8 +1,5 @@
 import { Channel } from './channel';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
 export declare class Event {

@@ -2,10 +2,7 @@ import {
   ChatKittyUploadProgressListener,
   CreateChatKittyFileProperties,
 } from './file';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { BaseUser } from './user';
 
 export type CurrentUser = BaseUser & {

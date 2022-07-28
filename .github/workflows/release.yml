@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and Generate docs 📚
         run: |
-          npm ci
+          npm ci -force
           nx doc core
 
       - name: Deploy 🚀

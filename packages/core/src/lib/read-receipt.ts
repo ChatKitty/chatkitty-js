@@ -1,9 +1,6 @@
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { User } from './user';
 
 export declare class ReadReceipt {

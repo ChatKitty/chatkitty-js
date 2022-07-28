@@ -1,10 +1,7 @@
 import { Channel } from './channel';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 
 export declare class Thread {
   id: string;
