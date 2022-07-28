@@ -9,10 +9,11 @@ import { User } from './user';
 export declare class ReadReceipt {
   user: User;
   createdTime: string;
+  /** @internal */
   _relays: ReadReceiptRelays;
 }
 
-export declare class ReadReceiptRelays {
+declare class ReadReceiptRelays {
   message: string;
 }
 

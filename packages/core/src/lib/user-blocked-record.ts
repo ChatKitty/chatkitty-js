@@ -8,10 +8,11 @@ import { User } from './user';
 export declare class UserBlockedRecord {
   user: User;
   createdTime: string;
+  /** @internal */
   _actions: UserBlockedRecordActions;
 }
 
-export declare class UserBlockedRecordActions {
+declare class UserBlockedRecordActions {
   delete: string;
 }
 

@@ -67,6 +67,12 @@
         "passWithNoTests": true
       }
     },
+    "doc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --options ./packages/core/typedoc.json"
+      }
+    },
     "release": {
       "executor": "nx:run-commands",
       "outputs": [],

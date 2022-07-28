@@ -112,7 +112,7 @@ export default class StompX {
 
     const connectHeaders: StompHeaders = {
       'StompX-User': request.username,
-      'StompX-User-Agent': `ChatKitty-JS/${version}`,
+      'StompX-User-Agent': `ChatKitty-JS-Core/${version}`,
     };
 
     if (request.authParams) {

@@ -9,10 +9,11 @@ export declare class Event {
   type: string;
   user: User;
   properties: unknown;
+  /** @internal */
   _relays: EventRelays;
 }
 
-export declare class EventRelays {
+declare class EventRelays {
   channel: string;
 }
 

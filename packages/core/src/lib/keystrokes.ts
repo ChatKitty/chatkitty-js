@@ -4,10 +4,11 @@ import { Thread } from './thread';
 export declare class Keystrokes {
   username: string;
   keys: string;
+  /** @internal */
   _relays: KeystrokesRelays;
 }
 
-export declare class KeystrokesRelays {
+declare class KeystrokesRelays {
   thread: string;
   user: string;
 }

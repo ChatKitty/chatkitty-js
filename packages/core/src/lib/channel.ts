@@ -16,9 +16,13 @@ export interface BaseChannel {
   creator?: User;
   lastMessageReceived?: Message;
   properties: unknown;
+  /** @internal */
   _relays: ChannelRelays;
+  /** @internal */
   _topics: ChannelTopics;
+  /** @internal */
   _actions: ChannelActions;
+  /** @internal */
   _streams: ChannelStreams;
 }
 
@@ -30,7 +34,7 @@ export type PublicChannel = BaseChannel;
 
 export type PrivateChannel = BaseChannel;
 
-export declare class ChannelRelays {
+declare class ChannelRelays {
   self: string;
   messages: string;
   messagesCount: string;
@@ -42,7 +46,7 @@ export declare class ChannelRelays {
   calls: string;
 }
 
-export declare class ChannelTopics {
+declare class ChannelTopics {
   self: string;
   messages: string;
   keystrokes: string;
@@ -53,7 +57,7 @@ export declare class ChannelTopics {
   events: string;
 }
 
-export declare class ChannelActions {
+declare class ChannelActions {
   message: string;
   keystrokes: string;
   join?: string;
@@ -71,7 +75,7 @@ export declare class ChannelActions {
   createThread: string;
 }
 
-export declare class ChannelStreams {
+declare class ChannelStreams {
   messages: string;
 }
 

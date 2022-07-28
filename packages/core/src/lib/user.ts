@@ -22,10 +22,11 @@ export declare class UserPresence {
 }
 
 export type User = BaseUser & {
+  /** @internal */
   _relays: UserRelays;
 };
 
-export declare class UserRelays {
+declare class UserRelays {
   self: string;
   channelMember: string;
 }

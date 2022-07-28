@@ -30,8 +30,11 @@ export interface BaseMessage {
   reactions?: ReactionSummary[];
   repliesCount?: number;
   properties: unknown;
+  /** @internal */
   _relays: MessageRelays;
+  /** @internal */
   _actions: MessageActions;
+  /** @internal */
   _streams: MessageStreams;
 }
 

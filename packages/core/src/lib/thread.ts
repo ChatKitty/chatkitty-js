@@ -12,31 +12,35 @@ export declare class Thread {
   name?: string;
   properties: unknown;
   createdTime: string;
+  /** @internal */
   _relays: ThreadRelays;
+  /** @internal */
   _topics: ThreadTopics;
+  /** @internal */
   _actions: ThreadActions;
+  /** @internal */
   _streams: ThreadStreams;
 }
 
-export declare class ThreadRelays {
+declare class ThreadRelays {
   channel: string;
   message: string;
 }
 
-export declare class ThreadTopics {
+declare class ThreadTopics {
   self: string;
   messages: string;
   keystrokes: string;
   typing: string;
 }
 
-export declare class ThreadActions {
+declare class ThreadActions {
   message: string;
   keystrokes: string;
   read: string;
 }
 
-export declare class ThreadStreams {
+declare class ThreadStreams {
   messages: string;
 }
 

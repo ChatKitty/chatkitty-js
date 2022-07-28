@@ -9,13 +9,17 @@ import {
 import { BaseUser } from './user';
 
 export type CurrentUser = BaseUser & {
+  /** @internal */
   _relays: CurrentUserRelays;
+  /** @internal */
   _topics: CurrentUserTopics;
+  /** @internal */
   _actions: CurrentUserActions;
+  /** @internal */
   _streams: CurrentUserStreams;
 };
 
-export declare class CurrentUserRelays {
+declare class CurrentUserRelays {
   self: string;
   readFileAccessGrant: string;
   writeFileAccessGrant: string;
@@ -30,7 +34,7 @@ export declare class CurrentUserRelays {
   userBlockedRecords: string;
 }
 
-export declare class CurrentUserTopics {
+declare class CurrentUserTopics {
   self: string;
   channels: string;
   messages: string;
@@ -43,13 +47,13 @@ export declare class CurrentUserTopics {
   calls: string;
 }
 
-export declare class CurrentUserActions {
+declare class CurrentUserActions {
   update: string;
   createChannel: string;
   updateDisplayPicture: string;
 }
 
-export declare class CurrentUserStreams {
+declare class CurrentUserStreams {
   displayPicture: string;
 }
 

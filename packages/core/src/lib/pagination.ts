@@ -3,6 +3,7 @@ import StompX, { StompXError, StompXPage } from './stompx';
 import { ChatKittyError } from './error';
 
 export class ChatKittyPaginator<I> {
+  /** @internal */
   static async createInstance<I>(
     request: CreatePaginatorRequest<I>
   ): Promise<ChatKittyPaginator<I>> {

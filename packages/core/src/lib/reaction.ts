@@ -11,10 +11,11 @@ export declare class Reaction {
   emoji: Emoji;
   user: User;
   createdTime: string;
+  /** @internal */
   _relays: ReactionRelays;
 }
 
-export declare class ReactionRelays {
+declare class ReactionRelays {
   message: string;
 }
 
