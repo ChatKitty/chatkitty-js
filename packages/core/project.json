@@ -79,7 +79,13 @@
       "options": {
         "command": "npx semantic-release-plus --extends ./packages/core/release.config.js",
         "parallel": false
-      }
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
     }
   },
   "tags": []
