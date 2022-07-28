@@ -58,6 +58,7 @@ import {
   UpdatedChannelResult,
   CountUnreadChannelsRequest,
   CheckChannelUnreadSucceededResult,
+  CheckChannelUnreadRequest,
 } from './channel';
 import {
   ChatSession,
@@ -714,7 +715,7 @@ export class ChatKitty {
   }
 
   checkChannelUnread(
-    request: RetrieveChannelUnreadRequest
+    request: CheckChannelUnreadRequest
   ): Promise<CheckChannelUnreadResult> {
     const currentUser = this.currentUser;
 

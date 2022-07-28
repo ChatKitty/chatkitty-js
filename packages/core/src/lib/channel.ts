@@ -1,10 +1,7 @@
 import { ChatKittyError } from './error';
 import { Message } from './message';
 import { ChatKittyPaginator } from './pagination';
-import {
-  ChatKittyFailedResult,
-  ChatKittySucceededResult,
-} from './result';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
 import { ChatKittyUserReference, User } from './user';
 
 export type Channel = DirectChannel | PublicChannel | PrivateChannel;
@@ -150,7 +147,13 @@ export class RetrieveChannelSucceededResult extends ChatKittySucceededResult {
   }
 }
 
-export type CheckChannelUnreadResult = CheckChannelUnreadSucceededResult | ChatKittyFailedResult;
+export declare class CheckChannelUnreadRequest {
+  channel: Channel;
+}
+
+export type CheckChannelUnreadResult =
+  | CheckChannelUnreadSucceededResult
+  | ChatKittyFailedResult;
 
 export class CheckChannelUnreadSucceededResult extends ChatKittySucceededResult {
   constructor(public unread: boolean) {
