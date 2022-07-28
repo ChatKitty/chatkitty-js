@@ -66,6 +66,7 @@ import {
   StartChatSessionResult,
   StartedChatSessionResult,
 } from './chat-session';
+import { ChatKittyConfiguration } from './configuration';
 import {
   CurrentUser,
   RetrieveCurrentUserResult,
@@ -2040,12 +2041,6 @@ export class ChatKitty {
       });
     });
   }
-}
-
-export declare class ChatKittyConfiguration {
-  apiKey: string;
-  isSecure?: boolean;
-  host?: string;
 }
 
 class MessageMapper {

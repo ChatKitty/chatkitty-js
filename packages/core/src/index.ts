@@ -19,8 +19,9 @@ export * from './lib/user';
 export * from './lib/user-blocked-record';
 export * from './lib/user-session';
 
+export * from './lib/configuration';
 export * from './lib/observer';
 export { ChatKittyPaginator, PageOutOfBoundsError } from './lib/pagination';
-export { ChatKitty, ChatKittyConfiguration } from './lib/chatkitty';
+export { ChatKitty } from './lib/chatkitty';
 
 export { ChatKitty as default } from './lib/chatkitty';
