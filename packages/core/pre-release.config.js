@@ -6,6 +6,7 @@ const baseConfig = require('./release.config.js');
 module.exports = {
   ...baseConfig,
   pkgRoot: `${srcRoot}`,
+  skipTag: true,
   plugins: [
     '@semantic-release/commit-analyzer',
     [
