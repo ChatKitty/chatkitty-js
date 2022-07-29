@@ -3,6 +3,13 @@
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "targets": {
+    "prepare": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx semantic-release-plus --extends ./packages/core/pre-release.config.js"
+      }
+    },
     "build": {
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
@@ -26,18 +33,6 @@
         "buildableProjectDepsInPackageJsonType": "dependencies",
         "generatePackageJson": true
       }
-    },
-    "publish": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "node tools/scripts/publish.mjs core {args.ver} {args.tag}"
-      },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -73,7 +68,13 @@
       "options": {
         "command": "npx semantic-release-plus --extends ./packages/core/release.config.js",
         "parallel": false
-      }
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "prepare"
+        }
+      ]
     }
   },
   "tags": []
