@@ -3,13 +3,6 @@
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "targets": {
-    "prepare": {
-      "executor": "nx:run-commands",
-      "outputs": [],
-      "options": {
-        "command": "genversion --es6 --semi ./packages/core/src/environment/version.ts"
-      }
-    },
     "build": {
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
@@ -32,13 +25,7 @@
         ],
         "buildableProjectDepsInPackageJsonType": "dependencies",
         "generatePackageJson": true
-      },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "prepare"
-        }
-      ]
+      }
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
@@ -73,19 +60,20 @@
         "command": "typedoc --options ./packages/core/typedoc.json"
       }
     },
+    "prepare-release": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "node tools/scripts/version.mjs core {args.version}"
+      }
+    },
     "release": {
       "executor": "nx:run-commands",
       "outputs": [],
       "options": {
         "command": "npx semantic-release-plus --extends ./packages/core/release.config.js",
         "parallel": false
-      },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
+      }
     }
   },
   "tags": []
