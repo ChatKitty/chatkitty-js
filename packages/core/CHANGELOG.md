@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.0.3...core-v1.0.4) (2022-07-29)
+
+
+### Bug Fixes
+
+* **core:** fix pre-release ([42f2c8e](https://github.com/ChatKitty/chatkitty-js/commit/42f2c8e2d6e7476ac6dfac9c22404c9d17ac6d4a))
+
 ## [1.0.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.0.0...core-v1.0.1) (2022-07-29)
 
 
