@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.0.0...core-v1.0.1) (2022-07-29)
+
+
+### Bug Fixes
+
+* **core:** set current version in user agent string ([a5f4f99](https://github.com/ChatKitty/chatkitty-js/commit/a5f4f99e7e5f6bd5634b53a287c1bb96e6c9d3c7))
+
 # 1.0.0 (2022-07-28)
 
 
