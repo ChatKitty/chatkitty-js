@@ -1,5 +1,3 @@
-import 'text-encoding';
-
 export * from './lib/channel';
 export * from './lib/chat-session';
 export * from './lib/current-user';
