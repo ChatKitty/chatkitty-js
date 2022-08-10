@@ -51,10 +51,10 @@ typing indicators, delivery and read receipts, emoji and like reactions, etc, yo
 ```js
 kitty.startChatSession({
   channel: channel,
-  onReceivedMessage: (message) => {
+  onMessageReceived: (message) => {
     // handle received messages
   },
-  onReceivedKeystrokes: (keystrokes) => {
+  onKeystrokesReceived: (keystrokes) => {
     // handle received typing keystrokes
   },
   onTypingStarted: (user) => {
@@ -81,21 +81,13 @@ All handler methods are optional, so you only needed to register handlers for ch
 
 | Name                           | Parameter Type | Description                                                                                   |
 | ------------------------------ | -------------- | --------------------------------------------------------------------------------------------- |
-| `onReceivedMessage`            | `Message`      | Called when a message is sent to this channel.                                                |
-| `onReceivedKeystrokes`         | `Keystrokes`   | Called when typing keystrokes are made by users actively chatting in this channel.            |
+| `onMessageReceived`            | `Message`      | Called when a message is sent to this channel.                                                |
+| `onKeystrokesReceived`         | `Keystrokes`   | Called when typing keystrokes are made by users actively chatting in this channel.            |
 | `onTypingStarted`              | `User`         | Called when a user starts typing in this channel.                                             |
 | `onTypingStopped`              | `User`         | Called when a user stops typing in this channel.                                              |
 | `onParticipantEnteredChat`     | `User`         | Called when another user starts an active chat session in this channel.                       |
 | `onParticipantLeftChat`        | `User`         | Called when another user ends their active chat session in this channel.                      |
 | `onParticipantPresenceChanged` | `User`         | Called when a member of this channel changes their presence status or goes online or offline. |
-
-## API Documentation
-
-Please see the documentation for this SDK at the [ChatKitty Website](https://docs.chatkitty.com/javascript/).
-
-The source code of the website can be found [here](https://github.com/ChatKitty/chatkitty-api-docs). Contributions are welcomed!
-
-A complete SDK reference document is hosted at https://chatkitty.github.io/chatkitty-js/
 
 ## Questions? Need Help? Found a bug?
 
@@ -119,4 +111,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - [axios](https://github.com/axios/axios)
 - [RxJS](https://github.com/ReactiveX/RxJS)
 - [RxStomp](https://github.com/stomp-js/rx-stomp)
-- [text-encoding](https://github.com/inexorabletash/text-encoding)
