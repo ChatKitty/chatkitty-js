@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.0.5...core-v1.1.0) (2022-08-22)
+
+
+### Features
+
+* **react-ui:** wrap image message in anchor tag ([a93f8dd](https://github.com/ChatKitty/chatkitty-js/commit/a93f8dd138a7d2b502fc481cec0f1b58238f048e))
+
 ## [1.0.5](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.0.4...core-v1.0.5) (2022-08-10)
 
 ### Bug Fixes
