@@ -38,6 +38,7 @@ jobs:
       - name: Deploy 🚀
         run: |
           npx nx release core
+          npx nx release react-ui
           aws s3 cp --recursive --acl public-read packages/core/dist/docs s3://chatkitty-docs/chatkitty-js/packages/core/docs
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}

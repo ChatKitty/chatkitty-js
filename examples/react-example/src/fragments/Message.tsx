@@ -4,9 +4,8 @@ import {
   isTextMessage,
 } from '@chatkitty/core';
 import React from 'react';
-import { TextMessage } from '@chatkitty/react-ui';
+import {ImageMessage, TextMessage} from '@chatkitty/react-ui';
 
-import FileMessage from './FileMessage';
 import LinkPreview from './LinkPreview';
 
 type MessageProps = {
@@ -22,7 +21,7 @@ const Message: React.FC<MessageProps> = ({ message }: MessageProps) => {
           {message.links && <LinkPreview links={message.links} />}
         </>
       )}
-      {isFileMessage(message) && <FileMessage message={message} />}
+      {isFileMessage(message) && <ImageMessage image={message.file.url} />}
     </>
   );
 };
