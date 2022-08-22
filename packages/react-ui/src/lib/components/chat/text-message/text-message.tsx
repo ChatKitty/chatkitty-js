@@ -1,6 +1,6 @@
 import emojiRegex from 'emoji-regex';
 import React from 'react';
-import Linkify from 'react-linkify';
+import Linkify from 'linkify-react';
 import Styled, { css } from 'styled-components/macro';
 
 export enum TextMessageSizes {
