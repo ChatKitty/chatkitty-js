@@ -73,6 +73,10 @@
         {
           "projects": "self",
           "target": "prepare"
+        },
+        {
+          "projects": "self",
+          "target": "build"
         }
       ]
     }
