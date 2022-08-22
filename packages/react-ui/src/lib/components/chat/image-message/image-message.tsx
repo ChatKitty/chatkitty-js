@@ -18,5 +18,9 @@ export const ImageMessage: React.FC<ImageMessageProps> = ({
   image,
   ...rest
 }: ImageMessageProps) => {
-  return<a href={image} target="_blank" rel="noreferrer"> <Image alt={`media from ${image}`} src={image} {...rest} /></a>;
+  return (
+    <a href={image} target="_blank" rel="noreferrer">
+      <Image alt={`media from ${image}`} src={image} {...rest} />
+    </a>
+  );
 };
