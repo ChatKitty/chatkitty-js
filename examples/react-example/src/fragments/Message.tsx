@@ -4,7 +4,7 @@ import {
   isTextMessage,
 } from '@chatkitty/core';
 import React from 'react';
-import {ImageMessage, TextMessage} from '@chatkitty/react-ui';
+import { ImageMessage, TextMessage } from '@chatkitty/react-ui';
 
 import LinkPreview from './LinkPreview';
 
