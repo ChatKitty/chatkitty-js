@@ -1,4 +1,11 @@
 {
   "name": "@chatkitty/react-ui",
-  "version": "0.0.1"
+  "version": "0.0.0-semantic-release",
+  "dependencies": {
+    "linkify-react": "^3.0.4",
+    "styled-components": "^5.3.5",
+    "styled-system": "^5.1.5",
+    "invariant": "^2.2.4",
+    "framer-motion": "^6.5.1"
+  }
 }

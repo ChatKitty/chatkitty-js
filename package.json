@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "0.0.0",
+  "version": "0.0.0-semantic-release",
   "description": "Build chat in minutes with ChatKitty's real-time messaging framework.",
   "license": "MIT",
   "keywords": [
