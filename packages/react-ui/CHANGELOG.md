@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/ChatKitty/chatkitty-js/compare/react-ui-v1.0.2...react-ui-v1.0.3) (2022-08-23)
+
+
+### Bug Fixes
+
+* **react-ui:** include linkifyjs dependency ([70fb8a8](https://github.com/ChatKitty/chatkitty-js/commit/70fb8a815a5c34a5e5b9a54c8afd61f6ed0e22df))
+
 ## [1.0.2](https://github.com/ChatKitty/chatkitty-js/compare/react-ui-v1.0.1...react-ui-v1.0.2) (2022-08-23)
 
 
