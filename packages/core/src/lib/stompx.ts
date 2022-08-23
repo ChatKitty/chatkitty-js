@@ -12,7 +12,7 @@ let TransportFallback: { new (url: string): unknown };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const transportFallbackPromise = import('sockjs-client/dist/sockjs')
+const transportFallbackPromise = import('sockjs-client/dist/sockjs.js')
   .then((sockjs) => {
     TransportFallback = sockjs.default;
   })
