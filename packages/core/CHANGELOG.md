@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.0...core-v1.1.1) (2022-08-23)
+
+
+### Bug Fixes
+
+* **react-ui:** include dependencies ([91c645a](https://github.com/ChatKitty/chatkitty-js/commit/91c645a8ec9e5ef02629738e4240156db248040f))
+
 # [1.1.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.0.5...core-v1.1.0) (2022-08-22)
 
 
