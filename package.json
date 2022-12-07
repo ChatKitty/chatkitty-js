@@ -122,7 +122,7 @@
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
     "typedoc": "^0.23.21",
-    "typedoc-plugin-markdown": "^3.13.4",
+    "typedoc-plugin-markdown": "^3.14.0",
     "typescript": "4.8.4",
     "@expo/cli": "0.3.2"
   }
