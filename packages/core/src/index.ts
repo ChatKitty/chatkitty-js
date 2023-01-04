@@ -1,3 +1,5 @@
+import 'text-encoding-polyfill';
+
 export * from './lib/channel';
 export * from './lib/chat-session';
 export * from './lib/current-user';
