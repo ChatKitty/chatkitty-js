@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.2...core-v1.1.3) (2023-01-04)
+
+
+### Bug Fixes
+
+* **core:** polyfill text-encoding ([7d5f6b9](https://github.com/ChatKitty/chatkitty-js/commit/7d5f6b99f4e2d35bd204676c9d781d0947e2c3d1))
+
 ## [1.1.2](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.1...core-v1.1.2) (2022-08-23)
 
 
