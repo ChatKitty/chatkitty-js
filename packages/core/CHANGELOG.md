@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.3...core-v1.1.4) (2023-01-06)
+
+
+### Bug Fixes
+
+* **core:** polyfill text-encoding and crypto.getrandomvalues ([72d4784](https://github.com/ChatKitty/chatkitty-js/commit/72d47842622d50dbeb2620c6bf0aad11f46ced58))
+
 ## [1.1.3](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.2...core-v1.1.3) (2023-01-04)
 
 
