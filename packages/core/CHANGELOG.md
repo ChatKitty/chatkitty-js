@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.4...core-v1.1.5) (2023-01-06)
+
+
+### Bug Fixes
+
+* **core:** fix react native uuid generation ([c21f7d3](https://github.com/ChatKitty/chatkitty-js/commit/c21f7d3969610f0511c9649e14d878bbd85659f4))
+
 ## [1.1.4](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.3...core-v1.1.4) (2023-01-06)
 
 
