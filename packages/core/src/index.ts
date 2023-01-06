@@ -1,5 +1,4 @@
 import 'text-encoding-polyfill';
-import 'polyfill-crypto.getrandomvalues';
 
 export * from './lib/channel';
 export * from './lib/chat-session';
