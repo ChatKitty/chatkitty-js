@@ -12,6 +12,7 @@ export interface BaseChannel {
   name: string;
   creator?: User;
   lastMessageReceived?: Message;
+  createdTime: string;
   properties: unknown;
   /** @internal */
   _relays: ChannelRelays;
