@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.5...core-v1.1.6) (2023-01-20)
+
+
+### Bug Fixes
+
+* **core:** channel createdTime to types ([1a09732](https://github.com/ChatKitty/chatkitty-js/commit/1a09732fc945a790416cba240ba1a0c9961ff427))
+
 ## [1.1.5](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.4...core-v1.1.5) (2023-01-06)
 
 
