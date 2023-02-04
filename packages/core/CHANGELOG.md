@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.7...core-v1.1.8) (2023-02-04)
+
+
+### Bug Fixes
+
+* **core:** upgrade RxStomp ([500a178](https://github.com/ChatKitty/chatkitty-js/commit/500a178f57d8098bdb0ad107746b2e401bb1b747))
+
 ## [1.1.7](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.6...core-v1.1.7) (2023-02-04)
 
 
