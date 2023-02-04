@@ -17,6 +17,7 @@
   "dependencies": {
     "@emoji-mart/data": "^1.0.3",
     "@expo/metro-config": "0.3.22",
+    "@stomp/stompjs": "^7.0.0-beta2",
     "@stomp/rx-stomp": "^1.2.0",
     "axios": "^0.27.2",
     "base-64": "^1.0.0",

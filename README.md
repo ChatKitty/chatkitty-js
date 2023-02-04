@@ -16,7 +16,7 @@ yarn add @chatkitty/core
 ## How to use
 
 ### Getting an API key
-You'll need [a free ChatKitty account](https://dashboard.chatkitty.com/authorization/register) before you can
+You'll need [a ChatKitty account](https://dashboard.chatkitty.com/authorization/register) before you can
 begin building chat with ChatKitty. After creating your account, create a ChatKitty application using the dashboard
 and copy its API key from your application's setting page.
 
