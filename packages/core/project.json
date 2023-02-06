@@ -12,7 +12,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/core",
@@ -27,6 +27,18 @@
         ],
         "buildableProjectDepsInPackageJsonType": "dependencies",
         "generatePackageJson": true
+      }
+    },
+    "build-bundle": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "webpackConfig": "packages/core/webpack.config.js",
+        "isolatedConfig": true,
+        "outputPath": "dist/packages/core-bundled",
+        "main": "packages/core/src/index.ts",
+        "tsConfig": "packages/core/tsconfig.lib.json",
+        "assets": []
       }
     },
     "lint": {
