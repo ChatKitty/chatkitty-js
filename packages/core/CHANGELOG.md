@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.1...core-v1.2.2) (2023-02-06)
+
+
+### Bug Fixes
+
+* **core:** build with tsc ([9f9c64a](https://github.com/ChatKitty/chatkitty-js/commit/9f9c64ae6291ab5d0402e5efca7436805b5e958c))
+
 ## [1.2.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.0...core-v1.2.1) (2023-02-06)
 
 
