@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.8...core-v1.2.0) (2023-02-06)
+
+
+### Features
+
+* **core:** add list user file messages filters ([87f2dba](https://github.com/ChatKitty/chatkitty-js/commit/87f2dba3a80033c2a5c16561fae0135bd8f420cd))
+
 ## [1.1.8](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.7...core-v1.1.8) (2023-02-04)
 
 
