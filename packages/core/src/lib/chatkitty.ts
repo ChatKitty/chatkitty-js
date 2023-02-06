@@ -28,7 +28,6 @@ import {
   ListChannelsResult,
   ListChannelsSucceededResult,
   RetrieveChannelSucceededResult,
-  RetrieveChannelUnreadRequest,
   CheckChannelUnreadResult,
   ListUnreadChannelsRequest,
   HideChannelRequest,
@@ -134,6 +133,7 @@ import {
   SentFileMessageResult,
   SentTextMessageResult,
   TextUserMessage,
+  ListUsersMessagesRequest,
 } from './message';
 import { Notification } from './notification';
 import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
@@ -1294,6 +1294,14 @@ export class ChatKitty {
 
     let parameters: Record<string, unknown> | undefined = undefined;
 
+    if (isListUsersMessagesRequest(request)) {
+      relay = currentUser._relays.messages;
+
+      parameters = {
+        ...request.filter,
+      };
+    }
+
     if (isListChannelMessagesRequest(request)) {
       relay = request.channel._relays.messages;
 
@@ -2109,6 +2117,15 @@ function isSendChannelFileMessageRequest(
   request: SendMessageRequest
 ): request is SendFileMessageRequest {
   return (request as SendFileMessageRequest).file !== undefined;
+}
+
+function isListUsersMessagesRequest(
+  request: ListMessagesRequest
+): request is ListUsersMessagesRequest {
+  return (
+    (request as ListChannelMessagesRequest).channel === undefined &&
+    (request as ListMessageRepliesRequest).message === undefined
+  );
 }
 
 function isListChannelMessagesRequest(

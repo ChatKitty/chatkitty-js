@@ -137,8 +137,13 @@ export function isSystemMessage(message: Message): message is SystemMessage {
 }
 
 export type ListMessagesRequest =
+  | ListUsersMessagesRequest
   | ListChannelMessagesRequest
   | ListMessageRepliesRequest;
+
+export declare class ListUsersMessagesRequest {
+  filter?: ListUsersMessagesFilter;
+}
 
 export declare class ListChannelMessagesRequest {
   channel: Channel;
@@ -149,8 +154,13 @@ export declare class ListMessageRepliesRequest {
   message: Message;
 }
 
+export declare class ListUsersMessagesFilter {
+  type: 'FILE' | undefined;
+}
+
 export declare class ListChannelMessagesFilter {
   mainThread: boolean;
+  type: 'FILE' | undefined;
 }
 
 export declare class RetrieveLastReadMessageRequest {

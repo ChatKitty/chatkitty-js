@@ -1,13 +1,13 @@
 import { ChatKittyError } from './error';
 
 export abstract class ChatKittySucceededResult {
-  succeeded: true = true;
-  failed: false = false;
+  succeeded = true as const;
+  failed = false as const;
 }
 
 export class ChatKittyFailedResult {
-  succeeded: false = false;
-  failed: true = true;
+  succeeded = false as const;
+  failed = true as const;
 
   constructor(public error: ChatKittyError) {}
 }

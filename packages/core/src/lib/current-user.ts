@@ -22,6 +22,7 @@ declare class CurrentUserRelays {
   writeFileAccessGrant: string;
   channelsCount: string;
   channels: string;
+  messages: string;
   joinableChannels: string;
   unreadChannelsCount: string;
   unreadChannels: string;
