@@ -1,4 +1,5 @@
 {
+  "name": "core",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/core/src",
   "projectType": "library",
@@ -11,18 +12,12 @@
       }
     },
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/core",
+        "main": "packages/core/src/index.ts",
         "tsConfig": "packages/core/tsconfig.lib.json",
-        "project": "packages/core/package.json",
-        "entryFile": "packages/core/src/index.ts",
-        "rollupConfig": [
-          "@nrwl/react/plugins/bundle-rollup",
-          "bundle-rollup.cjs"
-        ],
-        "compiler": "babel",
         "assets": [
           {
             "glob": "packages/core/*.md",
@@ -43,7 +38,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/core"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/core/jest.config.ts",
         "passWithNoTests": true

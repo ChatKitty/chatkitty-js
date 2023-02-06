@@ -1,3 +1,11 @@
 {
-  "presets": ["@nrwl/web/babel", "@babel/preset-typescript"]
+  "presets": [
+    [
+      "@nrwl/web/babel",
+      {
+        "useBuiltIns": "usage"
+      }
+    ],
+    "@babel/preset-typescript"
+  ]
 }
