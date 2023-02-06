@@ -12,20 +12,18 @@
       }
     },
     "build": {
-      "builder": "nx:run-commands",
-      "options": {
-        "commands": ["nx build-bundle core", "nx build-types core"]
-      }
-    },
-    "build-bundle": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "webpackConfig": "packages/core/webpack.config.js",
-        "isolatedConfig": true,
         "outputPath": "dist/packages/core",
-        "main": "packages/core/src/index.ts",
         "tsConfig": "packages/core/tsconfig.lib.json",
+        "project": "packages/core/package.json",
+        "entryFile": "packages/core/src/index.ts",
+        "rollupConfig": [
+          "@nrwl/react/plugins/bundle-rollup",
+          "bundle-rollup.cjs"
+        ],
+        "compiler": "babel",
         "assets": [
           {
             "glob": "packages/core/*.md",
@@ -37,10 +35,16 @@
         "generatePackageJson": true
       }
     },
-    "build-types": {
-      "executor": "nx:run-commands",
+    "build-bundle": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "command": "tsc --project packages/core/tsconfig.lib.json"
+        "webpackConfig": "packages/core/webpack.config.js",
+        "isolatedConfig": true,
+        "outputPath": "dist/packages/core-bundled",
+        "main": "packages/core/src/index.ts",
+        "tsConfig": "packages/core/tsconfig.lib.json",
+        "assets": []
       }
     },
     "lint": {
