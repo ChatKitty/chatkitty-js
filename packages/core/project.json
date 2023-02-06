@@ -12,12 +12,18 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/core",
-        "main": "packages/core/src/index.ts",
         "tsConfig": "packages/core/tsconfig.lib.json",
+        "project": "packages/core/package.json",
+        "entryFile": "packages/core/src/index.ts",
+        "rollupConfig": [
+          "@nrwl/react/plugins/bundle-rollup",
+          "bundle-rollup.cjs"
+        ],
+        "compiler": "babel",
         "assets": [
           {
             "glob": "packages/core/*.md",
