@@ -7,5 +7,6 @@
     "type": "git",
     "url": "https://github.com/chatkitty/chatkitty-js.git",
     "directory": "packages/core"
-  }
+  },
+  "types": "./src/index.d.ts"
 }

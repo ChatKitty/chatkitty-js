@@ -1,8 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../dist",
     "declaration": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
     "types": ["node"]
   },
   "include": ["**/*.ts"],
