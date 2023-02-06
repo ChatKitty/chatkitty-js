@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.0...core-v1.2.1) (2023-02-06)
+
+
+### Bug Fixes
+
+* **core:** build with webpack ([8d7d4d6](https://github.com/ChatKitty/chatkitty-js/commit/8d7d4d6848feb5280761a93f027fa43cdb2aebb4))
+
 # [1.2.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.1.8...core-v1.2.0) (2023-02-06)
 
 
