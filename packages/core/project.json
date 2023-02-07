@@ -15,13 +15,13 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "format": ["esm", "umd", "cjs"],
         "outputPath": "dist/packages/core",
         "tsConfig": "packages/core/tsconfig.lib.json",
         "project": "packages/core/package.json",
         "entryFile": "packages/core/src/index.ts",
         "rollupConfig": [
-          "@nrwl/react/plugins/bundle-rollup",
-          "bundle-rollup.cjs"
+          "packages/core/bundle-rollup.cjs"
         ],
         "compiler": "babel",
         "assets": [
