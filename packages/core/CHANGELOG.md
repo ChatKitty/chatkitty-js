@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.5...core-v1.2.6) (2023-02-07)
+
+
+### Bug Fixes
+
+* **core:** build cjs rollup bundle ([48caa15](https://github.com/ChatKitty/chatkitty-js/commit/48caa158ba4c50f00a1f27ee05b2ec737657765b))
+
 ## [1.2.5](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.4...core-v1.2.5) (2023-02-06)
 
 
