@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.6...core-v1.2.7) (2023-02-23)
+
+
+### Bug Fixes
+
+* **core:** correct lastReceivedMessage typing ([ef133c4](https://github.com/ChatKitty/chatkitty-js/commit/ef133c428a0b730e322d03d3d0d53a3b1efda27d))
+
 ## [1.2.6](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.5...core-v1.2.6) (2023-02-07)
 
 
