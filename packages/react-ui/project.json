@@ -41,20 +41,6 @@
         "jestConfig": "packages/react-ui/jest.config.ts",
         "passWithNoTests": true
       }
-    },
-    "release": {
-      "executor": "nx:run-commands",
-      "outputs": [],
-      "options": {
-        "command": "npx semantic-release-plus --extends ./packages/react-ui/release.config.js",
-        "parallel": false
-      },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
     }
   }
 }
