@@ -24,7 +24,7 @@ and copy its API key from your application's setting page.
 
 ### Initialize the SDK with your API key
 
-With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.github.io/chatkitty-js/classes/default.html):
+With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.com/docs/chatkitty-js-core/classes/ChatKitty):
 
 ```js
 const kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);

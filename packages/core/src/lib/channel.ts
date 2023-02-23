@@ -11,7 +11,7 @@ export interface BaseChannel {
   type: string;
   name: string;
   creator?: User;
-  lastMessageReceived?: Message;
+  lastReceivedMessage?: Message;
   createdTime: string;
   properties: unknown;
   /** @internal */
@@ -36,7 +36,7 @@ declare class ChannelRelays {
   self: string;
   messages: string;
   messagesCount: string;
-  lastMessageReceived: string;
+  lastReceivedMessage: string;
   lastReadMessage: string;
   unread: string;
   members: string;
