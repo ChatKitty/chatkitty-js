@@ -1,8 +1,10 @@
-import { readCachedProjectGraph } from '@nrwl/devkit';
 import chalk from 'chalk';
 
 import genversion from './genversion/index.js';
 import {execSync} from "child_process";
+
+import pkg from '@nrwl/devkit';
+const { readCachedProjectGraph } = pkg;
 
 function invariant(condition, message) {
   if (!condition) {
