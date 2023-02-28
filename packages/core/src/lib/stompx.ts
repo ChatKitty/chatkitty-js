@@ -4,7 +4,7 @@ import Axios, { AxiosInstance } from 'axios';
 import { encode } from 'base-64';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import uuid from 'uuid-random';
+import { v4 as uuidv4 } from 'uuid';
 
 import { version } from '../environment/version';
 
@@ -477,11 +477,11 @@ export default class StompX {
   }
 
   private static generateSubscriptionId(): string {
-    return 'subscription-id-' + uuid();
+    return 'subscription-id-' + uuidv4();
   }
 
   private static generateReceipt(): string {
-    return 'receipt-' + uuid();
+    return 'receipt-' + uuidv4();
   }
 }
 
