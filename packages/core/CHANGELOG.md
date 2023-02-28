@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.8...core-v1.2.9) (2023-02-28)
+
+
+### Bug Fixes
+
+* **core:** replace uuid provider ([836961d](https://github.com/ChatKitty/chatkitty-js/commit/836961d48976e5c107f0d547a549ed85a8c3ae59))
+
 ## [1.2.8](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.7...core-v1.2.8) (2023-02-28)
 
 
