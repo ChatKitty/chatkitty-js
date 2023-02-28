@@ -1,4 +1,5 @@
 {
+  "name": "react-ui",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/react-ui/src",
   "projectType": "library",

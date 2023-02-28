@@ -29,7 +29,7 @@
         "generatePackageJson": true
       }
     },
-    "build-bundle": {
+    "build-web-bundle": {
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
