@@ -67,6 +67,7 @@
     "@nrwl/cli": "15.7.2",
     "@nrwl/cypress": "15.7.2",
     "@nrwl/detox": "15.7.2",
+    "@nrwl/devkit": "15.7.2",
     "@nrwl/eslint-plugin-nx": "15.7.2",
     "@nrwl/expo": "15.7.2",
     "@nrwl/jest": "15.7.2",
