@@ -1,4 +1,5 @@
 import 'text-encoding-polyfill';
+import "./polyfills.js";
 
 export * from './lib/channel';
 export * from './lib/chat-session';
