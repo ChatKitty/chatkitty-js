@@ -1,3 +1,11 @@
+## [1.2.10](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.9...core-v1.2.10) (2023-02-28)
+
+
+### Bug Fixes
+
+* **core:** polyfill crypto getRandomValues ([8cce2bb](https://github.com/ChatKitty/chatkitty-js/commit/8cce2bbca2714135faa4596c917480090b0d9200))
+* **core:** polyfill crypto getRandomValues ([4e79cf2](https://github.com/ChatKitty/chatkitty-js/commit/4e79cf2227fac165f4736525a947c9d28160caa7))
+
 ## [1.2.9](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.8...core-v1.2.9) (2023-02-28)
 
 
