@@ -1,3 +1,11 @@
+## [1.2.8](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.7...core-v1.2.8) (2023-02-28)
+
+
+### Bug Fixes
+
+* **core:** migrate workspace configuration ([7d2d92b](https://github.com/ChatKitty/chatkitty-js/commit/7d2d92be1ab6199530330434172c7e22a475f3fe))
+* **react-ui:** build with tsc ([34f051c](https://github.com/ChatKitty/chatkitty-js/commit/34f051c050ef383c20845c8cd4720d2e1395d454))
+
 ## [1.2.7](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.6...core-v1.2.7) (2023-02-23)
 
 
