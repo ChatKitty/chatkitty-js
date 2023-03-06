@@ -1,4 +1,3 @@
-import 'text-encoding-polyfill';
 import "./polyfills";
 
 export * from './lib/channel';

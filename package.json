@@ -53,7 +53,7 @@
     "sockjs-client": "^1.6.1",
     "styled-components": "5.3.6",
     "styled-system": "^5.1.5",
-    "text-encoding-polyfill": "^0.6.7",
+    "text-encoding": "^0.7.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0"
   },
