@@ -111,6 +111,7 @@ export interface BaseCreateChannelRequest {
 
 export interface CreateGroupChannelRequest extends BaseCreateChannelRequest {
   name?: string;
+  displayName?: string;
 }
 
 export type CreateDirectChannelRequest = BaseCreateChannelRequest & {
