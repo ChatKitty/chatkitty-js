@@ -1,3 +1,10 @@
+## [1.2.12](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.11...core-v1.2.12) (2023-03-17)
+
+
+### Bug Fixes
+
+* **core:** improve channel typing ([8e6cf93](https://github.com/ChatKitty/chatkitty-js/commit/8e6cf9323c64d5513e832b04f356d75db6dac54b))
+
 ## [1.2.11](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.10...core-v1.2.11) (2023-03-06)
 
 
