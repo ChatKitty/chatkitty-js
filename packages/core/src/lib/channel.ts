@@ -1,14 +1,13 @@
-import { ChatKittyError } from './error';
-import { Message } from './message';
-import { ChatKittyPaginator } from './pagination';
-import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
-import { ChatKittyUserReference, User } from './user';
+import {ChatKittyError} from './error';
+import {Message} from './message';
+import {ChatKittyPaginator} from './pagination';
+import {ChatKittyFailedResult, ChatKittySucceededResult} from './result';
+import {ChatKittyUserReference, User} from './user';
 
 export type Channel = DirectChannel | PublicChannel | PrivateChannel;
 
 export interface BaseChannel {
   id: number;
-  type: string;
   name: string;
   creator?: User;
   lastReceivedMessage?: Message;
@@ -24,13 +23,22 @@ export interface BaseChannel {
   _streams: ChannelStreams;
 }
 
+export interface GroupChannel extends BaseChannel {
+  displayName: string;
+}
+
 export type DirectChannel = BaseChannel & {
+  type: 'DIRECT'
   members: User[];
 };
 
-export type PublicChannel = BaseChannel;
+export type PublicChannel = GroupChannel & {
+  type: 'PUBLIC'
+};
 
-export type PrivateChannel = BaseChannel;
+export type PrivateChannel = GroupChannel & {
+  type: 'PRIVATE'
+};
 
 declare class ChannelRelays {
   self: string;
@@ -91,12 +99,31 @@ export function isPrivateChannel(channel: Channel): channel is PrivateChannel {
 
 export type CreateChannelResult = CreatedChannelResult | ChatKittyFailedResult;
 
-export declare class CreateChannelRequest {
-  type: string;
-  name?: string;
+export type CreateChannelRequest =
+  CreateDirectChannelRequest
+  | CreatePublicChannelRequest
+  | CreatePrivateChannelRequest;
+
+export interface BaseCreateChannelRequest {
   members?: ChatKittyUserReference[];
   properties?: unknown;
 }
+
+export interface CreateGroupChannelRequest extends BaseCreateChannelRequest {
+  name?: string;
+}
+
+export type CreateDirectChannelRequest = BaseCreateChannelRequest & {
+  type: 'DIRECT'
+};
+
+export type CreatePublicChannelRequest = CreateGroupChannelRequest & {
+  type: 'PUBLIC'
+};
+
+export type CreatePrivateChannelRequest = CreateGroupChannelRequest & {
+  type: 'PRIVATE'
+};
 
 export class CreatedChannelResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
