@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.15...core-v1.3.0) (2023-04-11)
+
+
+### Features
+
+* **core:** improve message typing ([39ba1d9](https://github.com/ChatKitty/chatkitty-js/commit/39ba1d9a3032827d198e44711454714597e7c6ba))
+
 ## [1.2.15](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.14...core-v1.2.15) (2023-04-11)
 
 
