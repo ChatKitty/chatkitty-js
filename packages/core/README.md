@@ -27,7 +27,7 @@ and copy its API key from your application's setting page.
 With your API key you can initialize a new instance of the [ChatKitty JS client](https://chatkitty.com/docs/chatkitty-js-core/classes/ChatKitty):
 
 ```js
-const kitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
+const chatkitty = ChatKitty.getInstance(CHATKITTY_API_KEY);
 ```
 
 ### Starting a user session
@@ -38,7 +38,7 @@ You can start a user session using the unique username of a user and optional au
 parameters to secure the user session.
 
 ```js
-await kitty.startSession({
+await chatkitty.startSession({
   username: email,
 });
 ```
@@ -49,7 +49,7 @@ Before a user can begin sending and receiving real-time messages and use in-app 
 typing indicators, delivery and read receipts, emoji and like reactions, etc, you'll need to start a chat session.
 
 ```js
-kitty.startChatSession({
+chatkitty.startChatSession({
   channel: channel,
   onMessageReceived: (message) => {
     // handle received messages

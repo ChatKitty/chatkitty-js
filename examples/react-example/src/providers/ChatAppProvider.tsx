@@ -29,7 +29,7 @@ import {
 import ChatKittyConfiguration from '../configuration/chatkitty';
 import { LayoutState, View } from '../navigation';
 
-const kitty = ChatKitty.getInstance(ChatKittyConfiguration.API_KEY);
+const chatkitty = ChatKitty.getInstance(ChatKittyConfiguration.API_KEY);
 
 interface ChatAppContext {
   login: (username: string) => void;
@@ -259,20 +259,20 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   useEffect(() => {
-    kitty.onCurrentUserChanged((user) => {
+    chatkitty.onCurrentUserChanged((user) => {
       setCurrentUser(user);
     });
 
-    kitty.onCurrentUserOnline(() => {
+    chatkitty.onCurrentUserOnline(() => {
       setOnline(true);
     });
 
-    kitty.onCurrentUserOffline(() => {
+    chatkitty.onCurrentUserOffline(() => {
       setOnline(false);
     });
 
     if (currentUser) {
-      kitty.onNotificationReceived((notification) => {
+      chatkitty.onNotificationReceived((notification) => {
         setcurrentNotification(notification);
       });
     }
@@ -281,7 +281,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   const login = async (username: string) => {
     setLoading(true);
 
-    await kitty.startSession({
+    await chatkitty.startSession({
       username:
         username || demoUsers[Math.floor(Math.random() * demoUsers.length)],
     });
@@ -290,7 +290,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const users = async () => {
-    const result = await kitty.listUsers();
+    const result = await chatkitty.listUsers();
 
     if (result.succeeded) {
       return result.paginator;
@@ -312,7 +312,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const joinedChannelsPaginator = async () => {
-    const result = await kitty.listChannels({
+    const result = await chatkitty.listChannels({
       filter: { joined: true },
     });
 
@@ -324,7 +324,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const joinableChannelsPaginator = async () => {
-    const result = await kitty.listChannels({
+    const result = await chatkitty.listChannels({
       filter: { joined: false },
     });
 
@@ -336,7 +336,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const joinChannel = async (channel: Channel) => {
-    const result = await kitty.joinChannel({ channel });
+    const result = await chatkitty.joinChannel({ channel });
 
     if (result.succeeded) {
       hideView('Join Channel');
@@ -346,7 +346,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const leaveChannel = async (c: Channel) => {
-    const result = await kitty.leaveChannel({ channel: c });
+    const result = await chatkitty.leaveChannel({ channel: c });
 
     if (result.succeeded && result.channel.id === channel?.id) {
       hideChat();
@@ -354,11 +354,11 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const onJoinedChannel = (handler: (channel: Channel) => void) => {
-    return kitty.onChannelJoined(handler);
+    return chatkitty.onChannelJoined(handler);
   };
 
   const onLeftChannel = (handler: (channel: Channel) => void) => {
-    return kitty.onChannelLeft(handler);
+    return chatkitty.onChannelLeft(handler);
   };
 
   const channelDisplayName = (channel: Channel): string => {
@@ -388,7 +388,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     onTypingStarted: (user: User) => void,
     onTypingStopped: (user: User) => void
   ): ChatSession | null => {
-    const result = kitty.startChatSession({
+    const result = chatkitty.startChatSession({
       channel,
       onMessageReceived,
       onTypingStarted,
@@ -409,7 +409,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const channelUnreadMessagesCount = async (channel: Channel) => {
-    const result = await kitty.countUnreadMessages({
+    const result = await chatkitty.countUnreadMessages({
       channel,
     });
 
@@ -421,7 +421,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const messagesPaginator = async (channel: Channel) => {
-    const result = await kitty.listMessages({
+    const result = await chatkitty.listMessages({
       channel,
     });
 
@@ -433,7 +433,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const replyMessagesPaginator = async (message: Message) => {
-    const result = await kitty.listMessages({
+    const result = await chatkitty.listMessages({
       message,
     });
 
@@ -449,7 +449,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     const test: any = message;
 
     if (test.nestedLevel > 0) {
-      const result = await kitty.retrieveMessageParent({
+      const result = await chatkitty.retrieveMessageParent({
         message,
       });
 
@@ -462,7 +462,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const memberListGetter = async (channel: Channel) => {
-    const result = await kitty.listChannelMembers({ channel: channel });
+    const result = await chatkitty.listChannelMembers({ channel: channel });
 
     if (result.succeeded) {
       return result.paginator.items;
@@ -472,7 +472,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const reactToMessage = async (emoji: string, message: Message) => {
-    const result = await kitty.reactToMessage({ emoji, message });
+    const result = await chatkitty.reactToMessage({ emoji, message });
 
     if (result.succeeded) {
       return result.reaction;
@@ -482,7 +482,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const removeReaction = async (emoji: string, message: Message) => {
-    const result = await kitty.removeReaction({ emoji, message });
+    const result = await chatkitty.removeReaction({ emoji, message });
 
     if (result.succeeded) {
       return result.reaction;
@@ -504,7 +504,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
       return;
     }
 
-    await kitty.sendKeystrokes({ channel, keys: draft.text });
+    await chatkitty.sendKeystrokes({ channel, keys: draft.text });
 
     setMessageDraft(draft);
   };
@@ -517,7 +517,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     if (!channel) {
       return;
     }
-    await kitty.sendMessage({
+    await chatkitty.sendMessage({
       channel,
       file,
     });
@@ -531,13 +531,13 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
     if (isTextMessageDraft(draft)) {
       if (userFile) {
         if (replyMessage) {
-          await kitty.sendMessage({
+          await chatkitty.sendMessage({
             body: draft.text,
             message: replyMessage,
             file: userFile,
           });
         } else {
-          await kitty.sendMessage({
+          await chatkitty.sendMessage({
             channel: channel,
             body: draft.text,
             file: userFile,
@@ -545,12 +545,12 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
         }
       } else {
         if (replyMessage) {
-          await kitty.sendMessage({
+          await chatkitty.sendMessage({
             body: draft.text,
             message: replyMessage,
           });
         } else {
-          await kitty.sendMessage({
+          await chatkitty.sendMessage({
             channel: channel,
             body: draft.text,
           });
@@ -564,7 +564,7 @@ const ChatAppContextProvider: React.FC<ChatAppContextProviderProps> = ({
   };
 
   const logout = async () => {
-    await kitty.endSession();
+    await chatkitty.endSession();
   };
 
   return (
