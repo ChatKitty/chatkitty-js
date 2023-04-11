@@ -1,3 +1,10 @@
+## [1.2.14](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.13...core-v1.2.14) (2023-04-11)
+
+
+### Bug Fixes
+
+* **core:** polyfill global ([029e186](https://github.com/ChatKitty/chatkitty-js/commit/029e186cd95d68b476d3af4bd19e16e3b9aba146))
+
 ## [1.2.13](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.12...core-v1.2.13) (2023-03-17)
 
 
