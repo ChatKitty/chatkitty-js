@@ -1,3 +1,10 @@
+## [1.2.15](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.14...core-v1.2.15) (2023-04-11)
+
+
+### Bug Fixes
+
+* **core:** polyfill STOMP dependencies ([ffe0a56](https://github.com/ChatKitty/chatkitty-js/commit/ffe0a5642bea9d5a55df1ce2f6b0b7ce3dbacad4))
+
 ## [1.2.14](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.13...core-v1.2.14) (2023-04-11)
 
 
