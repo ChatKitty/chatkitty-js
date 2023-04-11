@@ -1,9 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-if (!global) {
-  global = {};
-}
+const global = window || global;
 
 if (typeof global.crypto !== 'object') {
   global.crypto = {
