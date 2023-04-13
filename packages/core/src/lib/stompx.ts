@@ -447,6 +447,10 @@ export default class StompX {
   }
 
   public disconnect(request: StompXDisconnectRequest) {
+    this.topics.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+
     this.initialized = false;
     this.rxStomp = new RxStomp();
 
