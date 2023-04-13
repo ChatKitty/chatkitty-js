@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.2...core-v1.3.3) (2023-04-13)
+
+
+### Bug Fixes
+
+* **core:** clear StompX state on disconnect ([ddbf00e](https://github.com/ChatKitty/chatkitty-js/commit/ddbf00e3b6e6062a99966fdf4214f3e9210fc3b4))
+
 ## [1.3.2](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.1...core-v1.3.2) (2023-04-13)
 
 
