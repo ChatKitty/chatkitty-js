@@ -451,6 +451,12 @@ export default class StompX {
       subscription.unsubscribe();
     });
 
+    this.topics.clear();
+    this.pendingActions.clear();
+    this.pendingActionErrors.clear();
+    this.pendingRelayErrors.clear();
+    this.eventHandlers.clear();
+
     this.initialized = false;
     this.rxStomp = new RxStomp();
 
