@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.4...core-v1.3.5) (2023-04-13)
+
+
+### Bug Fixes
+
+* **core:** add readme field to package.json ([a893b17](https://github.com/ChatKitty/chatkitty-js/commit/a893b17fe15cf199868a4e288b8097b3360f7daf))
+
 ## [1.3.4](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.3...core-v1.3.4) (2023-04-13)
 
 
