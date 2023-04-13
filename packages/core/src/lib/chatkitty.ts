@@ -327,20 +327,11 @@ export class ChatKitty {
     });
   }
 
-  endSession(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.stompX.disconnect({
-        onSuccess: () => {
-          this.currentUser = undefined;
-          this.currentUserSubject.next(null);
+  async endSession() {
+    await this.stompX.disconnect();
 
-          resolve();
-        },
-        onError: (e) => {
-          reject(e);
-        },
-      });
-    });
+    this.currentUser = undefined;
+    this.currentUserSubject.next(null);
   }
 
   retrieveCurrentUser(): Promise<RetrieveCurrentUserResult> {

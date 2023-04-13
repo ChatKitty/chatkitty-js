@@ -243,7 +243,7 @@ export default class StompX {
       if (error.error == 'AccessDeniedError') {
         const onResult = () => request.onError(error);
 
-        this.disconnect({ onSuccess: onResult, onError: onResult });
+        this.disconnect().then(onResult, onResult);
       } else {
         request.onError(error);
       }
@@ -446,7 +446,7 @@ export default class StompX {
       });
   }
 
-  public disconnect(request: StompXDisconnectRequest) {
+  public async disconnect() {
     this.topics.forEach((subscription) => {
       subscription.unsubscribe();
     });
@@ -458,9 +458,10 @@ export default class StompX {
     this.eventHandlers.clear();
 
     this.initialized = false;
-    this.rxStomp = new RxStomp();
 
-    this.rxStomp.deactivate().then(request.onSuccess).catch(request.onError);
+    await this.rxStomp.deactivate();
+
+    this.rxStomp = new RxStomp();
   }
 
   private guardConnected(action: () => void) {
@@ -509,11 +510,6 @@ export declare class StompXConnectRequest<U> {
   onConnectionLost: () => void;
   onConnectionResumed: () => void;
   onError: (error: StompXError) => void;
-}
-
-export declare class StompXDisconnectRequest {
-  onSuccess: () => void;
-  onError: (e: unknown) => void;
 }
 
 export declare class StompXListenForEventRequest<R> {
