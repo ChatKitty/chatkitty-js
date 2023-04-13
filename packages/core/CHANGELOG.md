@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.1...core-v1.3.2) (2023-04-13)
+
+
+### Bug Fixes
+
+* **core:** unsubscribe from topics on disconnect ([34a29ec](https://github.com/ChatKitty/chatkitty-js/commit/34a29ec7ddf9a22d6dd25b435c596c51efd9778b))
+
 ## [1.3.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.0...core-v1.3.1) (2023-04-13)
 
 
