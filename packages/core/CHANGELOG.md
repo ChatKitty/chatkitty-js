@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.0...core-v1.3.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* **core:** drop RxStomp instance on disconnect ([9178a3c](https://github.com/ChatKitty/chatkitty-js/commit/9178a3c416b46caad9853d141854799dab952ef1))
+
 # [1.3.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.2.15...core-v1.3.0) (2023-04-11)
 
 
