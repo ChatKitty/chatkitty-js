@@ -448,10 +448,9 @@ export default class StompX {
 
   public disconnect(request: StompXDisconnectRequest) {
     this.initialized = false;
+    this.rxStomp = new RxStomp();
 
     this.rxStomp.deactivate().then(request.onSuccess).catch(request.onError);
-
-    this.rxStomp = new RxStomp();
   }
 
   private guardConnected(action: () => void) {
