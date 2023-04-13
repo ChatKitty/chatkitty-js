@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.3...core-v1.3.4) (2023-04-13)
+
+
+### Bug Fixes
+
+* **core:** handle disconnect asynchronous state ([9f23cc3](https://github.com/ChatKitty/chatkitty-js/commit/9f23cc3757ba9c4d86241dd03e5a71a2b66071e8))
+
 ## [1.3.3](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.2...core-v1.3.3) (2023-04-13)
 
 
