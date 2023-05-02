@@ -53,7 +53,6 @@
     "sockjs-client": "^1.6.1",
     "styled-components": "5.3.6",
     "styled-system": "^5.1.5",
-    "text-encoding": "^0.7.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0"
   },
@@ -126,7 +125,6 @@
     "prettier": "^2.6.2",
     "react-test-renderer": "18.1.0",
     "rollup": "^3.14.0",
-    "rollup-plugin-uglify": "^6.0.4",
     "semantic-release-npm-github-publish": "^1.5.1",
     "semantic-release-plus": "^20.0.0",
     "ts-jest": "28.0.5",
