@@ -1,5 +1,3 @@
-import "./text-encoding"
-
 const scope = typeof window !== "undefined" ?
   window : typeof global !== "undefined" ?
     global : this;
