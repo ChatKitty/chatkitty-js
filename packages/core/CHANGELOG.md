@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.5...core-v1.3.6) (2023-05-02)
+
+
+### Bug Fixes
+
+* **core:** remove text-encoding dependency ([26d8575](https://github.com/ChatKitty/chatkitty-js/commit/26d857511cdf135b6f2050b48f1e51ad85b4c30b))
+
 ## [1.3.5](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.4...core-v1.3.5) (2023-04-13)
 
 
