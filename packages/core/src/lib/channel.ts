@@ -1,8 +1,8 @@
-import {ChatKittyError} from './error';
-import {Message} from './message';
-import {ChatKittyPaginator} from './pagination';
-import {ChatKittyFailedResult, ChatKittySucceededResult} from './result';
-import {ChatKittyUserReference, User} from './user';
+import { ChatKittyError } from './error';
+import { Message } from './message';
+import { ChatKittyPaginator } from './pagination';
+import { ChatKittyFailedResult, ChatKittySucceededResult } from './result';
+import { ChatKittyUserReference, User } from './user';
 
 export type Channel = DirectChannel | PublicChannel | PrivateChannel;
 
@@ -28,16 +28,16 @@ export interface GroupChannel extends BaseChannel {
 }
 
 export type DirectChannel = BaseChannel & {
-  type: 'DIRECT'
+  type: 'DIRECT';
   members: User[];
 };
 
 export type PublicChannel = GroupChannel & {
-  type: 'PUBLIC'
+  type: 'PUBLIC';
 };
 
 export type PrivateChannel = GroupChannel & {
-  type: 'PRIVATE'
+  type: 'PRIVATE';
 };
 
 declare class ChannelRelays {
@@ -100,7 +100,7 @@ export function isPrivateChannel(channel: Channel): channel is PrivateChannel {
 export type CreateChannelResult = CreatedChannelResult | ChatKittyFailedResult;
 
 export type CreateChannelRequest =
-  CreateDirectChannelRequest
+  | CreateDirectChannelRequest
   | CreatePublicChannelRequest
   | CreatePrivateChannelRequest;
 
@@ -115,15 +115,15 @@ export interface CreateGroupChannelRequest extends BaseCreateChannelRequest {
 }
 
 export type CreateDirectChannelRequest = BaseCreateChannelRequest & {
-  type: 'DIRECT'
+  type: 'DIRECT';
 };
 
 export type CreatePublicChannelRequest = CreateGroupChannelRequest & {
-  type: 'PUBLIC'
+  type: 'PUBLIC';
 };
 
 export type CreatePrivateChannelRequest = CreateGroupChannelRequest & {
-  type: 'PRIVATE'
+  type: 'PRIVATE';
 };
 
 export class CreatedChannelResult extends ChatKittySucceededResult {

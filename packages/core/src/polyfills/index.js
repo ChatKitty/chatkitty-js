@@ -1,6 +1,9 @@
-const scope = typeof window !== "undefined" ?
-  window : typeof global !== "undefined" ?
-    global : this;
+const scope =
+  typeof window !== 'undefined'
+    ? window
+    : typeof global !== 'undefined'
+    ? global
+    : this;
 
 if (typeof scope.crypto !== 'object') {
   scope.crypto = {

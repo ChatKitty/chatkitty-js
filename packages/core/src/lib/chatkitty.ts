@@ -833,6 +833,7 @@ export class ChatKitty {
     const onParticipantPresenceChanged = request.onParticipantPresenceChanged;
     const onEventTriggered = request.onEventTriggered;
     const onMessageUpdated = request.onMessageUpdated;
+    const onMessageDeleted = request.onMessageDeleted;
     const onChannelUpdated = request.onChannelUpdated;
     const onMessageRead = request.onMessageRead;
     const onMessageReactionAdded = request.onMessageReactionAdded;
@@ -851,6 +852,7 @@ export class ChatKitty {
     let participantPresenceChangedUnsubscribe: () => void;
     let eventTriggeredUnsubscribe: () => void;
     let messageUpdatedUnsubscribe: () => void;
+    let messageDeletedUnsubscribe: () => void;
     let channelUpdatedUnsubscribe: () => void;
     let messageReadUnsubscribe: () => void;
     let messageReactionAddedUnsubscribe: () => void;
@@ -954,6 +956,16 @@ export class ChatKitty {
       });
     }
 
+    if (onMessageDeleted) {
+      messageDeletedUnsubscribe = this.stompX.listenForEvent<Message>({
+        topic: request.channel._topics.messages,
+        event: 'channel.message.deleted',
+        onSuccess: (message) => {
+          onMessageDeleted(message);
+        },
+      });
+    }
+
     if (onEventTriggered) {
       eventTriggeredUnsubscribe = this.stompX.listenForEvent<Event>({
         topic: request.channel._topics.events,
@@ -1025,6 +1037,7 @@ export class ChatKitty {
       messageReadUnsubscribe?.();
       channelUpdatedUnsubscribe?.();
       messageUpdatedUnsubscribe?.();
+      messageDeletedUnsubscribe?.();
       eventTriggeredUnsubscribe?.();
       participantPresenceChangedUnsubscribe?.();
       participantLeftChatUnsubscribe?.();

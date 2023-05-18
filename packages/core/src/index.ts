@@ -1,4 +1,4 @@
-import "./polyfills";
+import './polyfills';
 
 export * from './lib/channel';
 export * from './lib/chat-session';

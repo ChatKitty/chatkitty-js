@@ -53,20 +53,22 @@ export type BaseUserMessage = BaseMessage & {
 };
 
 export type TextSystemMessage = BaseTextMessage & {
-  type: 'SYSTEM_TEXT'
+  type: 'SYSTEM_TEXT';
 };
 
 export type FileSystemMessage = BaseFileMessage & {
-  type: 'SYSTEM_FILE'
+  type: 'SYSTEM_FILE';
 };
 
-export type TextUserMessage = BaseTextMessage & BaseUserMessage & {
-  type: 'TEXT'
-};
+export type TextUserMessage = BaseTextMessage &
+  BaseUserMessage & {
+    type: 'TEXT';
+  };
 
-export type FileUserMessage = BaseFileMessage & BaseUserMessage & {
-  type: 'FILE'
-};
+export type FileUserMessage = BaseFileMessage &
+  BaseUserMessage & {
+    type: 'FILE';
+  };
 
 export declare class MessageLink {
   source: string;
