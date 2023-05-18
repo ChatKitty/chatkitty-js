@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.7...core-v1.4.0) (2023-05-18)
+
+
+### Features
+
+* **core:** expose message deleted chat session listener ([1186ddb](https://github.com/ChatKitty/chatkitty-js/commit/1186ddb7c56c210d5205e1843b5f0f929de1269d))
+
 ## [1.3.7](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.6...core-v1.3.7) (2023-05-02)
 
 ### Bug Fixes
