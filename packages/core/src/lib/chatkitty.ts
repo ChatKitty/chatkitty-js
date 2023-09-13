@@ -133,7 +133,7 @@ import {
   SentFileMessageResult,
   SentTextMessageResult,
   TextUserMessage,
-  ListUsersMessagesRequest,
+  ListUsersMessagesRequest, UpdateMessagePropertiesRequest, UpdatedMessagePropertiesSucceededResult,
 } from './message';
 import { Notification } from './notification';
 import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
@@ -1427,6 +1427,20 @@ export class ChatKitty {
         },
         onSuccess: (message) =>
           resolve(new EditedMessageSucceededResult(message)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
+  updateMessageProperties(request: UpdateMessagePropertiesRequest) {
+    return new Promise((resolve) => {
+      this.stompX.sendAction<Message>({
+        destination: request.message._actions.updateProperties,
+        body: {
+          properties: request.properties,
+        },
+        onSuccess: (message) =>
+          resolve(new UpdatedMessagePropertiesSucceededResult(message)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });

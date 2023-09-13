@@ -124,6 +124,7 @@ declare class MessageActions {
   react: string;
   edit: string;
   removeReaction: string;
+  updateProperties: string;
 }
 
 declare class MessageStreams {
@@ -222,6 +223,21 @@ export type EditMessageResult =
   | ChatKittyFailedResult;
 
 export class EditedMessageSucceededResult extends ChatKittySucceededResult {
+  constructor(public message: Message) {
+    super();
+  }
+}
+
+export declare class UpdateMessagePropertiesRequest {
+  message: Message;
+  properties: unknown;
+}
+
+export type UpdateMessagePropertiesResult =
+  | UpdatedMessagePropertiesSucceededResult
+  | ChatKittyFailedResult;
+
+export class UpdatedMessagePropertiesSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }
