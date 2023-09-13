@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.4.0...core-v1.5.0) (2023-09-13)
+
+
+### Features
+
+* **core:** update message properties ([edd6b1d](https://github.com/ChatKitty/chatkitty-js/commit/edd6b1d067bf4acfad33048ff085017ec6f24e1f))
+
 # [1.4.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.3.7...core-v1.4.0) (2023-05-18)
 
 
