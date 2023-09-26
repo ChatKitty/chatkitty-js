@@ -133,7 +133,10 @@ import {
   SentFileMessageResult,
   SentTextMessageResult,
   TextUserMessage,
-  ListUsersMessagesRequest, UpdateMessagePropertiesRequest, UpdatedMessagePropertiesSucceededResult,
+  ListUsersMessagesRequest,
+  UpdateMessagePropertiesRequest,
+  UpdatedMessagePropertiesSucceededResult,
+  UnreadMessageRequest, UnreadMessageResult, UnreadMessageSucceededResult,
 } from './message';
 import { Notification } from './notification';
 import { ChatKittyObserver, ChatKittyUnsubscribe } from './observer';
@@ -836,6 +839,7 @@ export class ChatKitty {
     const onMessageDeleted = request.onMessageDeleted;
     const onChannelUpdated = request.onChannelUpdated;
     const onMessageRead = request.onMessageRead;
+    const onMessageUnread = request.onMessageUnread;
     const onMessageReactionAdded = request.onMessageReactionAdded;
     const onMessageReactionRemoved = request.onMessageReactionRemoved;
     const onThreadMessageReceived = request.onThreadMessageReceived;
@@ -995,6 +999,21 @@ export class ChatKitty {
             destination: receipt._relays.message,
             onSuccess: (message) => {
               onMessageRead(message, receipt);
+            },
+          });
+        },
+      });
+    }
+
+    if (onMessageUnread) {
+      messageReadUnsubscribe = this.stompX.listenForEvent<ReadReceipt>({
+        topic: request.channel._topics.readReceipts,
+        event: 'message.read_receipt.deleted',
+        onSuccess: (receipt) => {
+          this.stompX.relayResource<Message>({
+            destination: receipt._relays.message,
+            onSuccess: (message) => {
+              onMessageUnread(message, receipt);
             },
           });
         },
@@ -1394,6 +1413,18 @@ export class ChatKitty {
         destination: request.message._actions.read,
         body: {},
         onSent: () => resolve(new ReadMessageSucceededResult(request.message)),
+        onError: (error) => resolve(new ChatKittyFailedResult(error)),
+      });
+    });
+  }
+
+  unreadMessage(request: UnreadMessageRequest): Promise<UnreadMessageResult> {
+    return new Promise((resolve) => {
+      this.stompX.sendAction<never>({
+        destination: request.message._actions.unread,
+        body: {},
+        onSent: () =>
+          resolve(new UnreadMessageSucceededResult(request.message)),
         onError: (error) => resolve(new ChatKittyFailedResult(error)),
       });
     });

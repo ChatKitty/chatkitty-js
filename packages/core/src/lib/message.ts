@@ -118,6 +118,7 @@ declare class MessageRelays {
 
 declare class MessageActions {
   read: string;
+  unread: string;
   reply: string;
   deleteForMe: string;
   delete: string;
@@ -203,11 +204,25 @@ export declare class ReadMessageRequest {
   message: Message;
 }
 
+export declare class UnreadMessageRequest {
+  message: Message;
+}
+
 export type ReadMessageResult =
   | ReadMessageSucceededResult
   | ChatKittyFailedResult;
 
 export class ReadMessageSucceededResult extends ChatKittySucceededResult {
+  constructor(public message: Message) {
+    super();
+  }
+}
+
+export type UnreadMessageResult =
+  | UnreadMessageSucceededResult
+  | ChatKittyFailedResult;
+
+export class UnreadMessageSucceededResult extends ChatKittySucceededResult {
   constructor(public message: Message) {
     super();
   }

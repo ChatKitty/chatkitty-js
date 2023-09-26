@@ -33,6 +33,7 @@ export declare class StartChatSessionRequest {
   onMessageDeleted?: (message: Message) => void;
   onChannelUpdated?: (channel: Channel) => void;
   onMessageRead?: (message: Message, receipt: ReadReceipt) => void;
+  onMessageUnread?: (message: Message, receipt: ReadReceipt) => void;
   onMessageReactionAdded?: (message: Message, reaction: Reaction) => void;
   onMessageReactionRemoved?: (message: Message, reaction: Reaction) => void;
   onThreadMessageReceived?: (thread: Thread, message: Message) => void;
