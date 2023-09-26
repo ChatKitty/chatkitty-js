@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.5.0...core-v1.6.0) (2023-09-26)
+
+
+### Features
+
+* **core:** unread message ([3bdee37](https://github.com/ChatKitty/chatkitty-js/commit/3bdee379d9b5bae66a3323c7b06e9ade13d51aee))
+
 # [1.5.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.4.0...core-v1.5.0) (2023-09-13)
 
 
