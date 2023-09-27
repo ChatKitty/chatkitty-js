@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.0...core-v1.7.1) (2023-09-27)
+
+
+### Bug Fixes
+
+* **core:** type page cursors as strings ([bccb95d](https://github.com/ChatKitty/chatkitty-js/commit/bccb95dd30408668ca2cc927fdc09dfef7c7b09b))
+
 # [1.7.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.6.0...core-v1.7.0) (2023-09-27)
 
 
