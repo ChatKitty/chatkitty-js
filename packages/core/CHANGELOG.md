@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.6.0...core-v1.7.0) (2023-09-27)
+
+
+### Features
+
+* **core:** channel context ([b79d186](https://github.com/ChatKitty/chatkitty-js/commit/b79d186048b6159c1ed46249f56807c2e8834569))
+
 # [1.6.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.5.0...core-v1.6.0) (2023-09-26)
 
 
