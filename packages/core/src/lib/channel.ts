@@ -87,6 +87,8 @@ declare class ChannelStreams {
 }
 
 export declare class ChannelContext {
+  startCursor: string;
+  endCursor: string;
   readBy: { [key: string]: number[] };
 }
 
