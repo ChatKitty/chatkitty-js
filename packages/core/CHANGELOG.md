@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.1...core-v1.7.2) (2023-09-27)
+
+
+### Bug Fixes
+
+* **core:** type StompX page cursors as strings ([0ea3d71](https://github.com/ChatKitty/chatkitty-js/commit/0ea3d71fe83666aefb511a9e59c68b82cf505869))
+
 ## [1.7.1](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.0...core-v1.7.1) (2023-09-27)
 
 
