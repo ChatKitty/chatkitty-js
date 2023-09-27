@@ -159,8 +159,8 @@ export type CountUnreadChannelsRequest = ListUnreadChannelsRequest;
 
 export declare class RetrieveChannelContextRequest {
   channel: Channel;
-  startCursor: number;
-  endCursor: number;
+  startCursor: string;
+  endCursor: string;
 }
 
 export declare class RetrieveChannelUnreadRequest {

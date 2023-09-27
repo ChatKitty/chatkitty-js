@@ -23,7 +23,6 @@ export type FileMessage = FileSystemMessage | FileUserMessage;
 
 export interface BaseMessage {
   id: number;
-  cursor: number;
   type: string;
   channelId: number;
   createdTime: string;

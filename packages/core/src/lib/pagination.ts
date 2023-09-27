@@ -1,4 +1,4 @@
-import StompX, { StompXError, StompXPage } from './stompx';
+import StompX, { StompXError, StompXPage, StompXPageMetadata } from './stompx';
 
 import { ChatKittyError } from './error';
 
@@ -40,6 +40,7 @@ export class ChatKittyPaginator<I> {
 
     return new ChatKittyPaginator<I>(
       items,
+      page.page,
       request.stompX,
       request.contentName,
       page._relays.prev,
@@ -52,6 +53,7 @@ export class ChatKittyPaginator<I> {
 
   private constructor(
     public items: I[],
+    public page: StompXPageMetadata,
     private stompX: StompX,
     private contentName: string,
     private prevRelay?: string,
@@ -115,6 +117,7 @@ export class ChatKittyPaginator<I> {
 
     return new ChatKittyPaginator<I>(
       items,
+      page.page,
       this.stompX,
       this.contentName,
       page._relays.prev,
