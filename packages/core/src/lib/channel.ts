@@ -42,6 +42,7 @@ export type PrivateChannel = GroupChannel & {
 
 declare class ChannelRelays {
   self: string;
+  context: string;
   messages: string;
   messagesCount: string;
   lastReceivedMessage: string;
@@ -83,6 +84,10 @@ declare class ChannelActions {
 
 declare class ChannelStreams {
   messages: string;
+}
+
+export declare class ChannelContext {
+  readBy: { [key: string]: number[] };
 }
 
 export function isDirectChannel(channel: Channel): channel is DirectChannel {
@@ -152,6 +157,12 @@ export declare class ListUnreadChannelsFilter {
 
 export type CountUnreadChannelsRequest = ListUnreadChannelsRequest;
 
+export declare class RetrieveChannelContextRequest {
+  channel: Channel;
+  startCursor: number;
+  endCursor: number;
+}
+
 export declare class RetrieveChannelUnreadRequest {
   channel: Channel;
 }
@@ -172,6 +183,16 @@ export type RetrieveChannelResult =
 
 export class RetrieveChannelSucceededResult extends ChatKittySucceededResult {
   constructor(public channel: Channel) {
+    super();
+  }
+}
+
+export type RetrieveChannelContextResult =
+  | RetrieveChannelContextSucceededResult
+  | ChatKittyFailedResult;
+
+export class RetrieveChannelContextSucceededResult extends ChatKittySucceededResult {
+  constructor(public context: ChannelContext) {
     super();
   }
 }

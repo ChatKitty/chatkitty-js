@@ -534,6 +534,8 @@ export declare class StompXPageMetadata {
   totalElement: number;
   totalPages: number;
   number: number;
+  start: number;
+  next: number;
 }
 
 export declare class StompXPageRelays {

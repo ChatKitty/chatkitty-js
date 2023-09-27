@@ -58,6 +58,9 @@ import {
   CountUnreadChannelsRequest,
   CheckChannelUnreadSucceededResult,
   CheckChannelUnreadRequest,
+  RetrieveChannelContextRequest,
+  RetrieveChannelContextResult,
+  RetrieveChannelContextSucceededResult, ChannelContext,
 } from './channel';
 import {
   ChatSession,
@@ -593,6 +596,24 @@ export class ChatKitty {
         destination: ChatKitty.channelRelay(id),
         onSuccess: (channel) => {
           resolve(new RetrieveChannelSucceededResult(channel));
+        },
+        onError: (error) => {
+          resolve(new ChatKittyFailedResult(error));
+        },
+      });
+    });
+  }
+
+  retrieveChannelContext(request: RetrieveChannelContextRequest): Promise<RetrieveChannelContextResult> {
+    return new Promise((resolve) => {
+      this.stompX.relayResource<ChannelContext>({
+        destination: request.channel._relays.context,
+        parameters: {
+          startCursor: request.startCursor,
+          endCursor: request.endCursor,
+        },
+        onSuccess: (context) => {
+          resolve(new RetrieveChannelContextSucceededResult(context));
         },
         onError: (error) => {
           resolve(new ChatKittyFailedResult(error));
