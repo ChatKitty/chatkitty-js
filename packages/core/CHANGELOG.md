@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.2...core-v1.7.3) (2023-09-27)
+
+
+### Bug Fixes
+
+* **core:** type channel context cursors ([8ed0ba9](https://github.com/ChatKitty/chatkitty-js/commit/8ed0ba9d180c93f2dfee305c31730e5ad8ab68ce))
+
 ## [1.7.2](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.1...core-v1.7.2) (2023-09-27)
 
 
