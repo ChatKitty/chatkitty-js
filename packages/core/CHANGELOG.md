@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.3...core-v1.8.0) (2023-12-09)
+
+
+### Features
+
+* **core:** Add nested level into base message ([f583c68](https://github.com/ChatKitty/chatkitty-js/commit/f583c68d4048a93752c865ccff8bedd4be67e18b))
+
 ## [1.7.3](https://github.com/ChatKitty/chatkitty-js/compare/core-v1.7.2...core-v1.7.3) (2023-09-27)
 
 
