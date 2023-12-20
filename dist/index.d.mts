@@ -326,12 +326,14 @@ interface ApiConnection {
     user: ReactiveValue<CurrentUser>;
     notifications: ReactiveStream<Notification>;
     unreadChannelsCount: ReactiveValue<number>;
+    updateUser(user: Partial<CurrentUser>): Promise<void>;
+    dispose(): Promise<void>;
 }
 declare class ConnectApiOptions {
     apiKey: string;
     username: string;
     authParams?: any;
-    $environment: Environment;
+    $environment?: Environment;
 }
 
 declare type Theme = 'light' | 'dark';
