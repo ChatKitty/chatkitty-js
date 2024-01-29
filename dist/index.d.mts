@@ -304,7 +304,7 @@ declare class UserMentionedChannelNotificationData extends NotificationData {
     message: Message;
 }
 
-interface Watcher<T> {
+interface Observer<T> {
     next: (value: T) => void;
     error: (error: any) => void;
     complete: () => void;
@@ -313,7 +313,7 @@ interface Subscription {
     unsubscribe: () => void;
 }
 interface Reactive<T> {
-    watch: (watcher?: Partial<Watcher<T>> | ((value: T) => void)) => Subscription;
+    watch: (observer?: Partial<Observer<T>> | ((value: T) => void)) => Subscription;
 }
 interface ReactiveStream<T> extends Reactive<T> {
 }
@@ -326,6 +326,7 @@ interface ApiConnection {
     user: ReactiveValue<CurrentUser>;
     notifications: ReactiveStream<Notification>;
     unreadChannelsCount: ReactiveValue<number>;
+    unreadMessagesCount: ReactiveValue<number>;
     updateUser(user: Partial<CurrentUser>): Promise<void>;
     dispose(): Promise<void>;
 }
@@ -429,6 +430,9 @@ declare type Templates = {
     error: ErrorTemplate;
 };
 declare type ChatUi = {
+    unmount(): Promise<void>;
+};
+declare type ChatUiOptions = {
     widgetId: string;
     username?: string;
     locale?: string;
@@ -451,6 +455,6 @@ declare type LoadChatUiOptions = {
 declare const connectApi: (options: ConnectApiOptions) => Promise<ApiConnection>;
 
 declare const template: (template: string) => Template;
-declare const loadChatUi: (ui: ChatUi, options?: LoadChatUiOptions) => void;
+declare const loadChatUi: (ui: ChatUiOptions, options?: LoadChatUiOptions) => ChatUi;
 
 export { connectApi, loadChatUi, template };
