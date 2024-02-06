@@ -237,6 +237,7 @@ declare class CurrentUserRelays {
 }
 declare class CurrentUserTopics {
     self: string;
+    styles: string;
     channels: string;
     messages: string;
     readReceipts: string;
