@@ -237,6 +237,7 @@ declare class CurrentUserRelays {
 }
 declare class CurrentUserTopics {
     self: string;
+    features: string;
     styles: string;
     channels: string;
     messages: string;
@@ -408,6 +409,11 @@ declare type ChatUiContainer = {
     id?: string;
     height?: string;
     width?: string;
+    responsive?: {
+        small?: {
+            breakpoint: number;
+        };
+    };
 };
 declare type ChatComponentContext = {
     locale: string;
