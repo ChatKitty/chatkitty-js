@@ -53,6 +53,7 @@ interface BaseMessage {
     groupTag?: string;
     reactions?: ReactionSummary[];
     repliesCount?: number;
+    reportCount?: number;
     properties: unknown;
     /** @internal */
     _relays: MessageRelays;
@@ -119,8 +120,10 @@ declare class MessageRelays {
     parent?: string;
     readReceipts: string;
     repliesCount: string;
+    reportCount: string;
     replies: string;
     reactions: string;
+    reports: string;
 }
 declare class MessageActions {
     read: string;
@@ -130,6 +133,8 @@ declare class MessageActions {
     delete: string;
     react: string;
     edit: string;
+    report: string;
+    removeReport: string;
     removeReaction: string;
     updateProperties: string;
 }
@@ -350,17 +355,22 @@ declare type AuthParamsAuthentication = {
     type: 'auth-params';
     params: any;
 };
-declare type Route = {
+declare type Route = DirectMessagesRoute | ChannelRoute | EventRoute;
+declare type NavigatableRoute = {
     name: string;
     allowNavigation?: boolean;
-} & (DirectMessagesRoute | ChannelRoute);
+};
 declare type DirectMessagesRoute = {
     name: 'direct-messages';
     users: string[];
-};
+} & NavigatableRoute;
 declare type ChannelRoute = {
     name: 'channel';
     channel: string;
+} & NavigatableRoute;
+declare type EventRoute = {
+    name: 'event';
+    event: string;
 };
 declare type UserProfile = {
     displayName: string;
