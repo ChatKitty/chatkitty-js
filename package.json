@@ -1,7 +1,7 @@
 {
   "name": "chatkitty",
-  "version": "2.3.1",
-  "description": "ChatKitty is the first complete chat platform for your mobile and web apps. ChatKitty provides chat features that are easy to add to your new or existing app without having to build ui or a backend.",
+  "version": "2.3.2",
+  "description": "A powerful tool for integrating chat features into your web applications.",
   "license": "MIT",
   "files": [
     "dist"
