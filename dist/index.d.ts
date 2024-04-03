@@ -1441,7 +1441,7 @@ declare type ChatUiOptions = {
     locale?: string;
     container?: ChatUiContainer;
     theme?: Theme;
-    styles?: ChatUIThemeStylingOptions;
+    styles?: Partial<ChatUIThemeStylingOptions>;
     authentication?: Authentication;
     profile?: UserProfile;
     route?: Route;
