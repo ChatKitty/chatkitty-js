@@ -20,7 +20,7 @@ interface BaseUser {
     displayPictureUrl: string;
     isGuest: boolean;
     presence: UserPresence;
-    properties: unknown;
+    properties: any;
 }
 declare class UserPresence {
     status: string;
@@ -149,7 +149,7 @@ interface BaseChannel {
     creator?: User;
     lastReceivedMessage?: Message;
     createdTime: string;
-    properties: unknown;
+    properties: any;
     /** @internal */
     _relays: ChannelRelays;
     /** @internal */
@@ -242,6 +242,7 @@ declare class CurrentUserRelays {
 }
 declare class CurrentUserTopics {
     self: string;
+    elements: string;
     features: string;
     styles: string;
     channels: string;
@@ -309,6 +310,991 @@ declare class UserMentionedNotificationData extends NotificationData {
 }
 declare class UserMentionedChannelNotificationData extends NotificationData {
     message: Message;
+}
+
+/**
+ * JSON schema for configuring the ChatKitty Chat UI theme options. It's designed to be intuitive and easy to understand for front-end developers, designers, and product managers alike.
+ */
+interface ChatUIThemeStylingOptions {
+    $version: "0.0.2";
+    /**
+     * The base theme to use for the Chat UI. This will be used as the default theme for all components.
+     */
+    "base-theme": "light" | "dark";
+    /**
+     * A custom stylesheet to be applied across the Chat UI. This will be applied after the base theme and component overrides.
+     */
+    stylesheet?: string;
+    /**
+     * Overrides for specific components. These will override the base theme for the specified component.
+     */
+    overrides?: {
+        /**
+         * General overrides for all components.
+         */
+        general?: {
+            /**
+             * Text overrides for all components.
+             */
+            text?: {
+                /**
+                 * The color of text.
+                 */
+                color?: string;
+            };
+            /**
+             * Button overrides for all components.
+             */
+            button?: {
+                /**
+                 * Clear button overrides for all components.
+                 */
+                clear?: {
+                    /**
+                     * The color of the clear button.
+                     */
+                    color?: string;
+                };
+                /**
+                 * The default color of buttons.
+                 */
+                color?: string;
+                /**
+                 * The default background color of buttons.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Text input overrides for all components.
+             */
+            input?: {
+                /**
+                 * The background color of text inputs.
+                 */
+                "background-color"?: string;
+                /**
+                 * Input placeholder text overrides for all components.
+                 */
+                placeholder?: {
+                    /**
+                     * The color of placeholder text.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Text input caret overrides for all components.
+                 */
+                caret?: {
+                    /**
+                     * The color of the caret.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * Spinner overrides for all components.
+             */
+            spinner?: {
+                /**
+                 * The color of spinners.
+                 */
+                color?: string;
+            };
+            /**
+             * Border overrides for all components.
+             */
+            border?: {
+                /**
+                 * The CSS style of borders.
+                 */
+                style?: string;
+            };
+        };
+        /**
+         * Chat container overrides.
+         */
+        container?: {
+            /**
+             * Chat container border overrides.
+             */
+            border?: {
+                /**
+                 * The CSS style of chat container borders.
+                 */
+                style?: string;
+                /**
+                 * The CSS radius of chat container borders.
+                 */
+                radius?: string;
+            };
+            /**
+             * The CSS box shadow of chat containers.
+             */
+            "box-shadow"?: string;
+        };
+        /**
+         * Chat header overrides.
+         */
+        header?: {
+            /**
+             * The background color of chat headers.
+             */
+            "background-color"?: string;
+            /**
+             * Chat header channel overrides.
+             */
+            channel?: {
+                name?: {
+                    /**
+                     * The color of chat header channel names.
+                     */
+                    color?: string;
+                };
+                description?: {
+                    /**
+                     * The color of chat header channel descriptions.
+                     */
+                    color?: string;
+                };
+            };
+        };
+        /**
+         * Chat footer overrides.
+         */
+        footer?: {
+            /**
+             * The background color of chat footers.
+             */
+            "background-color"?: string;
+            /**
+             * Chat footer input overrides.
+             */
+            input?: {
+                /**
+                 * Chat footer input border overrides.
+                 */
+                border?: {
+                    /**
+                     * The CSS style of chat footer input borders.
+                     */
+                    style?: string;
+                    /**
+                     * The CSS style of chat footer input borders when selected.
+                     */
+                    selected?: string;
+                };
+            };
+            /**
+             * Chat footer reply overrides.
+             */
+            reply?: {
+                /**
+                 * The background color of chat footer replies.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Chat footer tag overrides.
+             */
+            tag?: {
+                /**
+                 * Chat footer active tag overrides.
+                 */
+                active?: {
+                    /**
+                     * The background color of chat footer active tags.
+                     */
+                    "background-color"?: string;
+                };
+                /**
+                 * The background color of chat footer tags.
+                 */
+                "background-color"?: string;
+            };
+        };
+        /**
+         * Chat content overrides.
+         */
+        content?: {
+            /**
+             * The background color of chat content.
+             */
+            "background-color"?: string;
+        };
+        /**
+         * Chat side menu overrides.
+         */
+        "side-menu"?: {
+            /**
+             * The background color of chat side menus.
+             */
+            "background-color"?: string;
+            /**
+             * Chat side menu hover overrides.
+             */
+            hover?: {
+                /**
+                 * The background color of chat side menu hover states.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Chat side menu active overrides.
+             */
+            active?: {
+                /**
+                 * The background color of chat side menu active states.
+                 */
+                "background-color"?: string;
+                /**
+                 * The color of chat side menu active states.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat side menu search overrides.
+             */
+            search?: {
+                /**
+                 * Chat side menu search border overrides.
+                 */
+                border?: {
+                    /**
+                     * The color of chat side menu search borders.
+                     */
+                    color?: string;
+                };
+            };
+        };
+        /**
+         * Chat dropdown overrides.
+         */
+        dropdown?: {
+            /**
+             * The background color of chat dropdowns.
+             */
+            "background-color"?: string;
+            hover?: {
+                /**
+                 * The background color of chat dropdown hover states.
+                 */
+                "background-color"?: string;
+            };
+        };
+        /**
+         * Chat message overrides.
+         */
+        message?: {
+            /**
+             * Chat inbound message overrides (messages sent by other users and received by the current user).
+             */
+            inbound?: {
+                /**
+                 * The background color of chat inbound messages.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Chat outbound message overrides (messages sent by the current user).
+             */
+            outbound?: {
+                /**
+                 * The background color of chat outbound messages.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Chat message text overrides.
+             */
+            text?: {
+                /**
+                 * The color of chat message text.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat draft message overrides (messages started but not sent).
+             */
+            draft?: {
+                /**
+                 * Chat draft message text overrides.
+                 */
+                text?: {
+                    /**
+                     * The color of chat draft message text.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * Chat deleted message overrides (messages deleted by the current user).
+             */
+            deleted?: {
+                /**
+                 * The background color of chat deleted messages.
+                 */
+                "background-color"?: string;
+                /**
+                 * The color of chat deleted message text.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat selected message overrides.
+             */
+            selected?: {
+                /**
+                 * The background color of chat selected messages.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Chat message user overrides.
+             */
+            user?: {
+                /**
+                 * Chat message user display name overrides.
+                 */
+                "display-name"?: {
+                    /**
+                     * The color of chat message user display names.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * Chat message timestamp overrides.
+             */
+            timestamp?: {
+                /**
+                 * The color of chat message timestamps.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat message date overrides.
+             */
+            date?: {
+                /**
+                 * The background color of chat message dates.
+                 */
+                "background-color"?: string;
+                /**
+                 * The color of chat message dates.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat system message overrides.
+             */
+            system?: {
+                /**
+                 * The background color of chat system messages.
+                 */
+                "background-color"?: string;
+                /**
+                 * The color of chat system message text.
+                 */
+                color?: string;
+            };
+            media?: {
+                /**
+                 * The background color of chat media messages.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Chat reply message overrides.
+             */
+            reply?: {
+                /**
+                 * The background color of chat reply messages.
+                 */
+                "background-color"?: string;
+                /**
+                 * The color of chat reply message text.
+                 */
+                color?: string;
+                /**
+                 * Chat reply message user overrides.
+                 */
+                user?: {
+                    /**
+                     * Chat reply message user display name overrides.
+                     */
+                    "display-name"?: {
+                        /**
+                         * The color of chat reply message user display names.
+                         */
+                        color?: string;
+                    };
+                };
+            };
+            /**
+             * Chat message tag overrides.
+             */
+            tag?: {
+                /**
+                 * The color of chat message tags.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat message image overrides.
+             */
+            image?: {
+                /**
+                 * The background color of chat message images.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * New (recently received) chat messages overrides.
+             */
+            new?: {
+                /**
+                 * The color of new chat message text.
+                 */
+                color?: string;
+                /**
+                 * New messages counter overrides.
+                 */
+                counter?: {
+                    /**
+                     * The background color of the new messages counter.
+                     */
+                    "background-color"?: string;
+                    /**
+                     * The color of the new messages counter.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * Chat message reaction overrides.
+             */
+            reaction?: {
+                /**
+                 * Outbound chat message reaction overrides. (reactions created by the current user)
+                 */
+                outbound?: {
+                    /**
+                     * The background color of outbound chat message reactions.
+                     */
+                    "background-color"?: string;
+                    /**
+                     * Outbound chat message reaction border overrides.
+                     */
+                    border?: {
+                        /**
+                         * The CSS style of outbound chat message reaction borders.
+                         */
+                        style?: string;
+                    };
+                    /**
+                     * Outbound chat message reaction hover overrides.
+                     */
+                    hover?: {
+                        /**
+                         * The background color of outbound chat message reaction hover states.
+                         */
+                        "background-color"?: string;
+                        /**
+                         * Outbound chat message reaction hover border overrides.
+                         */
+                        border?: {
+                            /**
+                             * The CSS style of outbound chat message reaction hover borders.
+                             */
+                            style?: string;
+                        };
+                    };
+                    /**
+                     * Outbound chat message reaction counter overrides.
+                     */
+                    counter?: {
+                        /**
+                         * The color of outbound chat message reaction counters.
+                         */
+                        color?: string;
+                    };
+                };
+                /**
+                 * Inbound chat message reaction overrides. (reactions created by other users)
+                 */
+                inbound?: {
+                    /**
+                     * The background color of inbound chat message reactions.
+                     */
+                    "background-color"?: string;
+                    /**
+                     * Inbound chat message reaction border overrides.
+                     */
+                    border?: {
+                        /**
+                         * The CSS style of inbound chat message reaction borders.
+                         */
+                        style?: string;
+                    };
+                    /**
+                     * Inbound chat message reaction hover overrides.
+                     */
+                    hover?: {
+                        /**
+                         * The background color of inbound chat message reaction hover states.
+                         */
+                        "background-color"?: string;
+                        /**
+                         * Inbound chat message reaction hover border overrides.
+                         */
+                        border?: {
+                            /**
+                             * The CSS style of inbound chat message reaction hover borders.
+                             */
+                            style?: string;
+                        };
+                    };
+                    /**
+                     * Inbound chat message reaction counter overrides.
+                     */
+                    counter?: {
+                        /**
+                         * The color of inbound chat message reaction counters.
+                         */
+                        color?: string;
+                    };
+                };
+            };
+            /**
+             * Chat message audio overrides.
+             */
+            audio?: {
+                /**
+                 * Chat message audio record overrides.
+                 */
+                record?: {
+                    /**
+                     * The background color of chat message audio record states.
+                     */
+                    "background-color"?: string;
+                };
+                /**
+                 * Chat message audio progress overrides.
+                 */
+                progress?: {
+                    /**
+                     * The background color of chat message audio progress states.
+                     */
+                    "background-color"?: string;
+                    /**
+                     * Chat message audio progress line overrides.
+                     */
+                    line?: {
+                        /**
+                         * The background color of chat message audio progress line states.
+                         */
+                        "background-color"?: string;
+                    };
+                    /**
+                     * Chat message audio progress selector overrides.
+                     */
+                    selector?: {
+                        /**
+                         * The background color of chat message audio progress selectors.
+                         */
+                        "background-color"?: string;
+                    };
+                };
+            };
+            /**
+             * Chat message file overrides.
+             */
+            file?: {
+                /**
+                 * Chat message file extension overrides.
+                 */
+                extension?: {
+                    /**
+                     * The color of chat message file extensions.
+                     */
+                    color?: string;
+                };
+            };
+        };
+        /**
+         * Chat markdown overrides.
+         */
+        markdown?: {
+            /**
+             * The background color of chat markdown.
+             */
+            "background-color"?: string;
+            /**
+             * Chat markdown border overrides.
+             */
+            border?: {
+                /**
+                 * The color of chat markdown borders.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat markdown text overrides.
+             */
+            text?: {
+                /**
+                 * The color of chat markdown text.
+                 */
+                color?: string;
+            };
+            /**
+             * Chat markdown code overrides.
+             */
+            code?: {
+                /**
+                 * Chat markdown multi-line code overrides.
+                 */
+                "multi-line"?: {
+                    /**
+                     * The color of chat markdown multi-line code.
+                     */
+                    color?: string;
+                };
+            };
+        };
+        /**
+         * Channels list overrides.
+         */
+        channels?: {
+            /**
+             * Channels item overrides.
+             */
+            item?: {
+                /**
+                 * Channel display name overrides.
+                 */
+                "display-name"?: {
+                    /**
+                     * The color of channel display names.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Channel last message overrides.
+                 */
+                "last-message"?: {
+                    /**
+                     * The color of channel last messages.
+                     */
+                    color?: string;
+                    /**
+                     * Channel last message timestamp overrides.
+                     */
+                    timestamp?: {
+                        /**
+                         * The color of channel last message timestamps.
+                         */
+                        color?: string;
+                    };
+                };
+                /**
+                 * Channel user overrides. (DMs only)
+                 */
+                user?: {
+                    /**
+                     * Channel user presence overrides.
+                     */
+                    presence?: {
+                        /**
+                         * Channel user presence status overrides.
+                         */
+                        status?: {
+                            /**
+                             * Channel user presence online status overrides.
+                             */
+                            online?: {
+                                /**
+                                 * The color of channel user presence online status.
+                                 */
+                                color?: string;
+                            };
+                            /**
+                             * Channel user presence offline status overrides.
+                             */
+                            offline?: {
+                                /**
+                                 * The color of channel user presence offline status.
+                                 */
+                                color?: string;
+                            };
+                        };
+                    };
+                };
+                /**
+                 * Channel unread messages overrides.
+                 */
+                unread?: {
+                    /**
+                     * Channel unread message counter overrides.
+                     */
+                    counter?: {
+                        /**
+                         * The background color of channel unread message counters.
+                         */
+                        "background-color"?: string;
+                        /**
+                         * The color of channel unread message counters.
+                         */
+                        color?: string;
+                    };
+                };
+            };
+        };
+        /**
+         * Emoji picker overrides.
+         */
+        emoji?: {
+            /**
+             * The emoji picker background color.
+             */
+            "background-color"?: string;
+        };
+        /**
+         * Icon overrides.
+         */
+        icons?: {
+            /**
+             * Scroll icon overrides.
+             */
+            scroll?: {
+                /**
+                 * The background color of scroll icons.
+                 */
+                "background-color"?: string;
+            };
+            /**
+             * Search icon overrides.
+             */
+            search?: {
+                /**
+                 * The color of search icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Add icon overrides.
+             */
+            add?: {
+                /**
+                 * The color of add icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Toggle icon overrides.
+             */
+            toggle?: {
+                /**
+                 * The color of toggle icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Menu icon overrides.
+             */
+            menu?: {
+                /**
+                 * The color of menu icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Close icon overrides.
+             */
+            close?: {
+                /**
+                 * The color of close icons.
+                 */
+                color?: string;
+                /**
+                 * Close icon image overrides.
+                 */
+                image?: {
+                    /**
+                     * The color of close icon images.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Close icon outline overrides.
+                 */
+                outline?: {
+                    /**
+                     * The color of close icon outlines.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Close icon preview overrides.
+                 */
+                preview?: {
+                    /**
+                     * The color of close icon previews.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * File icon overrides.
+             */
+            file?: {
+                /**
+                 * The color of file icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Paperclip icon overrides.
+             */
+            paperclip?: {
+                /**
+                 * The color of paperclip icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Send icon overrides.
+             */
+            send?: {
+                /**
+                 * The color of send icons.
+                 */
+                color?: string;
+                /**
+                 * Send icon disabled overrides.
+                 */
+                disabled?: {
+                    /**
+                     * The color of disabled send icons.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * Emoji icon overrides.
+             */
+            emoji?: {
+                /**
+                 * The color of emoji icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Reaction icon overrides.
+             */
+            reaction?: {
+                /**
+                 * The color of reaction icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Document icon overrides.
+             */
+            document?: {
+                /**
+                 * The color of document icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Pencil icon overrides.
+             */
+            pencil?: {
+                /**
+                 * The color of pencil icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Delivered message status icon overrides.
+             */
+            delivered?: {
+                /**
+                 * The color of delivered icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Read message status icon overrides.
+             */
+            read?: {
+                /**
+                 * The color of read icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Microphone icon overrides.
+             */
+            microphone?: {
+                /**
+                 * The color of microphone icons.
+                 */
+                color?: string;
+            };
+            /**
+             * Audio icon overrides.
+             */
+            audio?: {
+                /**
+                 * Audio play icon overrides.
+                 */
+                play?: {
+                    /**
+                     * The color of audio play icons.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Audio pause icon overrides.
+                 */
+                pause?: {
+                    /**
+                     * The color of audio pause icons.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Audio cancel icon overrides.
+                 */
+                cancel?: {
+                    /**
+                     * The color of audio cancel icons.
+                     */
+                    color?: string;
+                };
+                /**
+                 * Audio confirm icon overrides.
+                 */
+                confirm?: {
+                    /**
+                     * The color of audio confirm icons.
+                     */
+                    color?: string;
+                };
+            };
+            /**
+             * Preview icon overrides.
+             */
+            preview?: {
+                /**
+                 * The color of preview icons.
+                 */
+                color?: string;
+            };
+        };
+    };
 }
 
 interface Observer<T> {
@@ -455,6 +1441,7 @@ declare type ChatUiOptions = {
     locale?: string;
     container?: ChatUiContainer;
     theme?: Theme;
+    styles?: ChatUIThemeStylingOptions;
     authentication?: Authentication;
     profile?: UserProfile;
     route?: Route;
