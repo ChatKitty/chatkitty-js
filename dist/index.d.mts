@@ -265,6 +265,18 @@ declare class CurrentUserStreams {
     displayPicture: string;
 }
 
+declare type ClassMap = Record<string, string>;
+declare type ClassMaps = {
+    [key: string]: ClassMap;
+};
+declare type UiElement = {
+    template: string;
+    classMaps: ClassMaps;
+};
+declare type UiElements = {
+    [key: string]: UiElement;
+};
+
 declare type Notification = SystemSentMessageNotification | UserSentMessageNotification | UserRepliedToMessageNotification | UserMentionedNotification | UserMentionedChannelNotification;
 interface BaseNotification {
     id: number;
@@ -1430,7 +1442,8 @@ interface Template {
 }
 declare type ErrorTemplate = (options: ErrorTemplateContext) => Template;
 declare type Templates = {
-    error: ErrorTemplate;
+    error?: ErrorTemplate;
+    elements?: UiElements;
 };
 declare type ChatUi = {
     unmount(): Promise<void>;
