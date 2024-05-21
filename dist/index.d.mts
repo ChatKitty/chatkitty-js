@@ -1415,6 +1415,7 @@ declare type Audio = {
 };
 declare type ChatUiContainer = {
     id?: string;
+    reference?: HTMLElement;
     height?: string;
     width?: string;
     responsive?: {
