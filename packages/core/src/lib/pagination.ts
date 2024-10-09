@@ -8,8 +8,10 @@ export class ChatKittyPaginator<I> {
     request: CreatePaginatorRequest<I>
   ): Promise<ChatKittyPaginator<I>> {
     const page = await new Promise<StompXPage>((resolve, reject) => {
+      const destination = request.relay.replace(".size..sort.", `.size.${request.size }.sort.${request.sort}`);
+
       request.stompX.relayResource<StompXPage>({
-        destination: request.relay,
+        destination: destination,
         parameters: request.parameters,
         onSuccess: (resource) => resolve(resource),
         onError: (error) => reject(error),
@@ -134,6 +136,8 @@ export declare class CreatePaginatorRequest<I> {
   relay: string;
   contentName: string;
   parameters?: Record<string, unknown>;
+  size?: number;
+  sort?: string;
   mapper?: (item: I) => I;
   asyncMapper?: (item: I) => Promise<I>;
   onError?: (error: StompXError) => void;

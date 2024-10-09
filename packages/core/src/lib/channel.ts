@@ -141,6 +141,8 @@ export class CreatedChannelResult extends ChatKittySucceededResult {
 
 export declare class ListChannelsRequest {
   filter?: ListChannelsFilter;
+  size?: number;
+  sort?: string;
 }
 
 export declare class ListChannelsFilter {

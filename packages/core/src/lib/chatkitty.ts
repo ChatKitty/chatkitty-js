@@ -582,6 +582,8 @@ export class ChatKitty {
         relay: relay,
         contentName: 'channels',
         parameters: parameters,
+        size: request?.size,
+        sort: request?.sort,
       })
         .then((paginator) =>
           resolve(new ListChannelsSucceededResult(paginator))
