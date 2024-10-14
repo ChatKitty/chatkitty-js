@@ -10,10 +10,11 @@
   "author": "ChatKitty",
   "license": "MIT",
   "repository": "https://github.com/ChatKitty/chatkitty-js",
+  "type": "module",
   "packemon": {
     "format": [
-      "lib",
-      "esm"
+      "esm",
+      "umd"
     ],
     "platform": "browser"
   },
@@ -23,22 +24,28 @@
   "files": [
     "esm/**/*",
     "lib/**/*",
-    "src/**/*"
+    "src/**/*",
+    "umd/**/*"
   ],
-  "main": "./lib/index.js",
+  "main": "./esm/index.js",
   "module": "./esm/index.js",
   "types": "./lib/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": {
-        "types": "./esm/index.d.ts",
-        "default": "./esm/index.js"
-      },
-      "require": {
-        "types": "./lib/index.d.ts",
-        "default": "./lib/index.js"
-      }
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js"
     }
-  }
+  },
+  "dependencies": {
+    "@stomp/rx-stomp": "^2.0.0",
+    "@stomp/stompjs": "^7.0.0",
+    "axios": "^0.27.2",
+    "base-64": "^1.0.0",
+    "rxjs": "^7.8.1",
+    "sockjs-client": "^1.6.1",
+    "text-encoding-polyfill": "^0.6.7",
+    "uuid": "^10.0.0"
+  },
+  "browser": "./umd/index.js"
 }

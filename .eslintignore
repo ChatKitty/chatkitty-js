@@ -6,6 +6,9 @@ node_modules
 
 esm
 lib
+umd
+
+dist
 
 *.d.ts
 *.d.cts

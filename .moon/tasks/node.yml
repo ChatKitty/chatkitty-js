@@ -32,7 +32,7 @@ tasks:
       - 'prettier'
       - '--ignore-path'
       - '@in(0)'
-      - '--check'
+      - '--write'
       - '.'
     inputs:
       - '/.prettierignore'

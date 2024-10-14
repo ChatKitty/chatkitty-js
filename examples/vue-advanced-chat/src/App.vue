@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
-import { add } from '@chatkitty/core';
+import ChatKitty from '@chatkitty/core';
 
 import HelloWorld from '@/components/HelloWorld.vue';
 
 // Testing imports of local workspace packages
 // eslint-disable-next-line no-console
-console.log(add(1, 1));
+console.log(ChatKitty.getInstance("test"));
 </script>
 
 <template>

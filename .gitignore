@@ -12,6 +12,9 @@ node_modules
 # builds
 esm
 lib
+umd
+
+dist
 
 # TS build info
 *.tsbuildinfo

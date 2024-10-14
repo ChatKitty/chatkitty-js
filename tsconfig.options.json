@@ -2,8 +2,8 @@
   "extends": "tsconfig-moon/tsconfig.json",
   "compilerOptions": {
     "lib": ["esnext", "dom"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "target": "es2022",
     "composite": true,
     "declaration": true,
