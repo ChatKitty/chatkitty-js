@@ -1,0 +1,17 @@
+# IntelliJ IDEA
+.idea
+*.iml
+
+# moon
+.moon/cache
+.moon/docker
+
+# Node modules
+node_modules
+
+# builds
+esm
+lib
+
+# TS build info
+*.tsbuildinfo

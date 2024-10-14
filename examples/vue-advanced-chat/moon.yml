@@ -1,0 +1,48 @@
+type: 'application'
+
+workspace:
+  inheritedTasks:
+    exclude: ['typecheck']
+
+toolchain:
+  typescript:
+    disabled: true
+
+fileGroups:
+  app:
+    - 'env.d.ts'
+    - 'index.html'
+    - 'vite.config.*'
+
+tasks:
+  dev:
+    command: 'vite dev'
+    local: true
+
+  build:
+    command: 'vite build'
+    inputs:
+      - '@group(app)'
+      - '@group(sources)'
+    outputs:
+      - 'dist'
+
+  preview:
+    command: 'vite preview --port 4173'
+    deps:
+      - 'build'
+    local: true
+
+  typecheck:
+    command:
+      - 'vue-tsc'
+      - '--noEmit'
+      - '--project'
+      - 'tsconfig.vitest.json'
+      - '--composite'
+      - 'false'
+    inputs:
+      - '@group(sources)'
+      - 'tests/**/*'
+      - 'tsconfig.json'
+      - 'tsconfig.*.json'

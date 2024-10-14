@@ -1,0 +1,14 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+tasks:
+  build:
+    command:
+      - 'packemon'
+      - 'pack'
+      - '--addEngines'
+      - '--addExports'
+      - '--declaration'
+    inputs:
+      - '@globs(sources)'
+      - 'package.json'
+      - 'tsconfig.*.json'

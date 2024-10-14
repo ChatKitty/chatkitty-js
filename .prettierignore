@@ -1,0 +1,12 @@
+node_modules
+
+esm
+lib
+
+*.d.ts
+*.d.cts
+*.d.mts
+*.min.js
+*.map
+
+*.vue

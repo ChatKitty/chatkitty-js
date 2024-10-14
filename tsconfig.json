@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.options.json",
+  "files": [],
+  "references": [
+    {
+      "path": "examples/vue-advanced-chat"
+    },
+    {
+      "path": "libraries/core"
+    }
+  ]
+}

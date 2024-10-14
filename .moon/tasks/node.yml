@@ -1,0 +1,73 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+implicitDeps:
+  - '^:build'
+
+implicitInputs:
+  - 'package.json'
+
+fileGroups:
+  # Application specific files
+  app: []
+  configs:
+    - '*.{js,json,yml,yaml}'
+  sources:
+    - 'public/**/*'
+    - 'src/**/*'
+    - 'types/**/*'
+  tests:
+    - 'tests/**/*.test.*'
+    - 'tests/**/*.stories.*'
+    - '**/__tests__/**/*'
+  assets:
+    - 'assets/**/*'
+    - 'images/**/*'
+    - 'static/**/*'
+    - '**/*.{scss,css}'
+    - '**/*.{md,mdx}'
+
+tasks:
+  format:
+    command:
+      - 'prettier'
+      - '--ignore-path'
+      - '@in(0)'
+      - '--check'
+      - '.'
+    inputs:
+      - '/.prettierignore'
+      - '/prettier.config.js'
+      - '@group(app)'
+      - '@globs(sources)'
+      - '@globs(tests)'
+      - '@globs(configs)'
+      - '**/*.{md,mdx}'
+
+  format-write:
+    command:
+      - 'prettier'
+      - '--ignore-path'
+      - '@in(0)'
+      - '--write'
+      - '.'
+    inputs:
+      - '/.prettierignore'
+      - '/prettier.config.js'
+      - '@group(app)'
+      - '@globs(sources)'
+      - '@globs(tests)'
+      - '@globs(configs)'
+      - '**/*.{md,mdx}'
+    local: true
+
+  typecheck:
+    command:
+      - 'tsc'
+      - '--build'
+    inputs:
+      - '@group(app)'
+      - '@globs(sources)'
+      - '@globs(tests)'
+      - 'tsconfig.json'
+      - 'tsconfig.*.json'
+      - '/tsconfig.options.json'

@@ -1,0 +1,44 @@
+{
+  "name": "@chatkitty/core",
+  "version": "0.0.0-semantic-release",
+  "description": "ChatKitty core JS package.",
+  "keywords": [
+    "node",
+    "lib",
+    "esm"
+  ],
+  "author": "ChatKitty",
+  "license": "MIT",
+  "repository": "https://github.com/ChatKitty/chatkitty-js",
+  "packemon": {
+    "format": [
+      "lib",
+      "esm"
+    ],
+    "platform": "browser"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "files": [
+    "esm/**/*",
+    "lib/**/*",
+    "src/**/*"
+  ],
+  "main": "./lib/index.js",
+  "module": "./esm/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./esm/index.d.ts",
+        "default": "./esm/index.js"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      }
+    }
+  }
+}
