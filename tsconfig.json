@@ -6,6 +6,9 @@
       "path": "examples/vue-advanced-chat"
     },
     {
+      "path": "libraries/chatkitty"
+    },
+    {
       "path": "libraries/core"
     }
   ]

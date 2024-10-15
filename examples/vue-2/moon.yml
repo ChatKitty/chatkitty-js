@@ -1,0 +1,19 @@
+type: 'application'
+
+workspace:
+  inheritedTasks:
+    exclude: ['typecheck']
+
+toolchain:
+  typescript:
+    disabled: true
+
+fileGroups:
+  app:
+    - 'public/index.html'
+    - 'vue.config.*'
+
+tasks:
+  dev:
+    command: 'vue-cli-service serve'
+    local: true
