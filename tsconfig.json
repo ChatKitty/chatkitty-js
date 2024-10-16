@@ -3,10 +3,7 @@
   "files": [],
   "references": [
     {
-      "path": "examples/vue-advanced-chat"
-    },
-    {
-      "path": "libraries/chatkitty"
+      "path": "libraries/typescript"
     },
     {
       "path": "libraries/core"

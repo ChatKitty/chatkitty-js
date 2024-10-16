@@ -47,5 +47,11 @@
     "text-encoding-polyfill": "^0.6.7",
     "uuid": "^10.0.0"
   },
+  "devDependencies": {
+    "@types/base-64": "^1.0.2",
+    "@types/node": "^22.7.5",
+    "@types/sockjs-client": "^1.5.4",
+    "@types/uuid": "^10.0.0"
+  },
   "browser": "./umd/index.js"
 }

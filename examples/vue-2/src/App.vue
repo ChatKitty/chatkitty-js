@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {connectApi, loadChatUi, template} from "chatkitty";
+import {connectApi, loadChatUi, template} from "libraries/typescript";
 
 export default {
   name: 'App',

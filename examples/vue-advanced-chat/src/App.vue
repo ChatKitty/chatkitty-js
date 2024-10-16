@@ -1,135 +1,143 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import ChatKitty from '@chatkitty/core';
+import ChatComponent from './components/ChatComponent.vue'
+import { ref } from 'vue'
 
-import HelloWorld from '@/components/HelloWorld.vue';
+const theme = ref('light')
 
-// Testing imports of local workspace packages
-// eslint-disable-next-line no-console
-console.log(ChatKitty.getInstance("test"));
+const users = [
+  {
+    username: 'b2a6da08-88bf-4778-b993-7234e6d8a3ff',
+    name: 'Joni'
+  },
+  {
+    username: 'abc4264d-f1b1-41c0-b4cc-1e9daadfc893',
+    name: 'Penelope'
+  },
+  {
+    username: 'c6f75947-af48-4893-a78e-0e0b9bd68580',
+    name: 'Julie'
+  },
+  {
+    username: '2989c53a-d0c5-4222-af8d-fbf7b0c74ec6',
+    name: 'Paxton'
+  },
+  {
+    username: '8fadc920-f3e6-49ff-9398-1e58b3dc44dd',
+    name: 'Zaria'
+  }
+]
+
+const username = ref(users[Math.floor(Math.random() * users.length)].username)
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    >
+  <div class="app-container" :class="{ 'app-container-dark': theme === 'dark' }">
+    <span class="user-logged" :class="{ 'user-logged-dark': theme === 'dark' }">
+      Logged in as
+    </span>
+    <select v-model="username">
+      <option v-for="user in users" :key="user.username" :value="user.username">
+        {{ user.name }}
+      </option>
+    </select>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">
-          Home
-        </RouterLink>
-        <RouterLink to="/about">
-          About
-        </RouterLink>
-      </nav>
+    <div class="button-theme">
+      <button class="button-light" @click="theme = 'light'">Light</button>
+      <button class="button-dark" @click="theme = 'dark'">Dark</button>
     </div>
-  </header>
 
-  <RouterView />
+    <ChatComponent :theme="theme" :username="username" />
+  </div>
 </template>
 
-<style>
-@import '@/assets/base.css';
-
-#app {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
-
-	font-weight: normal;
+<style lang="scss">
+body {
+  margin: 0;
 }
 
-header {
-	line-height: 1.5;
-	max-height: 100vh;
+input {
+  -webkit-appearance: none;
 }
 
-.logo {
-	display: block;
-	margin: 0 auto 2rem;
+.app-container {
+  font-family: 'Quicksand', sans-serif;
+  padding: 30px;
+
+  &.app-container-dark {
+    background: #131415;
+  }
 }
 
-a,
-.green {
-	text-decoration: none;
-	color: hsla(160, 100%, 37%, 1);
-	transition: 0.4s;
+.user-logged {
+  font-size: 12px;
+  margin-right: 5px;
+  margin-top: 10px;
+
+  &.user-logged-dark {
+    color: #fff;
+  }
 }
 
-@media (hover: hover) {
-	a:hover {
-		background-color: hsla(160, 100%, 37%, 0.2);
-	}
+select {
+  height: 20px;
+  outline: none;
+  border: 1px solid #e0e2e4;
+  border-radius: 4px;
+  background: #fff;
+  margin-bottom: 20px;
 }
 
-nav {
-	width: 100%;
-	font-size: 12px;
-	text-align: center;
-	margin-top: 2rem;
-}
+.button-theme {
+  float: right;
+  display: flex;
+  align-items: center;
 
-nav a.router-link-exact-active {
-	color: var(--color-text);
-}
+  .button-light {
+    background: #fff;
+    border: 1px solid #46484e;
+    color: #46484e;
+  }
 
-nav a.router-link-exact-active:hover {
-	background-color: transparent;
-}
+  .button-dark {
+    background: #1c1d21;
+    border: 1px solid #1c1d21;
+  }
 
-nav a {
-	display: inline-block;
-	padding: 0 1rem;
-	border-left: 1px solid var(--color-border);
-}
+  button {
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-left: 10px;
+    border: none;
+    font-size: 14px;
+    transition: 0.3s;
+    vertical-align: middle;
 
-nav a:first-of-type {
-	border: 0;
-}
+    &.button-github {
+      height: 30px;
+      background: none;
+      padding: 0;
+      margin-left: 20px;
 
-@media (min-width: 1024px) {
-	body {
-		display: flex;
-		place-items: center;
-	}
+      img {
+        height: 30px;
+      }
+    }
 
-	#app {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		padding: 0 2rem;
-	}
+    &:hover {
+      opacity: 0.8;
+    }
 
-	header {
-		display: flex;
-		place-items: center;
-		padding-right: calc(var(--section-gap) / 2);
-	}
+    &:active {
+      opacity: 0.6;
+    }
 
-	header .wrapper {
-		display: flex;
-		place-items: flex-start;
-		flex-wrap: wrap;
-	}
-
-	.logo {
-		margin: 0 2rem 0 0;
-	}
-
-	nav {
-		text-align: left;
-		margin-left: -1rem;
-		font-size: 1rem;
-
-		padding: 1rem 0;
-		margin-top: 1rem;
-	}
+    @media only screen and (max-width: 768px) {
+      padding: 3px 6px;
+      font-size: 13px;
+    }
+  }
 }
 </style>

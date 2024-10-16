@@ -19,10 +19,6 @@
   "devDependencies": {
     "@moonrepo/cli": "^1.29.1",
     "@swc/core": "^1.7.35",
-    "@types/base-64": "^1.0.2",
-    "@types/node": "^22.7.5",
-    "@types/sockjs-client": "^1.5.4",
-    "@types/uuid": "^10.0.0",
     "babel-preset-moon": "^3.0.3",
     "eslint": "8.57.0",
     "eslint-config-moon": "^3.1.2",
