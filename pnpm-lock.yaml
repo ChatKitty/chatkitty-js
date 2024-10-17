@@ -11,9 +11,15 @@ importers:
 
   .:
     devDependencies:
+      '@b12k/mvm':
+        specifier: ^0.0.10
+        version: 0.0.10
       '@moonrepo/cli':
         specifier: ^1.29.1
         version: 1.29.1
+      '@release-it/conventional-changelog':
+        specifier: ^9.0.0
+        version: 9.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@17.10.0(typescript@5.6.3))
       '@swc/core':
         specifier: ^1.7.35
         version: 1.7.36(@swc/helpers@0.5.13)
@@ -198,17 +204,7 @@ importers:
         specifier: ^9.0.0
         version: 9.0.1
 
-  tools/release-config:
-    devDependencies:
-      '@b12k/mvm':
-        specifier: ^0.0.10
-        version: 0.0.10
-      '@release-it/conventional-changelog':
-        specifier: ^9.0.0
-        version: 9.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@17.10.0(typescript@5.6.3))
-      release-it:
-        specifier: ^17.10.0
-        version: 17.10.0(typescript@5.6.3)
+  tools/release-config: {}
 
 packages:
 

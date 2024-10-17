@@ -12,3 +12,7 @@ tasks:
       - '@globs(sources)'
       - 'package.json'
       - 'tsconfig.*.json'
+  release:
+    command:
+        - 'pnpm'
+        - 'release'

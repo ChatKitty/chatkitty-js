@@ -10,7 +10,8 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "node download-assets.js"
+    "build": "node download-assets.js",
+    "release": "release-it --ci"
   },
   "exports": {
     ".": {

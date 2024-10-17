@@ -5,10 +5,5 @@
   "main": ".release-it.js",
   "scripts": {
     "release": "release-it --ci"
-  },
-  "devDependencies": {
-    "@b12k/mvm": "^0.0.10",
-    "@release-it/conventional-changelog": "^9.0.0",
-    "release-it": "^17.10.0"
   }
 }

@@ -11,6 +11,9 @@
   "license": "MIT",
   "repository": "https://github.com/ChatKitty/chatkitty-js",
   "type": "module",
+  "scripts": {
+    "release": "release-it --ci"
+  },
   "packemon": {
     "format": [
       "esm",

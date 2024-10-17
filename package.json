@@ -17,7 +17,9 @@
   },
   "packageManager": "pnpm@9.0.2",
   "devDependencies": {
+    "@b12k/mvm": "^0.0.10",
     "@moonrepo/cli": "^1.29.1",
+    "@release-it/conventional-changelog": "^9.0.0",
     "@swc/core": "^1.7.35",
     "babel-preset-moon": "^3.0.3",
     "eslint": "8.57.0",

@@ -1,6 +1,6 @@
 type: 'library'
 language: 'javascript'
 
-tasks:
-  release:
-    command: 'pnpm run release'
+workspace:
+  inheritedTasks:
+    exclude: ['build']
