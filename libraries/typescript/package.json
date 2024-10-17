@@ -1,6 +1,6 @@
 {
   "name": "chatkitty",
-  "version": "0.0.0-semantic-release",
+  "version": "2.6.1",
   "description": "A powerful tool for integrating chat features into your web applications.",
   "license": "MIT",
   "files": [
