@@ -3,10 +3,13 @@
   "files": [],
   "references": [
     {
+      "path": "libraries/core"
+    },
+    {
       "path": "libraries/typescript"
     },
     {
-      "path": "libraries/core"
+      "path": "tools/release-config"
     }
   ]
 }

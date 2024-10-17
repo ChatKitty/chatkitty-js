@@ -1,0 +1,6 @@
+type: 'library'
+language: 'javascript'
+
+tasks:
+  release:
+    command: 'release-it --ci'

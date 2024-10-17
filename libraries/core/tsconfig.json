@@ -3,7 +3,11 @@
   "include": [
     "**/*"
   ],
-  "references": [],
+  "references": [
+    {
+      "path": "../../tools/release-config"
+    }
+  ],
   "compilerOptions": {
     "outDir": "../../.moon/cache/types/libraries/core"
   }

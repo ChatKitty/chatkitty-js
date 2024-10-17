@@ -3,6 +3,7 @@
   "include": [
     "examples/**/*",
     "libraries/**/*",
+    "tools/**/*",
     "**/.eslintrc.js"
   ],
   "exclude": [
