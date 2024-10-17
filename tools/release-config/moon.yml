@@ -3,4 +3,4 @@ language: 'javascript'
 
 tasks:
   release:
-    command: 'release-it --ci'
+    command: 'pnpm run release'
