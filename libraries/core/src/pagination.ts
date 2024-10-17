@@ -10,7 +10,7 @@ export class ChatKittyPaginator<I> {
 		const page = await new Promise<StompXPage>((resolve, reject) => {
 			const destination = request.relay.replace(
 				'.size..sort.',
-				`.size.${request.size}.sort.${request.sort}`,
+				`.size.${request.size || ''}.sort.${request.sort || ''}`,
 			);
 
 			request.stompX.relayResource<StompXPage>({
