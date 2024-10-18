@@ -16,8 +16,7 @@
   },
   "packemon": {
     "format": [
-      "esm",
-      "umd"
+      "esm"
     ],
     "platform": "browser"
   },
@@ -26,13 +25,11 @@
   },
   "files": [
     "esm/**/*",
-    "lib/**/*",
-    "src/**/*",
-    "umd/**/*"
+    "src/**/*"
   ],
   "main": "./esm/index.js",
   "module": "./esm/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./esm/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -56,6 +53,5 @@
     "@types/node": "^22.7.5",
     "@types/sockjs-client": "^1.5.4",
     "@types/uuid": "^10.0.0"
-  },
-  "browser": "./umd/index.js"
+  }
 }
