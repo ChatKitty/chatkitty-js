@@ -5,32 +5,11 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 
+import sockjs from 'sockjs-client/dist/sockjs';
+
 import { version } from './environment';
 
-let TransportFallback: { new (url: string): unknown };
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const transportFallbackPromise = import('sockjs-client/dist/sockjs.js')
-	.then((sockjs) => {
-		TransportFallback = sockjs.default;
-	})
-	.catch((error) => {
-		ErrorMessageTransportFallback.errorMessage = error.message;
-
-		TransportFallback = ErrorMessageTransportFallback;
-	});
-
-class ErrorMessageTransportFallback {
-	static errorMessage: string;
-
-	constructor() {
-		throw new Error(
-			'Encountered error when attempting to use transport fallback: ' +
-				ErrorMessageTransportFallback.errorMessage,
-		);
-	}
-}
+const TransportFallback = sockjs;
 
 export default class StompX {
 	private readonly host: string;
@@ -244,9 +223,7 @@ export default class StompX {
 			});
 		});
 
-		transportFallbackPromise.then(() => {
-			this.rxStomp.activate();
-		});
+		this.rxStomp.activate();
 	}
 
 	public relayResource<R>(request: StompXRelayResourceRequest<R>) {
