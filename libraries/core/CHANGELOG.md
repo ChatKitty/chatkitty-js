@@ -1,5 +1,11 @@
 
 
+## [1.11.0](https://github.com/ChatKitty/chatkitty-js/compare/@chatkitty/core-v1.10.0...@chatkitty/core-v1.11.0) (2024-10-18)
+
+### Bug Fixes
+
+* **core:** remove dynamic imports ([dfd30b9](https://github.com/ChatKitty/chatkitty-js/commit/dfd30b9affdb64e9b5b40c52b0278b9dc264cbb8))
+
 ## [1.10.0](https://github.com/ChatKitty/chatkitty-js/compare/@chatkitty/core-v1.9.0...@chatkitty/core-v1.10.0) (2024-10-18)
 
 ### Bug Fixes
