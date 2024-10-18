@@ -16,7 +16,7 @@ module.exports = {
 	git: {
 		push: true,
 		tagName: `${packageName}-v${version}`,
-		pushRepo: 'git@github.com:b12k/monorepo-semantic-releases.git',
+		pushRepo: 'git@github.com:chatkitty/chatkitty.git',
 		commitsPath: '.',
 		commitMessage: `feat(${scope}): released version v${version} [no ci]`,
 		requireCommits: true,
